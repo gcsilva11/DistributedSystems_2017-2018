@@ -1,16 +1,17 @@
 package RMIPackage;
+
+import ServerPackage.TCPServerInterface;
+import adminPackage.VotingAdminInterface;
+
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.*;
 import java.util.ArrayList;
 
-import adminPackage.VotingAdminInterface;
-
-public class serverRMI extends UnicastRemoteObject implements VotingAdminInterface {
-
-	
+public class serverRMI extends UnicastRemoteObject implements VotingAdminInterface, TCPServerInterface {
 	private static final long serialVersionUID = 1L;
+
 	private static UserList users = new UserList();
 	private static DepList departments = new DepList();
 	private static candidateListList candidateList = new candidateListList();
@@ -20,9 +21,10 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		super();
 	}
 
+	// =================================================================================================
+	// VotingAdminInterface
 	public boolean registerUser(User user) throws RemoteException {
 		//Register a new user in the object file
-		
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
 		
 		//Go through the currently registered people and check if there's one with same ID
@@ -187,8 +189,16 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return true;
 		
 	}
-	
-	// =========================================================
+
+	// =================================================================================================
+	// TCPServerInterface
+
+	public ArrayList<User> getUsers() throws RemoteException{
+		return users.getUsers();
+	}
+
+	// =================================================================================================
+	//Main
 	public static void main(String args[]) {
 
 		try {
@@ -201,60 +211,60 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			System.out.println("Exception in serverRMI.main: " + re);
 		}
 	}
-	
+
 	public static void setupObjectFiles(){
 
 		FicheiroDeObjectos foUser = new FicheiroDeObjectos();
 		FicheiroDeObjectos foDeps = new FicheiroDeObjectos();
 		FicheiroDeObjectos foLists = new FicheiroDeObjectos();
 		FicheiroDeObjectos foElections = new FicheiroDeObjectos();
-		
+
 		//Read users file and add them to user Array
 		try{
 			if (foUser.abreLeitura("out/users.dat")){
-                users = (UserList) foUser.leObjecto();
-                foUser.fechaLeitura();
-            }
-			
+				users = (UserList) foUser.leObjecto();
+				foUser.fechaLeitura();
+			}
+
 		}
 		catch (Exception e) {
-            System.out.println("Exception caught reading users.dat - "+e);
-        }
-		
+			System.out.println("Exception caught reading users.dat - "+e);
+		}
+
 		//Read deparment file and add them to department Array
 		try{
 			if (foDeps.abreLeitura("out/deps.dat")){
-                departments = (DepList) foDeps.leObjecto();
-                foDeps.fechaLeitura();
-            }
-			
+				departments = (DepList) foDeps.leObjecto();
+				foDeps.fechaLeitura();
+			}
+
 		}
 		catch (Exception e) {
-            System.out.println("Exception caught reading deps.dat - "+e);
-        }
-		
-		//Read list file and add them to candidateList list 
+			System.out.println("Exception caught reading deps.dat - "+e);
+		}
+
+		//Read list file and add them to candidateList list
 		try{
 			if (foLists.abreLeitura("out/lists.dat")){
-                candidateList = (candidateListList) foLists.leObjecto();
-                foLists.fechaLeitura();
-            }
-			
+				candidateList = (candidateListList) foLists.leObjecto();
+				foLists.fechaLeitura();
+			}
+
 		}
 		catch (Exception e) {
-            System.out.println("Exception caught reading lists.dat - "+e);
-        }
-		
+			System.out.println("Exception caught reading lists.dat - "+e);
+		}
+
 		//Read elections file and add them to electionList Array
 		try{
 			if (foElections.abreLeitura("out/elections.dat")){
-                elList = (ElectionList) foElections.leObjecto();
-                foElections.fechaLeitura();
-            }
-			
+				elList = (ElectionList) foElections.leObjecto();
+				foElections.fechaLeitura();
+			}
+
 		}
 		catch (Exception e) {
-            System.out.println("Exception caught reading elections.dat - "+e);
-        }
+			System.out.println("Exception caught reading elections.dat - "+e);
+		}
 	}
 }

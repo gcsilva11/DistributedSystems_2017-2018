@@ -1,4 +1,5 @@
 package adminPackage;
+
 import java.rmi.registry.LocateRegistry;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -6,22 +7,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
-import RMIPackage.Department;
-import RMIPackage.Election;
-import RMIPackage.User;
-import RMIPackage.candidateList;
+import RMIPackage.*;
 
 public class Admin {
-	
 	private static Scanner input;
 
 	public static void main(String[] args){
-		
 		input = new Scanner(System.in);
 		String choice;
 		
 		try{
-			
 			VotingAdminInterface vote = (VotingAdminInterface) LocateRegistry.getRegistry(6500).lookup("vote_booth");
 			
 			while(true){
@@ -30,7 +25,6 @@ public class Admin {
 				choice = input.nextLine();
 				
 				switch(choice){
-				
 					case "1":					
 						//Voter Data
 						String name;

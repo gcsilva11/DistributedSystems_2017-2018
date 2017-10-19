@@ -1,15 +1,15 @@
 package adminPackage;
 
-import java.rmi.*;
-import java.util.ArrayList;
-
 import RMIPackage.*;
 
+import java.rmi.*;
+import java.util.*;
+
 public interface VotingAdminInterface extends Remote {
-	public boolean registerUser(User user) throws java.rmi.RemoteException;
-	public boolean registerDep(Department dep) throws java.rmi.RemoteException;
-	public boolean editDep(Department dep) throws java.rmi.RemoteException;
-	public boolean deleteDep(Department dep) throws java.rmi.RemoteException;
-	public ArrayList <candidateList> getList(int type) throws java.rmi.RemoteException;
-	public boolean newElection(Election election) throws java.rmi.RemoteException;
+	boolean registerUser(User user) throws java.rmi.RemoteException;
+	boolean registerDep(Department dep) throws java.rmi.RemoteException;
+	boolean editDep(Department dep) throws java.rmi.RemoteException;
+	boolean deleteDep(Department dep) throws java.rmi.RemoteException;
+	ArrayList <candidateList> getList(int type) throws java.rmi.RemoteException;
+	boolean newElection(Election election) throws java.rmi.RemoteException;
 }
