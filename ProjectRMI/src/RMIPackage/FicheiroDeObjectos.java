@@ -1,4 +1,4 @@
-package projectRMI;
+package RMIPackage;
 
 import java.io.*;
 
@@ -8,7 +8,7 @@ public class FicheiroDeObjectos {
     private ObjectInputStream iS;
     private ObjectOutputStream oS;
    
-    /** Método para abrir um ficheiro para leitura
+    /** Mï¿½todo para abrir um ficheiro para leitura
      * @param nomeDoFicheiro - parametro com o nome do ficheiro a abrir.
      * @return
      */
@@ -21,7 +21,7 @@ public class FicheiroDeObjectos {
         }
     }
    
-    /** Método para abrir um ficheiro para escrita
+    /** Mï¿½todo para abrir um ficheiro para escrita
      * @param nomeDoFicheiro - parametro que recebe o nome do ficheiro
      * @throws IOException
      */
@@ -29,7 +29,7 @@ public class FicheiroDeObjectos {
         oS = new ObjectOutputStream(new FileOutputStream(new File(nomeDoFicheiro)));
     }
    
-    /** Método para ler um objecto do ficheiro
+    /** Mï¿½todo para ler um objecto do ficheiro
      *
      * @return - Devolve o objecto lid
      * @throws java.io.IOException
@@ -38,21 +38,21 @@ public class FicheiroDeObjectos {
         return iS.readObject();
     }
    
-    /** Método para escrever um objecto no ficheiro
+    /** Mï¿½todo para escrever um objecto no ficheiro
      * @param o - Objecto a receber.
      * @throws java.io.IOException*/
     public void escreveObjecto(Object o) throws IOException {
         oS.writeObject(o);
     }
    
-    /** Método para fechar um ficheiro aberto em modo leitura.
+    /** Mï¿½todo para fechar um ficheiro aberto em modo leitura.
      * @throws IOException
      */
     public void fechaLeitura() throws IOException {
         iS.close();
     }
    
-    /** Método para fechar um ficheiro aberto em modo escrita.
+    /** Mï¿½todo para fechar um ficheiro aberto em modo escrita.
      * @throws IOException
      */
     public void fechaEscrita() throws IOException {

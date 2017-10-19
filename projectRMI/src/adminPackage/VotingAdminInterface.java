@@ -3,7 +3,7 @@ package adminPackage;
 import java.rmi.*;
 import java.util.ArrayList;
 
-import projectRMI.*;
+import RMIPackage.*;
 
 public interface VotingAdminInterface extends Remote {
 	public boolean registerUser(User user) throws java.rmi.RemoteException;

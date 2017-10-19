@@ -6,10 +6,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
-import projectRMI.Department;
-import projectRMI.Election;
-import projectRMI.User;
-import projectRMI.candidateList;
+import RMIPackage.Department;
+import RMIPackage.Election;
+import RMIPackage.User;
+import RMIPackage.candidateList;
 
 public class Admin {
 	

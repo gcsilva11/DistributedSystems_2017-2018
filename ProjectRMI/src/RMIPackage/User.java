@@ -1,4 +1,4 @@
-package projectRMI;
+package RMIPackage;
 
 import java.io.Serializable;
 import java.util.Calendar;
