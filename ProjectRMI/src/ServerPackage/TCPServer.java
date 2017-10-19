@@ -11,13 +11,12 @@ import java.rmi.registry.LocateRegistry;
 import java.util.ArrayList;
 
 public class TCPServer {
+    public static final boolean DEBUG = true;
     public TCPServerInterface tcp;
     public TCPServer(){
         try {
             tcp = (TCPServerInterface) LocateRegistry.getRegistry(6500).lookup("vote_booth");
-        } catch (RemoteException|NotBoundException e) {
-            e.printStackTrace();
-        }
+        } catch (RemoteException|NotBoundException e) { System.out.println("Error connecting to RMI"); }
     }
     public static void main(String[] args){
         int numero = 0;
@@ -30,12 +29,12 @@ public class TCPServer {
                 Connection newClient = new Connection(clientSocket, numero);
                 newClient.start();
             }
-        }catch(IOException e)
-        {System.out.println("Listen:" + e.getMessage());}
+        }catch(IOException e) { System.out.println("Error connecting to client"); }
     }
 }
 
 class Connection extends Thread{
+    public static final boolean DEBUG = true;
     DataInputStream inputStream;
     DataOutputStream outputStream;
     Socket clientSocket;
@@ -51,33 +50,57 @@ class Connection extends Thread{
             inputStream = new DataInputStream(clientSocket.getInputStream());
             outputStream = new DataOutputStream(clientSocket.getOutputStream());
             user = tcpServer.tcp.getUsers();
-        }catch(IOException e){System.out.println("Connection:" + e.getMessage());}
+        }catch(IOException e){ }
     }
 
     public void run(){
         String data;
-        boolean bol;
+        boolean bool;
             try {
                 while (true) {
                     data = inputStream.readUTF();
-                    System.out.println("T[" + thread_number + "] Recebeu: " + data);
-                    bol = false;
+                    if(DEBUG)System.out.println("Received "+data+" from Client "+thread_number);
+                    bool = false;
+
                     for (int i = 0; i < user.size(); i++) {
+
                         if (Integer.parseInt(data) == Integer.parseInt(user.get(i).getID())) {
                             outputStream.writeUTF(user.get(i).getInfo());
-                            bol = true;
+                            String username = inputStream.readUTF();
+
+                            if (username.compareTo(user.get(i).getName())==0) {
+                                outputStream.writeBoolean(true);
+                                if(DEBUG) System.out.println("\t#DEBUG# Client "+thread_number+"'s Usernames match");
+
+                                String password = inputStream.readUTF();
+                                if (password.compareTo(user.get(i).getPassword())==0){
+                                    outputStream.writeBoolean(true);
+                                    if(DEBUG)System.out.println("\t#DEBUG# Client \"+thread_number+\"'s Passwords match");
+                                    /*
+                                    //Cliente pode votar
+                                    //
+                                    //
+                                    //
+                                    */
+                                }
+                                else {
+                                    outputStream.writeBoolean(false);
+                                    if(DEBUG)System.out.println("\t#DEBUG# Client \"+thread_number+\"'s Password did not match");
+                                }
+                            }
+                            else {
+                                outputStream.writeBoolean(false);
+                                if(DEBUG) System.out.println("\t#DEBUG# Client \"+thread_number+\"'s Usernames did not match");
+                            }
+                            bool = true;
                         }
                     }
-                    if(!bol)
+                    if (!bool)
                         outputStream.writeUTF("UserIDNotFound");
-
-                    System.out.println("\t\t" + bol);
-                    outputStream.writeBoolean(bol);
                 }
 
-
             } catch (EOFException e) {
-                System.out.println("EOF:" + e);
+                System.out.println("Client "+thread_number+" disconnected");
             } catch (IOException e) {
                 System.out.println("IO:" + e);
             }
