@@ -1,44 +1,50 @@
 package ServerPackage;
 
-import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
-
 import java.net.*;
 import java.io.*;
 
 public class TCPClient {
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
+
+    // Main
     public static void main(String args[]) {
-        Socket s = null;
+        Socket socket = null;
         int serversocket = 6000;
         try {
-            s = new Socket("localhost", serversocket);
+            //Cria ligação ao socket
+            socket = new Socket("localhost", serversocket);
             String text = "";
 
-            DataInputStream inputStream = new DataInputStream(s.getInputStream());
-            DataOutputStream outputStream = new DataOutputStream(s.getOutputStream());
+            // Inicializa dados socket
+            DataInputStream inputStream = new DataInputStream(socket.getInputStream());
+            DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
             InputStreamReader input = new InputStreamReader(System.in);
             BufferedReader reader = new BufferedReader(input);
 
             while (true) {
-
-                System.out.println("\nInsert User ID:");
-
+                System.out.println("\nInsert User ID (0 to Quit): ");
                 try {
                     text = reader.readLine();
                 } catch (Exception e) {
                 }
+                // Termina se 0
+                if(Integer.parseInt(text)==0)
+                    return;
 
+                //Envia ID a pesquisar
                 outputStream.writeUTF(text);
+
+                //DEBUG
                 String data = inputStream.readUTF();
+                if(DEBUG)System.out.println("\t#DEBUG# "+data+"\n");
 
-                if(DEBUG)System.out.println("\t#DEBUG#\n"+data+"\n");
-
-                if(data.compareTo("UserIDNotFound")==0)
+                // Rejeita ID
+                if(data.compareTo("UserIDNotFound")==0){
                     System.out.println("User ID not valid");
-
+                }
+                // Aceita ID: Cria Thread Terminal de Voto
                 else{
-                    Terminal votingTerminal = new Terminal(s,text);
+                    Terminal votingTerminal = new Terminal(socket,text);
                     votingTerminal.start();
                     try {
                         votingTerminal.join();
@@ -55,9 +61,9 @@ public class TCPClient {
         } catch (IOException e) {
             System.out.println("IO:" + e.getMessage());
         } finally {
-            if (s != null){
+            if (socket != null){
                 try {
-                    s.close();
+                    socket.close();
                 } catch (IOException e) {
                     System.out.println("close:" + e.getMessage());
                 }
@@ -67,27 +73,28 @@ public class TCPClient {
 }
 
 class Terminal extends Thread {
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
     private String id;
     private Socket clientSocket;
 
     private DataInputStream inputStream;
     private DataOutputStream outputStream;
+
+    // Construtor: Inicializa dados socket
     public Terminal(Socket s ,String id) {
         this.clientSocket = s;
         this.id = id;
-
         try {
             this.inputStream = new DataInputStream(this.clientSocket.getInputStream());
             this.outputStream = new DataOutputStream(this.clientSocket.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         System.out.println(" - Vote Terminal Unblocked - \n");
     }
 
     public void run(){
+        // Inicializa dados socket
         String text = "";
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
@@ -99,10 +106,12 @@ class Terminal extends Thread {
         } catch (Exception e) {
         }
         try {
+            // Envia username
             outputStream.writeUTF(text);
             boolean user_bool = inputStream.readBoolean();
             if(DEBUG)System.out.println("\t#DEBUG# User "+user_bool);
 
+            // Aceitou username
             if(user_bool){
                 System.out.println("Insert Password:");
                 try{
@@ -110,10 +119,12 @@ class Terminal extends Thread {
                 } catch (Exception e){
                 }
 
+                // Envia password
                 outputStream.writeUTF(text);
                 boolean pass_bool = inputStream.readBoolean();
                 if(DEBUG)System.out.println("\t#DEBUG# Password "+pass_bool);
 
+                // Aceita password
                 if(pass_bool){
                     if(DEBUG)System.out.println("\t#DEBUG# Authentication Complete");
                     /*
@@ -123,20 +134,19 @@ class Terminal extends Thread {
                     //
                     */
                 }
+                // Rejeita password
                 else{
-                    boolean bool = inputStream.readBoolean();
-                    System.out.println(bool);
                     System.out.println("Wrong Password");
                 }
             }
+            // Rejeita username
             else{
-                boolean bool = inputStream.readBoolean();
-                System.out.println(bool);
                 System.out.println("Could not find Username");
             }
 
         } catch (IOException e) {
         }
         if(DEBUG)System.out.println("\t#DEBUG# Vote Terminal Job Complete");
+        System.out.println(" - Vote Terminal Blocked - ");
     }
 }

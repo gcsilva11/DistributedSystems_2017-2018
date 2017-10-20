@@ -26,7 +26,7 @@ public class Admin {
 				
 				switch(choice){
 					case "1":					
-						//Voter Data
+						// Informação user
 						String name;
 						String ID;
 						String myDate;
@@ -37,15 +37,15 @@ public class Admin {
 						
 						System.out.print("Register requested.\n");
 						
-						//Name
+						// Nome
 						System.out.print("Username: ");
 						name = input.nextLine();
 	
-						//ID Number
+						// No. ID
 						System.out.print("\nID: ");
 						ID = input.nextLine();
 						
-						//ID Expiration Date
+						// Data expiração ID
 						System.out.print("\nExpiration Date(dd-MM-yyy hh:mm:ss):");
 						myDate = input.nextLine();
 						SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
@@ -53,19 +53,19 @@ public class Admin {
 						Calendar cal = Calendar.getInstance();
 						cal.setTime(expDate);
 						
-						//Phone Number
+						// No. Telefone
 						System.out.print("\nPhone number: ");
 						phone = input.nextLine();
 						
-						//Profession
+						// Profissão
 						System.out.print("\nProfession (1-Student, 2-Professor, 3- Employee): ");
 						profession = Integer.parseInt(input.nextLine());
 						
-						//Department
+						// Departamento
 						System.out.print("\nDepartment: ");
 						department = input.nextLine();
 	
-						//Password
+						// Password
 						System.out.print("\nPassword: ");
 						password = input.nextLine();
 					
@@ -97,15 +97,15 @@ public class Admin {
 						case "1":
 							
 							System.out.println("\nAdd a new department:");
-							//Department name
+							// Nome departamento
 							System.out.print("\nDepartment Name: ");
 							depName = input.nextLine();
 							
-							//ID
+							// ID
 							System.out.print("\nDepartment ID: ");
 							depID = input.nextLine();
 							
-							//Faculty
+							// Faculdade
 							System.out.print("\nFaculty name: ");
 							facName = input.nextLine();
 							
@@ -124,15 +124,15 @@ public class Admin {
 						case "2":
 							
 							System.out.println("\nEdit a department");
-							//Department name
+							// Nome departamento
 							System.out.print("\nID of the department to edit: ");
 							depID = input.nextLine();
 							
-							//ID
+							// ID
 							System.out.print("\nNew department name: ");
 							depName = input.nextLine();
 							
-							//Faculty
+							// Faculdade
 							System.out.print("\nNew faculty name: ");
 							facName = input.nextLine();
 							
@@ -151,7 +151,7 @@ public class Admin {
 						case "3":
 							
 							System.out.println("\nEdit a department");
-							//Department name
+							// Nome departamento
 							System.out.print("\nID of the department to delete: ");
 							depID = input.nextLine();
 							

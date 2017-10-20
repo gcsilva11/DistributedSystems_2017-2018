@@ -23,11 +23,12 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 	// =================================================================================================
 	// VotingAdminInterface
+
+	// Regista um novo user no ficheiro
 	public boolean registerUser(User user) throws RemoteException {
-		//Register a new user in the object file
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
 		
-		//Go through the currently registered people and check if there's one with same ID
+		// Verifica se existe algum user com o mesmo ID
 		for(int i=0;i<users.getUsers().size();i++){
 			if(user.getID().equals(users.getUsers().get(i).getID())){
 				System.out.println("ID already exists.");
@@ -40,7 +41,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		
 		users.addUser(user);
 		
-		//Update object file
+		// Update ficheiro
 		try{
 			fo.abreEscrita("out/users.dat");
         	fo.escreveObjecto(users);
@@ -52,12 +53,11 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return true;
 	}
 
+	// Adiciona departamento ao ficheiro
 	public boolean registerDep(Department dep) throws RemoteException{
-		//Add new department to object file
-		
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
 		
-		//Check if dep already exists
+		// Verifica se departamento já existe
 		for(int i=0;i<departments.getDeps().size();i++){
 			if(dep.getID().equals(departments.getDeps().get(i).getID())){
 				System.out.println("Department ID already exists.");
@@ -80,19 +80,17 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		
 	}
 
+	// Edita ficheiro departamento
 	public boolean editDep(Department dep) throws RemoteException{
-		//Edit department information
-		
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
 		
-		//Check if dep exists
-		
+		// Verifica se o departamento existe
 		for(int i=0;i<departments.getDeps().size();i++){
 			if(dep.getID().equals(departments.getDeps().get(i).getID())){
 				departments.getDeps().get(i).setDep(dep.getDep());
 				departments.getDeps().get(i).setFac(dep.getFac());
 				
-				//Update object file
+				// Update ficheiro
 				try{
 					fo.abreEscrita("out/deps.dat");
 		        	fo.escreveObjecto(departments);
@@ -109,20 +107,18 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return false;
 		
 	}
-	
+
+	// Apaga informação departamento
 	public boolean deleteDep(Department dep) throws RemoteException{
-		//Delete department information
-		
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
 		
-		//Check if dep exists
-		
+		// Verifica se o departamento existe
 		for(int i=0;i<departments.getDeps().size();i++){
 			if(dep.getID().equals(departments.getDeps().get(i).getID())){
 				
 				departments.getDeps().remove(i);
-				
-				//Update object file
+
+				// Update ficheiro
 				try{
 					fo.abreEscrita("out/deps.dat");
 		        	fo.escreveObjecto(departments);
@@ -139,10 +135,9 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return false;
 		
 	}
-	
+
+	// Procura candidatos por ID
 	public ArrayList <candidateList> getList(int type){
-		
-		//Search for desirable candidate lists by id
 		ArrayList <candidateList> chosenLists = new ArrayList <candidateList>();
 		if(type==1){
 			for(int i=0;i<candidateList.getCandidateList().size();i++){
@@ -158,15 +153,13 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		}
 		return chosenLists;
 	}
-	
+
+	//Create a new election
 	public boolean newElection(Election el) throws RemoteException{
-		//Create a new election
-		
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
 		boolean exists = false;
 		
-		//Check if  election title exists
-		
+		// Verifica se eleição já existe
 		for(int i=0;i<elList.getElections().size();i++){
 			if(el.getTitle().equals(elList.getElections().get(i).getTitle())){
 				exists = true;
@@ -178,7 +171,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			return false;
 		}
 		
-		//Update object file
+		//Update ficheiro
 		try{
 			fo.abreEscrita("out/elections.dat");
         	fo.escreveObjecto(elList);
@@ -193,25 +186,34 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	// =================================================================================================
 	// TCPServerInterface
 
-	public ArrayList<User> getUsers() throws RemoteException{
-		return users.getUsers();
-	}
+	// Devolve lista de users
+	public ArrayList<User> getUsers() throws RemoteException{ return users.getUsers(); }
+
+	// Devolve lista de candidatos
+	public ArrayList<candidateList> getCandidateList() throws RemoteException{ return candidateList.getCandidateList(); }
+
+	// Devolve lista de departamentos
+	public ArrayList<Department> getDepList() throws RemoteException{ return departments.getDeps(); }
 
 	// =================================================================================================
-	//Main
+	// Main
 	public static void main(String args[]) {
 
 		try {
+			// Atualiza dados ficheiros
 			setupObjectFiles();
+
+			// Criação RMI
 			serverRMI server = new serverRMI();
 			Registry reg = LocateRegistry.createRegistry(6500);
 			reg.rebind("vote_booth", server);
-			System.out.println("RMI server connected.");
+			System.out.println("RMI server connected");
 		} catch (RemoteException re) {
 			System.out.println("Exception in serverRMI.main: " + re);
 		}
 	}
 
+	// Atualiza dados ficheiros
 	public static void setupObjectFiles(){
 
 		FicheiroDeObjectos foUser = new FicheiroDeObjectos();
@@ -219,7 +221,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		FicheiroDeObjectos foLists = new FicheiroDeObjectos();
 		FicheiroDeObjectos foElections = new FicheiroDeObjectos();
 
-		//Read users file and add them to user Array
+		// Lê ficheiro users e adiciona-o a um array
 		try{
 			if (foUser.abreLeitura("out/users.dat")){
 				users = (UserList) foUser.leObjecto();
@@ -231,7 +233,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			System.out.println("Exception caught reading users.dat - "+e);
 		}
 
-		//Read deparment file and add them to department Array
+		// Lê ficheiro departamentos e adiciona-o a um array
 		try{
 			if (foDeps.abreLeitura("out/deps.dat")){
 				departments = (DepList) foDeps.leObjecto();
@@ -243,7 +245,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			System.out.println("Exception caught reading deps.dat - "+e);
 		}
 
-		//Read list file and add them to candidateList list
+		// Lê ficheiro lista de candidatos e adiciona-o a um array
 		try{
 			if (foLists.abreLeitura("out/lists.dat")){
 				candidateList = (candidateListList) foLists.leObjecto();
@@ -255,7 +257,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			System.out.println("Exception caught reading lists.dat - "+e);
 		}
 
-		//Read elections file and add them to electionList Array
+		// Lê ficheiro eleiçoes e adiciona-o a um array
 		try{
 			if (foElections.abreLeitura("out/elections.dat")){
 				elList = (ElectionList) foElections.leObjecto();
