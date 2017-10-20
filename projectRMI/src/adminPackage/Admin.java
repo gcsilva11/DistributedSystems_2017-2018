@@ -226,7 +226,7 @@ public class Admin {
 							
 							while(!input.nextLine().equals("0")){
 								for(int i=0;i<available.size();i++){
-									if(Integer.parseInt(input.nextLine())==available.get(i).getID()){
+									if(input.nextLine().equals(available.get(i).getID())){
 										toAdd.add(available.get(i));
 									}
 								}
@@ -262,7 +262,7 @@ public class Admin {
 							
 							while(!input.nextLine().equals("0")){
 								for(int i=0;i<available.size();i++){
-									if(Integer.parseInt(input.nextLine())==available.get(i).getID()){
+									if(input.nextLine().equals(available.get(i).getID())){
 										toAdd.add(available.get(i));
 									}
 								}
@@ -279,64 +279,78 @@ public class Admin {
 								System.out.println("Error creating election...");
 							}
 						}
+					case "4":
+						System.out.println("Manage candidate lists");
 						
+						System.out.print("1 - Create new list\n2-Delete a list\n3-Edit a list\nInput: ");
 						
-					/*case 3:
+						choice = input.nextLine();
 						
-					
+						switch(choice){
 						
-						if(type==1){
-							auxSplit = splitCommand[7].split("\\|");
-							String depID = auxSplit[1];
-							int i = 8;
-							while(!splitCommand[i].split("\\|").equals(" end")){
-								auxSplit = splitCommand[i].split("\\|");
-								candidateListID.add(auxSplit[1]);
-								i++;
-							}
+						case "1":
 							
-							ArrayList <candidateList> candidates = vote.getList(candidateListID);
+							System.out.println("Create a new list");
+							System.out.println("List type? 1- Student,2 - Teacher,3 - Employees");
+							int listType = Integer.parseInt(input.nextLine());
 							
-							if(!candidates.isEmpty()){
-								Election election = new Election(title,description,cal1,cal2,type,depID,candidates);
-								boolean ack = vote.newElection(election);
-								if(ack){
-									System.out.println("Election successfully created!");
+							if(listType == 1){
+								System.out.println("Student list creation\nPlease input the IDs of students to add to the list(0 to exit):");
+								ArrayList <User> studentList = new ArrayList <User>();
+								String studentId = input.nextLine();
+								while(!studentId.equals("0")){
+									User newStudent = vote.findId(studentId,1);
+									if(newStudent.getID().equals("Bad id")){
+										System.out.println("No student with such id");
+									}
+									else{
+										studentList.add(newStudent);
+									}
+									studentId = input.nextLine();
+								}
+								
+								System.out.print("Name: ");
+								String listName = input.nextLine();
+								System.out.print("\nList ID: ");
+								String listID = input.nextLine();
+								
+								candidateList cl = new candidateList(listName,listID,1,studentList);
+								
+								boolean ackCandidate = vote.createList(cl);
+								
+								if(ackCandidate){
+									System.out.println("List successfully created!");
 								}
 								else{
-									System.out.println("Error creating election...");
+									System.out.println("Problem creating the list...");
 								}
+								
+							}
+							else if(listType == 2){
+								
+								System.out.println("Teacher list creation\nPlease input the IDs of students to add to the list(0 to exit):");
+								ArrayList <User> studentList = new ArrayList <User>();
+								String studentId = input.nextLine();
+								while(!studentId.equals("0")){
+									User newStudent = vote.findId(studentId,1);
+									if(newStudent.getID().equals("Bad id")){
+										System.out.println("No student with such id");
+									}
+									else{
+										studentList.add(newStudent);
+									}
+									studentId = input.nextLine();
+								}
+								
 							}
 							else{
-								System.out.println("No valid candidate list ID inputed");
+								
 							}
-							
+							break;
+						default: 
+							System.out.println("Invalid choice, going back to menu");
+							break;
 						}
-						else{
-							int i = 7;
-							while(!splitCommand[i].split("\\|").equals(" end")){
-								auxSplit = splitCommand[i].split("\\|");
-								candidateListID.add(auxSplit[1]);
-								i++;
-							}
-							
-							ArrayList <candidateList> candidates = vote.getList(candidateListID);
-							
-							if(!candidates.isEmpty()){
-								Election election = new Election(title,description,cal1,cal2,type,candidates);
-								boolean ack = vote.newElection(election);
-								if(ack){
-									System.out.println("Election successfully created!");
-								}
-								else{
-									System.out.println("Error creating election...");
-								}
-							}
-							else{
-								System.out.println("No valid candidate list ID inputed");
-							}
-							
-						}*/
 				}
 			}
 		} catch (Exception e) {
