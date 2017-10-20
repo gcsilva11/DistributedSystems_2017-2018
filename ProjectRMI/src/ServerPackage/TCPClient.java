@@ -127,6 +127,13 @@ class Terminal extends Thread {
                 // Aceita password
                 if(pass_bool){
                     if(DEBUG)System.out.println("\t#DEBUG# Authentication Complete");
+
+                    System.out.println("\ttoImplement: Voting Act");
+                    try {
+                        sleep(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     /*
                     //Cliente pode votar
                     //

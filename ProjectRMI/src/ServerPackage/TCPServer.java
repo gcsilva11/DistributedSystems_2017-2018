@@ -25,6 +25,7 @@ public class TCPServer {
 
     // Main: À espera de novas ligações ao socket
     public static void main(String[] args){
+        System.out.println("TCP Server Connected");
         int numero = 0;
         try{
             int serverPort = 6000;
