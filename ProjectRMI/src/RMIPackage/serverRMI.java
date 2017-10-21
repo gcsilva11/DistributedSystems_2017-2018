@@ -183,6 +183,22 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		
 	}
 
+	//
+	public User findId(String s,int type) throws java.rmi.RemoteException{
+		for(int i=0;i< users.getUsers().size();i++){
+			if(Integer.parseInt(s) == Integer.parseInt(users.getUsers().get(i).getID())){
+				return users.getUsers().get(i);
+			}
+		}
+		return null;
+	}
+
+	//
+	public boolean createList(candidateList cl) throws java.rmi.RemoteException{
+		//
+		return false;
+	}
+
 	// =================================================================================================
 	// TCPServerInterface
 
