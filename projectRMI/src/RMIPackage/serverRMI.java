@@ -307,7 +307,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	}
 	
 	// =================================================================================================
-	// TCPServerInterface
+	// TCPServearInterface
 
 	// Devolve lista de users
 	public ArrayList<User> getUsers() throws RemoteException{ return users.getUsers(); }

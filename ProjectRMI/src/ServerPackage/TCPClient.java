@@ -1,152 +1,151 @@
 package ServerPackage;
 
-import java.net.*;
 import java.io.*;
+import java.net.*;
+import java.util.*;
 
-public class TCPClient {
-    public static final boolean DEBUG = false;
 
-    // Main
-    public static void main(String args[]) {
+class TCPClient {
+    public static final boolean DEBUG = true;
+    public static final String def_address = "localhost";
+    public static final int def_port = 6000;
+
+    public static void main(String[] args) {
         Socket socket = null;
-        int serversocket = 6000;
+
+        PrintWriter output;
+        BufferedReader input = null;
+
+        Terminal votingTerminal;
+
+        String data;
+        int choice;
+
+        Scanner sc = new Scanner(System.in);
+
         try {
-            //Cria ligação ao socket
-            socket = new Socket("localhost", serversocket);
-            String text = "";
+            // Conecta ao socket address:port (default -> localhost:6000)
+            if (args.length == 2)
+                socket = new Socket(args[0], Integer.parseInt(args[1]));
+            else
+                socket = new Socket(def_address, def_port);
 
-            // Inicializa dados socket
-            DataInputStream inputStream = new DataInputStream(socket.getInputStream());
-            DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
-            InputStreamReader input = new InputStreamReader(System.in);
-            BufferedReader reader = new BufferedReader(input);
+            // Cria streams para ler e escrever no socket
+            input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            output = new PrintWriter(socket.getOutputStream(), true);
 
-            while (true) {
-                System.out.println("\nInsert User ID (0 to Quit): ");
-                try {
-                    text = reader.readLine();
-                } catch (Exception e) {
-                }
-                // Termina se 0
-                if(Integer.parseInt(text)==0)
-                    return;
+            while (true){
+                System.out.println("\nSelect how to identfy yourself:\n1. ID\n2. Name\n0. Quit");
+                choice = sc.nextInt();
 
-                //Envia ID a pesquisar
-                outputStream.writeUTF(text);
+                switch (choice){
+                    case 0:
+                        return;
+                    case 1:
+                        output.println("true");
 
-                //DEBUG
-                String data = inputStream.readUTF();
-                if(DEBUG)System.out.println("\t#DEBUG# "+data+"\n");
+                        System.out.println("\nEnter ID:");
+                        sc = new Scanner(System.in);
+                        data = sc.nextLine();
 
-                // Rejeita ID
-                if(data.compareTo("UserIDNotFound")==0){
-                    System.out.println("User ID not valid");
-                }
-                // Aceita ID: Cria Thread Terminal de Voto
-                else{
-                    Terminal votingTerminal = new Terminal(socket,text);
-                    votingTerminal.start();
-                    try {
-                        votingTerminal.join();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                        output.println(data);
+
+                        data = input.readLine();
+
+                        if(data.compareTo("NotFound")!=0) {
+                            votingTerminal = new Terminal(socket, input, output, data);
+                            votingTerminal.start();
+                            try {
+                                votingTerminal.join();
+                            } catch (InterruptedException e) { }
+                        }
+                        else
+                            System.out.println("ID not found");
+                        break;
+                    case 2:
+                        output.println("false");
+
+                        System.out.println("\nEnter Name:");
+                        sc = new Scanner(System.in);
+                        data = sc.nextLine();
+
+                        output.println(data);
+
+                        data = input.readLine();
+
+                        if(data.compareTo("NotFound")!=0) {
+                            votingTerminal = new Terminal(socket, input, output, data);
+                            votingTerminal.start();
+                            try {
+                                votingTerminal.join();
+                            } catch (InterruptedException e) { }
+                        }
+                        else
+                            System.out.println("Name not found");
+                        break;
                 }
             }
 
-        } catch (UnknownHostException e) {
-            System.out.println("Sock:" + e.getMessage());
-        } catch (EOFException e) {
-            System.out.println("EOF:" + e.getMessage());
         } catch (IOException e) {
-            System.out.println("IO:" + e.getMessage());
+            System.out.println(e);
         } finally {
-            if (socket != null){
+            try {
+                input.close();
+            } catch (Exception e) {
+            }
+            if (socket != null) {
                 try {
                     socket.close();
                 } catch (IOException e) {
-                    System.out.println("close:" + e.getMessage());
                 }
             }
         }
     }
 }
 
-class Terminal extends Thread {
-    public static final boolean DEBUG = false;
-    private String id;
-    private Socket clientSocket;
+class Terminal extends Thread{
+    public static final boolean DEBUG = true;
 
-    private DataInputStream inputStream;
-    private DataOutputStream outputStream;
+    private Socket socket;
+    private BufferedReader input;
+    private PrintWriter output;
+    private Scanner sc = new Scanner(System.in);
+    private String data;
 
-    // Construtor: Inicializa dados socket
-    public Terminal(Socket s ,String id) {
-        this.clientSocket = s;
-        this.id = id;
-        try {
-            this.inputStream = new DataInputStream(this.clientSocket.getInputStream());
-            this.outputStream = new DataOutputStream(this.clientSocket.getOutputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(" - Vote Terminal Unblocked - \n");
+    public Terminal(Socket socket, BufferedReader input, PrintWriter output, String data){
+        this.socket = socket;
+        this.input = input;
+        this.output = output;
+        this.data = data;
     }
-
-    public void run(){
-        // Inicializa dados socket
-        String text = "";
-        InputStreamReader input = new InputStreamReader(System.in);
-        BufferedReader reader = new BufferedReader(input);
-
-        System.out.println("Insert Username:");
-
+    public void run() {
+        System.out.println(" - Vote Terminal Unblocked - ");
         try {
-            text = reader.readLine();
-        } catch (Exception e) {
-        }
-        try {
-            // Envia username
-            outputStream.writeUTF(text);
-            boolean user_bool = inputStream.readBoolean();
-            if(DEBUG)System.out.println("\t#DEBUG# User "+user_bool);
+            String data;
 
-            // Aceitou username
-            if(user_bool){
-                System.out.println("Insert Password:");
-                try{
-                    text = reader.readLine();
-                } catch (Exception e){
-                }
+            System.out.println("Insert \"[username]/[password]\":");
+            data = sc.nextLine();
 
-                // Envia password
-                outputStream.writeUTF(text);
-                boolean pass_bool = inputStream.readBoolean();
-                if(DEBUG)System.out.println("\t#DEBUG# Password "+pass_bool);
 
-                // Aceita password
-                if(pass_bool){
-                    if(DEBUG)System.out.println("\t#DEBUG# Authentication Complete");
-                    /*
-                    //Cliente pode votar
-                    //
-                    //
-                    //
-                    */
-                }
-                // Rejeita password
-                else{
-                    System.out.println("Wrong Password");
-                }
+            // Envia username & password
+            output.println(data);
+
+            data = this.input.readLine();
+            if(data.compareTo("true") == 0){
+                if(DEBUG)System.out.println("\t#DEBUG# Authentication Complete");
+                /*
+                //Cliente pode votar
+                //
+                //
+                //
+                */
             }
-            // Rejeita username
-            else{
-                System.out.println("Could not find Username");
-            }
-
+            else
+                System.out.println("Could not find Username or Password");
         } catch (IOException e) {
         }
         if(DEBUG)System.out.println("\t#DEBUG# Vote Terminal Job Complete");
         System.out.println(" - Vote Terminal Blocked - ");
+
     }
 }

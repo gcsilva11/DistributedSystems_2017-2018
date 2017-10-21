@@ -9,10 +9,11 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.ArrayList;
-
+import java.util.StringTokenizer;
 
 public class TCPServer {
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
+    public static final int def_port = 6000;
 
     public TCPServerInterface tcp;
 
@@ -27,8 +28,7 @@ public class TCPServer {
     public static void main(String[] args){
         int numero = 0;
         try{
-            int serverPort = 6000;
-            ServerSocket listenSocket = new ServerSocket(serverPort);
+            ServerSocket listenSocket = new ServerSocket(6000);
             while(true) {
                 Socket clientSocket = listenSocket.accept();
                 numero++;
@@ -40,95 +40,114 @@ public class TCPServer {
 }
 
 class Connection extends Thread{
-    public static final boolean DEBUG = false;
-    DataInputStream inputStream;
-    DataOutputStream outputStream;
-    Socket clientSocket;
+    public static final boolean DEBUG = true;
+
+    private BufferedReader input;
+    private PrintWriter output;
+
+    private Socket clientSocket;
     int thread_number;
 
-    TCPServer tcpServer = new TCPServer();
-    ArrayList<User> user = new ArrayList<>();
-    ArrayList<candidateList> candidateList = new ArrayList<>();
-    ArrayList<Department> depList = new ArrayList<>();
+    private StringTokenizer token;
+
+    private TCPServer tcpServer = new TCPServer();
+    private ArrayList<User> user = new ArrayList<>();
+    //ArrayList<candidateList> candidateList = new ArrayList<>();
+    //ArrayList<Department> depList = new ArrayList<>();
 
     // Construtor: Inicializa dados do socket e do RMI
     public Connection (Socket aClientSocket, int numero) {
-        thread_number = numero;
+        this.thread_number = numero;
+        this.clientSocket = aClientSocket;
         try{
-            clientSocket = aClientSocket;
-
-            inputStream = new DataInputStream(clientSocket.getInputStream());
-            outputStream = new DataOutputStream(clientSocket.getOutputStream());
-
-            user = tcpServer.tcp.getUsers();
-            candidateList = tcpServer.tcp.getCandidateList();
-            depList = tcpServer.tcp.getDepList();
+            this.input = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
+            this.output = new PrintWriter(this.clientSocket.getOutputStream(), true);
+            this.user = tcpServer.tcp.getUsers();
         }catch(IOException e){ }
     }
 
     // Run: Aceita Cliente
     public void run(){
+        if(DEBUG) System.out.println("\t#DEBUG# Aceitou cliente");
         String data;
         boolean bool;
+        int id = -1;
             try {
                 while (true) {
-                    // Recebe ID do cliente
-                    data = inputStream.readUTF();
-                    System.out.println("Client "+thread_number+" requested access");
                     bool = false;
 
-                    // Percorre lista de users
-                    for (int i = 0; i < user.size(); i++) {
-                        if (Integer.parseInt(data) == Integer.parseInt(user.get(i).getID())) {
-                            if(DEBUG) System.out.println("\t#DEBUG# Client "+thread_number+"'s ID match");
+                    // Recebe string true se for ID, false se for Nome
+                    data = this.input.readLine();
+                    if(DEBUG) System.out.println("\t#DEBUG# Recebeu "+data);
 
-                            //DEBUG
-                            outputStream.writeUTF(user.get(i).getInfo());
+                    // ID
+                    if(data.compareTo("true")==0){
 
-                            // Recebe username
-                            String username = inputStream.readUTF();
+                        // Recebe ID
+                        data = this.input.readLine();
+                        if(DEBUG) System.out.println("\t#DEBUG# Recebeu "+data);
 
-                            //Verifica username
-                            if (username.compareTo(user.get(i).getName())==0) {
-                                outputStream.writeBoolean(true);
-                                if(DEBUG) System.out.println("\t#DEBUG# Client "+thread_number+"'s Usernames match");
+                        for (int i = 0; i < this.user.size(); i++) {
+                            if (Integer.parseInt(data) == Integer.parseInt(this.user.get(i).getID())) {
 
-                                //Recebe password
-                                String password = inputStream.readUTF();
-
-                                //Verifica password
-                                if (password.compareTo(user.get(i).getPassword())==0){
-                                    outputStream.writeBoolean(true);
-                                    if(DEBUG)System.out.println("\t#DEBUG# Client "+thread_number+"'s Passwords match");
-
-                                    System.out.println("Client "+thread_number+" access granted");/*
-                                    //Cliente pode votar
-                                    //
-                                    //
-                                    //
-                                    */
-                                }
-                                else {
-                                    // Rejeita password
-                                    outputStream.writeBoolean(false);
-                                    if(DEBUG)System.out.println("\t#DEBUG# Client "+thread_number+"'s Password did not match");
-                                }
+                                // Envia ID
+                                this.output.println(this.user.get(i).getID());
+                                if(DEBUG) System.out.println("\t#DEBUG# Enviou "+this.user.get(i).getID());
+                                id = i; bool = true;
                             }
-                            else {
-                                // Rejeita username
-                                outputStream.writeBoolean(false);
-                                if(DEBUG) System.out.println("\t#DEBUG# Client "+thread_number+"'s Usernames did not match");
-                            }
-                            bool = true;
                         }
                     }
-                    if (!bool){
-                        // Rejeita ID
-                        if(DEBUG) System.out.println("\t#DEBUG# Client "+thread_number+"'s ID match");
-                        outputStream.writeUTF("UserIDNotFound");
+
+                    // Nome
+                    else{
+                        // Recebe Nome
+                        data = this.input.readLine();
+                        if(DEBUG) System.out.println("\t#DEBUG# Recebeu "+data);
+
+                        for (int j = 0; j < this.user.size(); j++) {
+                            if (data.compareTo(this.user.get(j).getName()) == 0) {
+
+                                // Envia Nome
+                                this.output.println(this.user.get(j).getName());
+                                if (DEBUG) System.out.println("\t#DEBUG# Enviou " + this.user.get(j).getName());
+                                id = j;
+                                bool = true;
+                            }
+                        }
+                    }
+
+                    // Envia não encontrado
+                    if(!bool) {
+                        this.output.println("NotFound");
+                        if(DEBUG) System.out.println("\t#DEBUG# Enviou NotFound");
+                    }
+
+                    // Autenticação sucedida
+                    else{
+
+                        // Recebe username
+                        data = this.input.readLine();
+                        if(DEBUG) System.out.println("\t#DEBUG# Recebeu "+data);
+
+                        token = new StringTokenizer(data,"/");
+
+                        // Sucesso na autenticaçao
+                        if((id != -1) && (token.nextToken().compareTo(this.user.get(id).getName()) == 0) && (token.nextToken().compareTo(this.user.get(id).getPassword()) == 0)){
+                            // Envia confirmação autenticaçao
+                            output.println("true");
+                            if(DEBUG) System.out.println("\t#DEBUG# Enviou 1");
+
+                            //
+                            //
+                            //
+                        }
+                        else{
+                            // Envia confirmação autenticaçao
+                            output.println("false");
+                            if(DEBUG) System.out.println("\t#DEBUG# Enviou 0");
+                        }
                     }
                 }
-
             } catch (EOFException e) {
                 System.out.println("Client "+thread_number+" disconnected");
             } catch (IOException e) {
