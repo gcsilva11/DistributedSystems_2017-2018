@@ -21,7 +21,7 @@ public class Admin {
 			
 			while(true){
 				System.out.println("Admin console ready.\nWhat do you want to do?\n1-Register a new user\n"
-						+ "2-Manage departments and faculties\n3- Create an election\n4-Manage candidate lists\n5-Manage voting booths");
+						+ "2-Manage departments and faculties\n3- Create an election\n4-Manage candidate lists\n5-Edit an election");
 				choice = input.nextLine();
 				
 				switch(choice){
@@ -248,11 +248,17 @@ public class Admin {
 								
 								boolean boothAck = vote.addBooth(election.getTitle(),depTables);
 								
+								if(boothAck){
+									System.out.println("Booths added successfully");
+								}
+								
 							}
 							else{
 								System.out.println("Error creating election...");
 							}
 						}
+						
+						
 						else{
 							
 							System.out.println("Council election");
@@ -433,6 +439,49 @@ public class Admin {
 							else{
 								System.out.println("Error editing name");
 							}
+							
+						case "5":
+							
+							System.out.println("Edit election");
+							System.out.print("Insert the title of the election to edit: ");
+							String oldElecName = input.nextLine();
+							//Election oldElec = vote.getElection(oldElecName);
+							
+							//Verifica se esta a decorrer
+							//Se nao
+							
+							System.out.print("\nInsert new election title: ");
+							oldElec.setTitle(input.nextLine());
+							
+							System.out.print("\nInsert new election description: ");
+							oldElec.setDescription(input.nextLine());
+							
+							System.out.print("\nSet new start date: ");
+							date = input.nextLine();
+							SimpleDateFormat sdf4 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+							startDate = sdf4.parse(date);
+							Calendar cal4 = Calendar.getInstance();
+							cal4.setTime(startDate);
+							oldElec.setStartDate(cal4);
+							
+							System.out.print("\nSet new end date: ");
+							date = input.nextLine();
+							SimpleDateFormat sdf5 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+							endDate = sdf5.parse(date);
+							Calendar cal5 = Calendar.getInstance();
+							cal5.setTime(endDate);
+							oldElec.setEndDate(cal5);
+							
+							//Substitui no rmi
+							//boolean editElec = vote.editElec(oldElec);
+							
+							if(editElec){
+								System.out.println("Election edited successfully");
+							}
+							else{
+								System.out.println("Error editing the election...");
+							}
+							
 							
 						default: 
 							System.out.println("Invalid choice, going back to menu");
