@@ -441,7 +441,7 @@ public class Admin {
 							}
 							
 						case "5":
-							
+							/*
 							System.out.println("Edit election");
 							System.out.print("Insert the title of the election to edit: ");
 							String oldElecName = input.nextLine();
@@ -482,7 +482,7 @@ public class Admin {
 								System.out.println("Error editing the election...");
 							}
 							
-							
+							*/
 						default: 
 							System.out.println("Invalid choice, going back to menu");
 							break;

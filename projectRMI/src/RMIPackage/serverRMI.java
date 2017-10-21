@@ -2,12 +2,17 @@ package RMIPackage;
 
 import ServerPackage.TCPServerInterface;
 import adminPackage.VotingAdminInterface;
+import com.sun.org.apache.regexp.internal.RE;
 
+import javax.management.remote.rmi.RMIServer;
+import java.io.IOException;
+import java.net.*;
+import java.net.UnknownHostException;
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.*;
-import java.util.ArrayList;
+import java.util.*;
 
 public class serverRMI extends UnicastRemoteObject implements VotingAdminInterface, TCPServerInterface {
 	private static final long serialVersionUID = 1L;
@@ -308,7 +313,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	
 	
 	// =================================================================================================
-	// TCPServearInterface
+	// TCPServerInterface
 
 	// Devolve lista de users
 	public ArrayList<User> getUsers() throws RemoteException{ return users.getUsers(); }
@@ -319,11 +324,21 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	// Devolve lista de departamentos
 	public ArrayList<Department> getDepList() throws RemoteException{ return departments.getDeps(); }
 
+	public ArrayList<Election> getElList() throws RemoteException{ return elList.getElections(); }
+
 	// =================================================================================================
 	// Main
 	public static void main(String args[]) {
-
+		RMIFailover rmiFailover;
 		try {
+			/*
+			// Failover
+			if(args.length == 2)
+				rmiFailover = new RMIFailover(args[0], args[1]);
+			else
+				rmiFailover = new RMIFailover();
+			rmiFailover.start();
+		*/
 			// Atualiza dados ficheiros
 			setupObjectFiles();
 
@@ -392,5 +407,66 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		catch (Exception e) {
 			System.out.println("Exception caught reading elections.dat - "+e);
 		}
+	}
+}
+
+class RMIFailover extends Thread{
+	private DatagramSocket RMISocket = null;
+	private int port;
+	private InetAddress aHost;
+
+	private byte[] buffer;
+
+
+	public RMIFailover() throws RemoteException {
+		this.port=7000;
+		this.buffer = new byte[1024];
+		try {
+			this.aHost = InetAddress.getByName("localhost");
+		} catch (UnknownHostException e) {}
+	}
+
+	public RMIFailover(String hostname, String port) throws RemoteException {
+		this.port = Integer.parseInt(port);
+		this.buffer = new byte[1024];
+		try{
+			this.aHost = InetAddress.getByName(hostname);
+		} catch (UnknownHostException e) {}
+	}
+
+	public void run(){
+		try {
+			this.RMISocket = new DatagramSocket(this.port);
+		} catch (SocketException e) {
+			try {
+				this.RMISocket = new DatagramSocket();
+			} catch (SocketException i) {}
+
+			while (true) {
+				// Tenta mandar pings
+				String str = "PING";
+				this.buffer = str.getBytes();
+
+				try {
+					DatagramPacket ping = new DatagramPacket(buffer, buffer.length, this.aHost, this.port);
+					this.RMISocket.send(ping);
+				} catch (IOException i) {
+				}
+			}
+		}
+
+		// Recebe pings
+		while (true) {
+			DatagramPacket request = new DatagramPacket(this.buffer, this.buffer.length);
+
+			try {
+				this.RMISocket.receive(request);
+			} catch (IOException | NullPointerException i) { }
+
+			System.out.println(buffer);
+		}
+
+
+
 	}
 }

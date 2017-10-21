@@ -54,4 +54,6 @@ public class candidateList implements Serializable{
 	public void addCandidate(User user){
 		this.candidates.add(user);
 	}
+
+	public String getInfo() { return "Name: "+this.name+"\nlistID: "+this.listId+"\nType: "+this.type;}
 }

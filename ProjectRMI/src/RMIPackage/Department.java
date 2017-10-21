@@ -41,4 +41,5 @@ public class Department implements Serializable{
 		this.facName = fac;
 	}
 
+	public String getInfo() { return "Dep. Name: "+this.depName+"\nFac. Name: "+this.facName+"\nDep ID: "+this.depID; }
 }

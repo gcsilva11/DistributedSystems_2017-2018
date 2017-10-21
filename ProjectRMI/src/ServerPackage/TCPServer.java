@@ -4,6 +4,7 @@ import RMIPackage.*;
 
 import java.net.*;
 import java.io.*;
+import java.util.*;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -35,7 +36,7 @@ public class TCPServer {
                 Connection newClient = new Connection(clientSocket, numero);
                 newClient.start();
             }
-        }catch(IOException e) { System.out.println("Error connecting to client"); }
+        }catch(IOException e) { System.out.println("Error creating TCP socket"); }
     }
 }
 
@@ -52,8 +53,9 @@ class Connection extends Thread{
 
     private TCPServer tcpServer = new TCPServer();
     private ArrayList<User> user = new ArrayList<>();
-    //ArrayList<candidateList> candidateList = new ArrayList<>();
-    //ArrayList<Department> depList = new ArrayList<>();
+    private ArrayList<candidateList> candidateList = new ArrayList<>();
+    private ArrayList<Department> department = new ArrayList<>();
+    private ArrayList<Election> election = new ArrayList<>();
 
     // Construtor: Inicializa dados do socket e do RMI
     public Connection (Socket aClientSocket, int numero) {
@@ -63,12 +65,30 @@ class Connection extends Thread{
             this.input = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
             this.output = new PrintWriter(this.clientSocket.getOutputStream(), true);
             this.user = tcpServer.tcp.getUsers();
+            this.candidateList = tcpServer.tcp.getCandidateList();
+            this.department = tcpServer.tcp.getDepList();
+            this.election = tcpServer.tcp.getElList();
         }catch(IOException e){ }
     }
 
     // Run: Aceita Cliente
     public void run(){
-        if(DEBUG) System.out.println("\t#DEBUG# Aceitou cliente");
+        if(DEBUG) System.out.println("\t#DEBUG# Cliente "+this.thread_number+" conectado");
+        for (int l = 0; l < user.size();l++){
+            System.out.println(user.get(l).getInfo());
+        }
+        System.out.println("candidates");
+        for (int l = 0; l < user.size();l++){
+            System.out.println(candidateList.get(l).getInfo());//
+        }
+        System.out.println("departments");
+        for (int l = 0; l < user.size();l++){
+            System.out.println(department.get(l).getInfo());//
+        }
+        for (int l = 0; l < user.size();l++){
+            System.out.println(election.get(l).getInfo());
+        }
+
         String data;
         boolean bool;
         int id = -1;
@@ -78,38 +98,47 @@ class Connection extends Thread{
 
                     // Recebe string true se for ID, false se for Nome
                     data = this.input.readLine();
-                    if(DEBUG) System.out.println("\t#DEBUG# Recebeu "+data);
+                    if (DEBUG) System.out.println("\t#DEBUG# Cliente "+this.thread_number+" recebeu " + data);
+
+
+                    if (data.compareTo("quit") == 0) {
+                        if (DEBUG) System.out.println("\t#DEBUG# Cliente "+this.thread_number+" desconectado");
+                        try {
+                            Thread.currentThread().join();
+                        } catch (InterruptedException e) { }
+                    }
 
                     // ID
-                    if(data.compareTo("true")==0){
+                    else if (data.compareTo("true") == 0) {
 
                         // Recebe ID
                         data = this.input.readLine();
-                        if(DEBUG) System.out.println("\t#DEBUG# Recebeu "+data);
+                        if (DEBUG) System.out.println("\t#DEBUG# Cliente "+this.thread_number+" recebeu " + data);
 
                         for (int i = 0; i < this.user.size(); i++) {
                             if (Integer.parseInt(data) == Integer.parseInt(this.user.get(i).getID())) {
 
                                 // Envia ID
                                 this.output.println(this.user.get(i).getID());
-                                if(DEBUG) System.out.println("\t#DEBUG# Enviou "+this.user.get(i).getID());
-                                id = i; bool = true;
+                                if (DEBUG) System.out.println("\t#DEBUG# Enviou para cliente "+this.thread_number+" - " + this.user.get(i).getID());
+                                id = i;
+                                bool = true;
                             }
                         }
                     }
 
                     // Nome
-                    else{
+                    else if (data.compareTo("false") == 0) {
                         // Recebe Nome
                         data = this.input.readLine();
-                        if(DEBUG) System.out.println("\t#DEBUG# Recebeu "+data);
+                        if (DEBUG) System.out.println("\t#DEBUG# Cliente "+this.thread_number+" recebeu " + data);
 
                         for (int j = 0; j < this.user.size(); j++) {
                             if (data.compareTo(this.user.get(j).getName()) == 0) {
 
                                 // Envia Nome
                                 this.output.println(this.user.get(j).getName());
-                                if (DEBUG) System.out.println("\t#DEBUG# Enviou " + this.user.get(j).getName());
+                                if (DEBUG) System.out.println("\t#DEBUG# Enviou para cliente "+this.thread_number +" - "+ this.user.get(j).getName());
                                 id = j;
                                 bool = true;
                             }
@@ -117,34 +146,33 @@ class Connection extends Thread{
                     }
 
                     // Envia não encontrado
-                    if(!bool) {
+                    if (!bool) {
                         this.output.println("NotFound");
-                        if(DEBUG) System.out.println("\t#DEBUG# Enviou NotFound");
+                        if (DEBUG) System.out.println("\t#DEBUG# Enviou para cliente "+this.thread_number+" NotFound");
                     }
 
                     // Autenticação sucedida
-                    else{
+                    else {
 
                         // Recebe username
                         data = this.input.readLine();
-                        if(DEBUG) System.out.println("\t#DEBUG# Recebeu "+data);
+                        if (DEBUG) System.out.println("\t#DEBUG# Cliente "+this.thread_number+" recebeu " + data);
 
-                        token = new StringTokenizer(data,"/");
+                        token = new StringTokenizer(data, "/");
 
                         // Sucesso na autenticaçao
-                        if((id != -1) && (token.nextToken().compareTo(this.user.get(id).getName()) == 0) && (token.nextToken().compareTo(this.user.get(id).getPassword()) == 0)){
+                        if ((token.countTokens() == 2) && (token.nextToken().compareTo(this.user.get(id).getName()) == 0) && (token.nextToken().compareTo(this.user.get(id).getPassword()) == 0)) {
                             // Envia confirmação autenticaçao
                             output.println("true");
-                            if(DEBUG) System.out.println("\t#DEBUG# Enviou 1");
+                            if (DEBUG) System.out.println("\t#DEBUG# Enviou para cliente "+this.thread_number+" - 1");
 
                             //
                             //
                             //
-                        }
-                        else{
+                        } else {
                             // Envia confirmação autenticaçao
                             output.println("false");
-                            if(DEBUG) System.out.println("\t#DEBUG# Enviou 0");
+                            if (DEBUG) System.out.println("\t#DEBUG# Enviou para cliente "+this.thread_number+" - 0");
                         }
                     }
                 }
@@ -156,4 +184,3 @@ class Connection extends Thread{
 
     }
 }
-
