@@ -232,12 +232,22 @@ public class Admin {
 								}
 							}
 							
-							Election election = new Election(title,description,cal2,cal3,type,depID,toAdd);
+							Election election = new Election(title,description,cal2,cal3,type,toAdd);
 							
 							boolean studElecAdd = vote.newElection(election);
 							
 							if(studElecAdd){
 								System.out.println("Successfully created the election!");
+								System.out.print("Add voting tables (by dep ID) to the election (0 to stop): ");
+								String depId = input.nextLine();
+								ArrayList <String> depTables = new ArrayList<String>();
+								while(!depId.equals("0")){
+									depTables.add(depId);
+									depId = input.nextLine();
+								}
+								
+								boolean boothAck = vote.addBooth(election.getTitle(),depTables);
+								
 							}
 							else{
 								System.out.println("Error creating election...");
@@ -309,7 +319,7 @@ public class Admin {
 									studentId = input.nextLine();
 								}
 								
-								System.out.print("Name: ");
+								System.out.print("List Name: ");
 								String listName = input.nextLine();
 								System.out.print("\nList ID: ");
 								String listID = input.nextLine();
@@ -328,25 +338,102 @@ public class Admin {
 							}
 							else if(listType == 2){
 								
-								System.out.println("Teacher list creation\nPlease input the IDs of students to add to the list(0 to exit):");
-								ArrayList <User> studentList = new ArrayList <User>();
-								String studentId = input.nextLine();
-								while(!studentId.equals("0")){
-									User newStudent = vote.findId(studentId,1);
-									if(newStudent.getID().equals("Bad id")){
+								System.out.println("Teacher list creation\nPlease input the IDs of teachers to add to the list(0 to exit):");
+								ArrayList <User> teacherList = new ArrayList <User>();
+								String teacherId = input.nextLine();
+								while(!teacherId.equals("0")){
+									User newTeacher = vote.findId(teacherId,2);
+									if(newTeacher.getID().equals("Bad id")){
 										System.out.println("No student with such id");
 									}
 									else{
-										studentList.add(newStudent);
+										teacherList.add(newTeacher);
 									}
-									studentId = input.nextLine();
+									teacherId = input.nextLine();
+								}
+								
+								System.out.print("List Name: ");
+								String listName = input.nextLine();
+								System.out.print("\nList ID: ");
+								String listID = input.nextLine();
+								
+								candidateList cl = new candidateList(listName,listID,2,teacherList);
+								
+								boolean ackCandidate = vote.createList(cl);
+								
+								if(ackCandidate){
+									System.out.println("List successfully created!");
+								}
+								else{
+									System.out.println("Problem creating the list...");
 								}
 								
 							}
 							else{
 								
+								System.out.println("Employee list creation\nPlease input the IDs of employees to add to the list(0 to exit):");
+								ArrayList <User> employeeList = new ArrayList <User>();
+								String employeeId = input.nextLine();
+								while(!employeeId.equals("0")){
+									User newEmployee = vote.findId(employeeId,3);
+									if(newEmployee.getID().equals("Bad id")){
+										System.out.println("No employee with such id");
+									}
+									else{
+										employeeList.add(newEmployee);
+									}
+									employeeId = input.nextLine();
+								}
+								
+								System.out.print("List Name: ");
+								String listName = input.nextLine();
+								System.out.print("\nList ID: ");
+								String listID = input.nextLine();
+								
+								candidateList cl = new candidateList(listName,listID,3,employeeList);
+								
+								boolean ackCandidate = vote.createList(cl);
+								
+								if(ackCandidate){
+									System.out.println("List successfully created!");
+								}
+								else{
+									System.out.println("Problem creating the list...");
+								}
+								
 							}
 							break;
+						
+						case "2":
+							
+							System.out.println("Delete a candidate list");
+							System.out.print("Input the ID of the list to delete: ");
+							String listID = input.nextLine();
+							
+							boolean deleteAck = vote.deleteList(listID);
+							
+							if(deleteAck){
+								System.out.println("List deleted successfully!");
+							}
+							else{
+								System.out.println("Error deleting list");
+							}
+						
+							break;
+						case "3":
+							System.out.println("Edit a candidate list name");
+							System.out.print("Input the ID of the list to edit: ");
+							String listId = input.nextLine();
+							System.out.print("Input new list name: ");
+							String newName = input.nextLine();
+							boolean editAck = vote.editList(listId,newName);
+							if(editAck){
+								System.out.println("List name edited successfully!");
+							}
+							else{
+								System.out.println("Error editing name");
+							}
+							
 						default: 
 							System.out.println("Invalid choice, going back to menu");
 							break;

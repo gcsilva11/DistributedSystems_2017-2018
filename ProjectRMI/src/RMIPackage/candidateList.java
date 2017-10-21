@@ -24,6 +24,10 @@ public class candidateList implements Serializable{
 		this.type = type;
 	}
 	
+	public void setName(String title){
+		this.name = title;
+	}
+	
 	public int getType(){
 		return type;
 	}

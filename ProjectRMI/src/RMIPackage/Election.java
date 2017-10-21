@@ -12,28 +12,16 @@ public class Election implements Serializable{
 	private Calendar startDate;
 	private Calendar endDate;
 	private int type;
-	private String depID;
+	private ArrayList <Department> viableDeps = null;
 	private ArrayList <candidateList> candidates;
 	private boolean closed;
-	
-	public Election(String title,String description,Calendar startDate,Calendar endDate,int type,String depID,ArrayList <candidateList> candidates){
-		this.title=title;
-		this.description =description;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.type = type;
-		this.depID = depID;
-		this.candidates = candidates;
-		this.closed = false;
-	}
-	
+
 	public Election(String title,String description,Calendar startDate,Calendar endDate,int type,ArrayList <candidateList> candidates){
 		this.title=title;
 		this.description =description;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.type = type;
-		this.depID = null;
 		this.closed = false;
 		this.candidates = candidates;
 	}
@@ -42,16 +30,16 @@ public class Election implements Serializable{
 		return this.title;
 	}
 	
+	public void addDep(Department dep){
+		this.viableDeps.add(dep);
+	}
+	
 	public boolean getClosed(){
 		return this.closed;
 	}
 	
 	public String getDescription(){
 		return this.description;
-	}
-	
-	public String getDepID(){
-		return this.depID;
 	}
 	
 	public Calendar getStartDate(){
