@@ -61,4 +61,18 @@ public class Election implements Serializable{
 	public void closeElection(){
 		this.closed = true;
 	}
+	
+	public void setTitle(String s){
+		this.title = s;
+	}
+	
+	public void setDescription(String s){
+		this.description = s;
+	}
+	public void setStartDate(Calendar cal){
+		this.startDate = cal;
+	}
+	public void setEndDate(Calendar cal){
+		this.endDate = cal;
+	}
 }
