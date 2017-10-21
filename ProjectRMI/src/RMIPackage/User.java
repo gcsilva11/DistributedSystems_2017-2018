@@ -23,6 +23,16 @@ public class User implements Serializable{
         this.department = department;
         this.password = password;
     }
+    
+    public User(){
+    	this.name = null;
+    	this.idNumber = "Bad id";
+    	this.idExpDate = null;
+    	this.phone = null;
+    	this.profession = 0;
+    	this.department = null;
+    	this.password = null;
+    }
 
     public void Vote(){
         this.hasVoted = true;
@@ -44,16 +54,8 @@ public class User implements Serializable{
     	return this.phone;
     }
     
-    public String getProfession() {
-    	if(this.profession==1){
-    		return "Student";
-    	}
-    	else if(this.profession==2){
-    		return "Professor";
-    	}
-    	else{
-    		return "Employee";
-    	}
+    public int getProfession() {
+    	return this.profession;
     }
     
     public String getDepartment(){

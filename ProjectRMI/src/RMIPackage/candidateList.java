@@ -9,15 +9,15 @@ public class candidateList implements Serializable{
 	private String name;
 	private int nVotes = 0;
 	private ArrayList <User> candidates = new ArrayList <User>();
-	private int listId = 0;
+	private String listId;
 	private int type = 0;
 	
 	
-	public candidateList(String name,int listID,int type){
+	public candidateList(String name,String listID,int type,ArrayList <User> candidates){
 		this.name = name;
 		this.listId = listID;
 		this.type = type;
-		this.candidates = null;
+		this.candidates = candidates;
 	}
 	
 	public void setType(int type){
@@ -32,7 +32,7 @@ public class candidateList implements Serializable{
 		return this.nVotes;
 	}
 	
-	public int getID(){
+	public String getID(){
 		return this.listId;
 	}
 	
@@ -43,7 +43,7 @@ public class candidateList implements Serializable{
 		this.nVotes++;
 	}
 	
-	public void setID(int id){
+	public void setID(String id){
 		this.listId = id;
 	}
 	

@@ -159,7 +159,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
 		boolean exists = false;
 		
-		// Verifica se eleição já existe
+		// Verifica  se titulo da eleicao ja existe
 		for(int i=0;i<elList.getElections().size();i++){
 			if(el.getTitle().equals(elList.getElections().get(i).getTitle())){
 				exists = true;
@@ -170,6 +170,8 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			System.out.println("Election title already exists...");
 			return false;
 		}
+		
+		elList.addELection(el);
 		
 		//Update ficheiro
 		try{
@@ -183,6 +185,54 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		
 	}
 
+	//Procura id do tipo de pessoa definida
+	public User findId(String s,int type) throws RemoteException{
+		
+		User sendUser = null;
+		
+		for(int i=0;i<users.getUsers().size();i++){
+			if(users.getUsers().get(i).getID().equals(s)){
+				if(users.getUsers().get(i).getProfession()==type){
+					sendUser = new User(users.getUsers().get(i).getName(),users.getUsers().get(i).getID(),users.getUsers().get(i).getExpDate(),users.getUsers().get(i).getPhone(),users.getUsers().get(i).getProfession(),users.getUsers().get(i).getDepartment(),users.getUsers().get(i).getPassword());
+				}
+				else{
+					sendUser = new User();
+				}
+			}
+		}
+		
+		return sendUser;
+	}
+	
+	public boolean createList(candidateList cl)throws RemoteException{
+		FicheiroDeObjectos fo = new FicheiroDeObjectos();
+		boolean exists = false;
+		
+		// Verifica se ID da lista de candidatos ja existe
+		for(int i=0;i<candidateList.getCandidateList().size();i++){
+			if(candidateList.getCandidateList().get(i).getID()==cl.getID()){
+				exists = true;
+			}
+		}
+				
+		if(exists){
+			System.out.println("List ID already exists...");
+			return false;
+		}
+		
+		candidateList.addCandidateList(cl);;
+		
+		//Update ficheiro
+		try{
+			fo.abreEscrita("out/lists.dat");
+        	fo.escreveObjecto(cl);
+        	fo.fechaEscrita();
+        }catch (Exception e){}
+		
+		System.out.println("Candidate List created");
+		return true;
+		
+	}
 	// =================================================================================================
 	// TCPServerInterface
 
