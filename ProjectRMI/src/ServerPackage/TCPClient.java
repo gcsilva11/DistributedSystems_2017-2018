@@ -154,7 +154,7 @@ class Terminal extends Thread{
                 //
                 //
                 // FALTA CLIENTE VOTAR!!
-                //
+                // QUANDO VOTA ESCREVE NO CLIENTE ONDE VOTOU E TITULO DA ELEICAO
                 //
                 */
             }

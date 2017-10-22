@@ -77,6 +77,10 @@ public class Election implements Serializable{
 	public void setEndDate(Calendar cal){
 		this.endDate = cal;
 	}
+	
+	public void setClosed(){
+		this.closed = true;
+	}
 
 	public String getInfo() {
 		return "Title: "+this.title+"\nDescription: "+this.description+"\nType: "+this.type+"\nClosed: "+this.closed;

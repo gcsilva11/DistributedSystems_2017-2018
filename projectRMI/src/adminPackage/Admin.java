@@ -1,5 +1,6 @@
 package adminPackage;
 
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,10 +19,13 @@ public class Admin {
 		
 		try{
 			VotingAdminInterface vote = (VotingAdminInterface) LocateRegistry.getRegistry(6500).lookup("vote_booth");
+			elecCheck checkThread = new elecCheck(vote);
+			checkThread.start();
 			
 			while(true){
 				System.out.println("Admin console ready.\nWhat do you want to do?\n1-Register a new user\n"
-						+ "2-Manage departments and faculties\n3- Create an election\n4-Manage candidate lists\n5-Edit an election");
+						+ "2-Manage departments and faculties\n3- Create an election\n4-Manage candidate lists"
+						+ "\n5-Edit an election\n6-Voting table status");
 				choice = input.nextLine();
 				
 				switch(choice){
@@ -441,48 +445,59 @@ public class Admin {
 							}
 							
 						case "5":
-							/*
+							
 							System.out.println("Edit election");
 							System.out.print("Insert the title of the election to edit: ");
 							String oldElecName = input.nextLine();
-							//Election oldElec = vote.getElection(oldElecName);
-							
-							//Verifica se esta a decorrer
-							//Se nao
-							
-							System.out.print("\nInsert new election title: ");
-							oldElec.setTitle(input.nextLine());
-							
-							System.out.print("\nInsert new election description: ");
-							oldElec.setDescription(input.nextLine());
-							
-							System.out.print("\nSet new start date: ");
-							date = input.nextLine();
-							SimpleDateFormat sdf4 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
-							startDate = sdf4.parse(date);
-							Calendar cal4 = Calendar.getInstance();
-							cal4.setTime(startDate);
-							oldElec.setStartDate(cal4);
-							
-							System.out.print("\nSet new end date: ");
-							date = input.nextLine();
-							SimpleDateFormat sdf5 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
-							endDate = sdf5.parse(date);
-							Calendar cal5 = Calendar.getInstance();
-							cal5.setTime(endDate);
-							oldElec.setEndDate(cal5);
-							
-							//Substitui no rmi
-							//boolean editElec = vote.editElec(oldElec);
-							
-							if(editElec){
-								System.out.println("Election edited successfully");
+							Election oldElec = vote.getElection(oldElecName);
+							if(!oldElec.getTitle().equals(null)){
+								
+								
+								//Verifica se esta a decorrer
+								if(oldElec.getStartDate().before(Calendar.getInstance())){
+									System.out.println("Election already ongoing, cannot edit");
+									break;
+								}
+								
+								else{
+									System.out.print("\nInsert new election title: ");
+									oldElec.setTitle(input.nextLine());
+
+									System.out.print("\nInsert new election description: ");
+									oldElec.setDescription(input.nextLine());
+
+									System.out.print("\nSet new start date: ");
+									date = input.nextLine();
+									SimpleDateFormat sdf4 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+									startDate = sdf4.parse(date);
+									Calendar cal4 = Calendar.getInstance();
+									cal4.setTime(startDate);
+									oldElec.setStartDate(cal4);
+
+									System.out.print("\nSet new end date: ");
+									date = input.nextLine();
+									SimpleDateFormat sdf5 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+									endDate = sdf5.parse(date);
+									Calendar cal5 = Calendar.getInstance();
+									cal5.setTime(endDate);
+									oldElec.setEndDate(cal5);
+
+									//Substitui no rmi
+									boolean editElec = vote.editElec(oldElec);
+
+									if(editElec){
+										System.out.println("Election edited successfully");
+									}
+									else{
+										System.out.println("Error editing the election...");
+									}
+								}
+								
 							}
 							else{
-								System.out.println("Error editing the election...");
+								System.out.println("Election with that title doesn't exist");
+								break;
 							}
-							
-							*/
 						default: 
 							System.out.println("Invalid choice, going back to menu");
 							break;
@@ -494,4 +509,51 @@ public class Admin {
 			e.printStackTrace();
 		}
 	}
+}
+
+//elecCheck var = new elecCheck
+//var.start();
+//Thread.currentThread join
+class elecCheck extends Thread{
+	private VotingAdminInterface vote;
+	private ArrayList <Election> seen = new ArrayList <Election>(); 
+	
+	public elecCheck(VotingAdminInterface vote){
+		this.vote = vote;
+	}
+	
+	public void run(){
+		System.out.println("Election checking thread started running");
+		while(true){
+			try{
+				try{
+				    Thread.sleep(1000);
+				} 
+				catch(InterruptedException ex){
+				    Thread.currentThread().interrupt();
+				}
+				Election expired = vote.checkElecDate();
+				boolean checked = false;
+				if(!expired.getTitle().equals(null)){
+					for(int i=0;i<seen.size();i++){
+						if(expired.getTitle().equals(seen.get(i).getTitle())){
+							checked = true;
+						}
+					}
+					if(!checked){
+						seen.add(expired);
+						System.out.println("Election just closed!");
+						//IMPRIMIR ESTATISTICAS
+					}
+				}
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+	}
+	
+	
+	
 }

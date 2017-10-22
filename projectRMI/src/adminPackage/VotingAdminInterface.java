@@ -12,12 +12,13 @@ public interface VotingAdminInterface extends Remote {
 	boolean deleteDep(Department dep) throws java.rmi.RemoteException;
 	ArrayList <candidateList> getList(int type) throws java.rmi.RemoteException;
 	boolean newElection(Election election) throws java.rmi.RemoteException;
-	boolean addBooth(String elTitle,ArrayList <String> depId)throws RemoteException;
+	boolean addBooth(String elTitle,ArrayList <String> depId)throws java.rmi.RemoteException;
 	User findId(String s,int type) throws java.rmi.RemoteException;
 	boolean createList(candidateList cl) throws java.rmi.RemoteException;
 	boolean deleteList(String id) throws java.rmi.RemoteException;
-	boolean editList(String id,String title)throws RemoteException;
-	//boolean editElection(Election el)throws RemoteException;
-	//boolean getElection(Election el)throws RemoteException;
+	boolean editList(String id,String title)throws java.rmi.RemoteException;
+	boolean editElec(Election el)throws java.rmi.RemoteException;
+	Election getElection(String title)throws java.rmi.RemoteException;
+	Election checkElecDate()throws java.rmi.RemoteException;
 	
 }

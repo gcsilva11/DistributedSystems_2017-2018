@@ -2,9 +2,7 @@ package RMIPackage;
 
 import ServerPackage.TCPServerInterface;
 import adminPackage.VotingAdminInterface;
-import com.sun.org.apache.regexp.internal.RE;
 
-import javax.management.remote.rmi.RMIServer;
 import java.io.IOException;
 import java.net.*;
 import java.net.UnknownHostException;
@@ -21,6 +19,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	private static DepList departments = new DepList();
 	private static candidateListList candidateList = new candidateListList();
 	private static ElectionList elList = new ElectionList();
+	private static ElectionList closedElections = new ElectionList();
 
 	public serverRMI() throws RemoteException {
 		super();
@@ -311,7 +310,61 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		
 	}
 	
+	public boolean editElec(Election el)throws RemoteException{
+		
+		FicheiroDeObjectos fo = new FicheiroDeObjectos();
+		
+		boolean done = false;
+		
+		for(int i=0;i<elList.getElections().size();i++){
+			if(elList.getElections().get(i).getTitle().equals(el.getTitle())){
+				elList.getElections().set(i, el);
+				//Update ficheiro
+				try{
+					fo.abreEscrita("out/elections.dat");
+		        	fo.escreveObjecto(elList);
+		        	fo.fechaEscrita();
+		        }catch (Exception e){}
+			
+				done = true;
+			}
+		}
+		
+		
+		return done;
+	}
 	
+	public Election checkElecDate()throws java.rmi.RemoteException{
+		
+		FicheiroDeObjectos fo = new FicheiroDeObjectos();
+		Election stub = null;
+		
+		for(int i=0;i<elList.getElections().size();i++){
+			if(elList.getElections().get(i).getEndDate().before(Calendar.getInstance())&&elList.getElections().get(i).getClosed()==false){
+				elList.getElections().get(i).setClosed();
+				closedElections.addELection(elList.getElections().get(i));
+				
+				//Update ficheiro eleicoes
+				try{
+					fo.abreEscrita("out/elections.dat");
+		        	fo.escreveObjecto(elList);
+		        	fo.fechaEscrita();
+		        }catch (Exception e){}
+				
+				//Update ficheiro eleicoes
+				try{
+					fo.abreEscrita("out/closedelections.dat");
+		        	fo.escreveObjecto(closedElections);
+		        	fo.fechaEscrita();
+		        }catch (Exception e){}
+				
+				return elList.getElections().get(i);
+			}
+		}
+		
+		return stub;
+		
+	}
 	// =================================================================================================
 	// TCPServerInterface
 
@@ -326,10 +379,23 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 	public ArrayList<Election> getElList() throws RemoteException{ return elList.getElections(); }
 
+	public Election getElection(String title)throws RemoteException{
+		
+		Election toSend = null;
+	
+		for(int i=0;i<elList.getElections().size();i++){
+			if(elList.getElections().get(i).getTitle().equals(title)){
+				toSend = elList.getElections().get(i);
+			}
+		}
+		
+		return toSend;
+	}
+
 	// =================================================================================================
 	// Main
 	public static void main(String args[]) {
-		RMIFailover rmiFailover;
+		//RMIFailover rmiFailover;
 		try {
 			/*
 			// Failover
@@ -359,6 +425,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		FicheiroDeObjectos foDeps = new FicheiroDeObjectos();
 		FicheiroDeObjectos foLists = new FicheiroDeObjectos();
 		FicheiroDeObjectos foElections = new FicheiroDeObjectos();
+		FicheiroDeObjectos foClosedElections = new FicheiroDeObjectos();
 
 		// Lê ficheiro users e adiciona-o a um array
 		try{
@@ -401,6 +468,18 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			if (foElections.abreLeitura("out/elections.dat")){
 				elList = (ElectionList) foElections.leObjecto();
 				foElections.fechaLeitura();
+			}
+
+		}
+		catch (Exception e) {
+			System.out.println("Exception caught reading elections.dat - "+e);
+		}
+		
+		// Le ficheiro de eleicoes fechadas e poe no array
+		try{
+			if (foClosedElections.abreLeitura("out/closedelections.dat")){
+				closedElections = (ElectionList) foClosedElections.leObjecto();
+				foClosedElections.fechaLeitura();
 			}
 
 		}
