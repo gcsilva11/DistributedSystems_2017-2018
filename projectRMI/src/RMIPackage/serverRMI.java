@@ -25,7 +25,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		super();
 	}
 
-	// =================================================================================================
+	// ==================================================================================================================
 	// VotingAdminInterface
 
 	// Regista um novo user no ficheiro
@@ -207,7 +207,8 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		
 		return sendUser;
 	}
-	
+
+	//
 	public boolean createList(candidateList cl)throws RemoteException{
 
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
@@ -238,7 +239,8 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return true;
 		
 	}
-	
+
+	//
 	public boolean deleteList(String id) throws java.rmi.RemoteException{
 		
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
@@ -260,6 +262,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return exists;
 	}
 
+	//
 	public boolean editList(String id, String title)throws RemoteException{
 		
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
@@ -280,7 +283,8 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		
 		return done;
 	}
-	
+
+	//
 	public boolean addBooth(String elTitle,ArrayList <String> depId)throws RemoteException{
 		
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
@@ -309,7 +313,8 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return done;
 		
 	}
-	
+
+	//
 	public boolean editElec(Election el)throws RemoteException{
 		
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
@@ -333,7 +338,8 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		
 		return done;
 	}
-	
+
+	//
 	public Election checkElecDate()throws java.rmi.RemoteException{
 		
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
@@ -365,7 +371,8 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return stub;
 		
 	}
-	// =================================================================================================
+
+	// ==================================================================================================================
 	// TCPServerInterface
 
 	// Devolve lista de users
@@ -377,8 +384,10 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	// Devolve lista de departamentos
 	public ArrayList<Department> getDepList() throws RemoteException{ return departments.getDeps(); }
 
+	//
 	public ArrayList<Election> getElList() throws RemoteException{ return elList.getElections(); }
 
+	//
 	public Election getElection(String title)throws RemoteException{
 		
 		Election toSend = null;
@@ -392,27 +401,65 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return toSend;
 	}
 
-	// =================================================================================================
+	// ==================================================================================================================
 	// Main
 	public static void main(String args[]) {
-		//RMIFailover rmiFailover;
-		try {
-			/*
-			// Failover
-			if(args.length == 2)
-				rmiFailover = new RMIFailover(args[0], args[1]);
-			else
-				rmiFailover = new RMIFailover();
-			rmiFailover.start();
-		*/
-			// Atualiza dados ficheiros
-			setupObjectFiles();
+		RMIFailover UDPConn;
 
-			// Criação RMI
-			serverRMI server = new serverRMI();
-			Registry reg = LocateRegistry.createRegistry(6500);
-			reg.rebind("vote_booth", server);
-			System.out.println("RMI server connected");
+		String hostname;
+		int serverPortOne, serverPortTwo, choice;
+		boolean isMain = true;
+
+		try {
+			// argumentos da linha de comando: hostname, serverPort
+			if (args.length != 2) {
+				hostname = "localhost";
+				serverPortOne = 7000;
+				serverPortTwo = 7050;
+
+			} else {
+				hostname = args[0];
+				serverPortOne = Integer.parseInt(args[1]);
+				serverPortTwo = Integer.parseInt(args[2]);
+			}
+
+			isMain = selectRMI();
+
+			if(isMain){
+				System.out.println("Main Server starting...");
+				// Inicia thread que lida com a conexão UDP
+				UDPConn = new RMIFailover(hostname, serverPortOne, serverPortTwo, isMain);
+				UDPConn.start();
+
+				// Atualiza dados ficheiros
+				setupObjectFiles();
+
+				// Criação RMI
+				serverRMI server = new serverRMI();
+				Registry reg = LocateRegistry.createRegistry(6500);
+				reg.rebind("vote_booth", server);
+				System.out.println("Main RMI Server connected");
+			}
+			else{
+				System.out.println("Backup Server starting...");
+				// Inicia thread que lida com a conexão UDP
+				UDPConn = new RMIFailover(hostname, serverPortOne, serverPortTwo, isMain);
+				UDPConn.start();
+				try {
+					System.out.println("Backup Server waiting for Main Server to fail...");
+					UDPConn.join();
+				} catch (InterruptedException e) { }
+
+				// Atualiza dados ficheiros
+				setupObjectFiles();
+
+				// Criação RMI
+				serverRMI server = new serverRMI();
+				Registry reg = LocateRegistry.createRegistry(6500);
+				reg.rebind("vote_booth", server);
+				System.out.println("Backup RMI Server connected");
+			}
+
 		} catch (RemoteException re) {
 			System.out.println("Exception in serverRMI.main: " + re);
 		}
@@ -487,65 +534,127 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			System.out.println("Exception caught reading elections.dat - "+e);
 		}
 	}
+
+	// Seleciona se vai ser Main ou Backup RMI
+	public static boolean selectRMI(){
+		Scanner sc = new Scanner(System.in);
+		System.out.println("RMI Server:\n1. Main Server\n2. Backup Server\n3. Exit");
+
+		int choice = sc.nextInt();
+		switch (choice) {
+			case 1: return true;
+			case 2: return false;
+			case 3: System.exit(0);
+			default: System.out.println("Non suported choice"); return selectRMI();
+		}
+	}
 }
 
+// Thread que trata do Failover
 class RMIFailover extends Thread{
-	private DatagramSocket RMISocket = null;
-	private int port;
-	private InetAddress aHost;
+	public static  final boolean DEBUG = true;
 
-	private byte[] buffer;
+	private DatagramSocket aSocketOne = null, aSocketTwo = null;
 
+	private String hostname;
+	private int serverPortOne, serverPortTwo;
+	private boolean mainServer;
 
-	public RMIFailover() throws RemoteException {
-		this.port=7000;
-		this.buffer = new byte[1024];
-		try {
-			this.aHost = InetAddress.getByName("localhost");
-		} catch (UnknownHostException e) {}
+	public RMIFailover(String hostname, int serverPortOne, int serverPortTwo, boolean mainServer) {
+		this.hostname = hostname;
+		this.serverPortOne = serverPortOne;
+		this.serverPortTwo = serverPortTwo;
+		this.mainServer = mainServer;
 	}
 
-	public RMIFailover(String hostname, String port) throws RemoteException {
-		this.port = Integer.parseInt(port);
-		this.buffer = new byte[1024];
-		try{
-			this.aHost = InetAddress.getByName(hostname);
-		} catch (UnknownHostException e) {}
+	public void run() {
+		if(this.mainServer)
+			isMainServer();
+		else
+			isNotMainServer();
 	}
 
-	public void run(){
+	void isMainServer(){
+		String texto = "";
+		byte [] msg = texto.getBytes();
+		byte[] buffer = new byte[1000];
+		int heartbeatsFailed = 0;
+
 		try {
-			this.RMISocket = new DatagramSocket(this.port);
-		} catch (SocketException e) {
-			try {
-				this.RMISocket = new DatagramSocket();
-			} catch (SocketException i) {}
+			// Abre socket UDP
+			InetAddress aHost = InetAddress.getByName(this.hostname);
+			this.aSocketOne = new DatagramSocket(this.serverPortOne);
+			this.aSocketTwo = new DatagramSocket();
 
-			while (true) {
-				// Tenta mandar pings
-				String str = "PING";
-				this.buffer = str.getBytes();
+			while(heartbeatsFailed < 5){
+				// Define timeout de recepção de heartbeat
+				this.aSocketOne.setSoTimeout(1000);
 
+				// Cria pacotes
+				DatagramPacket request = new DatagramPacket(msg, msg.length, aHost, this.serverPortTwo);
+				DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
+
+				// Envia
+				this.aSocketTwo.send(request);
+				if(DEBUG) System.out.println("\t#DEBUG# Enviou heartbeat na porta: "+this.serverPortTwo);
+
+				// Recebe
 				try {
-					DatagramPacket ping = new DatagramPacket(buffer, buffer.length, this.aHost, this.port);
-					this.RMISocket.send(ping);
-				} catch (IOException i) {
+					this.aSocketOne.receive(reply);
+					if(DEBUG) System.out.println("\t#DEBUG# Recebeu reply na porta: " + this.serverPortOne);
+				} catch (SocketTimeoutException e) {
+					if (DEBUG) System.out.println("\t#DEBUG# Heartbeat falhado");
+					heartbeatsFailed++;
 				}
+
+				// Espera 1 segundo
+				try { Thread.sleep(500); } catch (InterruptedException i) { }
 			}
-		}
 
-		// Recebe pings
-		while (true) {
-			DatagramPacket request = new DatagramPacket(this.buffer, this.buffer.length);
+		}catch (SocketException e){ if(DEBUG) System.out.println("\t#DEBUG# Socket: " + e.getMessage());
+		}catch (IOException e){ if(DEBUG) System.out.println("\t#DEBUG# IO: " + e.getMessage());
+		}finally {if(this.aSocketOne != null || this.aSocketTwo != null) {this.aSocketOne.close();this.aSocketTwo.close();}}
+	}
 
-			try {
-				this.RMISocket.receive(request);
-			} catch (IOException | NullPointerException i) { }
+	void isNotMainServer(){
+		String texto = "";
+		byte [] msg = texto.getBytes();
+		byte[] buffer = new byte[1000];
+		int heartbeatsFailed = 0;
 
-			System.out.println(buffer);
-		}
+		try {
+			// Abre socket UDP
+			InetAddress aHost = InetAddress.getByName(this.hostname);
+			this.aSocketOne = new DatagramSocket();
+			this.aSocketTwo = new DatagramSocket(this.serverPortTwo);
 
+			while(heartbeatsFailed < 5){
+				// Define timeout de recepção de heartbeat
+				this.aSocketTwo.setSoTimeout(1000);
 
+				// Cria pacotes
+				DatagramPacket request = new DatagramPacket(msg, msg.length, aHost, this.serverPortOne);
+				DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
 
+				// Envia
+				this.aSocketOne.send(request);
+				System.out.println("\t#DEBUG# Enviou reply na porta: "+this.serverPortOne);
+
+				// Recebe
+				try{
+					this.aSocketTwo.receive(reply);
+					if(DEBUG) System.out.println("\t#DEBUG# Recebeu heartbeat na porta: "+this.serverPortTwo);
+				} catch (SocketTimeoutException e) {
+					if(DEBUG) System.out.println("\t#DEBUG# Heartbeat falhado");
+					heartbeatsFailed++;
+				}
+
+				// Espera 1 segundo
+				try { Thread.sleep(500); } catch (InterruptedException i) { }
+			}
+
+		}catch (SocketException e){ if(DEBUG) System.out.println("\t#DEBUG# Socket: " + e.getMessage());
+		}catch (IOException e){ if(DEBUG) System.out.println("\t#DEBUG# IO: " + e.getMessage());
+		}finally {if(this.aSocketOne != null || this.aSocketTwo != null) {this.aSocketOne.close();this.aSocketTwo.close();}}
 	}
 }
