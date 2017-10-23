@@ -529,7 +529,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 	// Thread que trata do Failover
 class RMIFailover extends Thread {
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 
 	private DatagramSocket aSocket = null;
 
@@ -590,6 +590,7 @@ class RMIFailover extends Thread {
 					try {
 						aSocket.receive(request);
 						if (DEBUG) System.out.println("\t#DEBUG# Recebeu heartbeat");
+						System.out.println("Received heartbeat from Main RMI server");
 					} catch (SocketTimeoutException i){
 						heartbeatsFailed++;
 						System.out.println("\t#DEBUG# Heartbeat falhado");
