@@ -24,12 +24,15 @@ public class TCPServer {
     // Main: À espera de novas ligações ao socket
     public static void main(String[] args){
         int def_port;
+        int num_Cliente = 0;
 
         if(args.length != 1)
             def_port = 6000;
         else
             def_port = Integer.parseInt(args[0]);
-        int num_Cliente = 0;
+
+        TCPServer tcpServer = new TCPServer();
+
         try{
             ServerSocket listenSocket = new ServerSocket(def_port);
             while(true) {

@@ -3,6 +3,7 @@ package RMIPackage;
 import ServerPackage.TCPServerInterface;
 import adminPackage.VotingAdminInterface;
 
+import javax.management.remote.rmi.RMIServer;
 import java.io.IOException;
 import java.net.*;
 import java.rmi.*;
@@ -30,127 +31,130 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	// Regista um novo user no ficheiro
 	public boolean registerUser(User user) throws RemoteException {
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
-		
+
 		// Verifica se existe algum user com o mesmo ID
-		for(int i=0;i<users.getUsers().size();i++){
-			if(user.getID().equals(users.getUsers().get(i).getID())){
+		for (int i = 0; i < users.getUsers().size(); i++) {
+			if (user.getID().equals(users.getUsers().get(i).getID())) {
 				System.out.println("ID already exists.");
 				return false;
 			}
 		}
-		
+
 		//FALTA VER SO O DEP. EXISTE
-		
-		
+
+
 		users.addUser(user);
-		
+
 		// Update ficheiro
-		try{
+		try {
 			fo.abreEscrita("out/users.dat");
-        	fo.escreveObjecto(users);
-        	fo.fechaEscrita();
-        }catch (Exception e){}
-		
+			fo.escreveObjecto(users);
+			fo.fechaEscrita();
+		} catch (Exception e) {
+		}
+
 		System.out.println("New user registered.");
 
 		return true;
 	}
 
 	// Adiciona departamento ao ficheiro
-	public boolean registerDep(Department dep) throws RemoteException{
+	public boolean registerDep(Department dep) throws RemoteException {
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
-		
+
 		// Verifica se departamento já existe
-		for(int i=0;i<departments.getDeps().size();i++){
-			if(dep.getID().equals(departments.getDeps().get(i).getID())){
+		for (int i = 0; i < departments.getDeps().size(); i++) {
+			if (dep.getID().equals(departments.getDeps().get(i).getID())) {
 				System.out.println("Department ID already exists.");
 				return false;
 			}
 		}
-		
+
 		departments.addDep(dep);
-		
+
 		//Update object file
-		try{
+		try {
 			fo.abreEscrita("out/deps.dat");
-        	fo.escreveObjecto(departments);
-        	fo.fechaEscrita();
-        }catch (Exception e){}
-		
+			fo.escreveObjecto(departments);
+			fo.fechaEscrita();
+		} catch (Exception e) {
+		}
+
 		System.out.println("New department registered.");
-		
+
 		return true;
-		
+
 	}
 
 	// Edita ficheiro departamento
-	public boolean editDep(Department dep) throws RemoteException{
+	public boolean editDep(Department dep) throws RemoteException {
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
-		
+
 		// Verifica se o departamento existe
-		for(int i=0;i<departments.getDeps().size();i++){
-			if(dep.getID().equals(departments.getDeps().get(i).getID())){
+		for (int i = 0; i < departments.getDeps().size(); i++) {
+			if (dep.getID().equals(departments.getDeps().get(i).getID())) {
 				departments.getDeps().get(i).setDep(dep.getDep());
 				departments.getDeps().get(i).setFac(dep.getFac());
-				
+
 				// Update ficheiro
-				try{
+				try {
 					fo.abreEscrita("out/deps.dat");
-		        	fo.escreveObjecto(departments);
-		        	fo.fechaEscrita();
-		        }catch (Exception e){}
-				
-				
+					fo.escreveObjecto(departments);
+					fo.fechaEscrita();
+				} catch (Exception e) {
+				}
+
+
 				System.out.println("Department edited!");
 				return true;
 			}
 		}
-		
+
 		System.out.println("Department ID not found...");
 		return false;
-		
+
 	}
 
 	// Apaga informação departamento
-	public boolean deleteDep(Department dep) throws RemoteException{
+	public boolean deleteDep(Department dep) throws RemoteException {
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
-		
+
 		// Verifica se o departamento existe
-		for(int i=0;i<departments.getDeps().size();i++){
-			if(dep.getID().equals(departments.getDeps().get(i).getID())){
-				
+		for (int i = 0; i < departments.getDeps().size(); i++) {
+			if (dep.getID().equals(departments.getDeps().get(i).getID())) {
+
 				departments.getDeps().remove(i);
 
 				// Update ficheiro
-				try{
+				try {
 					fo.abreEscrita("out/deps.dat");
-		        	fo.escreveObjecto(departments);
-		        	fo.fechaEscrita();
-		        }catch (Exception e){}
-				
-				
+					fo.escreveObjecto(departments);
+					fo.fechaEscrita();
+				} catch (Exception e) {
+				}
+
+
 				System.out.println("Department removed!");
 				return true;
 			}
 		}
-		
+
 		System.out.println("Department ID not found...");
 		return false;
-		
+
 	}
 
 	// Procura candidatos por ID
-	public ArrayList <candidateList> getList(int type){
-		ArrayList <candidateList> chosenLists = new ArrayList <candidateList>();
-		if(type==1){
-			for(int i=0;i<candidateList.getCandidateList().size();i++){
-				if(candidateList.getCandidateList().get(i).getType()==type){
+	public ArrayList<candidateList> getList(int type) {
+		ArrayList<candidateList> chosenLists = new ArrayList<candidateList>();
+		if (type == 1) {
+			for (int i = 0; i < candidateList.getCandidateList().size(); i++) {
+				if (candidateList.getCandidateList().get(i).getType() == type) {
 					chosenLists.add(candidateList.getCandidateList().get(i));
 				}
 			}
-		}
-		else{
-			for(int i=0;i<candidateList.getCandidateList().size();i++){
+		} else {
+			for (int i = 0; i < candidateList.getCandidateList().size(); i++) {
 				chosenLists.add(candidateList.getCandidateList().get(i));
 			}
 		}
@@ -158,245 +162,261 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	}
 
 	//Create a new election
-	public boolean newElection(Election el) throws RemoteException{
+	public boolean newElection(Election el) throws RemoteException {
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
 		boolean exists = false;
-		
+
 		// Verifica  se titulo da eleicao ja existe
-		for(int i=0;i<elList.getElections().size();i++){
-			if(el.getTitle().equals(elList.getElections().get(i).getTitle())){
+		for (int i = 0; i < elList.getElections().size(); i++) {
+			if (el.getTitle().equals(elList.getElections().get(i).getTitle())) {
 				exists = true;
 			}
 		}
-				
-		if(exists){
+
+		if (exists) {
 			System.out.println("Election title already exists...");
 			return false;
 		}
-		
+
 		elList.addELection(el);
-		
+
 		//Update ficheiro
-		try{
+		try {
 			fo.abreEscrita("out/elections.dat");
-        	fo.escreveObjecto(elList);
-        	fo.fechaEscrita();
-        }catch (Exception e){}
-		
+			fo.escreveObjecto(elList);
+			fo.fechaEscrita();
+		} catch (Exception e) {
+		}
+
 		System.out.println("Election created");
 		return true;
-		
+
 	}
 
 	//Procura id do tipo de pessoa definida
-	public User findId(String s,int type) throws RemoteException{
-		
+	public User findId(String s, int type) throws RemoteException {
+
 		User sendUser = null;
-		
-		for(int i=0;i<users.getUsers().size();i++){
-			if(users.getUsers().get(i).getID().equals(s)){
-				if(users.getUsers().get(i).getProfession()==type){
-					sendUser = new User(users.getUsers().get(i).getName(),users.getUsers().get(i).getID(),users.getUsers().get(i).getExpDate(),users.getUsers().get(i).getPhone(),users.getUsers().get(i).getProfession(),users.getUsers().get(i).getDepartment(),users.getUsers().get(i).getPassword());
-				}
-				else{
+
+		for (int i = 0; i < users.getUsers().size(); i++) {
+			if (users.getUsers().get(i).getID().equals(s)) {
+				if (users.getUsers().get(i).getProfession() == type) {
+					sendUser = new User(users.getUsers().get(i).getName(), users.getUsers().get(i).getID(), users.getUsers().get(i).getExpDate(), users.getUsers().get(i).getPhone(), users.getUsers().get(i).getProfession(), users.getUsers().get(i).getDepartment(), users.getUsers().get(i).getPassword());
+				} else {
 					sendUser = new User();
 				}
 			}
 		}
-		
+
 		return sendUser;
 	}
 
 	//
-	public boolean createList(candidateList cl)throws RemoteException{
+	public boolean createList(candidateList cl) throws RemoteException {
 
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
 		boolean exists = false;
-		
+
 		// Verifica se ID da lista de candidatos ja existe
-		for(int i=0;i<candidateList.getCandidateList().size();i++){
-			if(candidateList.getCandidateList().get(i).getID()==cl.getID()){
+		for (int i = 0; i < candidateList.getCandidateList().size(); i++) {
+			if (candidateList.getCandidateList().get(i).getID() == cl.getID()) {
 				exists = true;
 			}
 		}
-				
-		if(exists){
+
+		if (exists) {
 			System.out.println("List ID already exists...");
 			return false;
 		}
-		
-		candidateList.addCandidateList(cl);;
-		
+
+		candidateList.addCandidateList(cl);
+		;
+
 		//Update ficheiro
-		try{
+		try {
 			fo.abreEscrita("out/lists.dat");
-        	fo.escreveObjecto(cl);
-        	fo.fechaEscrita();
-        }catch (Exception e){}
-		
+			fo.escreveObjecto(cl);
+			fo.fechaEscrita();
+		} catch (Exception e) {
+		}
+
 		System.out.println("Candidate List created");
 		return true;
-		
+
 	}
 
 	//
-	public boolean deleteList(String id) throws java.rmi.RemoteException{
-		
+	public boolean deleteList(String id) throws java.rmi.RemoteException {
+
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
 		boolean exists = false;
-		
-		for(int i=0;i<candidateList.getCandidateList().size();i++){
-			if(candidateList.getCandidateList().get(i).getID().equals(id)){
+
+		for (int i = 0; i < candidateList.getCandidateList().size(); i++) {
+			if (candidateList.getCandidateList().get(i).getID().equals(id)) {
 				candidateList.getCandidateList().remove(i);
 				exists = true;
 				//Update file
-				try{
+				try {
 					fo.abreEscrita("out/lists.dat");
-		        	fo.escreveObjecto(candidateList);
-		        	fo.fechaEscrita();
-		        }catch (Exception e){}
-				
+					fo.escreveObjecto(candidateList);
+					fo.fechaEscrita();
+				} catch (Exception e) {
+				}
+
 			}
 		}
 		return exists;
 	}
 
 	//
-	public boolean editList(String id, String title)throws RemoteException{
-		
+	public boolean editList(String id, String title) throws RemoteException {
+
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
 		boolean done = false;
-		
-		for(int i=0;i<candidateList.getCandidateList().size();i++){
-			if(candidateList.getCandidateList().get(i).getID().equals(id)){
+
+		for (int i = 0; i < candidateList.getCandidateList().size(); i++) {
+			if (candidateList.getCandidateList().get(i).getID().equals(id)) {
 				candidateList.getCandidateList().get(i).setName(title);
 				done = true;
 				//Update file
-				try{
+				try {
 					fo.abreEscrita("out/lists.dat");
-		        	fo.escreveObjecto(candidateList);
-		        	fo.fechaEscrita();
-		        }catch (Exception e){}
-			}
-		}
-		
-		return done;
-	}
-
-	//
-	public boolean addBooth(String elTitle,ArrayList <String> depId)throws RemoteException{
-		
-		FicheiroDeObjectos fo = new FicheiroDeObjectos();
-		boolean done = true;
-		
-		for(int i=0;i<elList.getElections().size();i++){
-			if(elList.getElections().get(i).getTitle().equals(elTitle)){
-				for(int j=0;j<departments.getDeps().size();j++){
-					for(int k=0;k<depId.size();k++){
-						if(departments.getDeps().get(j).getID().equals(depId.get(k))){
-							elList.getElections().get(i).addDep(departments.getDeps().get(j));
-						}
-					}
-					
+					fo.escreveObjecto(candidateList);
+					fo.fechaEscrita();
+				} catch (Exception e) {
 				}
 			}
 		}
-		
-		//Update ficheiro
-		try{
-			fo.abreEscrita("out/elections.dat");
-        	fo.escreveObjecto(elList);
-        	fo.fechaEscrita();
-        }catch (Exception e){}
-		
+
 		return done;
-		
 	}
 
 	//
-	public boolean editElec(Election el)throws RemoteException{
-		
+	public boolean addBooth(String elTitle, ArrayList<String> depId) throws RemoteException {
+
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
-		
+		boolean done = true;
+
+		for (int i = 0; i < elList.getElections().size(); i++) {
+			if (elList.getElections().get(i).getTitle().equals(elTitle)) {
+				for (int j = 0; j < departments.getDeps().size(); j++) {
+					for (int k = 0; k < depId.size(); k++) {
+						if (departments.getDeps().get(j).getID().equals(depId.get(k))) {
+							elList.getElections().get(i).addDep(departments.getDeps().get(j));
+						}
+					}
+
+				}
+			}
+		}
+
+		//Update ficheiro
+		try {
+			fo.abreEscrita("out/elections.dat");
+			fo.escreveObjecto(elList);
+			fo.fechaEscrita();
+		} catch (Exception e) {
+		}
+
+		return done;
+
+	}
+
+	//
+	public boolean editElec(Election el) throws RemoteException {
+
+		FicheiroDeObjectos fo = new FicheiroDeObjectos();
+
 		boolean done = false;
-		
-		for(int i=0;i<elList.getElections().size();i++){
-			if(elList.getElections().get(i).getTitle().equals(el.getTitle())){
+
+		for (int i = 0; i < elList.getElections().size(); i++) {
+			if (elList.getElections().get(i).getTitle().equals(el.getTitle())) {
 				elList.getElections().set(i, el);
 				//Update ficheiro
-				try{
+				try {
 					fo.abreEscrita("out/elections.dat");
-		        	fo.escreveObjecto(elList);
-		        	fo.fechaEscrita();
-		        }catch (Exception e){}
-			
+					fo.escreveObjecto(elList);
+					fo.fechaEscrita();
+				} catch (Exception e) {
+				}
+
 				done = true;
 			}
 		}
-		
-		
+
+
 		return done;
 	}
 
 	//
-	public Election checkElecDate()throws java.rmi.RemoteException{
-		
+	public Election checkElecDate() throws java.rmi.RemoteException {
+
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
 		Election stub = null;
-		
-		for(int i=0;i<elList.getElections().size();i++){
-			if(elList.getElections().get(i).getEndDate().before(Calendar.getInstance())&&elList.getElections().get(i).getClosed()==false){
+
+		for (int i = 0; i < elList.getElections().size(); i++) {
+			if (elList.getElections().get(i).getEndDate().before(Calendar.getInstance()) && elList.getElections().get(i).getClosed() == false) {
 				elList.getElections().get(i).setClosed();
 				closedElections.addELection(elList.getElections().get(i));
-				
+
 				//Update ficheiro eleicoes
-				try{
+				try {
 					fo.abreEscrita("out/elections.dat");
-		        	fo.escreveObjecto(elList);
-		        	fo.fechaEscrita();
-		        }catch (Exception e){}
-				
+					fo.escreveObjecto(elList);
+					fo.fechaEscrita();
+				} catch (Exception e) {
+				}
+
 				//Update ficheiro eleicoes
-				try{
+				try {
 					fo.abreEscrita("out/closedelections.dat");
-		        	fo.escreveObjecto(closedElections);
-		        	fo.fechaEscrita();
-		        }catch (Exception e){}
-				
+					fo.escreveObjecto(closedElections);
+					fo.fechaEscrita();
+				} catch (Exception e) {
+				}
+
 				return elList.getElections().get(i);
 			}
 		}
-		
+
 		return stub;
-		
+
 	}
 
 	// ==================================================================================================================
 	// TCPServerInterface
 
 	// Devolve lista de users
-	public ArrayList<User> getUsers() throws RemoteException{ return users.getUsers(); }
+	public ArrayList<User> getUsers() throws RemoteException {
+		return users.getUsers();
+	}
 
 	// Devolve lista de candidatos
-	public ArrayList<candidateList> getCandidateList() throws RemoteException{ return candidateList.getCandidateList(); }
+	public ArrayList<candidateList> getCandidateList() throws RemoteException {
+		return candidateList.getCandidateList();
+	}
 
 	// Devolve lista de departamentos
-	public ArrayList<Department> getDepList() throws RemoteException{ return departments.getDeps(); }
+	public ArrayList<Department> getDepList() throws RemoteException {
+		return departments.getDeps();
+	}
 
 	//
-	public ArrayList<Election> getElList() throws RemoteException{ return elList.getElections(); }
+	public ArrayList<Election> getElList() throws RemoteException {
+		return elList.getElections();
+	}
 
 	//
-	public Election getElection(String title)throws RemoteException{
-		
+	public Election getElection(String title) throws RemoteException {
+
 		Election toSend = null;
-	
-		for(int i=0;i<elList.getElections().size();i++){
-			if(elList.getElections().get(i).getTitle().equals(title)){
+
+		for (int i = 0; i < elList.getElections().size(); i++) {
+			if (elList.getElections().get(i).getTitle().equals(title)) {
 				toSend = elList.getElections().get(i);
 			}
 		}
-		
+
 		return toSend;
 	}
 
@@ -406,64 +426,30 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		RMIFailover UDPConn;
 
 		String hostname;
-		int serverPort, choice;
-		boolean isMain = true;
+		int serverPort;
+		boolean choice;
 
-		try {
-			// argumentos da linha de comando: hostname, serverPort
-			if (args.length != 2) {
-				hostname = "localhost";
-				serverPort = 7000;
+		// argumentos da linha de comando: hostname, serverPort
+		if (args.length != 2) {
+			hostname = "localhost";
+			serverPort = 7000;
 
-			} else {
-				hostname = args[0];
-				serverPort = Integer.parseInt(args[1]);
-			}
-
-			isMain = selectRMI();
-
-			if(isMain){
-				System.out.println("Main Server starting...");
-				// Inicia thread que lida com a conexão UDP
-				UDPConn = new RMIFailover(hostname, serverPort, isMain);
-				UDPConn.start();
-
-				// Atualiza dados ficheiros
-				setupObjectFiles();
-
-				// Criação RMI
-				serverRMI server = new serverRMI();
-				Registry reg = LocateRegistry.createRegistry(6500);
-				reg.rebind("vote_booth", server);
-				System.out.println("Main RMI Server connected");
-			}
-			else{
-				System.out.println("Backup Server starting...");
-				// Inicia thread que lida com a conexão UDP
-				UDPConn = new RMIFailover(hostname, serverPort, isMain);
-				UDPConn.start();
-				try {
-					System.out.println("Backup Server waiting for Main Server to fail...");
-					UDPConn.join();
-				} catch (InterruptedException e) { }
-
-				// Atualiza dados ficheiros
-				setupObjectFiles();
-
-				// Criação RMI
-				serverRMI server = new serverRMI();
-				Registry reg = LocateRegistry.createRegistry(6500);
-				reg.rebind("vote_booth", server);
-				System.out.println("Backup RMI Server connected");
-			}
-
-		} catch (RemoteException re) {
-			System.out.println("Could not bind RMI registry");
+		} else {
+			hostname = args[0];
+			serverPort = Integer.parseInt(args[1]);
 		}
+
+		// Inicia thread que lida com a conexão UDP
+		UDPConn = new RMIFailover(hostname, serverPort);
+		UDPConn.start();
+
+		// Atualiza dados ficheiros
+		setupObjectFiles();
+
 	}
 
 	// Atualiza dados ficheiros
-	public static void setupObjectFiles(){
+	public static void setupObjectFiles() {
 
 		FicheiroDeObjectos foUser = new FicheiroDeObjectos();
 		FicheiroDeObjectos foDeps = new FicheiroDeObjectos();
@@ -472,171 +458,161 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		FicheiroDeObjectos foClosedElections = new FicheiroDeObjectos();
 
 		// Lê ficheiro users e adiciona-o a um array
-		try{
-			if (foUser.abreLeitura("out/users.dat")){
+		try {
+			if (foUser.abreLeitura("out/users.dat")) {
 				users = (UserList) foUser.leObjecto();
 				foUser.fechaLeitura();
 			}
 
-		}
-		catch (Exception e) {
-			System.out.println("Exception caught reading users.dat - "+e);
+		} catch (Exception e) {
+			System.out.println("Exception caught reading users.dat - " + e);
 		}
 
 		// Lê ficheiro departamentos e adiciona-o a um array
-		try{
-			if (foDeps.abreLeitura("out/deps.dat")){
+		try {
+			if (foDeps.abreLeitura("out/deps.dat")) {
 				departments = (DepList) foDeps.leObjecto();
 				foDeps.fechaLeitura();
 			}
 
-		}
-		catch (Exception e) {
-			System.out.println("Exception caught reading deps.dat - "+e);
+		} catch (Exception e) {
+			System.out.println("Exception caught reading deps.dat - " + e);
 		}
 
 		// Lê ficheiro lista de candidatos e adiciona-o a um array
-		try{
-			if (foLists.abreLeitura("out/lists.dat")){
+		try {
+			if (foLists.abreLeitura("out/lists.dat")) {
 				candidateList = (candidateListList) foLists.leObjecto();
 				foLists.fechaLeitura();
 			}
 
-		}
-		catch (Exception e) {
-			System.out.println("Exception caught reading lists.dat - "+e);
+		} catch (Exception e) {
+			System.out.println("Exception caught reading lists.dat - " + e);
 		}
 
 		// Lê ficheiro eleiçoes e adiciona-o a um array
-		try{
-			if (foElections.abreLeitura("out/elections.dat")){
+		try {
+			if (foElections.abreLeitura("out/elections.dat")) {
 				elList = (ElectionList) foElections.leObjecto();
 				foElections.fechaLeitura();
 			}
 
+		} catch (Exception e) {
+			System.out.println("Exception caught reading elections.dat - " + e);
 		}
-		catch (Exception e) {
-			System.out.println("Exception caught reading elections.dat - "+e);
-		}
-		
+
 		// Le ficheiro de eleicoes fechadas e poe no array
-		try{
-			if (foClosedElections.abreLeitura("out/closedelections.dat")){
+		try {
+			if (foClosedElections.abreLeitura("out/closedelections.dat")) {
 				closedElections = (ElectionList) foClosedElections.leObjecto();
 				foClosedElections.fechaLeitura();
 			}
 
-		}
-		catch (Exception e) {
-			System.out.println("Exception caught reading elections.dat - "+e);
+		} catch (Exception e) {
+			System.out.println("Exception caught reading elections.dat - " + e);
 		}
 	}
 
 	// Seleciona se vai ser Main ou Backup RMI
-	public static boolean selectRMI(){
-		Scanner sc = new Scanner(System.in);
-		System.out.println("RMI Server:\n1. Main Server\n2. Backup Server\n3. Exit");
-
-		int choice = sc.nextInt();
-		switch (choice) {
-			case 1: return true;
-			case 2: return false;
-			case 3: System.exit(0);
-			default: System.out.println("Non suported choice"); return selectRMI();
+	public static void startRMI() {
+		try {
+			// Criação RMI
+			serverRMI server = new serverRMI();
+			Registry reg = LocateRegistry.createRegistry(6500);
+			reg.rebind("vote_booth", server);
+			System.out.println("RMI Server connected");
+		} catch (RemoteException e) {
+			System.out.println("Could not bind RMI registry");
 		}
 	}
 }
 
-// Thread que trata do Failover
-class RMIFailover extends Thread{
-	public static  final boolean DEBUG = true;
+	// Thread que trata do Failover
+class RMIFailover extends Thread {
+	public static final boolean DEBUG = true;
 
 	private DatagramSocket aSocket = null;
 
 	private String hostname;
 	private int serverPort;
-	private boolean mainServer;
 
-	public RMIFailover(String hostname, int serverPort, boolean mainServer) {
+	public RMIFailover(String hostname, int serverPort) {
 		this.hostname = hostname;
 		this.serverPort = serverPort;
-		this.mainServer = mainServer;
 	}
 
 	public void run() {
-		if(this.mainServer)
-			isMainServer();
-		else
-			isNotMainServer();
-	}
-
-	void isMainServer(){
-		String texto = "";
-		byte [] msg = texto.getBytes();
-		byte[] buffer = new byte[1000];
-		int heartbeatsFailed = 0;
-
+		RMIFailover UDPConn;
 		try {
 			// Abre socket UDP
-			InetAddress aHost = InetAddress.getByName(this.hostname);
-			this.aSocket = new DatagramSocket();
+			aSocket = new DatagramSocket(serverPort);
+			if (DEBUG) System.out.println("\t#DEBUG# Main RMI Server: A enviar hearbeats para Backup RMI Server");
 
-			while(heartbeatsFailed < 5){
-				// Define timeout de recepção de heartbeat
-				this.aSocket.setSoTimeout(1000);
+			serverRMI serverRMI = new serverRMI();
+			serverRMI.startRMI();
 
-				// Cria pacotes
-				DatagramPacket request = new DatagramPacket(msg, msg.length, aHost, this.serverPort);
-				DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
+			while (true) {
+				String texto = "";
+				byte[] m = texto.getBytes();
 
-				// Envia
-				this.aSocket.send(request);
-				if(DEBUG) System.out.println("\t#DEBUG# Enviou heartbeat na porta: "+this.serverPort);
+				// Cria e envia pacote UDP
+				InetAddress aHost = InetAddress.getByName(hostname);
+				DatagramPacket request = new DatagramPacket(m, m.length, aHost, serverPort);
+				aSocket.send(request);
 
-				// Espera 1 segundo
-				try { Thread.sleep(1000); } catch (InterruptedException i) { }
+				if (DEBUG) System.out.println("\t#DEBUG# Enviou hearbeat");
+
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException i) {
+				}
 			}
 
-		}catch (SocketException e){ if(DEBUG) System.out.println("\t#DEBUG# Socket: " + e.getMessage());
-		}catch (IOException e){ if(DEBUG) System.out.println("\t#DEBUG# IO: " + e.getMessage());
-		}finally {if(this.aSocket != null || this.aSocket != null) {this.aSocket.close();this.aSocket.close();}}
-	}
+		} catch (SocketException e) {
+			if (DEBUG) System.out.println("\t#DEBUG# Backup RMI Server: À espera de falha do Main RMI Server");
+			int heartbeatsFailed = 0;
+			byte[] buffer = new byte[1000];
 
-	void isNotMainServer(){
-		String texto = "";
-		byte [] msg = texto.getBytes();
-		byte[] buffer = new byte[1000];
-		int heartbeatsFailed = 0;
+			try {
+				// Abre receiver socket UDP
+				aSocket = new DatagramSocket(null);
+				aSocket.setReuseAddress(true);
+				aSocket.bind(new InetSocketAddress(hostname, serverPort));
 
-		try {
-			// Abre socket UDP
-			InetAddress aHost = InetAddress.getByName(this.hostname);
-			this.aSocket = new DatagramSocket();
-			this.aSocket = new DatagramSocket(this.serverPort);
+				while (heartbeatsFailed < 5) {
+					// Define timeout de recepção de heartbeat
+					this.aSocket.setSoTimeout(1500);
 
-			while(heartbeatsFailed < 5){
-				// Define timeout de recepção de heartbeat
-				this.aSocket.setSoTimeout(1000);
+					InetAddress aHost = InetAddress.getByName(hostname);
 
-				// Cria pacotes
-				DatagramPacket request = new DatagramPacket(msg, msg.length, aHost, this.serverPort);
-				DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
-
-				// Recebe
-				try{
-					this.aSocket.receive(reply);
-					if(DEBUG) System.out.println("\t#DEBUG# Recebeu heartbeat na porta: "+this.serverPort);
-				} catch (SocketTimeoutException e) {
-					if(DEBUG) System.out.println("\t#DEBUG# Heartbeat falhado");
-					heartbeatsFailed++;
+					// Cria e recebe pacote UDP
+					DatagramPacket request = new DatagramPacket(buffer, buffer.length, aHost, serverPort);
+					try {
+						aSocket.receive(request);
+						if (DEBUG) System.out.println("\t#DEBUG# Recebeu heartbeat");
+					} catch (SocketTimeoutException i){
+						heartbeatsFailed++;
+						System.out.println("\t#DEBUG# Heartbeat falhado");
+					}
 				}
 
-				// Espera 1 segundo
-				try { Thread.sleep(500); } catch (InterruptedException i) { }
-			}
+				if(heartbeatsFailed == 5) {
+					this.aSocket.close();
+					UDPConn = new RMIFailover(hostname, serverPort);
+					UDPConn.start();
+					serverRMI serverRMI = new serverRMI();
+					serverRMI.startRMI();
+					try {
+						Thread.currentThread().join();
+					} catch (InterruptedException i) {
+					}
+				}
 
-		}catch (SocketException e){ if(DEBUG) System.out.println("\t#DEBUG# Socket: " + e.getMessage());
-		}catch (IOException e){ if(DEBUG) System.out.println("\t#DEBUG# IO: " + e.getMessage());
-		}finally {if(this.aSocket != null || this.aSocket != null) {this.aSocket.close();this.aSocket.close();}}
+			} catch (SocketException i) { if (DEBUG) System.out.println("\t#DEBUG# Socket: " + e.getMessage());
+			} catch (IOException i) { if (DEBUG) System.out.println("\t#DEBUG# IO: " + e.getMessage());
+			} finally { if (this.aSocket != null) this.aSocket.close(); }
+
+		} catch (IOException e) { if (DEBUG) System.out.println("\t#DEBUG# IO: " + e.getMessage());
+		} finally { if (this.aSocket != null) this.aSocket.close(); }
 	}
 }
