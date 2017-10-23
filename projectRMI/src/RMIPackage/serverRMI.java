@@ -600,8 +600,6 @@ class RMIFailover extends Thread {
 					this.aSocket.close();
 					UDPConn = new RMIFailover(hostname, serverPort);
 					UDPConn.start();
-					serverRMI serverRMI = new serverRMI();
-					serverRMI.startRMI();
 					try {
 						Thread.currentThread().join();
 					} catch (InterruptedException i) {
