@@ -5,7 +5,6 @@ import adminPackage.VotingAdminInterface;
 
 import java.io.IOException;
 import java.net.*;
-import java.net.UnknownHostException;
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -407,20 +406,18 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		RMIFailover UDPConn;
 
 		String hostname;
-		int serverPortOne, serverPortTwo, choice;
+		int serverPort, choice;
 		boolean isMain = true;
 
 		try {
 			// argumentos da linha de comando: hostname, serverPort
 			if (args.length != 2) {
 				hostname = "localhost";
-				serverPortOne = 7000;
-				serverPortTwo = 7050;
+				serverPort = 7000;
 
 			} else {
 				hostname = args[0];
-				serverPortOne = Integer.parseInt(args[1]);
-				serverPortTwo = Integer.parseInt(args[2]);
+				serverPort = Integer.parseInt(args[1]);
 			}
 
 			isMain = selectRMI();
@@ -428,7 +425,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			if(isMain){
 				System.out.println("Main Server starting...");
 				// Inicia thread que lida com a conexão UDP
-				UDPConn = new RMIFailover(hostname, serverPortOne, serverPortTwo, isMain);
+				UDPConn = new RMIFailover(hostname, serverPort, isMain);
 				UDPConn.start();
 
 				// Atualiza dados ficheiros
@@ -443,7 +440,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			else{
 				System.out.println("Backup Server starting...");
 				// Inicia thread que lida com a conexão UDP
-				UDPConn = new RMIFailover(hostname, serverPortOne, serverPortTwo, isMain);
+				UDPConn = new RMIFailover(hostname, serverPort, isMain);
 				UDPConn.start();
 				try {
 					System.out.println("Backup Server waiting for Main Server to fail...");
@@ -552,18 +549,17 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 // Thread que trata do Failover
 class RMIFailover extends Thread{
-	public static  final boolean DEBUG = false;
+	public static  final boolean DEBUG = true;
 
-	private DatagramSocket aSocketOne = null, aSocketTwo = null;
+	private DatagramSocket aSocket = null;
 
 	private String hostname;
-	private int serverPortOne, serverPortTwo;
+	private int serverPort;
 	private boolean mainServer;
 
-	public RMIFailover(String hostname, int serverPortOne, int serverPortTwo, boolean mainServer) {
+	public RMIFailover(String hostname, int serverPort, boolean mainServer) {
 		this.hostname = hostname;
-		this.serverPortOne = serverPortOne;
-		this.serverPortTwo = serverPortTwo;
+		this.serverPort = serverPort;
 		this.mainServer = mainServer;
 	}
 
@@ -583,37 +579,27 @@ class RMIFailover extends Thread{
 		try {
 			// Abre socket UDP
 			InetAddress aHost = InetAddress.getByName(this.hostname);
-			this.aSocketOne = new DatagramSocket(this.serverPortOne);
-			this.aSocketTwo = new DatagramSocket();
+			this.aSocket = new DatagramSocket();
 
 			while(heartbeatsFailed < 5){
 				// Define timeout de recepção de heartbeat
-				this.aSocketOne.setSoTimeout(1000);
+				this.aSocket.setSoTimeout(1000);
 
 				// Cria pacotes
-				DatagramPacket request = new DatagramPacket(msg, msg.length, aHost, this.serverPortTwo);
+				DatagramPacket request = new DatagramPacket(msg, msg.length, aHost, this.serverPort);
 				DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
 
 				// Envia
-				this.aSocketTwo.send(request);
-				if(DEBUG) System.out.println("\t#DEBUG# Enviou heartbeat na porta: "+this.serverPortTwo);
-
-				// Recebe
-				try {
-					this.aSocketOne.receive(reply);
-					if(DEBUG) System.out.println("\t#DEBUG# Recebeu reply na porta: " + this.serverPortOne);
-				} catch (SocketTimeoutException e) {
-					if (DEBUG) System.out.println("\t#DEBUG# Heartbeat falhado");
-					heartbeatsFailed++;
-				}
+				this.aSocket.send(request);
+				if(DEBUG) System.out.println("\t#DEBUG# Enviou heartbeat na porta: "+this.serverPort);
 
 				// Espera 1 segundo
-				try { Thread.sleep(500); } catch (InterruptedException i) { }
+				try { Thread.sleep(1000); } catch (InterruptedException i) { }
 			}
 
 		}catch (SocketException e){ if(DEBUG) System.out.println("\t#DEBUG# Socket: " + e.getMessage());
 		}catch (IOException e){ if(DEBUG) System.out.println("\t#DEBUG# IO: " + e.getMessage());
-		}finally {if(this.aSocketOne != null || this.aSocketTwo != null) {this.aSocketOne.close();this.aSocketTwo.close();}}
+		}finally {if(this.aSocket != null || this.aSocket != null) {this.aSocket.close();this.aSocket.close();}}
 	}
 
 	void isNotMainServer(){
@@ -625,25 +611,21 @@ class RMIFailover extends Thread{
 		try {
 			// Abre socket UDP
 			InetAddress aHost = InetAddress.getByName(this.hostname);
-			this.aSocketOne = new DatagramSocket();
-			this.aSocketTwo = new DatagramSocket(this.serverPortTwo);
+			this.aSocket = new DatagramSocket();
+			this.aSocket = new DatagramSocket(this.serverPort);
 
 			while(heartbeatsFailed < 5){
 				// Define timeout de recepção de heartbeat
-				this.aSocketTwo.setSoTimeout(1000);
+				this.aSocket.setSoTimeout(1000);
 
 				// Cria pacotes
-				DatagramPacket request = new DatagramPacket(msg, msg.length, aHost, this.serverPortOne);
+				DatagramPacket request = new DatagramPacket(msg, msg.length, aHost, this.serverPort);
 				DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
-
-				// Envia
-				this.aSocketOne.send(request);
-				if(DEBUG) System.out.println("\t#DEBUG# Enviou reply na porta: "+this.serverPortOne);
 
 				// Recebe
 				try{
-					this.aSocketTwo.receive(reply);
-					if(DEBUG) System.out.println("\t#DEBUG# Recebeu heartbeat na porta: "+this.serverPortTwo);
+					this.aSocket.receive(reply);
+					if(DEBUG) System.out.println("\t#DEBUG# Recebeu heartbeat na porta: "+this.serverPort);
 				} catch (SocketTimeoutException e) {
 					if(DEBUG) System.out.println("\t#DEBUG# Heartbeat falhado");
 					heartbeatsFailed++;
@@ -655,6 +637,6 @@ class RMIFailover extends Thread{
 
 		}catch (SocketException e){ if(DEBUG) System.out.println("\t#DEBUG# Socket: " + e.getMessage());
 		}catch (IOException e){ if(DEBUG) System.out.println("\t#DEBUG# IO: " + e.getMessage());
-		}finally {if(this.aSocketOne != null || this.aSocketTwo != null) {this.aSocketOne.close();this.aSocketTwo.close();}}
+		}finally {if(this.aSocket != null || this.aSocket != null) {this.aSocket.close();this.aSocket.close();}}
 	}
 }
