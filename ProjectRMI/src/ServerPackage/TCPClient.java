@@ -59,7 +59,7 @@ class TCPClient {
         choice = sc.nextInt();
         switch (choice) {
             case 0:
-                output.println("quit");
+                System.exit(0);
                 if (DEBUG) System.out.println("\t#DEBUG# Enviou exit");
                 return;
             case 1:

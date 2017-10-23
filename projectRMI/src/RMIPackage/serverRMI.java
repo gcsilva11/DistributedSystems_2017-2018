@@ -546,6 +546,7 @@ class RMIFailover extends Thread {
 		try {
 			// Abre socket UDP
 			aSocket = new DatagramSocket(serverPort);
+			System.out.println("Main RMI Server started");
 			if (DEBUG) System.out.println("\t#DEBUG# Main RMI Server: A enviar hearbeats para Backup RMI Server");
 
 			serverRMI serverRMI = new serverRMI();
@@ -569,6 +570,7 @@ class RMIFailover extends Thread {
 			}
 
 		} catch (SocketException e) {
+			System.out.println("Backup RMI Server started");
 			if (DEBUG) System.out.println("\t#DEBUG# Backup RMI Server: À espera de falha do Main RMI Server");
 			int heartbeatsFailed = 0;
 			byte[] buffer = new byte[1000];
