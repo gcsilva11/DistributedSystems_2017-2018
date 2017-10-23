@@ -3,7 +3,6 @@ package RMIPackage;
 import ServerPackage.TCPServerInterface;
 import adminPackage.VotingAdminInterface;
 
-import javax.management.remote.rmi.RMIServer;
 import java.io.IOException;
 import java.net.*;
 import java.rmi.*;
@@ -40,22 +39,32 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			}
 		}
 
-		//FALTA VER SO O DEP. EXISTE
+		for (int i = 0; i < departments.getDeps().size(); i++) {
+			if (user.getDepartment().equals(departments.getDeps().get(i).getDep())) {
 
+				users.addUser(user);
 
-		users.addUser(user);
+				// Update ficheiro
+				try {
+					fo.abreEscrita("out/users.dat");
+					fo.escreveObjecto(users);
+					fo.fechaEscrita();
+				} catch (Exception e) {
+				}
 
-		// Update ficheiro
-		try {
-			fo.abreEscrita("out/users.dat");
-			fo.escreveObjecto(users);
-			fo.fechaEscrita();
-		} catch (Exception e) {
+				System.out.println("New user registered.");
+
+				return true;
+			}
 		}
 
-		System.out.println("New user registered.");
 
-		return true;
+		System.out.println("Error: That department doesn't exist");
+
+		return false;
+
+
+
 	}
 
 	// Adiciona departamento ao ficheiro
@@ -349,10 +358,9 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	}
 
 	//
-	public Election checkElecDate() throws java.rmi.RemoteException {
+	public ArrayList <Election> checkElecDate() throws java.rmi.RemoteException {
 
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
-		Election stub = null;
 
 		for (int i = 0; i < elList.getElections().size(); i++) {
 			if (elList.getElections().get(i).getEndDate().before(Calendar.getInstance()) && elList.getElections().get(i).getClosed() == false) {
@@ -375,11 +383,11 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 				} catch (Exception e) {
 				}
 
-				return elList.getElections().get(i);
+				return closedElections.getElections();
 			}
 		}
 
-		return stub;
+		return closedElections.getElections();
 
 	}
 
@@ -427,7 +435,6 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 		String hostname;
 		int serverPort;
-		boolean choice;
 
 		// argumentos da linha de comando: hostname, serverPort
 		if (args.length != 2) {
@@ -459,7 +466,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 		// Lê ficheiro users e adiciona-o a um array
 		try {
-			if (foUser.abreLeitura("out/users.dat")) {
+			if (foUser.abreLeitura("users.dat")) {
 				users = (UserList) foUser.leObjecto();
 				foUser.fechaLeitura();
 			}
@@ -470,7 +477,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 		// Lê ficheiro departamentos e adiciona-o a um array
 		try {
-			if (foDeps.abreLeitura("out/deps.dat")) {
+			if (foDeps.abreLeitura("deps.dat")) {
 				departments = (DepList) foDeps.leObjecto();
 				foDeps.fechaLeitura();
 			}
@@ -481,7 +488,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 		// Lê ficheiro lista de candidatos e adiciona-o a um array
 		try {
-			if (foLists.abreLeitura("out/lists.dat")) {
+			if (foLists.abreLeitura("lists.dat")) {
 				candidateList = (candidateListList) foLists.leObjecto();
 				foLists.fechaLeitura();
 			}
@@ -492,7 +499,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 		// Lê ficheiro eleiçoes e adiciona-o a um array
 		try {
-			if (foElections.abreLeitura("out/elections.dat")) {
+			if (foElections.abreLeitura("elections.dat")) {
 				elList = (ElectionList) foElections.leObjecto();
 				foElections.fechaLeitura();
 			}
@@ -514,7 +521,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	}
 
 	// Seleciona se vai ser Main ou Backup RMI
-	public static void startRMI() {
+	public void startRMI() {
 		try {
 			// Criação RMI
 			serverRMI server = new serverRMI();
@@ -580,7 +587,7 @@ class RMIFailover extends Thread {
 				aSocket = new DatagramSocket(null);
 				aSocket.setReuseAddress(true);
 				aSocket.bind(new InetSocketAddress(hostname, serverPort));
-
+				System.out.println("4");
 				while (heartbeatsFailed < 3) {
 					// Define timeout de recepção de heartbeat
 					this.aSocket.setSoTimeout(1500);

@@ -23,7 +23,7 @@ public class Admin {
 			checkThread.start();
 			
 			while(true){
-				System.out.println("Admin console ready.\nWhat do you want to do?\n1-Register a new user\n"
+				System.out.println("Admin console ready.What do you want to do?\n1-Register a new user\n"
 						+ "2-Manage departments and faculties\n3- Create an election\n4-Manage candidate lists"
 						+ "\n5-Edit an election\n6-Voting table status");
 				choice = input.nextLine();
@@ -44,8 +44,8 @@ public class Admin {
 						// Nome
 						System.out.print("Username: ");
 						name = input.nextLine();
-	
-						// No. ID
+
+                        // No. ID
 						System.out.print("\nID: ");
 						ID = input.nextLine();
 						
@@ -56,8 +56,8 @@ public class Admin {
 						Date expDate = sdf.parse(myDate);
 						Calendar cal = Calendar.getInstance();
 						cal.setTime(expDate);
-						
-						// No. Telefone
+
+                        // No. Telefone
 						System.out.print("\nPhone number: ");
 						phone = input.nextLine();
 						
@@ -175,7 +175,7 @@ public class Admin {
 							System.out.println("Not a valid choice, back to menu...");
 							break;
 						}
-						
+						break;
 					case "3":
 						
 						int type;
@@ -216,7 +216,7 @@ public class Admin {
 							depID = input.nextLine();
 							System.out.print("\nViable lists: ");
 							
-							ArrayList <candidateList> available = new ArrayList <candidateList>();
+							ArrayList <candidateList> available;
 							
 							available = vote.getList(1);
 							
@@ -522,38 +522,30 @@ class elecCheck extends Thread{
 		this.vote = vote;
 	}
 	
-	public void run(){
-		System.out.println("Election checking thread started running");
-		while(true){
-			try{
-				try{
-				    Thread.sleep(1000);
-				} 
-				catch(InterruptedException ex){
-				    Thread.currentThread().interrupt();
-				}
-				Election expired = vote.checkElecDate();
-				boolean checked = false;
-				if(!expired.getTitle().equals(null)){
-					for(int i=0;i<seen.size();i++){
-						if(expired.getTitle().equals(seen.get(i).getTitle())){
-							checked = true;
-						}
-					}
-					if(!checked){
-						seen.add(expired);
-						System.out.println("Election just closed!");
-						//IMPRIMIR ESTATISTICAS
-					}
-				}
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-			
-		}
-		
-	}
-	
-	
-	
+	public void run() {
+        System.out.println("ELECTION THREAD: Election Started running");
+        while (true) {
+            try {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+                ArrayList<Election> expired = vote.checkElecDate();
+                for (int i = 0; i < expired.size(); i++) {
+                    for (int j = 0; j < seen.size(); j++) {
+                        if (expired.get(i).getTitle() != seen.get(j).getTitle()) {
+                            System.out.println("Election expired: " + expired.get(i).getTitle());
+                            //ESTATISTICAS
+                            seen.add(expired.get(i));
+                        }
+                    }
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
 }
