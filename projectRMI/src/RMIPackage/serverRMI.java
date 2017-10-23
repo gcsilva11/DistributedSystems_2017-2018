@@ -579,7 +579,7 @@ class RMIFailover extends Thread {
 				aSocket.setReuseAddress(true);
 				aSocket.bind(new InetSocketAddress(hostname, serverPort));
 
-				while (heartbeatsFailed < 5) {
+				while (heartbeatsFailed < 3) {
 					// Define timeout de recepção de heartbeat
 					this.aSocket.setSoTimeout(1500);
 
@@ -593,11 +593,12 @@ class RMIFailover extends Thread {
 						System.out.println("Received heartbeat from Main RMI server");
 					} catch (SocketTimeoutException i){
 						heartbeatsFailed++;
-						System.out.println("\t#DEBUG# Heartbeat falhado");
+						if (DEBUG) System.err.println("\t#DEBUG# Heartbeat falhado");
+						System.err.println("Did not receive heartbeat from Main RMI server");
 					}
 				}
 
-				if(heartbeatsFailed == 5) {
+				if(heartbeatsFailed == 3) {
 					this.aSocket.close();
 					UDPConn = new RMIFailover(hostname, serverPort);
 					UDPConn.start();
