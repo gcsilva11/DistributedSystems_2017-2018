@@ -461,7 +461,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			}
 
 		} catch (RemoteException re) {
-			System.out.println("Exception in serverRMI.main: " + re);
+			System.out.println("Could not bind RMI registry");
 		}
 	}
 
@@ -552,7 +552,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 // Thread que trata do Failover
 class RMIFailover extends Thread{
-	public static  final boolean DEBUG = true;
+	public static  final boolean DEBUG = false;
 
 	private DatagramSocket aSocketOne = null, aSocketTwo = null;
 
@@ -638,7 +638,7 @@ class RMIFailover extends Thread{
 
 				// Envia
 				this.aSocketOne.send(request);
-				System.out.println("\t#DEBUG# Enviou reply na porta: "+this.serverPortOne);
+				if(DEBUG) System.out.println("\t#DEBUG# Enviou reply na porta: "+this.serverPortOne);
 
 				// Recebe
 				try{
