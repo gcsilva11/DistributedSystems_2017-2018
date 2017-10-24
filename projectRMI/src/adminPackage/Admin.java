@@ -24,7 +24,7 @@ public class Admin {
 			
 			while(true){
 				System.out.println("Admin console ready.What do you want to do?\n1-Register a new user\n"
-						+ "2-Manage departments and faculties\n3- Create an election\n4-Manage candidate lists"
+						+ "2-Add a new department\n3- Create an election\n4-Manage candidate lists"
 						+ "\n5-Edit an election\n6-Voting table status");
 				choice = input.nextLine();
 				
@@ -42,7 +42,7 @@ public class Admin {
 						System.out.print("Register requested.\n");
 						
 						// Nome
-						System.out.print("Username: ");
+						System.out.print("Name: ");
 						name = input.nextLine();
 
                         // No. ID
@@ -88,94 +88,38 @@ public class Admin {
 						
 					case "2":
 						
-						System.out.print("Manage departments/faculties.\n");
+						System.out.print("Add a new department\n");
 						
 						String depName;
 						String depID;
 						String facName;
-						
-						System.out.println("1-Add New Department\n2-Delete a deparment\n3-Edit department info");
-						choice = input.nextLine();
-						
-						switch(choice){
-						case "1":
-							
-							System.out.println("\nAdd a new department:");
-							// Nome departamento
-							System.out.print("\nDepartment Name: ");
-							depName = input.nextLine();
-							
-							// ID
-							System.out.print("\nDepartment ID: ");
-							depID = input.nextLine();
-							
-							// Faculdade
-							System.out.print("\nFaculty name: ");
-							facName = input.nextLine();
-							
-							Department dep = new Department(depName,depID,facName);
-							
-							boolean newDepAck = vote.registerDep(dep);
-							
-							if(newDepAck){
-								System.out.println("New department added!");
-							}
-							else{
-								System.out.println("Error adding the new department...");
-							}
-							break;
-							
-						case "2":
-							
-							System.out.println("\nEdit a department");
-							// Nome departamento
-							System.out.print("\nID of the department to edit: ");
-							depID = input.nextLine();
-							
-							// ID
-							System.out.print("\nNew department name: ");
-							depName = input.nextLine();
-							
-							// Faculdade
-							System.out.print("\nNew faculty name: ");
-							facName = input.nextLine();
-							
-							Department editDep = new Department(depName,depID,facName);
-							
-							boolean editDepAck = vote.registerDep(editDep);
-							
-							if(editDepAck){
-								System.out.println("Department edited!");
-							}
-							else{
-								System.out.println("Error editing the new department...");
-							}
-							break;
-							
-						case "3":
-							
-							System.out.println("\nEdit a department");
-							// Nome departamento
-							System.out.print("\nID of the department to delete: ");
-							depID = input.nextLine();
-							
-							Department deleteDep = new Department(depID);
-							
-							boolean deleteDepAck = vote.registerDep(deleteDep);
-							
-							if(deleteDepAck){
-								System.out.println("Department edited!");
-							}
-							else{
-								System.out.println("Error editing the new department...");
-							}
-							break;
 
-						default:
-							System.out.println("Not a valid choice, back to menu...");
-							break;
+						System.out.println("\nAdd a new department:");
+						// Nome departamento
+						System.out.print("\nDepartment Name: ");
+						depName = input.nextLine();
+
+						// ID
+						System.out.print("\nDepartment ID: ");
+						depID = input.nextLine();
+
+						// Faculdade
+						System.out.print("\nFaculty name: ");
+						facName = input.nextLine();
+
+						Department dep = new Department(depName,depID,facName);
+
+						boolean newDepAck = vote.registerDep(dep);
+
+						if(newDepAck){
+							System.out.println("New department added!");
 						}
+						else{
+							System.out.println("Error adding the new department...");
+						}
+
 						break;
+
 					case "3":
 						
 						int type;
@@ -189,8 +133,8 @@ public class Admin {
 						
 						System.out.print("\nElection type(1-Student Association 2- General Council: ");
 						type = Integer.parseInt(input.nextLine());
-						
-						System.out.print("\nTitle: ");
+
+                        System.out.print("\nTitle: ");
 						title = input.nextLine();
 						
 						System.out.print("\nDescription: ");
@@ -214,26 +158,27 @@ public class Admin {
 							
 							System.out.println("Student election - What department? - ");
 							depID = input.nextLine();
-							System.out.print("\nViable lists: ");
+							System.out.print("\nViable lists: \n");
 							
 							ArrayList <candidateList> available;
 							
 							available = vote.getList(1);
 							
 							for(int i=0;i<available.size();i++){
-								System.out.println("Title:" + available.get(i).getName() + " ID:" + available.get(i).getID());
+								System.out.println("Title: " + available.get(i).getName() + " ID: " + available.get(i).getID());
 							}
 							
-							System.out.println("Input the ID of the ones you want to add:");
+							System.out.println("Input the ID of the ones you want to add (0 to stop):");
 							
 							ArrayList <candidateList> toAdd = new ArrayList <candidateList>();
-							
-							while(!input.nextLine().equals("0")){
+							String IDchoice = input.nextLine();
+							while(!IDchoice.equals("0")){
 								for(int i=0;i<available.size();i++){
-									if(input.nextLine().equals(available.get(i).getID())){
+									if(IDchoice.equals(available.get(i).getID())){
 										toAdd.add(available.get(i));
 									}
 								}
+								IDchoice = input.nextLine();
 							}
 							
 							Election election = new Election(title,description,cal2,cal3,type,toAdd);
@@ -443,6 +388,7 @@ public class Admin {
 							else{
 								System.out.println("Error editing name");
 							}
+							break;
 							
 						case "5":
 							
@@ -511,9 +457,7 @@ public class Admin {
 	}
 }
 
-//elecCheck var = new elecCheck
-//var.start();
-//Thread.currentThread join
+
 class elecCheck extends Thread{
 	private VotingAdminInterface vote;
 	private ArrayList <Election> seen = new ArrayList <Election>(); 
@@ -523,23 +467,30 @@ class elecCheck extends Thread{
 	}
 	
 	public void run() {
-        System.out.println("ELECTION THREAD: Election Started running");
+        System.out.println("ELECTION THREAD: Checking for expired elections");
         while (true) {
             try {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(10000);
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 }
                 ArrayList<Election> expired = vote.checkElecDate();
+                boolean checked=true;
+                Election toAdd = null;
                 for (int i = 0; i < expired.size(); i++) {
                     for (int j = 0; j < seen.size(); j++) {
-                        if (expired.get(i).getTitle() != seen.get(j).getTitle()) {
-                            System.out.println("Election expired: " + expired.get(i).getTitle());
-                            //ESTATISTICAS
-                            seen.add(expired.get(i));
+                        if (expired.get(i).getTitle() == seen.get(j).getTitle()) {
+                           checked = false;
+                           toAdd = expired.get(i);
                         }
                     }
+                }
+
+                if(!checked){
+                    System.out.println("Election expired: " + toAdd.getTitle());
+                    //ESTATISTICAS
+                    seen.add(toAdd);
                 }
             } catch (RemoteException e) {
                 e.printStackTrace();

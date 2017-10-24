@@ -16,7 +16,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 	private static UserList users = new UserList();
 	private static DepList departments = new DepList();
-	private static candidateListList candidateList = new candidateListList();
+	private static candidateListList listOfCandidateLists = new candidateListList();
 	private static ElectionList elList = new ElectionList();
 	private static ElectionList closedElections = new ElectionList();
 
@@ -157,14 +157,14 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	public ArrayList<candidateList> getList(int type) {
 		ArrayList<candidateList> chosenLists = new ArrayList<candidateList>();
 		if (type == 1) {
-			for (int i = 0; i < candidateList.getCandidateList().size(); i++) {
-				if (candidateList.getCandidateList().get(i).getType() == type) {
-					chosenLists.add(candidateList.getCandidateList().get(i));
+			for (int i = 0; i < listOfCandidateLists.getCandidateList().size(); i++) {
+				if (listOfCandidateLists.getCandidateList().get(i).getType() == type) {
+					chosenLists.add(listOfCandidateLists.getCandidateList().get(i));
 				}
 			}
 		} else {
-			for (int i = 0; i < candidateList.getCandidateList().size(); i++) {
-				chosenLists.add(candidateList.getCandidateList().get(i));
+			for (int i = 0; i < listOfCandidateLists.getCandidateList().size(); i++) {
+				chosenLists.add(listOfCandidateLists.getCandidateList().get(i));
 			}
 		}
 		return chosenLists;
@@ -227,8 +227,8 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		boolean exists = false;
 
 		// Verifica se ID da lista de candidatos ja existe
-		for (int i = 0; i < candidateList.getCandidateList().size(); i++) {
-			if (candidateList.getCandidateList().get(i).getID() == cl.getID()) {
+		for (int i = 0; i < listOfCandidateLists.getCandidateList().size(); i++) {
+			if (listOfCandidateLists.getCandidateList().get(i).getID() == cl.getID()) {
 				exists = true;
 			}
 		}
@@ -238,13 +238,13 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			return false;
 		}
 
-		candidateList.addCandidateList(cl);
+        listOfCandidateLists.addCandidateList(cl);
 		;
 
 		//Update ficheiro
 		try {
 			fo.abreEscrita("out/lists.dat");
-			fo.escreveObjecto(cl);
+			fo.escreveObjecto(listOfCandidateLists);
 			fo.fechaEscrita();
 		} catch (Exception e) {
 		}
@@ -260,14 +260,14 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
 		boolean exists = false;
 
-		for (int i = 0; i < candidateList.getCandidateList().size(); i++) {
-			if (candidateList.getCandidateList().get(i).getID().equals(id)) {
-				candidateList.getCandidateList().remove(i);
+		for (int i = 0; i < listOfCandidateLists.getCandidateList().size(); i++) {
+			if (listOfCandidateLists.getCandidateList().get(i).getID().equals(id)) {
+                listOfCandidateLists.getCandidateList().remove(i);
 				exists = true;
 				//Update file
 				try {
 					fo.abreEscrita("out/lists.dat");
-					fo.escreveObjecto(candidateList);
+					fo.escreveObjecto(listOfCandidateLists);
 					fo.fechaEscrita();
 				} catch (Exception e) {
 				}
@@ -283,14 +283,14 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
 		boolean done = false;
 
-		for (int i = 0; i < candidateList.getCandidateList().size(); i++) {
-			if (candidateList.getCandidateList().get(i).getID().equals(id)) {
-				candidateList.getCandidateList().get(i).setName(title);
+		for (int i = 0; i < listOfCandidateLists.getCandidateList().size(); i++) {
+			if (listOfCandidateLists.getCandidateList().get(i).getID().equals(id)) {
+                listOfCandidateLists.getCandidateList().get(i).setName(title);
 				done = true;
 				//Update file
 				try {
 					fo.abreEscrita("out/lists.dat");
-					fo.escreveObjecto(candidateList);
+					fo.escreveObjecto(listOfCandidateLists);
 					fo.fechaEscrita();
 				} catch (Exception e) {
 				}
@@ -367,6 +367,8 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 				elList.getElections().get(i).setClosed();
 				closedElections.addELection(elList.getElections().get(i));
 
+				System.out.println("Election closed.");
+
 				//Update ficheiro eleicoes
 				try {
 					fo.abreEscrita("out/elections.dat");
@@ -401,7 +403,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 	// Devolve lista de candidatos
 	public ArrayList<candidateList> getCandidateList() throws RemoteException {
-		return candidateList.getCandidateList();
+		return listOfCandidateLists.getCandidateList();
 	}
 
 	// Devolve lista de departamentos
@@ -473,10 +475,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 				users = (UserList) foUser.leObjecto();
 				foUser.fechaLeitura();
 			}
-			else {
-				foUser.abreEscrita(path);
-				foUser.fechaEscrita();
-			}
+
 		} catch (Exception e) {
 			System.out.println("Exception caught reading users.dat - " + e);
 		}
@@ -484,14 +483,11 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		// Lê ficheiro departamentos e adiciona-o a um array
 		try {
 			path = "out/deps.dat";
-			if (foUser.abreLeitura(path)) {
+			if (foDeps.abreLeitura(path)) {
 				departments = (DepList) foDeps.leObjecto();
 				foDeps.fechaLeitura();
 			}
-			else {
-				foUser.abreEscrita(path);
-				foUser.fechaEscrita();
-			}
+
 		} catch (Exception e) {
 			System.out.println("Exception caught reading deps.dat - " + e);
 		}
@@ -499,14 +495,11 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		// Lê ficheiro lista de candidatos e adiciona-o a um array
 		try {
 			path = "out/lists.dat";
-			if (foUser.abreLeitura(path)) {
-				candidateList = (candidateListList) foLists.leObjecto();
+			if (foLists.abreLeitura(path)) {
+                listOfCandidateLists = (candidateListList) foLists.leObjecto();
 				foLists.fechaLeitura();
 			}
-			else {
-				foUser.abreEscrita(path);
-				foUser.fechaEscrita();
-			}
+
 		} catch (Exception e) {
 			System.out.println("Exception caught reading lists.dat - " + e);
 		}
@@ -514,13 +507,9 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		// Lê ficheiro eleiçoes e adiciona-o a um array
 		try {
 			path = "out/elections.dat";
-			if (foUser.abreLeitura(path)) {
+			if (foElections.abreLeitura(path)) {
 				elList = (ElectionList) foElections.leObjecto();
 				foElections.fechaLeitura();
-			}
-			else {
-				foUser.abreEscrita(path);
-				foUser.fechaEscrita();
 			}
 		} catch (Exception e) {
 			System.out.println("Exception caught reading elections.dat - " + e);
@@ -529,14 +518,11 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		// Le ficheiro de eleicoes fechadas e poe no array
 		try {
 			path = "out/closedelections.dat";
-			if (foUser.abreLeitura(path)) {
+			if (foClosedElections.abreLeitura(path)) {
 				closedElections = (ElectionList) foClosedElections.leObjecto();
 				foClosedElections.fechaLeitura();
 			}
-			else {
-				foUser.abreEscrita(path);
-				foUser.fechaEscrita();
-			}
+
 		} catch (Exception e) {
 			System.out.println("Exception caught reading elections.dat - " + e);
 		}
