@@ -88,6 +88,7 @@ class Connection extends Thread{
     }
 
     public int identifyUser(int id) {
+        int userID = 0;
         try {
             String data;
             boolean bool = false;
@@ -115,8 +116,8 @@ class Connection extends Thread{
 
                 for (int i = 0; i < this.user.size(); i++) {
                     if (Integer.parseInt(data) == Integer.parseInt(this.user.get(i).getID())) {
-
                         // Envia ID
+                        userID = Integer.parseInt(this.user.get(i).getID());
                         this.output.println(this.user.get(i).getID());
                         if (DEBUG)
                             System.out.println("\t#DEBUG# Enviou para cliente " + this.thread_number + " - " + this.user.get(i).getID());
@@ -134,11 +135,12 @@ class Connection extends Thread{
 
                 for (int j = 0; j < this.user.size(); j++) {
                     if (data.compareTo(this.user.get(j).getName()) == 0) {
-
+                        userID = Integer.parseInt(this.user.get(j).getID());
+                        this.output.println(this.user.get(j).getID());
+                        if (DEBUG) System.out.println("\t#DEBUG# Enviou para cliente " + this.thread_number + " - " + this.user.get(j).getID());
                         // Envia Nome
                         this.output.println(this.user.get(j).getName());
-                        if (DEBUG)
-                            System.out.println("\t#DEBUG# Enviou para cliente " + this.thread_number + " - " + this.user.get(j).getName());
+                        if (DEBUG) System.out.println("\t#DEBUG# Enviou para cliente " + this.thread_number + " - " + this.user.get(j).getName());
                         id = j;
                         bool = true;
                     }
@@ -165,10 +167,11 @@ class Connection extends Thread{
                     // Envia confirmação autenticaçao
                     output.println("true");
                     if (DEBUG) System.out.println("\t#DEBUG# Enviou para cliente " + this.thread_number + " - 1");
+
                     //
                     //   VOTAR AQUI
                     //
-                    voteAct();
+                    voteAct(userID);
 
                 // Falhou autenticação
                 } else {
@@ -181,7 +184,32 @@ class Connection extends Thread{
     }
 
     // Utilizador vota
-    public void voteAct() {
-        System.out.println("Vote por implementar");
+    public void voteAct(int userID) {
+        try {
+            int elections = 0;
+            for (int i = 0; i < election.size(); i++)
+                elections++;
+            output.println(elections);
+            for (int i = 0; i < election.size(); i++)
+                output.println(election.get(i).getTitle());
+
+            elections = Integer.parseInt(input.readLine());
+
+            int list = 0;
+            for (int i = 0; i < candidateList.size(); i++)
+                list++;
+            output.println(list);
+
+            for (int i = 0; i < candidateList.size(); i++)
+                output.println(candidateList.get(i).getName());
+
+            list = Integer.parseInt(input.readLine());
+
+            user.get(userID).Vote();
+            //e preciso refazer Vote() para por um boolean para cada eleiçao
+
+            output.println(user.get(userID).getVote());
+
+        } catch (IOException e) {}
     }
 }

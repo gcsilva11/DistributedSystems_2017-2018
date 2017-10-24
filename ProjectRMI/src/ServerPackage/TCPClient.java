@@ -52,26 +52,31 @@ class TCPClient {
 
         Terminal votingTerminal;
 
-        String data;
+        String data = "";
         int choice;
+        int userID = 0;
 
         System.out.println("\nSelect how to identfy yourself:\n1. ID\n2. Name\n0. Quit");
         choice = sc.nextInt();
         switch (choice) {
             case 0:
+                output.println("quit");
+                if (DEBUG) System.out.println("\t#DEBUG# Enviou true");
                 System.exit(0);
                 if (DEBUG) System.out.println("\t#DEBUG# Enviou exit");
                 return;
+
+            // ID
             case 1:
                 output.println("true");
                 if (DEBUG) System.out.println("\t#DEBUG# Enviou true");
 
                 System.out.println("\nEnter ID:");
                 sc = new Scanner(System.in);
-                data = sc.nextLine();
+                userID = Integer.parseInt(sc.nextLine());
 
-                output.println(data);
-                if (DEBUG) System.out.println("\t#DEBUG# Enviou " + data);
+                output.println(userID);
+                if (DEBUG) System.out.println("\t#DEBUG# Enviou " + userID);
 
                 try {
                     data = input.readLine();
@@ -79,7 +84,7 @@ class TCPClient {
                 if (DEBUG) System.out.println("\t#DEBUG# Recebeu " + data);
 
                 if (data.compareTo("NotFound") != 0) {
-                    votingTerminal = new Terminal(input, output);
+                    votingTerminal = new Terminal(input, output, userID);
                     votingTerminal.start();
                     try {
                         votingTerminal.join();
@@ -88,6 +93,8 @@ class TCPClient {
                 } else
                     System.out.println("ID not found");
                 break;
+
+            // Name
             case 2:
                 output.println("false");
                 if (DEBUG) System.out.println("\t#DEBUG# Enviou false");
@@ -100,12 +107,16 @@ class TCPClient {
                 if (DEBUG) System.out.println("\t#DEBUG# Enviou " + data);
 
                 try {
+                    userID = Integer.parseInt(input.readLine());
+                } catch (IOException e) { }
+
+                try {
                     data = input.readLine();
                 } catch (IOException e) { }
                 if (DEBUG) System.out.println("\t#DEBUG# Recebeu " + data);
 
                 if (data.compareTo("NotFound") != 0) {
-                    votingTerminal = new Terminal(input, output);
+                    votingTerminal = new Terminal(input, output, userID);
                     votingTerminal.start();
                     try {
                         votingTerminal.join();
@@ -126,9 +137,12 @@ class Terminal extends Thread{
     private PrintWriter output;
     private Scanner sc = new Scanner(System.in);
 
-    public Terminal(BufferedReader input, PrintWriter output){
+    private int userID;
+
+    public Terminal(BufferedReader input, PrintWriter output, int userID){
         this.input = input;
         this.output = output;
+        this.userID = userID;
     }
     public void run() {
         /*
@@ -176,12 +190,51 @@ class Terminal extends Thread{
 
     // Utilizador vota
     public void voteAct() {
+        Scanner sc;
+        String data;
         System.out.println("Vote por implementar");
+
+        try {
+            data = input.readLine();
+            int choice = Integer.parseInt(data);
+
+            System.out.println("Choose elections to vote in:");
+            for (int i = 1; i <= choice; i++) {
+                data = input.readLine();
+                System.out.println(i + ". " + data);
+            }
+
+            sc = new Scanner(System.in);
+            int aux = sc.nextInt();
+
+            output.println(aux);
+
+            data = input.readLine();
+            choice = Integer.parseInt(data);
+
+            System.out.println("Choose your vote:");
+            for (int i = 1; i <= choice; i++) {
+                data = input.readLine();
+                System.out.println(i + ". " + data);
+            }
+
+            sc = new Scanner(System.in);
+            aux = sc.nextInt();
+
+            output.println(aux);
+
+            data = input.readLine();
+            System.out.println("Vote "+data);
+
+        } catch (IOException e) {
+        }
         /*
         //
         // FALTA CLIENTE VOTAR!!
         // QUANDO VOTA ESCREVE NO CLIENTE ONDE VOTOU E TITULO DA ELEICAO
         //
         */
+
+
     }
 }

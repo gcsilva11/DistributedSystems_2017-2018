@@ -464,57 +464,79 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		FicheiroDeObjectos foElections = new FicheiroDeObjectos();
 		FicheiroDeObjectos foClosedElections = new FicheiroDeObjectos();
 
+		String path;
+
 		// Lê ficheiro users e adiciona-o a um array
 		try {
-			if (foUser.abreLeitura("users.dat")) {
+			path = "out/users.dat";
+			if (foUser.abreLeitura(path)) {
 				users = (UserList) foUser.leObjecto();
 				foUser.fechaLeitura();
 			}
-
+			else {
+				foUser.abreEscrita(path);
+				foUser.fechaEscrita();
+			}
 		} catch (Exception e) {
 			System.out.println("Exception caught reading users.dat - " + e);
 		}
 
 		// Lê ficheiro departamentos e adiciona-o a um array
 		try {
-			if (foDeps.abreLeitura("deps.dat")) {
+			path = "out/deps.dat";
+			if (foUser.abreLeitura(path)) {
 				departments = (DepList) foDeps.leObjecto();
 				foDeps.fechaLeitura();
 			}
-
+			else {
+				foUser.abreEscrita(path);
+				foUser.fechaEscrita();
+			}
 		} catch (Exception e) {
 			System.out.println("Exception caught reading deps.dat - " + e);
 		}
 
 		// Lê ficheiro lista de candidatos e adiciona-o a um array
 		try {
-			if (foLists.abreLeitura("lists.dat")) {
+			path = "out/lists.dat";
+			if (foUser.abreLeitura(path)) {
 				candidateList = (candidateListList) foLists.leObjecto();
 				foLists.fechaLeitura();
 			}
-
+			else {
+				foUser.abreEscrita(path);
+				foUser.fechaEscrita();
+			}
 		} catch (Exception e) {
 			System.out.println("Exception caught reading lists.dat - " + e);
 		}
 
 		// Lê ficheiro eleiçoes e adiciona-o a um array
 		try {
-			if (foElections.abreLeitura("elections.dat")) {
+			path = "out/elections.dat";
+			if (foUser.abreLeitura(path)) {
 				elList = (ElectionList) foElections.leObjecto();
 				foElections.fechaLeitura();
 			}
-
+			else {
+				foUser.abreEscrita(path);
+				foUser.fechaEscrita();
+			}
 		} catch (Exception e) {
 			System.out.println("Exception caught reading elections.dat - " + e);
 		}
 
 		// Le ficheiro de eleicoes fechadas e poe no array
 		try {
-			if (foClosedElections.abreLeitura("out/closedelections.dat")) {
+			path = "out/closedelections.dat";
+			if (foUser.abreLeitura(path)) {
 				closedElections = (ElectionList) foClosedElections.leObjecto();
 				foClosedElections.fechaLeitura();
 			}
-
+			else {
+				foUser.abreEscrita(path);
+				foUser.fechaEscrita();
+			}
 		} catch (Exception e) {
 			System.out.println("Exception caught reading elections.dat - " + e);
 		}
@@ -587,7 +609,6 @@ class RMIFailover extends Thread {
 				aSocket = new DatagramSocket(null);
 				aSocket.setReuseAddress(true);
 				aSocket.bind(new InetSocketAddress(hostname, serverPort));
-				System.out.println("4");
 				while (heartbeatsFailed < 3) {
 					// Define timeout de recepção de heartbeat
 					this.aSocket.setSoTimeout(1500);
