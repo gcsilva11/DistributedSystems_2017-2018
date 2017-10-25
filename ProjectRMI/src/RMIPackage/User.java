@@ -1,6 +1,7 @@
 package RMIPackage;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class User implements Serializable{
@@ -12,7 +13,8 @@ public class User implements Serializable{
     private int profession;
     private String department;
     private String password;
-    private boolean hasVoted = false;
+    private ArrayList <Election> votedIn = new ArrayList<Election>();
+    private ArrayList <candidateList> listVoted = new ArrayList<candidateList>();
 
     public User(String name, String idNumber, Calendar expDate, String phone, int profession, String department, String password){
         this.name = name;
@@ -34,10 +36,6 @@ public class User implements Serializable{
     	this.password = null;
     }
 
-    public void Vote(){
-        this.hasVoted = true;
-    }
-    
     public String getName(){
     	return this.name;
     }
@@ -66,11 +64,12 @@ public class User implements Serializable{
     	return this.password;
     }
 
-    public boolean getVote(){
-        return this.hasVoted;
+    public String getInfo() {
+        return "Name: "+this.getName()+"\nID: "+this.idNumber+"\nExp Date: "+this.getExpDate().toString()+"\nPhone: "+this.getPhone()+"\nProfession: "+this.getProfession()+"\nDepartment: "+this.getDepartment()+"\nPassword: "+this.getPassword();
     }
 
-    public String getInfo() {
-        return "Name: "+this.getName()+"\nID: "+this.idNumber+"\nExp Date: "+this.getExpDate().toString()+"\nPhone: "+this.getPhone()+"\nProfession: "+this.getProfession()+"\nDepartment: "+this.getDepartment()+"\nPassword: "+this.getPassword()+"\nHas voted: "+this.getVote();
+    public void voteElection(Election e,candidateList cl){
+        this.votedIn.add(e);
+        this.listVoted.add(cl);
     }
 }

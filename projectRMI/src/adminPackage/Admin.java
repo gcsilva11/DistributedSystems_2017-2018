@@ -1,5 +1,7 @@
 package adminPackage;
 
+import java.awt.*;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.text.SimpleDateFormat;
@@ -74,16 +76,32 @@ public class Admin {
 						password = input.nextLine();
 					
 						User user = new User(name,ID,cal,phone,profession,department,password);
-						
-						boolean ack = vote.registerUser(user);
-						
-						if(ack){
-							System.out.println("Successfully registered!");
-						}
-						else{
-							System.out.println("Error: Couldn't register new user...");
-						}
-						
+
+                        int failed = 0;
+						for(int i=0;i<10;i++) {
+                            try {
+                                boolean ack = vote.registerUser(user);
+                                if (ack) {
+                                    System.out.println("Successfully registered!");
+                                } else {
+                                    System.out.println("Error: Couldn't register new user...");
+                                }
+                                break;
+                            } catch (Exception e) {
+                                failed++;
+                                if(failed== 10){
+                                    System.out.println("RMI Timeout on User registry, trying to reconnect");
+                                    try{
+                                        Thread.sleep(1000);
+                                        vote = (VotingAdminInterface) LocateRegistry.getRegistry(6500).lookup("vote_booth");
+                                    } catch (Exception e2){
+                                        System.out.println("RMI server not responding.");
+                                        break;
+                                    }
+                                }
+                                Thread.sleep(3000);
+                            }
+                        }
 						break;
 						
 					case "2":
@@ -109,15 +127,31 @@ public class Admin {
 
 						Department dep = new Department(depName,depID,facName);
 
-						boolean newDepAck = vote.registerDep(dep);
-
-						if(newDepAck){
-							System.out.println("New department added!");
-						}
-						else{
-							System.out.println("Error adding the new department...");
-						}
-
+						failed =0;
+						for(int i=0;i<10;i++) {
+                            try {
+                                boolean newDepAck = vote.registerDep(dep);
+                                if (newDepAck) {
+                                    System.out.println("New department added!");
+                                } else {
+                                    System.out.println("Error adding the new department...");
+                                }
+                                failed = 0;
+                            } catch (Exception e) {
+                                failed++;
+                                if (failed == 10) {
+                                    System.out.println("RMI Timeout on department creation, trying to reconnect");
+                                    try {
+                                        Thread.sleep(1000);
+                                        vote = (VotingAdminInterface) LocateRegistry.getRegistry(6500).lookup("vote_booth");
+                                    } catch (Exception e2) {
+                                        System.out.println("RMI server not responding.");
+                                        break;
+                                    }
+                                }
+                                Thread.sleep(3000);
+                            }
+                        }
 						break;
 
 					case "3":
@@ -182,32 +216,47 @@ public class Admin {
 							}
 							
 							Election election = new Election(title,description,cal2,cal3,type,toAdd);
-							
-							boolean studElecAdd = vote.newElection(election);
-							
-							if(studElecAdd){
-								System.out.println("Successfully created the election!");
-								System.out.print("Add voting tables (by dep ID) to the election (0 to stop): ");
-								String depId = input.nextLine();
-								ArrayList <String> depTables = new ArrayList<String>();
-								while(!depId.equals("0")){
-									depTables.add(depId);
-									depId = input.nextLine();
-								}
-								
-								boolean boothAck = vote.addBooth(election.getTitle(),depTables);
-								
-								if(boothAck){
-									System.out.println("Booths added successfully");
-								}
-								
+
+							failed = 0;
+							for(int i=0;i<10;i++){
+							try{
+							    boolean studElecAdd = vote.newElection(election);
+							    if(studElecAdd){
+							        System.out.println("Successfully created the election!");
+                                    System.out.print("Add voting tables (by dep ID) to the election (0 to stop): ");
+                                    String depId = input.nextLine();
+                                    ArrayList <String> depTables = new ArrayList<String>();
+                                    while(!depId.equals("0")){
+                                        depTables.add(depId);
+                                        depId = input.nextLine();
+                                    }
+                                    boolean boothAck = vote.addBooth(election.getTitle(),depTables);
+
+                                    if(boothAck){
+                                        System.out.println("Booths added successfully");
+                                    }
+                                }
+                                else{
+                                    System.out.println("Error creating election...");
+                                    }
+                                } catch (Exception e) {
+                                failed++;
+                                    if (failed == 10) {
+                                        System.out.println("RMI Timeout on election creation, trying to reconnect");
+                                        try {
+                                            Thread.sleep(1000);
+                                            vote = (VotingAdminInterface) LocateRegistry.getRegistry(6500).lookup("vote_booth");
+                                        } catch (Exception e2) {
+                                            System.out.println("RMI server not responding.");
+                                            break;
+                                        }
+                                    }
+                                Thread.sleep(3000);
+                            }
 							}
-							else{
-								System.out.println("Error creating election...");
-							}
-						}
-						
-						
+
+                        }
+
 						else{
 							
 							System.out.println("Council election");
@@ -234,25 +283,41 @@ public class Admin {
 							}
 							
 							Election election = new Election(title,description,cal2,cal3,type,toAdd);
-							
+							failed = 0;
+							try{
 							boolean genElecAdd = vote.newElection(election);
-							
+
 							if(genElecAdd){
 								System.out.println("Successfully created the election!");
 							}
 							else{
 								System.out.println("Error creating election...");
 							}
+                            } catch (Exception e) {
+                            failed++;
+                            if (failed == 10) {
+                                System.out.println("RMI Timeout on election creation, trying to reconnect");
+                                try {
+                                    Thread.sleep(1000);
+                                    vote = (VotingAdminInterface) LocateRegistry.getRegistry(6500).lookup("vote_booth");
+                                } catch (Exception e2) {
+                                    System.out.println("RMI server not responding.");
+                                    break;
+                                }
+                            }
+                            Thread.sleep(3000);
+                        }
 						}
+						break;
 					case "4":
 						System.out.println("Manage candidate lists");
-						
+
 						System.out.print("1 - Create new list\n2-Delete a list\n3-Edit a list\nInput: ");
-						
+
 						choice = input.nextLine();
-						
+
 						switch(choice){
-						
+
 						case "1":
 							
 							System.out.println("Create a new list");
@@ -280,16 +345,35 @@ public class Admin {
 								String listID = input.nextLine();
 								
 								candidateList cl = new candidateList(listName,listID,1,studentList);
-								
-								boolean ackCandidate = vote.createList(cl);
-								
-								if(ackCandidate){
-									System.out.println("List successfully created!");
-								}
-								else{
-									System.out.println("Problem creating the list...");
-								}
-								
+
+								failed = 0;
+								for(int i=0;i<10;i++) {
+								    try {
+
+                                        boolean ackCandidate = vote.createList(cl);
+
+                                        if (ackCandidate) {
+                                            System.out.println("List successfully created!");
+                                        } else {
+                                            System.out.println("Problem creating the list...");
+                                        }
+                                    } catch (Exception e){
+                                        failed++;
+                                        if (failed == 10) {
+                                            System.out.println("RMI Timeout on election creation, trying to reconnect");
+                                            try {
+                                                Thread.sleep(1000);
+                                                vote = (VotingAdminInterface) LocateRegistry.getRegistry(6500).lookup("vote_booth");
+                                            } catch (Exception e2) {
+                                                System.out.println("RMI server not responding.");
+                                                break;
+                                            }
+                                        }
+                                        Thread.sleep(3000);
+                                    }
+                                    break;
+                                }
+                                break;
 							}
 							else if(listType == 2){
 								
@@ -461,13 +545,14 @@ public class Admin {
 class elecCheck extends Thread{
 	private VotingAdminInterface vote;
 	private ArrayList <Election> seen = new ArrayList <Election>(); 
-	
+
 	public elecCheck(VotingAdminInterface vote){
 		this.vote = vote;
 	}
 	
 	public void run() {
         System.out.println("ELECTION THREAD: Checking for expired elections");
+        int failed=0;
         while (true) {
             try {
                 try {
@@ -486,17 +571,24 @@ class elecCheck extends Thread{
                         }
                     }
                 }
-
                 if(!checked){
                     System.out.println("Election expired: " + toAdd.getTitle());
                     //ESTATISTICAS
                     seen.add(toAdd);
                 }
+                failed = 0;
             } catch (RemoteException e) {
-                e.printStackTrace();
+                failed++;
+                if(failed == 3){
+                    System.out.println("Timeout - RMI didn't respond for 30 seconds, trying to reconnect...");
+                    try{
+                        this.vote = (VotingAdminInterface) LocateRegistry.getRegistry(6500).lookup("vote_booth");
+                    } catch (Exception e2){
+                        System.out.println("RMI server not responding, shutting down thread");
+                        break;
+                    }
+                }
             }
-
         }
-
     }
 }
