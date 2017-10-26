@@ -15,7 +15,7 @@ import java.util.StringTokenizer;
 
 public class TCPServer {
     public static TCPServerInterface tcp;
-    private static int userID;
+    private static String userID;
 
     // Contrutor: Inicializa conexão ao RMI
     public TCPServer(){
@@ -39,13 +39,16 @@ public class TCPServer {
             def_port = 6000;
         }
 
-        // Conecta ao RMI
-        TCPServer tcpServer = new TCPServer();
-
-        // Recebe input na consola de qual é o departamento deste Servidor
-        boolean aux = false;
         System.out.println("Department ID:");
         department = sc.nextInt();
+
+        // Conecta ao RMI
+        TCPServer tcpSer = new TCPServer();
+
+        // Recebe input na consola de qual é o departamento deste Servidor
+
+
+        boolean aux = false;
         try {
             for (int i=0;i<tcp.getDepList().size();i++){
                 if(department == Integer.parseInt(tcp.getDepList().get(i).getID()))
@@ -96,8 +99,8 @@ public class TCPServer {
                         boolean unblocks = false;
                         for (int i = 0; i < user.size(); i++) {
                             if (user.get(i).getID().compareTo(data) == 0) {
-                                userID = i;
-                                System.out.println(user.get(userID).getInfo());
+                                userID = user.get(i).getID();
+                                System.out.println(user.get(i).getInfo());
                                 unblocks = true;
                             }
                         }
@@ -134,10 +137,10 @@ class Connection extends Thread{
     private ArrayList<Department> department = new ArrayList<>();
     private ArrayList<Election> election = new ArrayList<>();
 
-    private int userID;
+    private String userID;
 
     // Construtor: Inicializa dados do socket e do RMI
-    public Connection (Socket aClientSocket, int userID) {
+    public Connection (Socket aClientSocket, String userID) {
         this.clientSocket = aClientSocket;
         try{
             this.input = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
@@ -186,31 +189,34 @@ class Connection extends Thread{
                 // Lista as listas de determinada eleiçao
                 output.println("Choose list to vote on: \n0. ");
                 for (int i = 0; i<election.get(idElection-1).getCandidates().size();i++)
-                    output.println(i+1+". "+election.get(idElection).getCandidates().get(i).getName());
+                    output.println(i+1+". "+election.get(idElection-1).getCandidates().get(i).getName());
+
                 // Recebe escolha lista
                 aux = input.readLine();
                 idList = Integer.parseInt(aux);
 
                 // Envia informaçao de voto para RMI
-                vote(idElection-1, idList-1, election.get(idElection-1).getCandidates().size());
+                vote(election.get(idElection-1).getTitle(), idList-1, election.get(idElection-1).getCandidates().size());
             }
             // Rejeita autenticaçao e fecha thread
             else {
                 output.println("Failed authentication\nRe-Identify yourself to continue");
                 System.out.println("Failed authentication\n Closing connection to client");
             }
-        } catch (IOException e) { }
+        } catch (IOException e) {
+        } catch (NullPointerException e){}
     }
 
     public boolean authenticateUser (String username, String password) {
         for (int i = 0; i < user.size(); i++) {
-            if (user.get(userID).getName().compareTo(username) == 0 && user.get(userID).getPassword().compareTo(password) == 0)
+            if (user.get(i).getName().equals(username) && user.get(i).getPassword().equals(password))
                 return true;
         }
         return false;
     }
 
-    public void vote(int idElection, int idList, int listSize) throws IOException,NumberFormatException{
+    public void vote(String electionName, int idList, int listSize) throws IOException,NumberFormatException{
+        Election e = null;
         try {
             // Voto nulo
             if(idList>listSize){
@@ -220,23 +226,17 @@ class Connection extends Thread{
                 if(idList == -1) {
                     System.out.println("implementar voto em branco");
                 }
-
                 // Voto numa lista
                 else {
-                    /*System.out.println("votou numa lista");
-                    if(user.get(userID).hasVoted(election.get(idElection)))
-                        System.out.println("ja votou");
-                    else
-                        System.out.println("ainda nao votou");
+                    for (int i=0;i<user.size();i++){
+                        if(user.get(i).getID().equals(userID)){
+                            e = tcpServer.tcp.getElection(electionName);
+                            //System.out.println(e.getInfo()+"\n"+e.getCandidates().get(idList).getInfo());
 
-                    if(user.get(userID).voteElection(election.get(idElection), candidateList.get(idList))){
-                        System.out.println("Votou\t Eleiçao: "+idElection+"lista: "+idList);
-                        System.out.println(election.get(idElection).getInfo());
-                        System.out.println(candidateList.get(idList).getInfo());
+                            tcpServer.tcp.voteElection(user.get(i),e,e.getCandidates().get(idList));
+                            System.out.println("Votou Eleiçao: " + e.getTitle() + "lista: " + e.getCandidates().get(idList).getName());
+                        }
                     }
-                    else
-                        System.out.println("user ja votou na eleição "+idElection);
-*/
                 }
             }
         } catch (NullPointerException i){}
