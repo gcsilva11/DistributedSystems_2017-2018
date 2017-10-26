@@ -65,12 +65,23 @@ public class User implements Serializable {
     }
 
     public String getInfo() {
-        return "Name: "+this.getName()+"\nID: "+this.idNumber+"\nExp Date: "+this.getExpDate().toString()+"\nPhone: "+this.getPhone()+"\nProfession: "+this.getProfession()+"\nDepartment: "+this.getDepartment()+"\nPassword: "+this.getPassword();
+        return "Name: "+this.getName()+"\nID: "+this.idNumber+"\nPhone: "+this.getPhone()+"\nProfession: "+this.getProfession()+"\nDepartment: "+this.getDepartment()+"\nPassword: "+this.getPassword();
     }
 
-    public void voteElection(Election e,candidateList cl){
-        this.votedIn.add(e);
-        this.listVoted.add(cl);
+    public boolean voteElection(Election e,candidateList cl){
+        if(this.votedIn.contains(e))
+            return false;
+        else{
+            this.votedIn.add(e);
+            this.listVoted.add(cl);
+            return true;
+        }
+    }
+
+    public boolean hasVoted(Election e){
+        if(this.votedIn.contains(e))
+            return true;
+        return false;
     }
 }
 
