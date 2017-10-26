@@ -304,31 +304,31 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	public boolean addBooth(String elTitle, ArrayList<String> depId) throws RemoteException {
 
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
-		boolean done = true;
+		boolean done = false;
+		Department addThisOne = null;
 
 		for (int i = 0; i < elList.getElections().size(); i++) {
 			if (elList.getElections().get(i).getTitle().equals(elTitle)) {
 				for (int j = 0; j < departments.getDeps().size(); j++) {
 					for (int k = 0; k < depId.size(); k++) {
 						if (departments.getDeps().get(j).getID().equals(depId.get(k))) {
-							elList.getElections().get(i).addDep(departments.getDeps().get(j));
+							elList.getElections().get(i).addDep(addThisOne);
+							done = true;
 						}
 					}
 
 				}
 			}
 		}
-
 		//Update ficheiro
 		try {
 			fo.abreEscrita("out/elections.dat");
 			fo.escreveObjecto(elList);
 			fo.fechaEscrita();
-		} catch (Exception e) {
+		} catch (Exception e){
+			e.printStackTrace();
 		}
-
 		return done;
-
 	}
 
 	//
@@ -375,6 +375,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 					fo.escreveObjecto(elList);
 					fo.fechaEscrita();
 				} catch (Exception e) {
+					e.printStackTrace();
 				}
 
 				//Update ficheiro eleicoes
@@ -383,6 +384,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 					fo.escreveObjecto(closedElections);
 					fo.fechaEscrita();
 				} catch (Exception e) {
+					e.printStackTrace();
 				}
 
 				return closedElections.getElections();
