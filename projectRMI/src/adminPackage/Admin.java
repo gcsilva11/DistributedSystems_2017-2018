@@ -62,7 +62,7 @@ public class Admin {
                         // No. Telefone
 						System.out.print("\nPhone number: ");
 						phone = input.nextLine();
-						
+
 						// Profissão
 						System.out.print("\nProfession (1-Student, 2-Professor, 3- Employee): ");
 						profession = Integer.parseInt(input.nextLine());
@@ -190,13 +190,13 @@ public class Admin {
 						
 						if(type == 1){
 							
-							System.out.println("Student election - What department? - ");
+							System.out.print("Student election - Department(id):  ");
 							depID = input.nextLine();
 							System.out.print("\nViable lists: \n");
 							
 							ArrayList <candidateList> available;
-							
-							available = vote.getList(1);
+
+                            available = vote.getList(1);
 							
 							for(int i=0;i<available.size();i++){
 								System.out.println("Title: " + available.get(i).getName() + " ID: " + available.get(i).getID());
@@ -224,21 +224,27 @@ public class Admin {
 							    if(studElecAdd){
 							        System.out.println("Successfully created the election!");
                                     System.out.print("Add voting tables (by dep ID) to the election (0 to stop): ");
+									ArrayList <String> depTables = new ArrayList<String>();
                                     String depId = input.nextLine();
-                                    ArrayList <String> depTables = new ArrayList<String>();
                                     while(!depId.equals("0")){
                                         depTables.add(depId);
-                                        depId = input.nextLine();
-                                    }
+										depId = input.nextLine();
+									}
+
                                     boolean boothAck = vote.addBooth(election.getTitle(),depTables);
 
                                     if(boothAck){
                                         System.out.println("Booths added successfully");
                                     }
+                                    else{
+										System.out.println("Error adding booths.");
+									}
+									break;
                                 }
                                 else{
                                     System.out.println("Error creating election...");
-                                    }
+                                    break;
+								}
                                 } catch (Exception e) {
                                 failed++;
                                     if (failed == 10) {
@@ -254,9 +260,8 @@ public class Admin {
                                 Thread.sleep(3000);
                             }
 							}
-
+							break;
                         }
-
 						else{
 							
 							System.out.println("Council election");
@@ -561,21 +566,30 @@ class elecCheck extends Thread{
                     Thread.currentThread().interrupt();
                 }
                 ArrayList<Election> expired = vote.checkElecDate();
-                boolean checked=true;
+                ArrayList<Integer> printable = new ArrayList<Integer>();
+                boolean checked=false;
                 Election toAdd = null;
                 for (int i = 0; i < expired.size(); i++) {
                     for (int j = 0; j < seen.size(); j++) {
                         if (expired.get(i).getTitle() == seen.get(j).getTitle()) {
-                           checked = false;
-                           toAdd = expired.get(i);
+                            checked = true;
                         }
                     }
+                    if(!checked){
+                        toAdd = expired.get(i);
+                        printable.add(0);
+                        seen.add(toAdd);
+                    }
+                    checked = false;
                 }
-                if(!checked){
-                    System.out.println("Election expired: " + toAdd.getTitle());
-                    //ESTATISTICAS
-                    seen.add(toAdd);
+
+                for(int i=0;i <seen.size();i++){
+                    if(printable.get(i)==0){
+                        printable.set(i,1);
+                        System.out.println("Election expired - " + toAdd.getTitle());
+                    }
                 }
+
                 failed = 0;
             } catch (RemoteException e) {
                 failed++;
