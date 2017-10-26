@@ -432,6 +432,20 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return toSend;
 	}
 
+	//
+	synchronized public void voteElection(User u, Election e, candidateList cl) throws RemoteException {
+
+		for (int i = 0; i < users.getUsers().size(); i++) {
+			if (users.getUsers().get(i).getID().equals(u.getID())) {
+				System.out.println("Encontrou um user com id igual");
+
+				users.getUsers().get(i).setVotes(e, cl);
+
+				//System.out.println(users.getUsers().get(i).getVotes());
+			}
+		}
+	}
+
 	// ==================================================================================================================
 	// Main
 	public static void main(String args[]) {

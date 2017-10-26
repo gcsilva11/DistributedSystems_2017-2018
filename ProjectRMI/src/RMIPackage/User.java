@@ -13,10 +13,10 @@ public class User implements Serializable {
     private int profession;
     private String department;
     private String password;
-    private ArrayList <Election> votedIn = new ArrayList<Election>();
-    private ArrayList <candidateList> listVoted = new ArrayList<candidateList>();
+    private ArrayList<Election> votedIn = new ArrayList<Election>();
+    private ArrayList<candidateList> listVoted = new ArrayList<candidateList>();
 
-    public User(String name, String idNumber, Calendar expDate, String phone, int profession, String department, String password){
+    public User(String name, String idNumber, Calendar expDate, String phone, int profession, String department, String password) {
         this.name = name;
         this.idNumber = idNumber;
         this.idExpDate = expDate;
@@ -25,63 +25,52 @@ public class User implements Serializable {
         this.department = department;
         this.password = password;
     }
-    
-    public User(){
-    	this.name = null;
-    	this.idNumber = "Bad id";
-    	this.idExpDate = null;
-    	this.phone = null;
-    	this.profession = 0;
-    	this.department = null;
-    	this.password = null;
+
+    public User() {
+        this.name = null;
+        this.idNumber = "Bad id";
+        this.idExpDate = null;
+        this.phone = null;
+        this.profession = 0;
+        this.department = null;
+        this.password = null;
     }
 
-    public String getName(){
-    	return this.name;
+    public String getName() {
+        return this.name;
     }
 
-    public String getID(){
+    public String getID() {
         return this.idNumber;
     }
-    
-    public Calendar getExpDate(){
-    	return this.idExpDate;
+
+    public Calendar getExpDate() {
+        return this.idExpDate;
     }
 
-    public String getPhone(){
-    	return this.phone;
+    public String getPhone() {
+        return this.phone;
     }
-    
+
     public int getProfession() {
-    	return this.profession;
+        return this.profession;
     }
-    
-    public String getDepartment(){
-    	return this.department;
+
+    public String getDepartment() {
+        return this.department;
     }
-    
-    public String getPassword(){
-    	return this.password;
+
+    public String getPassword() {
+        return this.password;
     }
 
     public String getInfo() {
-        return "Name: "+this.getName()+"\nID: "+this.idNumber+"\nPhone: "+this.getPhone()+"\nProfession: "+this.getProfession()+"\nDepartment: "+this.getDepartment()+"\nPassword: "+this.getPassword();
+        return "Name: " + this.getName() + "\nID: " + this.idNumber + "\nPhone: " + this.getPhone() + "\nProfession: " + this.getProfession() + "\nDepartment: " + this.getDepartment() + "\nPassword: " + this.getPassword();
     }
 
-    public boolean voteElection(Election e,candidateList cl){
-        if(this.votedIn.contains(e))
-            return false;
-        else{
-            this.votedIn.add(e);
-            this.listVoted.add(cl);
-            return true;
-        }
-    }
-
-    public boolean hasVoted(Election e){
-        if(this.votedIn.contains(e))
-            return true;
-        return false;
+    public void setVotes(Election e, candidateList cl) {
+        this.votedIn.add(e);
+        this.listVoted.add(cl);
     }
 }
 
