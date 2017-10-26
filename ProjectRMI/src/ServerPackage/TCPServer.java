@@ -9,10 +9,13 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class TCPServer {
     public TCPServerInterface tcp;
+    public static int userID;
 
     // Contrutor: Inicializa conexão ao RMI
     public TCPServer(){
@@ -36,24 +39,67 @@ public class TCPServer {
         try{
             ServerSocket listenSocket = new ServerSocket(def_port);
             while(true) {
-                Socket clientSocket = listenSocket.accept();
-                num_Cliente++;
-                Connection newClient = new Connection(clientSocket, num_Cliente);
 
-                newClient.start();
+                // Accepts socket connection
+                Socket clientSocket = listenSocket.accept();
+                Connection newClient = new Connection(clientSocket, userID);
+                BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                PrintWriter output = new PrintWriter(clientSocket.getOutputStream(), true);
+
+                // Thread que trata da identificação de users n o TCP Server
+                new Thread() {
+                    // getListaUsers
+                    // Identifica user
+                    public void run() {
+                        TCPServer tcpServer = new TCPServer();
+                        ArrayList<User> user = new ArrayList<>();
+
+                        try {
+                            user = tcpServer.tcp.getUsers();
+                        } catch (RemoteException e) { }
+                        while(true)
+                                identifyUser(user);
+
+
+                    }
+                    public void identifyUser(ArrayList<User> user) {
+                        Scanner sc = new Scanner(System.in);
+
+                        System.out.println("Identify yourself by ID: ");
+
+                        String data = sc.nextLine();
+
+                        // Procura ID
+                        boolean unblocks = false;
+                        for (int i = 0; i < user.size(); i++) {
+                            if (user.get(i).getID().compareTo(data) == 0) {
+                                userID = i;
+                                output.println("VOTE TERMINAL UNBLOCKED");
+                                unblocks = true;
+                            }
+                        }
+
+                        // Nao encontrou ID
+                        if(!unblocks) {
+                            System.out.println("ID not found");
+                            identifyUser(user);
+                        }
+                        // Thread que trata da autentificação e do voto do cada cliente
+                        else {
+                            newClient.start();
+                        }
+                    }
+                }.start();
             }
         }catch(IOException e) { System.out.println("Error creating TCP socket"); }
     }
 }
 
 class Connection extends Thread{
-    public static final boolean DEBUG = true;
-
     private BufferedReader input;
     private PrintWriter output;
 
     private Socket clientSocket;
-    int thread_number;
 
     private StringTokenizer token;
 
@@ -63,9 +109,10 @@ class Connection extends Thread{
     private ArrayList<Department> department = new ArrayList<>();
     private ArrayList<Election> election = new ArrayList<>();
 
+    private int userID;
+
     // Construtor: Inicializa dados do socket e do RMI
-    public Connection (Socket aClientSocket, int numero) {
-        this.thread_number = numero;
+    public Connection (Socket aClientSocket, int userID) {
         this.clientSocket = aClientSocket;
         try{
             this.input = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
@@ -74,142 +121,85 @@ class Connection extends Thread{
             this.candidateList = tcpServer.tcp.getCandidateList();
             this.department = tcpServer.tcp.getDepList();
             this.election = tcpServer.tcp.getElList();
+            this.userID = userID;
         }catch(IOException e){ }
     }
 
     // Run: Aceita Cliente
     public void run(){
-        if(DEBUG) System.out.println("\t#DEBUG# Cliente "+this.thread_number+" conectado");
-
-        int id = -1;
-        while (true) {
-            id = identifyUser(id);
+        if(authenticateUser()){
+            System.out.println("Authentication successfull");
+            try { vote(); } catch (IOException e) { }
+        }
+        else {
+            output.println("Failed authentication\nRe-Identify yourself to continue");
+            System.out.println("Failed authentication\n Closing thread");
         }
     }
 
-    public int identifyUser(int id) {
-        int userID = 0;
+    public boolean authenticateUser(){
+        StringTokenizer tokenizer;
+        String data="", aux="";
+        output.println("Insert [username]/[password]");
+
         try {
-            String data;
-            boolean bool = false;
+            data = input.readLine();
+        } catch (IOException e) {}
 
-            // Recebe string true se for ID, false se for Nome
+        tokenizer = new StringTokenizer(data, "/");
+        data = tokenizer.nextToken();
+        try{
+            aux = tokenizer.nextToken();
+        } catch (NoSuchElementException e) {}
 
-            data = this.input.readLine();
-
-            if (DEBUG) System.out.println("\t#DEBUG# Cliente " + this.thread_number + " recebeu " + data);
-
-            if (data.compareTo("quit") == 0) {
-                if (DEBUG) System.out.println("\t#DEBUG# Cliente " + this.thread_number + " desconectado");
-                try {
-                    Thread.currentThread().join();
-                } catch (InterruptedException e) {
-                }
+        for (int i=0;i<user.size();i++){
+            if(user.get(userID).getName().compareTo(data)==0 && user.get(userID).getPassword().compareTo(aux)==0) {
+                output.println("Authentication successfull");
+                return true;
             }
-
-            // ID
-            else if (data.compareTo("true") == 0) {
-
-                // Recebe ID
-                data = this.input.readLine();
-                if (DEBUG) System.out.println("\t#DEBUG# Cliente " + this.thread_number + " recebeu " + data);
-
-                for (int i = 0; i < this.user.size(); i++) {
-                    if (Integer.parseInt(data) == Integer.parseInt(this.user.get(i).getID())) {
-                        // Envia ID
-                        userID = Integer.parseInt(this.user.get(i).getID());
-                        this.output.println(this.user.get(i).getID());
-                        if (DEBUG)
-                            System.out.println("\t#DEBUG# Enviou para cliente " + this.thread_number + " - " + this.user.get(i).getID());
-                        id = i;
-                        bool = true;
-                    }
-                }
-            }
-
-            // Nome
-            else if (data.compareTo("false") == 0) {
-                // Recebe Nome
-                data = this.input.readLine();
-                if (DEBUG) System.out.println("\t#DEBUG# Cliente " + this.thread_number + " recebeu " + data);
-
-                for (int j = 0; j < this.user.size(); j++) {
-                    if (data.compareTo(this.user.get(j).getName()) == 0) {
-                        userID = Integer.parseInt(this.user.get(j).getID());
-                        this.output.println(this.user.get(j).getID());
-                        if (DEBUG) System.out.println("\t#DEBUG# Enviou para cliente " + this.thread_number + " - " + this.user.get(j).getID());
-                        // Envia Nome
-                        this.output.println(this.user.get(j).getName());
-                        if (DEBUG) System.out.println("\t#DEBUG# Enviou para cliente " + this.thread_number + " - " + this.user.get(j).getName());
-                        id = j;
-                        bool = true;
-                    }
-                }
-            }
-
-            // Envia não encontrado
-            if (!bool) {
-                this.output.println("NotFound");
-                if (DEBUG) System.out.println("\t#DEBUG# Enviou para cliente " + this.thread_number + " NotFound");
-            }
-
-            // Autenticação
-            else {
-
-                // Recebe username
-                data = this.input.readLine();
-                if (DEBUG) System.out.println("\t#DEBUG# Cliente " + this.thread_number + " recebeu " + data);
-
-                token = new StringTokenizer(data, "/");
-
-                // Sucesso na autenticaçao
-                if ((token.countTokens() == 2) && (token.nextToken().compareTo(this.user.get(id).getName()) == 0) && (token.nextToken().compareTo(this.user.get(id).getPassword()) == 0)) {
-                    // Envia confirmação autenticaçao
-                    output.println("true");
-                    if (DEBUG) System.out.println("\t#DEBUG# Enviou para cliente " + this.thread_number + " - 1");
-
-                    //
-                    //   VOTAR AQUI
-                    //
-                    voteAct(userID);
-
-                // Falhou autenticação
-                } else {
-                    output.println("false");
-                    if (DEBUG) System.out.println("\t#DEBUG# Enviou para cliente " + this.thread_number + " - 0");
-                }
-            }
-        } catch (IOException e) { }
-        return id;
+        }
+        return false;
     }
 
-    // Utilizador vota
-    public void voteAct(int userID) {
+    public void vote() throws IOException,NumberFormatException{
+        String data="";
+        int idElection, idList;
+
+        // Lista as eleiçoes
+        output.println("Choose election to vote on: ");
+        for(int i = 0;i<election.size();i++) {
+            output.println(i + ". " + election.get(i).getTitle());
+        }
+
         try {
-            int elections = 0;
-            for (int i = 0; i < election.size(); i++)
-                elections++;
-            output.println(elections);
-            for (int i = 0; i < election.size(); i++)
-                output.println(election.get(i).getTitle());
+            data = input.readLine();
+        } catch (IOException e) { }
 
-            elections = Integer.parseInt(input.readLine());
+        idElection = Integer.parseInt(data);
 
-            int list = 0;
-            for (int i = 0; i < candidateList.size(); i++)
-                list++;
-            output.println(list);
+        output.println("0. ");
+        int listSize = election.get(idElection).getCandidates().size();
+        for (int i = 0; i<listSize;i++){
+            output.println(i-1+". "+election.get(idElection).getCandidates().get(i).getName());
+        }
+        data = input.readLine();
+        idList = Integer.parseInt(data);
+        if(!(idList>listSize)){
+            System.out.println("eleiçao: "+idElection+"lista: "+idList);
 
-            for (int i = 0; i < candidateList.size(); i++)
-                output.println(candidateList.get(i).getName());
+            if(idList == 0) {
+                System.out.println("implementar voto em branco");
+            }
+                // voto branco
+            // voto em lista
+            else
+                user.get(userID).voteElection(election.get(idElection),candidateList.get(idList));
 
-            list = Integer.parseInt(input.readLine());
+        } else{
+            System.out.println("implementar voto nulo");
+            // voto nulo
+        }
 
-            user.get(userID).Vote();
-            //e preciso refazer Vote() para por um boolean para cada eleiçao
-
-            output.println(user.get(userID).getVote());
-
-        } catch (IOException e) {}
     }
 }
+
