@@ -19,9 +19,9 @@ public class TCPServer {
     public static int departmentID;
 
     // Contrutor: Inicializa conexão ao RMI
-    public TCPServer(int rmiPort){
+    public TCPServer(String hostname, int rmiPort){
         try {
-            tcp = (TCPServerInterface) LocateRegistry.getRegistry(rmiPort).lookup("vote_booth");
+            tcp = (TCPServerInterface) LocateRegistry.getRegistry(hostname, rmiPort).lookup("vote_booth");
         } catch (RemoteException|NotBoundException e) { System.out.println("Error connecting to RMI"); }
     }
 
@@ -31,7 +31,7 @@ public class TCPServer {
         int defPort, rmiPort, num_Cliente = 0;
         String hostname;
 
-        if (args.length == 2){
+        if (args.length == 3){
             hostname = args[0];
             rmiPort = Integer.parseInt(args[1]);
             defPort = Integer.parseInt(args[2]);
@@ -47,7 +47,7 @@ public class TCPServer {
         departmentID = departmentID-1;
 
         // Conecta ao RMI
-        TCPServer tcpSer = new TCPServer(rmiPort);
+        TCPServer tcpSer = new TCPServer(hostname, rmiPort);
 
         // Recebe input na consola de qual é o departamento deste Servidor
 
@@ -81,7 +81,7 @@ public class TCPServer {
                     // getListaUsers
                     // Identifica user
                     public void run() {
-                        TCPServer tcpServer = new TCPServer(rmiPort);
+                        TCPServer tcpServer = new TCPServer(hostname, rmiPort);
                         ArrayList<User> user = new ArrayList<>();
 
                         try {
@@ -119,7 +119,7 @@ public class TCPServer {
                         }
                         // Thread Connection que trata da autentificação e do voto do cada cliente
                         else {
-                            Connection newClient = new Connection(clientSocket, userID, rmiPort);
+                            Connection newClient = new Connection(clientSocket, userID, rmiPort, hostname);
                             newClient.start();
                         }
                     }
@@ -147,7 +147,7 @@ class Connection extends Thread{
     private String userID;
 
     // Construtor: Inicializa dados do socket e do RMI
-    public Connection (Socket aClientSocket, String userID, int rmiPort) {
+    public Connection (Socket aClientSocket, String userID, int rmiPort, String hostname) {
         this.clientSocket = aClientSocket;
         try{
             this.input = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
@@ -157,7 +157,7 @@ class Connection extends Thread{
             this.department = tcpServer.tcp.getDepList();
             this.election = tcpServer.tcp.getElList();
             this.userID = userID;
-            this.tcpServer = new TCPServer(rmiPort);
+            this.tcpServer = new TCPServer(hostname, rmiPort);
         }catch(IOException e){ }
     }
 

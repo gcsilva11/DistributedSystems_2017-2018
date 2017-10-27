@@ -475,7 +475,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		int serverPort, rmiPort;
 
 		// argumentos da linha de comando: hostname, serverPort
-		if (args.length != 2) {
+		if (args.length != 3) {
 			hostname = "localhost";
 			serverPort = 7000;
 			rmiPort = 6500;
