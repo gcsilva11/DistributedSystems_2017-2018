@@ -20,5 +20,5 @@ public interface VotingAdminInterface extends Remote {
 	boolean editElec(Election el)throws java.rmi.RemoteException;
 	Election getElection(String title)throws java.rmi.RemoteException;
 	ArrayList <Election> checkElecDate()throws java.rmi.RemoteException;
-	
+	ArrayList <Department> checkTables()throws java.rmi.RemoteException;
 }
