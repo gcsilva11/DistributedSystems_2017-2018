@@ -315,6 +315,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 					for (int k = 0; k < depId.size(); k++) {
 						if (departments.getDeps().get(j).getID().equals(depId.get(k))) {
 							elList.getElections().get(i).addDep(addThisOne);
+							depsWithBooth.getDeps().add(addThisOne);
 							done = true;
 						}
 					}
@@ -330,6 +331,14 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		} catch (Exception e){
 			e.printStackTrace();
 		}
+
+        try {
+            fo.abreEscrita("out/booths.dat");
+            fo.escreveObjecto(depsWithBooth);
+            fo.fechaEscrita();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 		return done;
 	}
 
@@ -350,13 +359,13 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 					fo.fechaEscrita();
 				} catch (Exception e) {
 				}
-
-				done = true;
+                System.out.println("Election edited");
+                done = true;
 			}
 		}
 
-
-		return done;
+        System.out.println("Couldn't find election title");
+        return done;
 	}
 
 	//
@@ -398,25 +407,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	}
 
 	public ArrayList <Department> checkTables() throws java.rmi.RemoteException{
-
-	    ArrayList <Department> toSend = new ArrayList <Department>();
-        boolean checked = false;
-
-        for(int i=0;i<elList.getElections().size();i++){
-	        for(int j=0;j<elList.getElections().get(i).getViableDeps().size();j++){
-	            for(int k=0;k<toSend.size();k++){
-                    if(elList.getElections().get(i).getViableDeps().get(j).getID().equals(toSend.get(k).getID())){
-                        checked = true;
-                    }
-                }
-                if(!checked){
-                    System.out.println("added dep");
-                    toSend.add(elList.getElections().get(i).getViableDeps().get(j));
-                }
-                checked = false;
-            }
-        }
-        return toSend;
+        return depsWithBooth.getDeps();
     }
 	// ==================================================================================================================
 	// TCPServerInterface
@@ -523,6 +514,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		FicheiroDeObjectos foLists = new FicheiroDeObjectos();
 		FicheiroDeObjectos foElections = new FicheiroDeObjectos();
 		FicheiroDeObjectos foClosedElections = new FicheiroDeObjectos();
+        FicheiroDeObjectos foDepBooth = new FicheiroDeObjectos();
 
 		String path;
 
@@ -584,6 +576,16 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		} catch (Exception e) {
 			System.out.println("Exception caught reading elections.dat - " + e);
 		}
+        try {
+            path = "out/booths.dat";
+            if (foDepBooth.abreLeitura(path)) {
+                depsWithBooth = (DepList) foDepBooth.leObjecto();
+                foDepBooth.fechaLeitura();
+            }
+
+        } catch (Exception e) {
+            System.out.println("Exception caught reading lists.dat - " + e);
+        }
 	}
 
 	// Seleciona se vai ser Main ou Backup RMI
