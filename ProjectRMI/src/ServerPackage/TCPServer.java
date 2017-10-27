@@ -272,7 +272,13 @@ class Connection extends Thread{
                 if(idList == -1) {
                     for (int i = 0; i < user.size(); i++) {
                         if (user.get(i).getID().equals(userID)) {
-                            tcpServer.tcp.voteElection(user.get(i), e, new candidateList("WHITEVOTE", "WHITEVOTE", -1, null));
+                            for (int j=0;j<e.getCandidates().size();j++){
+                                if(e.getCandidates().get(j).getID().equals("BLANKVOTE"))
+                                    tcpServer.tcp.voteElection(user.get(i), e, e.getCandidates().get(j));
+                                else
+                                    System.out.println("Could not register blankvote");
+                            }
+
                         }
                     }
                 }
