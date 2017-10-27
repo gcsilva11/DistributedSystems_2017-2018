@@ -68,7 +68,7 @@ public class User implements Serializable {
         return "Name: " + this.getName() + "\nID: " + this.idNumber + "\nPhone: " + this.getPhone() + "\nProfession: " + this.getProfession() + "\nDepartment: " + this.getDepartment() + "\nPassword: " + this.getPassword();
     }
 
-    public boolean setVotes(Election e, candidateList cl) {
+    public void setVotes(Election e, candidateList cl) {
             if(this.votedIn == null) {
                 this.votedIn = new ArrayList<Election>();
                 this.votedIn.add(e);
