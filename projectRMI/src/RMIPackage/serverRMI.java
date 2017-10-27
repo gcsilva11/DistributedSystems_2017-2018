@@ -434,21 +434,35 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	}
 
 	//
-	synchronized public void voteElection(User u, Election e, candidateList cl) throws RemoteException {
+	public void voteElection(User u, Election e, candidateList cl) throws RemoteException {
+		FicheiroDeObjectos fo = new FicheiroDeObjectos();
 
 		for (int i = 0; i < users.getUsers().size(); i++) {
 			if (users.getUsers().get(i).getID().equals(u.getID())) {
-
-				users.getUsers().get(i).setVotes(e, cl);
-
-				//System.out.println(users.getUsers().get(i).getVotes());
+					users.getUsers().get(i).setVotes(e, cl);
 			}
+		}
+
+		// Update ficheiro
+		try {
+			fo.abreEscrita("out/users.dat");
+			fo.escreveObjecto(users);
+			fo.fechaEscrita();
+		} catch (Exception ei) {
 		}
 	}
 
+	public boolean hasVoted(User u, Election e) throws RemoteException {
+		for (int i = 0; i < users.getUsers().size(); i++) {
+			if (users.getUsers().get(i).getID().equals(u.getID())) {
+				if (users.getUsers().get(i).hasVoted(e))
+					return true;
+			}
+		}
+		return false;
+	}
 
-
-
+	public ArrayList<Department> getDeps(Election e) throws RemoteException { return e.getViableDeps(); }
 
 	// ==================================================================================================================
 	// Main

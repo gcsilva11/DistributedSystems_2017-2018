@@ -25,6 +25,10 @@ public class Election implements Serializable{
 		this.closed = false;
 		this.candidates = candidates;
 	}
+
+	public Election(){
+		this.title = "BRANCO";
+	}
 	
 	public String getTitle(){
 		return this.title;
@@ -33,7 +37,9 @@ public class Election implements Serializable{
 	public void addDep(Department dep){
 		this.viableDeps.add(dep);
 	}
-	
+
+	public ArrayList<Department> getViableDeps() { return viableDeps; }
+
 	public boolean getClosed(){
 		return this.closed;
 	}

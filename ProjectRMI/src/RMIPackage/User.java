@@ -1,5 +1,7 @@
 package RMIPackage;
 
+import sun.awt.geom.AreaOp;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,6 +17,7 @@ public class User implements Serializable {
     private String password;
     private ArrayList<Election> votedIn;
     private ArrayList<candidateList> listVoted;
+    private ArrayList<Calendar> whenVoted;
 
     public User(String name, String idNumber, Calendar expDate, String phone, int profession, String department, String password) {
         this.name = name;
@@ -36,39 +39,26 @@ public class User implements Serializable {
         this.password = null;
     }
 
-    public String getName() {
-        return this.name;
-    }
+    public String getName() { return this.name; }
 
-    public String getID() {
-        return this.idNumber;
-    }
+    public String getID() { return this.idNumber; }
 
-    public Calendar getExpDate() {
-        return this.idExpDate;
-    }
+    public Calendar getExpDate() { return this.idExpDate; }
 
-    public String getPhone() {
-        return this.phone;
-    }
+    public String getPhone() { return this.phone; }
 
-    public int getProfession() {
-        return this.profession;
-    }
+    public int getProfession() { return this.profession; }
 
-    public String getDepartment() {
-        return this.department;
-    }
+    public String getDepartment() { return this.department; }
 
-    public String getPassword() {
-        return this.password;
-    }
+    public String getPassword() { return this.password; }
 
     public String getInfo() {
         return "Name: " + this.getName() + "\nID: " + this.idNumber + "\nPhone: " + this.getPhone() + "\nProfession: " + this.getProfession() + "\nDepartment: " + this.getDepartment() + "\nPassword: " + this.getPassword();
     }
 
     public void setVotes(Election e, candidateList cl) {
+<<<<<<< HEAD
             if(this.votedIn == null) {
                 this.votedIn = new ArrayList<Election>();
                 this.votedIn.add(e);
@@ -83,7 +73,46 @@ public class User implements Serializable {
             else{
                 this.listVoted.add(cl);
             }
+=======
+        // Sets time voted
+        if(this.whenVoted == null){
+            this.whenVoted = new ArrayList<Calendar>();
+            this.whenVoted.add(Calendar.getInstance());
+        }
+        else {
+            this.whenVoted.add(Calendar.getInstance());
+        }
 
+        // Sets Election voted
+        if(this.votedIn == null) {
+            this.votedIn = new ArrayList<Election>();
+            this.votedIn.add(e);
+        }
+        else {
+            this.votedIn.add(e);
+        }
+>>>>>>> bc393d2fe02f32523d830336a32a9a6c6a3ffe38
+
+        // Sets Lists voted
+        if(this.listVoted ==null){
+            this.listVoted = new ArrayList<candidateList>();
+            this.listVoted.add(cl);
+        }
+        else{
+            this.listVoted.add(cl);
+        }
     }
+
+    public boolean hasVoted(Election e){
+        if(this.votedIn != null){
+            for(int i = 0;i<this.votedIn.size();i++){
+                if(this.votedIn.get(i).getTitle().equals(e.getTitle())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }
 
