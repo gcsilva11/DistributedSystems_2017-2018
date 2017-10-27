@@ -22,8 +22,8 @@
       <file leaf-file-name="TCPServer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="121" column="105" lean-forward="false" selection-start-line="121" selection-start-column="105" selection-end-line="121" selection-end-column="105" />
+            <state relative-caret-position="345">
+              <caret line="23" column="74" lean-forward="false" selection-start-line="23" selection-start-column="66" selection-end-line="23" selection-end-column="74" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#authenticateUser#0;class#Connection#0" expanded="false" />
@@ -92,8 +92,8 @@
       <file leaf-file-name="Admin.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/adminPackage/Admin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="317">
-              <caret line="33" column="98" lean-forward="false" selection-start-line="33" selection-start-column="90" selection-end-line="33" selection-end-column="98" />
+            <state relative-caret-position="245">
+              <caret line="33" column="12" lean-forward="false" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="130" />
               <folding />
             </state>
           </provider>
@@ -103,7 +103,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>error addi</find>
       <find>addBoo</find>
       <find>socket.c</find>
       <find>getElect</find>
@@ -120,7 +119,6 @@
       <find>serverRMI</find>
       <find>socketadr</find>
       <find>regis</find>
-      <find>hostname</find>
       <find>serverPort</find>
       <find>startRMI</find>
       <find>host</find>
@@ -133,6 +131,8 @@
       <find>ha</find>
       <find>error connec</find>
       <find>def_port</find>
+      <find>rmiPort</find>
+      <find>hostname</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -242,7 +242,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.RMI">
+  <component name="RunManager" selected="Application.TCPClient">
     <configuration name="Admin" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="adminPackage.Admin" />
@@ -261,7 +261,7 @@
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="RMIPackage.serverRMI" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="localhost 7000 6500" />
+      <option name="PROGRAM_PARAMETERS" value="10.7.0.63 7000 6500" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -289,7 +289,7 @@
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="ServerPackage.TCPServer" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="10.7.0.58 6500 6000" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 6500 6000" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -402,7 +402,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -412,14 +411,14 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22334455" sideWeight="0.504884" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40122825" sideWeight="0.495116" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40122825" sideWeight="0.495116" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32884398" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3306039" sideWeight="0.497558" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15567766" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24969475" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39918116" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -487,6 +486,10 @@
       <option name="time" value="40" />
     </breakpoint-manager>
     <watches-manager />
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/adminPackage/VotingAdminInterface.java">
@@ -740,16 +743,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/adminPackage/Admin.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="33" column="98" lean-forward="false" selection-start-line="33" selection-start-column="90" selection-end-line="33" selection-end-column="98" />
+        <state relative-caret-position="245">
+          <caret line="33" column="12" lean-forward="false" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="130" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="121" column="105" lean-forward="false" selection-start-line="121" selection-start-column="105" selection-end-line="121" selection-end-column="105" />
+        <state relative-caret-position="345">
+          <caret line="23" column="74" lean-forward="false" selection-start-line="23" selection-start-column="66" selection-end-line="23" selection-end-column="74" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#authenticateUser#0;class#Connection#0" expanded="false" />

@@ -19,9 +19,9 @@ public class TCPServer {
     public static int departmentID;
 
     // Contrutor: Inicializa conexão ao RMI
-    public TCPServer(String hostname, int rmiPort){
+    public TCPServer(String hostname,int rmiPort){
         try {
-            tcp = (TCPServerInterface) LocateRegistry.getRegistry(hostname, rmiPort).lookup("vote_booth");
+            tcp = (TCPServerInterface) LocateRegistry.getRegistry(hostname,rmiPort).lookup("vote_booth");
         } catch (RemoteException|NotBoundException e) { System.out.println("Error connecting to RMI"); }
     }
 
@@ -119,7 +119,7 @@ public class TCPServer {
                         }
                         // Thread Connection que trata da autentificação e do voto do cada cliente
                         else {
-                            Connection newClient = new Connection(clientSocket, userID, rmiPort, hostname);
+                            Connection newClient = new Connection(clientSocket, userID, hostname, rmiPort);
                             newClient.start();
                         }
                     }
@@ -147,7 +147,7 @@ class Connection extends Thread{
     private String userID;
 
     // Construtor: Inicializa dados do socket e do RMI
-    public Connection (Socket aClientSocket, String userID, int rmiPort, String hostname) {
+    public Connection (Socket aClientSocket, String userID, String hostname, int rmiPort) {
         this.clientSocket = aClientSocket;
         try{
             this.input = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
