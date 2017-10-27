@@ -559,7 +559,8 @@ public class Admin {
 
 class elecCheck extends Thread{
 	private VotingAdminInterface vote;
-	private ArrayList <Election> seen = new ArrayList <Election>(); 
+	private ArrayList <Election> seen = new ArrayList <Election>();
+    private ArrayList<Integer> printable = new ArrayList<Integer>();
 
 	public elecCheck(VotingAdminInterface vote){
 		this.vote = vote;
@@ -576,16 +577,15 @@ class elecCheck extends Thread{
                     Thread.currentThread().interrupt();
                 }
                 ArrayList<Election> expired = vote.checkElecDate();
-                ArrayList<Integer> printable = new ArrayList<Integer>();
                 boolean checked=false;
                 Election toAdd = null;
                 for (int i = 0; i < expired.size(); i++) {
                     for (int j = 0; j < seen.size(); j++) {
-                        if (expired.get(i).getTitle() == seen.get(j).getTitle()) {
+                        if (expired.get(i).getTitle().equals(seen.get(j).getTitle())) {
                             checked = true;
                         }
                     }
-                    if(!checked){
+                    if(checked==false){
                         toAdd = expired.get(i);
                         printable.add(0);
                         seen.add(toAdd);
