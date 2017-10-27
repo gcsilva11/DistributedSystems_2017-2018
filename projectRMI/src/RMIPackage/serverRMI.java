@@ -87,6 +87,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			fo.escreveObjecto(departments);
 			fo.fechaEscrita();
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		System.out.println("New department registered.");
@@ -437,7 +438,6 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 		for (int i = 0; i < users.getUsers().size(); i++) {
 			if (users.getUsers().get(i).getID().equals(u.getID())) {
-				System.out.println("Encontrou um user com id igual");
 
 				users.getUsers().get(i).setVotes(e, cl);
 

@@ -13,8 +13,8 @@ public class User implements Serializable {
     private int profession;
     private String department;
     private String password;
-    private ArrayList<Election> votedIn = new ArrayList<Election>();
-    private ArrayList<candidateList> listVoted = new ArrayList<candidateList>();
+    private ArrayList<Election> votedIn;
+    private ArrayList<candidateList> listVoted;
 
     public User(String name, String idNumber, Calendar expDate, String phone, int profession, String department, String password) {
         this.name = name;
@@ -68,9 +68,22 @@ public class User implements Serializable {
         return "Name: " + this.getName() + "\nID: " + this.idNumber + "\nPhone: " + this.getPhone() + "\nProfession: " + this.getProfession() + "\nDepartment: " + this.getDepartment() + "\nPassword: " + this.getPassword();
     }
 
-    public void setVotes(Election e, candidateList cl) {
-        this.votedIn.add(e);
-        this.listVoted.add(cl);
+    public boolean setVotes(Election e, candidateList cl) {
+            if(this.votedIn == null) {
+                this.votedIn = new ArrayList<Election>();
+                this.votedIn.add(e);
+            }
+            else {
+                this.votedIn.add(e);
+            }
+            if(this.listVoted ==null){
+                this.listVoted = new ArrayList<candidateList>();
+                this.listVoted.add(cl);
+            }
+            else{
+                this.listVoted.add(cl);
+            }
+
     }
 }
 

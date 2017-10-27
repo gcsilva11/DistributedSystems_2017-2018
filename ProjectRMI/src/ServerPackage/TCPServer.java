@@ -215,7 +215,7 @@ class Connection extends Thread{
         return false;
     }
 
-    public void vote(String electionName, int idList, int listSize) throws IOException,NumberFormatException{
+    public void vote(String electionName, int idList, int listSize) throws java.rmi.RemoteException{
         Election e = null;
         try {
             // Voto nulo

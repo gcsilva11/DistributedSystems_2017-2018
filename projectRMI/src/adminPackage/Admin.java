@@ -137,6 +137,7 @@ public class Admin {
                                     System.out.println("Error adding the new department...");
                                 }
                                 failed = 0;
+                                break;
                             } catch (Exception e) {
                                 failed++;
                                 if (failed == 10) {
