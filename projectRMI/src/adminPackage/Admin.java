@@ -31,7 +31,7 @@ public class Admin {
         }
 		
 		try{
-			VotingAdminInterface vote = (VotingAdminInterface) LocateRegistry.getRegistry(hostname,def_port).lookup("vote_booth");
+			VotingAdminInterface vote = (VotingAdminInterface) LocateRegistry.getRegistry(def_port).lookup("vote_booth");
 			elecCheck checkThread = new elecCheck(vote);
 			checkThread.start();
 			

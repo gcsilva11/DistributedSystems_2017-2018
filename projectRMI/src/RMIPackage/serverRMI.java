@@ -472,22 +472,20 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		RMIFailover UDPConn;
 
 		String hostname;
-		int serverPort, rmiPort;
+		int serverPort;
 
 		// argumentos da linha de comando: hostname, serverPort
 		if (args.length != 3) {
 			hostname = "localhost";
 			serverPort = 7000;
-			rmiPort = 6500;
 
 		} else {
 			hostname = args[0];
 			serverPort = Integer.parseInt(args[1]);
-			rmiPort = Integer.parseInt(args[2]);
 		}
 
 		// Inicia thread que lida com a conexão UDP
-		UDPConn = new RMIFailover(hostname, serverPort, rmiPort);
+		UDPConn = new RMIFailover(hostname, serverPort);
 		UDPConn.start();
 
 		// Atualiza dados ficheiros
@@ -567,11 +565,11 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	}
 
 	// Seleciona se vai ser Main ou Backup RMI
-	public void startRMI(int rmiPort) {
+	public void startRMI() {
 		try {
 			// Criação RMI
 			serverRMI server = new serverRMI();
-			Registry reg = LocateRegistry.createRegistry(rmiPort);
+			Registry reg = LocateRegistry.createRegistry(6500);
 			reg.rebind("vote_booth", server);
 			System.out.println("RMI Server connected");
 		} catch (RemoteException e) {
@@ -585,23 +583,22 @@ class RMIFailover extends Thread {
 	private DatagramSocket aSocket = null;
 
 	private String hostname;
-	private int serverPort, rmiPort;
+	private int serverPort;
 
-	public RMIFailover(String hostname, int serverPort, int rmiPort) {
+	public RMIFailover(String hostname, int serverPort) {
 		this.hostname = hostname;
 		this.serverPort = serverPort;
-		this.rmiPort = rmiPort;
 	}
 
 	public void run() {
 		RMIFailover UDPConn;
 		try {
 			// Abre socket UDP
-			this.aSocket = new DatagramSocket(this.serverPort);
+			aSocket = new DatagramSocket(this.serverPort);
 			System.out.println("Main RMI Server started");
 
 			serverRMI serverRMI = new serverRMI();
-			serverRMI.startRMI(this.rmiPort);
+			serverRMI.startRMI();
 
 			while (true) {
 				String texto = "";
@@ -610,7 +607,7 @@ class RMIFailover extends Thread {
 				// Cria e envia pacote UDP
 				InetAddress aHost = InetAddress.getByName(this.hostname);
 				DatagramPacket request = new DatagramPacket(m, m.length, aHost, this.serverPort);
-				this.aSocket.send(request);
+				aSocket.send(request);
 
 				try {
 					Thread.sleep(1000);
@@ -625,19 +622,19 @@ class RMIFailover extends Thread {
 
 			try {
 				// Abre receiver socket UDP
-				this.aSocket = new DatagramSocket(null);
-				this.aSocket.setReuseAddress(true);
-				this.aSocket.bind(new InetSocketAddress(this.hostname, this.serverPort));
+				aSocket = new DatagramSocket(null);
+				aSocket.setReuseAddress(true);
+				aSocket.bind(new InetSocketAddress(hostname, serverPort));
 				while (heartbeatsFailed < maxHeartbeats) {
 					// Define timeout de recepção de heartbeat
-					this.aSocket.setSoTimeout(1500);
+					aSocket.setSoTimeout(1500);
 
-					InetAddress aHost = InetAddress.getByName(this.hostname);
+					InetAddress aHost = InetAddress.getByName(hostname);
 
 					// Cria e recebe pacote UDP
-					DatagramPacket request = new DatagramPacket(buffer, buffer.length, aHost, this.serverPort);
+					DatagramPacket request = new DatagramPacket(buffer, buffer.length, aHost, serverPort);
 					try {
-						this.aSocket.receive(request);
+						aSocket.receive(request);
 						System.out.println("Received heartbeat from Main RMI server");
 					} catch (SocketTimeoutException i){
 						heartbeatsFailed++;
@@ -646,8 +643,8 @@ class RMIFailover extends Thread {
 				}
 
 				if(heartbeatsFailed >= maxHeartbeats) {
-					this.aSocket.close();
-					UDPConn = new RMIFailover(this.hostname, this.serverPort, this.rmiPort);
+					aSocket.close();
+					UDPConn = new RMIFailover(hostname, serverPort);
 					UDPConn.start();
 					try {
 						Thread.currentThread().join();

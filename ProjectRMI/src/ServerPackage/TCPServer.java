@@ -21,7 +21,7 @@ public class TCPServer {
     // Contrutor: Inicializa conexão ao RMI
     public TCPServer(String hostname,int rmiPort){
         try {
-            tcp = (TCPServerInterface) LocateRegistry.getRegistry(hostname,rmiPort).lookup("vote_booth");
+            tcp = (TCPServerInterface) LocateRegistry.getRegistry(rmiPort).lookup("vote_booth");
         } catch (RemoteException|NotBoundException e) { System.out.println("Error connecting to RMI"); }
     }
 
