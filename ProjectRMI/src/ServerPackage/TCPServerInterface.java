@@ -12,7 +12,7 @@ public interface TCPServerInterface extends Remote {
     ArrayList<Department> getDepList() throws RemoteException;
     ArrayList<Election> getElList() throws RemoteException;
     Election getElection(String title) throws RemoteException;
-    void voteElection(User u, Election e, candidateList cl) throws RemoteException;
+    public void voteElection(User u, Election e, candidateList cl) throws RemoteException;
     boolean hasVoted(User u, Election e) throws RemoteException;
     ArrayList<Department> getDeps(Election e) throws RemoteException;
 }

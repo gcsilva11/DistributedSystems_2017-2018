@@ -16,7 +16,6 @@ import java.util.StringTokenizer;
 public class TCPServer {
     public static TCPServerInterface tcp;
     private static String userID;
-    public static int departmentID;
 
     // Contrutor: Inicializa conexão ao RMI
     public TCPServer(String hostname,int rmiPort){
@@ -28,8 +27,8 @@ public class TCPServer {
     // Main: À espera de novas ligações ao socket
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int defPort, rmiPort, num_Cliente = 0;
-        String hostname;
+        int defPort, rmiPort, num_Cliente = 0, id;
+        String hostname, departmentID ;
 
         if (args.length == 3){
             hostname = args[0];
@@ -43,19 +42,18 @@ public class TCPServer {
         }
 
         System.out.println("Department ID:");
-        departmentID = sc.nextInt();
-        departmentID = departmentID-1;
+        id = sc.nextInt()-1;
+        departmentID = Integer.toString(id);
 
         // Conecta ao RMI
-        TCPServer tcpSer = new TCPServer(hostname, rmiPort);
+        TCPServer tcpServer = new TCPServer(hostname, rmiPort);
 
         // Recebe input na consola de qual é o departamento deste Servidor
-
 
         boolean aux = false;
         try {
             for (int i=0;i<tcp.getDepList().size();i++){
-                if(departmentID == Integer.parseInt(tcp.getDepList().get(i).getID()))
+                if(id == Integer.parseInt(tcp.getDepList().get(i).getID()))
                     aux = true;
             }
         } catch (RemoteException e) { }
@@ -119,7 +117,7 @@ public class TCPServer {
                         }
                         // Thread Connection que trata da autentificação e do voto do cada cliente
                         else {
-                            Connection newClient = new Connection(clientSocket, userID, hostname, rmiPort);
+                            Connection newClient = new Connection(clientSocket, userID, hostname, rmiPort, departmentID);
                             newClient.start();
                         }
                     }
@@ -145,9 +143,10 @@ class Connection extends Thread{
     private ArrayList<Election> election = new ArrayList<>();
 
     private String userID;
+    private String departmentID;
 
     // Construtor: Inicializa dados do socket e do RMI
-    public Connection (Socket aClientSocket, String userID, String hostname, int rmiPort) {
+    public Connection (Socket aClientSocket, String userID, String hostname, int rmiPort, String departmentID) {
         this.clientSocket = aClientSocket;
         try{
             this.input = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
@@ -158,6 +157,7 @@ class Connection extends Thread{
             this.election = tcpServer.tcp.getElList();
             this.userID = userID;
             this.tcpServer = new TCPServer(hostname, rmiPort);
+            this.departmentID = departmentID;
         }catch(IOException e){ }
     }
 
@@ -182,51 +182,72 @@ class Connection extends Thread{
             }
 
             // Autentica user
-            if(authenticateUser(data,aux)){
+            if(authenticateUser(data,aux)) {
                 output.println("Authentication successfull");
 
                 // Lista as eleiçoes
                 output.println("Choose election to vote on: ");
 
-                for(int i = 1;i<=election.size();i++) {
-                    //if (!election.get(idElection - 1).getClosed()) {
-                        output.println(i + ". " + election.get(i - 1).getTitle());
-                    //}
-                }
-                // Recebe escolha eleiçao
-                aux = input.readLine();
-                idElection = Integer.parseInt(aux);
-
-                for (int i = 0; i < user.size(); i++) {
-                    if (user.get(i).getID().equals(userID)) {
-                        if (!tcpServer.tcp.hasVoted(user.get(i), election.get(idElection - 1))) {
-                            // Lista as listas de determinada eleiçao
-                            output.println("Choose list to vote on: \n0. ");
-                            for (int j = 0; j < election.get(idElection - 1).getCandidates().size(); j++)
-                                output.println(j + 1 + ". " + election.get(idElection - 1).getCandidates().get(j).getName());
-
-                            // Recebe escolha lista
-                            aux = input.readLine();
-                            idList = Integer.parseInt(aux);
-
-                            // Envia informaçao de voto para RMI
-                            vote(election.get(idElection - 1).getTitle(), idList - 1, election.get(idElection - 1).getCandidates().size());
-                        } else {
-                            output.println("This user already voted for election " + election.get(idElection - 1).getTitle() + "\nRe-Identify yourself to continue");
-                            System.out.println("Invalid vote\nClosing connection to client");
-                        }
+                boolean auxB = false;
+                for (int i = 0; i < election.size(); i++) {
+                    for (int j = 0; j < user.size(); j++) {
+                        if (user.get(j).getID().equals(userID) && !user.get(j).hasVoted(election.get(i))) {
+                            //for (int k = 0; k < election.get(i).getViableDeps().size(); k++) {
+                                //if (election.get(i).getViableDeps().get(k).getID().equals(departmentID)) {
+                                    output.println(i + ". " + election.get(i).getTitle());
+                                    auxB = true;
+                                }
+                            //}
+                        //}
                     }
+                }
+                if (auxB){
+                    // Recebe escolha eleiçao
+                    aux = input.readLine();
+                    idElection = Integer.parseInt(aux);
+
+                    if (idElection >= 0) {
+                        for (int i = 0; i < user.size(); i++) {
+                            if (user.get(i).getID().equals(userID)) {
+                                if (!tcpServer.tcp.hasVoted(user.get(i), election.get(idElection))) {
+                                    // Lista as listas de determinada eleiçao
+                                    output.println("Choose list to vote on: \n0. ");
+                                    for (int j = 0; j < election.get(idElection).getCandidates().size(); j++)
+                                        output.println(j + 1 + ". " + election.get(idElection).getCandidates().get(j).getName());
+
+                                    // Recebe escolha lista
+                                    aux = input.readLine();
+                                    idList = Integer.parseInt(aux);
+
+                                    System.out.println(idList);
+
+                                    // Envia informaçao de voto para RMI
+                                    vote(election.get(idElection).getTitle(), idList - 1);
+                                } else {
+                                    output.println("This user already voted for election " + election.get(idElection).getTitle() + "\n\tClosing session...");
+                                    System.out.println("Invalid Vote\n\tClosing client's session...");
+                                }
+                            }
+                        }
+                    } else {
+                        output.println("There is no such election\n\tClosing session...");
+                        System.out.println("Invalid Election\n\tClosing client's session...");
+                    }
+                } else {
+                    output.println("No elections to vote on\n\tClosing session...");
+                    System.out.println("No elections for user to vote on\n\tClosing client's session...");
                 }
             }
             // Rejeita autenticaçao e fecha thread
             else {
-                output.println("Failed authentication\nRe-Identify yourself to continue");
-                System.out.println("Failed authentication\nClosing connection to client");
+                output.println("Failed authentication\n\tClosing session...");
+                System.out.println("Failed authentication\n\tClosing client's session...");
             }
         } catch (IOException e) {
         } catch (NullPointerException e){}
     }
 
+    //
     public boolean authenticateUser (String username, String password) {
         for (int i = 0; i < user.size(); i++) {
             if (user.get(i).getName().equals(username) && user.get(i).getPassword().equals(password))
@@ -235,25 +256,23 @@ class Connection extends Thread{
         return false;
     }
 
-    public void vote(String electionName, int idList, int listSize) throws java.rmi.RemoteException{
-        Election e = null;
+    //
+    public void vote(String electionName, int idList) throws java.rmi.RemoteException{
+        Election e = tcpServer.tcp.getElection(electionName);
         try {
             // Voto nulo
-            if(idList>listSize) {
+            if(idList>=e.getCandidates().size()) {
                 for (int i = 0; i < user.size(); i++) {
                     if (user.get(i).getID().equals(userID)) {
                         tcpServer.tcp.voteElection(user.get(i), e, new candidateList("NULLVOTE","NULLVOTE",-1,null));
-                        System.out.println("Enviou voto nulo");
                     }
                 }
             } else{
                 // Voto em branco
                 if(idList == -1) {
-                    e = new Election();
                     for (int i = 0; i < user.size(); i++) {
                         if (user.get(i).getID().equals(userID)) {
-                            tcpServer.tcp.voteElection(user.get(i), e, new candidateList("WHITEVOTE","WHITEVOTE",-1,null));
-                            System.out.println("Enviou voto branco");
+                            tcpServer.tcp.voteElection(user.get(i), e, new candidateList("WHITEVOTE", "WHITEVOTE", -1, null));
                         }
                     }
                 }
@@ -261,10 +280,7 @@ class Connection extends Thread{
                 else {
                     for (int i=0;i<user.size();i++){
                         if(user.get(i).getID().equals(userID)){
-                            e = tcpServer.tcp.getElection(electionName);
-
-                            tcpServer.tcp.voteElection(user.get(i),e,e.getCandidates().get(idList));
-                            System.out.println("Enviou voto: " + e.getTitle() + "lista: " + e.getCandidates().get(idList).getName());
+                            tcpServer.tcp.voteElection(user.get(i), e, e.getCandidates().get(idList));
                         }
                     }
                 }

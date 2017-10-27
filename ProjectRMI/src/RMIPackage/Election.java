@@ -15,7 +15,7 @@ public class Election implements Serializable{
 	private ArrayList <Department> viableDeps = new ArrayList<Department>();
 	private ArrayList <candidateList> candidates = new ArrayList<candidateList>();
 	private boolean closed;
-	public int nVotos = 0;
+	public int nVotos;
 
 	public Election(String title,String description,Calendar startDate,Calendar endDate,int type,ArrayList <candidateList> candidates){
 		this.title=title;
@@ -25,12 +25,13 @@ public class Election implements Serializable{
 		this.type = type;
 		this.closed = false;
 		this.candidates = candidates;
+		this.nVotos = 0;
 	}
 
-	public Election(){
-		this.title = "BRANCO";
+	public void incrementVotes(){
+		this.nVotos++;
 	}
-	
+
 	public String getTitle(){
 		return this.title;
 	}

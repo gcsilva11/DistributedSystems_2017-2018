@@ -18,6 +18,7 @@ public class User implements Serializable {
     private ArrayList<Election> votedIn;
     private ArrayList<candidateList> listVoted;
     private ArrayList<Calendar> whenVoted;
+    private ArrayList<Department> whereVoted;
 
     public User(String name, String idNumber, Calendar expDate, String phone, int profession, String department, String password) {
         this.name = name;
@@ -90,7 +91,7 @@ public class User implements Serializable {
     public boolean hasVoted(Election e){
         if(this.votedIn != null){
             for(int i = 0;i<this.votedIn.size();i++){
-                if(this.votedIn.get(i).getTitle().equals(e.getTitle())) {
+                if(this.votedIn.get(i).getTitle().equals(e.getTitle()) || this.votedIn.get(i).getTitle().equals("NULLVOTE") || this.votedIn.get(i).getTitle().equals("WHITEVOTE")) {
                     return true;
                 }
             }
@@ -101,7 +102,7 @@ public class User implements Serializable {
     public String getVotes(){
         String aux="";
         for (int i = 0;i<this.votedIn.size();i++){
-            aux = aux + votedIn.get(i).getTitle() + "\t" + this.listVoted.get(i).getName() + "\n";
+            aux = aux + "\t\t" + "eleição : " + this.votedIn.get(i).getTitle() + " - lista: " + this.listVoted.get(i).getName() + "\n";
         }
         return aux;
     }
