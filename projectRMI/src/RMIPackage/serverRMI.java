@@ -19,6 +19,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	private static candidateListList listOfCandidateLists = new candidateListList();
 	private static ElectionList elList = new ElectionList();
 	private static ElectionList closedElections = new ElectionList();
+	private static DepList depsWithBooth = new DepList();
 
 	public serverRMI() throws RemoteException {
 		super();
@@ -396,6 +397,27 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 	}
 
+	public ArrayList <Department> checkTables() throws java.rmi.RemoteException{
+
+	    ArrayList <Department> toSend = new ArrayList <Department>();
+        boolean checked = false;
+
+        for(int i=0;i<elList.getElections().size();i++){
+	        for(int j=0;j<elList.getElections().get(i).getViableDeps().size();j++){
+	            for(int k=0;k<toSend.size();k++){
+                    if(elList.getElections().get(i).getViableDeps().get(j).getID().equals(toSend.get(k).getID())){
+                        checked = true;
+                    }
+                }
+                if(!checked){
+                    System.out.println("added dep");
+                    toSend.add(elList.getElections().get(i).getViableDeps().get(j));
+                }
+                checked = false;
+            }
+        }
+        return toSend;
+    }
 	// ==================================================================================================================
 	// TCPServerInterface
 

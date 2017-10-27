@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 import RMIPackage.*;
+import com.sun.org.apache.regexp.internal.RE;
 
 public class Admin {
 	private static Scanner input;
@@ -33,12 +34,14 @@ public class Admin {
 		try{
 			VotingAdminInterface vote = (VotingAdminInterface) LocateRegistry.getRegistry(def_port).lookup("vote_booth");
 			elecCheck checkThread = new elecCheck(vote);
+			//boothCheck boothThread = new boothCheck(vote);
 			checkThread.start();
+			//boothThread.start();
 			
 			while(true){
 				System.out.println("Admin console ready.What do you want to do?\n1-Register a new user\n"
 						+ "2-Add a new department\n3-Create an election\n4-Manage candidate lists"
-						+ "\n5-Edit an election\n6-Voting table status");
+						+ "\n5-Edit an election\n6-Add/Remove tables");
 				choice = input.nextLine();
 				
 				switch(choice){
@@ -215,6 +218,10 @@ public class Admin {
 							System.out.println("Input the ID of the lists you want to add (0 to stop):");
 							
 							ArrayList <candidateList> toAdd = new ArrayList <candidateList>();
+                            candidateList nullVote = new candidateList("NULLVOTE","NULLVOTE",1,null);
+                            candidateList blankVote = new candidateList("BLANKVOTE","BLANKVOTE",1,null);
+                            toAdd.add(nullVote);
+                            toAdd.add(blankVote);
 							String IDchoice = input.nextLine();
 							while(!IDchoice.equals("0")){
 								for(int i=0;i<available.size();i++){
@@ -285,10 +292,15 @@ public class Admin {
 							for(int i=0;i<available.size();i++){
 								System.out.println("Title: " + available.get(i).getName() + " ID: " + available.get(i).getID());
 							}
-							
+
 							System.out.println("Input the ID of the lists you want to add:");
 							
 							ArrayList <candidateList> toAdd = new ArrayList <candidateList>();
+
+                            candidateList nullVote = new candidateList("NULLVOTE","NULLVOTE",1,null);
+                            candidateList blankVote = new candidateList("BLANKVOTE","BLANKVOTE",1,null);
+                            toAdd.add(nullVote);
+                            toAdd.add(blankVote);
 
                             String IDchoice = input.nextLine();
                             while(!IDchoice.equals("0")){
@@ -583,7 +595,7 @@ class elecCheck extends Thread{
         while (true) {
             try {
                 try {
-                    Thread.sleep(10000);
+                    Thread.sleep(5000);
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 }
@@ -627,3 +639,80 @@ class elecCheck extends Thread{
         }
     }
 }
+
+/*class boothCheck extends Thread {
+    private VotingAdminInterface vote;
+
+    private ArrayList <Department> seen2 = new ArrayList <Department>();
+    private ArrayList<Integer> printable2 = new ArrayList<Integer>();
+
+    public boothCheck(VotingAdminInterface vote) {
+        this.vote = vote;
+    }
+
+    public void run() {
+        System.out.println("Booth checking thread started.");
+        int failed = 0;
+        while(true){
+            try {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+                ArrayList<Department> tables = vote.checkTables();
+                boolean checked=false;
+                Department toAdd = null;
+                //Check for new tables
+                for (int i = 0; i < tables.size(); i++) {
+                    for (int j = 0; j < seen2.size(); j++) {
+                        if (tables.get(i).getID().equals(seen2.get(j).getID())) {
+                            checked = true;
+                        }
+                    }
+                    if(!checked){
+                        toAdd = tables.get(i);
+                        printable2.add(0);
+                        seen2.add(toAdd);
+                    }
+                    checked = false;
+                }
+
+                for(int i=0;i<seen2.size();i++){
+                    System.out.println(i);
+                    if(printable2.get(i)==0){
+                        printable2.set(i,1);
+                        System.out.println("Voting table added in " + seen2.get(i).getDep());
+                    }
+                }
+
+                //Check for deleted tables
+                checked = false;
+                for(int i=0;i<seen2.size();i++){
+                    for(int j=0;j<tables.size();j++){
+                        if(seen2.get(i).getID().equals(tables.get(j).getID())) {
+                            checked = true;
+                        }
+                    }
+                    if(!checked){
+                        System.out.println("Voting table removed in "+seen2.get(i).getDep());
+                        seen2.remove(i);
+                    }
+                    checked = false;
+                }
+                failed = 0;
+            }catch(RemoteException e){
+                failed++;
+                if(failed == 3){
+                    System.out.println("Timeout - RMI didn't respond for 30 seconds, trying to reconnect...");
+                    try{
+                        this.vote = (VotingAdminInterface) LocateRegistry.getRegistry(6500).lookup("vote_booth");
+                    } catch (Exception e2){
+                        System.out.println("RMI server not responding, shutting down thread");
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}*/
