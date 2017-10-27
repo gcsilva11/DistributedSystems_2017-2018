@@ -16,6 +16,7 @@ import java.util.StringTokenizer;
 public class TCPServer {
     public static TCPServerInterface tcp;
     private static String userID;
+    public static int departmentID;
 
     // Contrutor: Inicializa conexão ao RMI
     public TCPServer(){
@@ -27,7 +28,7 @@ public class TCPServer {
     // Main: À espera de novas ligações ao socket
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int department, def_port, num_Cliente = 0;
+        int def_port, num_Cliente = 0;
         String hostname;
 
         if (args.length == 2){
@@ -40,7 +41,7 @@ public class TCPServer {
         }
 
         System.out.println("Department ID:");
-        department = sc.nextInt();
+        departmentID = sc.nextInt();
 
         // Conecta ao RMI
         TCPServer tcpSer = new TCPServer();
@@ -51,7 +52,7 @@ public class TCPServer {
         boolean aux = false;
         try {
             for (int i=0;i<tcp.getDepList().size();i++){
-                if(department == Integer.parseInt(tcp.getDepList().get(i).getID()))
+                if(departmentID == Integer.parseInt(tcp.getDepList().get(i).getID()))
                     aux = true;
             }
         } catch (RemoteException e) { }
@@ -180,28 +181,41 @@ class Connection extends Thread{
 
                 // Lista as eleiçoes
                 output.println("Choose election to vote on: ");
-                for(int i = 1;i<=election.size();i++)
-                    output.println(i + ". " + election.get(i-1).getTitle());
+
+                for(int i = 1;i<=election.size();i++) {
+                    if (!election.get(idElection - 1).getClosed()) {
+                        output.println(i + ". " + election.get(i - 1).getTitle());
+                    }
+                }
                 // Recebe escolha eleiçao
                 aux = input.readLine();
                 idElection = Integer.parseInt(aux);
 
-                // Lista as listas de determinada eleiçao
-                output.println("Choose list to vote on: \n0. ");
-                for (int i = 0; i<election.get(idElection-1).getCandidates().size();i++)
-                    output.println(i+1+". "+election.get(idElection-1).getCandidates().get(i).getName());
+                for(int i = 0;i<user.size();i++){
+                    if(user.get(i).getID().equals(userID)){
+                        if(!tcpServer.tcp.hasVoted(user.get(i),election.get(idElection-1))){
+                            // Lista as listas de determinada eleiçao
+                            output.println("Choose list to vote on: \n0. ");
+                            for (int j = 0; j<election.get(idElection-1).getCandidates().size();j++)
+                                output.println(j+1+". "+election.get(idElection-1).getCandidates().get(j).getName());
 
-                // Recebe escolha lista
-                aux = input.readLine();
-                idList = Integer.parseInt(aux);
+                            // Recebe escolha lista
+                            aux = input.readLine();
+                            idList = Integer.parseInt(aux);
 
-                // Envia informaçao de voto para RMI
-                vote(election.get(idElection-1).getTitle(), idList-1, election.get(idElection-1).getCandidates().size());
+                            // Envia informaçao de voto para RMI
+                            vote(election.get(idElection-1).getTitle(), idList-1, election.get(idElection-1).getCandidates().size());
+                        } else {
+                            output.println("This user already voted for election " + election.get(idElection - 1).getTitle()+"\nRe-Identify yourself to continue");
+                            System.out.println("Invalid vote\nClosing connection to client");
+                        }
+                    }
+                }
             }
             // Rejeita autenticaçao e fecha thread
             else {
                 output.println("Failed authentication\nRe-Identify yourself to continue");
-                System.out.println("Failed authentication\n Closing connection to client");
+                System.out.println("Failed authentication\nClosing connection to client");
             }
         } catch (IOException e) {
         } catch (NullPointerException e){}
@@ -234,7 +248,7 @@ class Connection extends Thread{
                             //System.out.println(e.getInfo()+"\n"+e.getCandidates().get(idList).getInfo());
 
                             tcpServer.tcp.voteElection(user.get(i),e,e.getCandidates().get(idList));
-                            System.out.println("Votou Eleiçao: " + e.getTitle() + "lista: " + e.getCandidates().get(idList).getName());
+                            System.out.println("Enviou voto: " + e.getTitle() + "lista: " + e.getCandidates().get(idList).getName());
                         }
                     }
                 }

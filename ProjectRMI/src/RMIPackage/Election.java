@@ -33,7 +33,9 @@ public class Election implements Serializable{
 	public void addDep(Department dep){
 		this.viableDeps.add(dep);
 	}
-	
+
+	public ArrayList<Department> getViableDeps() { return viableDeps; }
+
 	public boolean getClosed(){
 		return this.closed;
 	}
