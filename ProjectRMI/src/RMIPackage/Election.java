@@ -25,6 +25,10 @@ public class Election implements Serializable{
 		this.closed = false;
 		this.candidates = candidates;
 	}
+
+	public Election(){
+		this.title = "BRANCO";
+	}
 	
 	public String getTitle(){
 		return this.title;

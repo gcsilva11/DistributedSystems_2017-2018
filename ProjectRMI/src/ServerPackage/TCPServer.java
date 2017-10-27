@@ -183,9 +183,9 @@ class Connection extends Thread{
                 output.println("Choose election to vote on: ");
 
                 for(int i = 1;i<=election.size();i++) {
-                    if (!election.get(idElection - 1).getClosed()) {
+                    //if (!election.get(idElection - 1).getClosed()) {
                         output.println(i + ". " + election.get(i - 1).getTitle());
-                    }
+                    //}
                 }
                 // Recebe escolha eleiçao
                 aux = input.readLine();
@@ -233,19 +233,29 @@ class Connection extends Thread{
         Election e = null;
         try {
             // Voto nulo
-            if(idList>listSize){
-                System.out.println("implementar voto nulo");
+            if(idList>listSize) {
+                for (int i = 0; i < user.size(); i++) {
+                    if (user.get(i).getID().equals(userID)) {
+                        tcpServer.tcp.voteElection(user.get(i), null, null);
+                        System.out.println("Enviou voto nulo");
+                    }
+                }
             } else{
                 // Voto em branco
                 if(idList == -1) {
-                    System.out.println("implementar voto em branco");
+                    e = new Election();
+                    for (int i = 0; i < user.size(); i++) {
+                        if (user.get(i).getID().equals(userID)) {
+                            tcpServer.tcp.voteElection(user.get(i), e, null);
+                            System.out.println("Enviou voto branco");
+                        }
+                    }
                 }
                 // Voto numa lista
                 else {
                     for (int i=0;i<user.size();i++){
                         if(user.get(i).getID().equals(userID)){
                             e = tcpServer.tcp.getElection(electionName);
-                            //System.out.println(e.getInfo()+"\n"+e.getCandidates().get(idList).getInfo());
 
                             tcpServer.tcp.voteElection(user.get(i),e,e.getCandidates().get(idList));
                             System.out.println("Enviou voto: " + e.getTitle() + "lista: " + e.getCandidates().get(idList).getName());
