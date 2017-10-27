@@ -19,32 +19,35 @@ public class TCPServer {
     public static int departmentID;
 
     // Contrutor: Inicializa conexão ao RMI
-    public TCPServer(){
+    public TCPServer(int rmiPort){
         try {
-            tcp = (TCPServerInterface) LocateRegistry.getRegistry(6500).lookup("vote_booth");
+            tcp = (TCPServerInterface) LocateRegistry.getRegistry(rmiPort).lookup("vote_booth");
         } catch (RemoteException|NotBoundException e) { System.out.println("Error connecting to RMI"); }
     }
 
     // Main: À espera de novas ligações ao socket
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int def_port, num_Cliente = 0;
+        int defPort, rmiPort, num_Cliente = 0;
         String hostname;
 
         if (args.length == 2){
             hostname = args[0];
-            def_port = Integer.parseInt(args[1]);
+            rmiPort = Integer.parseInt(args[1]);
+            defPort = Integer.parseInt(args[2]);
         }
         else{
             hostname = "localhost";
-            def_port = 6000;
+            rmiPort = 6500;
+            defPort = 6000;
         }
 
         System.out.println("Department ID:");
         departmentID = sc.nextInt();
+        departmentID = departmentID-1;
 
         // Conecta ao RMI
-        TCPServer tcpSer = new TCPServer();
+        TCPServer tcpSer = new TCPServer(rmiPort);
 
         // Recebe input na consola de qual é o departamento deste Servidor
 
@@ -68,7 +71,7 @@ public class TCPServer {
             try {
 
                 // Cria e aceita socket connection
-                listenSocket = new ServerSocket(def_port);
+                listenSocket = new ServerSocket(defPort);
                 Socket clientSocket = listenSocket.accept();
                 BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 PrintWriter output = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -78,7 +81,7 @@ public class TCPServer {
                     // getListaUsers
                     // Identifica user
                     public void run() {
-                        TCPServer tcpServer = new TCPServer();
+                        TCPServer tcpServer = new TCPServer(rmiPort);
                         ArrayList<User> user = new ArrayList<>();
 
                         try {
@@ -116,7 +119,7 @@ public class TCPServer {
                         }
                         // Thread Connection que trata da autentificação e do voto do cada cliente
                         else {
-                            Connection newClient = new Connection(clientSocket, userID);
+                            Connection newClient = new Connection(clientSocket, userID, rmiPort);
                             newClient.start();
                         }
                     }
@@ -135,7 +138,7 @@ class Connection extends Thread{
 
     private StringTokenizer token;
 
-    private TCPServer tcpServer = new TCPServer();
+    private TCPServer tcpServer;
     private ArrayList<User> user = new ArrayList<>();
     private ArrayList<candidateList> candidateList = new ArrayList<>();
     private ArrayList<Department> department = new ArrayList<>();
@@ -144,7 +147,7 @@ class Connection extends Thread{
     private String userID;
 
     // Construtor: Inicializa dados do socket e do RMI
-    public Connection (Socket aClientSocket, String userID) {
+    public Connection (Socket aClientSocket, String userID, int rmiPort) {
         this.clientSocket = aClientSocket;
         try{
             this.input = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
@@ -154,6 +157,7 @@ class Connection extends Thread{
             this.department = tcpServer.tcp.getDepList();
             this.election = tcpServer.tcp.getElList();
             this.userID = userID;
+            this.tcpServer = new TCPServer(rmiPort);
         }catch(IOException e){ }
     }
 
@@ -238,7 +242,7 @@ class Connection extends Thread{
             if(idList>listSize) {
                 for (int i = 0; i < user.size(); i++) {
                     if (user.get(i).getID().equals(userID)) {
-                        tcpServer.tcp.voteElection(user.get(i), null, null);
+                        tcpServer.tcp.voteElection(user.get(i), e, new candidateList("NULLVOTE","NULLVOTE",-1,null));
                         System.out.println("Enviou voto nulo");
                     }
                 }
@@ -248,7 +252,7 @@ class Connection extends Thread{
                     e = new Election();
                     for (int i = 0; i < user.size(); i++) {
                         if (user.get(i).getID().equals(userID)) {
-                            tcpServer.tcp.voteElection(user.get(i), e, null);
+                            tcpServer.tcp.voteElection(user.get(i), e, new candidateList("WHITEVOTE","WHITEVOTE",-1,null));
                             System.out.println("Enviou voto branco");
                         }
                     }

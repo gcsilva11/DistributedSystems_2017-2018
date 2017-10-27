@@ -15,6 +15,7 @@ public class Election implements Serializable{
 	private ArrayList <Department> viableDeps = new ArrayList<Department>();
 	private ArrayList <candidateList> candidates = new ArrayList<candidateList>();
 	private boolean closed;
+	public int nVotos = 0;
 
 	public Election(String title,String description,Calendar startDate,Calendar endDate,int type,ArrayList <candidateList> candidates){
 		this.title=title;

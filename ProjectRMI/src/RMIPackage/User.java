@@ -98,5 +98,13 @@ public class User implements Serializable {
         return false;
     }
 
+    public String getVotes(){
+        String aux="";
+        for (int i = 0;i<this.votedIn.size();i++){
+            aux = aux + votedIn.get(i).getTitle() + "\t" + this.listVoted.get(i).getName() + "\n";
+        }
+        return aux;
+    }
+
 }
 

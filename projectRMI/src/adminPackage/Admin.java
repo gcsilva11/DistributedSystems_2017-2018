@@ -16,11 +16,22 @@ public class Admin {
 	private static Scanner input;
 
 	public static void main(String[] args){
+		String hostname;
+		int def_port;
 		input = new Scanner(System.in);
 		String choice;
+
+        if (args.length == 2){
+            hostname = args[0];
+            def_port = Integer.parseInt(args[1]);
+        }
+        else{
+            hostname = "localhost";
+            def_port = 6500;
+        }
 		
 		try{
-			VotingAdminInterface vote = (VotingAdminInterface) LocateRegistry.getRegistry(6500).lookup("vote_booth");
+			VotingAdminInterface vote = (VotingAdminInterface) LocateRegistry.getRegistry(hostname,def_port).lookup("vote_booth");
 			elecCheck checkThread = new elecCheck(vote);
 			checkThread.start();
 			
