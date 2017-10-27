@@ -58,22 +58,7 @@ public class User implements Serializable {
     }
 
     public void setVotes(Election e, candidateList cl) {
-<<<<<<< HEAD
-            if(this.votedIn == null) {
-                this.votedIn = new ArrayList<Election>();
-                this.votedIn.add(e);
-            }
-            else {
-                this.votedIn.add(e);
-            }
-            if(this.listVoted ==null){
-                this.listVoted = new ArrayList<candidateList>();
-                this.listVoted.add(cl);
-            }
-            else{
-                this.listVoted.add(cl);
-            }
-=======
+
         // Sets time voted
         if(this.whenVoted == null){
             this.whenVoted = new ArrayList<Calendar>();
@@ -91,7 +76,6 @@ public class User implements Serializable {
         else {
             this.votedIn.add(e);
         }
->>>>>>> bc393d2fe02f32523d830336a32a9a6c6a3ffe38
 
         // Sets Lists voted
         if(this.listVoted ==null){

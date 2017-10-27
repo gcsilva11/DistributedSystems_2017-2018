@@ -578,8 +578,6 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 	// Thread que trata do Failover
 class RMIFailover extends Thread {
-	public static final boolean DEBUG = false;
-
 	private DatagramSocket aSocket = null;
 
 	private String hostname;
@@ -596,7 +594,6 @@ class RMIFailover extends Thread {
 			// Abre socket UDP
 			aSocket = new DatagramSocket(serverPort);
 			System.out.println("Main RMI Server started");
-			if (DEBUG) System.out.println("\t#DEBUG# Main RMI Server: A enviar hearbeats para Backup RMI Server");
 
 			serverRMI serverRMI = new serverRMI();
 			serverRMI.startRMI();
@@ -610,8 +607,6 @@ class RMIFailover extends Thread {
 				DatagramPacket request = new DatagramPacket(m, m.length, aHost, serverPort);
 				aSocket.send(request);
 
-				if (DEBUG) System.out.println("\t#DEBUG# Enviou hearbeat");
-
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException i) {
@@ -620,8 +615,7 @@ class RMIFailover extends Thread {
 
 		} catch (SocketException e) {
 			System.out.println("Backup RMI Server started");
-			if (DEBUG) System.out.println("\t#DEBUG# Backup RMI Server: À espera de falha do Main RMI Server");
-			int heartbeatsFailed = 0;
+			int heartbeatsFailed = 0, maxHeartbeats = 10;
 			byte[] buffer = new byte[1000];
 
 			try {
@@ -629,7 +623,7 @@ class RMIFailover extends Thread {
 				aSocket = new DatagramSocket(null);
 				aSocket.setReuseAddress(true);
 				aSocket.bind(new InetSocketAddress(hostname, serverPort));
-				while (heartbeatsFailed < 3) {
+				while (heartbeatsFailed < maxHeartbeats) {
 					// Define timeout de recepção de heartbeat
 					this.aSocket.setSoTimeout(1500);
 
@@ -639,16 +633,14 @@ class RMIFailover extends Thread {
 					DatagramPacket request = new DatagramPacket(buffer, buffer.length, aHost, serverPort);
 					try {
 						aSocket.receive(request);
-						if (DEBUG) System.out.println("\t#DEBUG# Recebeu heartbeat");
 						System.out.println("Received heartbeat from Main RMI server");
 					} catch (SocketTimeoutException i){
 						heartbeatsFailed++;
-						if (DEBUG) System.err.println("\t#DEBUG# Heartbeat falhado");
-						System.err.println("Did not receive heartbeat from Main RMI server");
+						System.err.println("Did not receive heartbeat from Main RMI server\tRetrying... "+heartbeatsFailed+"/"+maxHeartbeats);
 					}
 				}
 
-				if(heartbeatsFailed == 3) {
+				if(heartbeatsFailed >= maxHeartbeats) {
 					this.aSocket.close();
 					UDPConn = new RMIFailover(hostname, serverPort);
 					UDPConn.start();
@@ -658,11 +650,11 @@ class RMIFailover extends Thread {
 					}
 				}
 
-			} catch (SocketException i) { if (DEBUG) System.out.println("\t#DEBUG# Socket: " + e.getMessage());
-			} catch (IOException i) { if (DEBUG) System.out.println("\t#DEBUG# IO: " + e.getMessage());
+			} catch (SocketException i) { System.out.println("Socket: " + e.getMessage());
+			} catch (IOException i) { System.out.println("IO: " + e.getMessage());
 			} finally { if (this.aSocket != null) this.aSocket.close(); }
 
-		} catch (IOException e) { if (DEBUG) System.out.println("\t#DEBUG# IO: " + e.getMessage());
+		} catch (IOException e) { System.out.println("IO: " + e.getMessage());
 		} finally { if (this.aSocket != null) this.aSocket.close(); }
 	}
 }

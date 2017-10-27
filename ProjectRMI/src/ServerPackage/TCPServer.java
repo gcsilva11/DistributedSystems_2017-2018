@@ -101,7 +101,10 @@ public class TCPServer {
                         for (int i = 0; i < user.size(); i++) {
                             if (user.get(i).getID().compareTo(data) == 0) {
                                 userID = user.get(i).getID();
+
+
                                 System.out.println(user.get(i).getInfo());
+
                                 unblocks = true;
                             }
                         }
@@ -176,7 +179,6 @@ class Connection extends Thread{
 
             // Autentica user
             if(authenticateUser(data,aux)){
-                System.out.println("Authentication successfull");
                 output.println("Authentication successfull");
 
                 // Lista as eleiçoes
@@ -191,22 +193,22 @@ class Connection extends Thread{
                 aux = input.readLine();
                 idElection = Integer.parseInt(aux);
 
-                for(int i = 0;i<user.size();i++){
-                    if(user.get(i).getID().equals(userID)){
-                        if(!tcpServer.tcp.hasVoted(user.get(i),election.get(idElection-1))){
+                for (int i = 0; i < user.size(); i++) {
+                    if (user.get(i).getID().equals(userID)) {
+                        if (!tcpServer.tcp.hasVoted(user.get(i), election.get(idElection - 1))) {
                             // Lista as listas de determinada eleiçao
                             output.println("Choose list to vote on: \n0. ");
-                            for (int j = 0; j<election.get(idElection-1).getCandidates().size();j++)
-                                output.println(j+1+". "+election.get(idElection-1).getCandidates().get(j).getName());
+                            for (int j = 0; j < election.get(idElection - 1).getCandidates().size(); j++)
+                                output.println(j + 1 + ". " + election.get(idElection - 1).getCandidates().get(j).getName());
 
                             // Recebe escolha lista
                             aux = input.readLine();
                             idList = Integer.parseInt(aux);
 
                             // Envia informaçao de voto para RMI
-                            vote(election.get(idElection-1).getTitle(), idList-1, election.get(idElection-1).getCandidates().size());
+                            vote(election.get(idElection - 1).getTitle(), idList - 1, election.get(idElection - 1).getCandidates().size());
                         } else {
-                            output.println("This user already voted for election " + election.get(idElection - 1).getTitle()+"\nRe-Identify yourself to continue");
+                            output.println("This user already voted for election " + election.get(idElection - 1).getTitle() + "\nRe-Identify yourself to continue");
                             System.out.println("Invalid vote\nClosing connection to client");
                         }
                     }
