@@ -747,6 +747,7 @@ class RMIFailover extends Thread {
 					}
 				}
 
+				//
 				if(heartbeatsFailed >= maxHeartbeats) {
 					this.aSocket.close();
 					UDPConn = new RMIFailover(this.hostname, this.serverPort, this.rmiPort);

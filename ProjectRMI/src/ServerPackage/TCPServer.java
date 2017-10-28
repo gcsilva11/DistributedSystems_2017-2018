@@ -174,6 +174,7 @@ class Connection extends Thread {
             output.println("Insert [username]/[password]");
             data = input.readLine();
 
+            // Trata dados recebidos
             tokenizer = new StringTokenizer(data, "/");
             try {
                 data = tokenizer.nextToken();
@@ -187,7 +188,6 @@ class Connection extends Thread {
 
                 // Lista as eleiçoes
                 output.println("Choose election to vote on: ");
-
                 boolean auxB = false;
                 for (int i = 0; i < election.size(); i++) {
                     for (int j = 0; j < user.size(); j++) {
@@ -228,6 +228,7 @@ class Connection extends Thread {
                                                 try {
                                                     vote(election.get(idElection).getTitle(), idList + 1);
                                                     break;
+                                                // Failover RMI
                                                 } catch (Exception e) {
                                                     System.out.println("RMI Timeout on User registry, trying to reconnect");
                                                     try {
@@ -250,6 +251,7 @@ class Connection extends Thread {
                                             break;
                                         }
                                         break;
+                                    // Failover RMI
                                     } catch (Exception e) {
                                         System.out.println("RMI Timeout on User registry, trying to reconnect");
                                         try {
@@ -294,7 +296,7 @@ class Connection extends Thread {
         }
     }
 
-    //
+    // Autentica Cliente
     public boolean authenticateUser(String username, String password, String userID) {
         for (int i = 0; i < user.size(); i++) {
             if (user.get(i).getID().equals(userID) && user.get(i).getName().equals(username) && user.get(i).getPassword().equals(password))
@@ -303,7 +305,7 @@ class Connection extends Thread {
         return false;
     }
 
-    //
+    // Efetua voto
     public void vote(String electionName, int idList) throws java.rmi.RemoteException {
         Election e = tcpServer.tcp.getElection(electionName);
         // Voto nulo
