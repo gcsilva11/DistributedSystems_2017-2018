@@ -18,7 +18,6 @@ public class User implements Serializable {
     private ArrayList<Election> votedIn;
     private ArrayList<candidateList> listVoted;
     private ArrayList<Calendar> whenVoted;
-    private ArrayList<Department> whereVoted;
 
     public User(String name, String idNumber, Calendar expDate, String phone, int profession, String department, String password) {
         this.name = name;
@@ -104,9 +103,8 @@ public class User implements Serializable {
         if(this.votedIn == null){
             return " ";
         }
-        for (int i = 0;i<this.votedIn.size();i++){
-            aux = aux + "\t\t" + "election : " + this.votedIn.get(i).getTitle() + " - list: " + this.listVoted.get(i).getName() + "\n";
-        }
+        for (int i = 0;i<this.votedIn.size();i++)
+            aux = aux + "user " + this.getName() + " voted on " + "election : " + this.votedIn.get(i).getTitle() + " chose list : " + this.listVoted.get(i).getName() + " at " + this.whenVoted.get(i).getTime()+ "\n";
         return aux;
     }
 

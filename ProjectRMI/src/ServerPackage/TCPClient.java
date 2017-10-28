@@ -20,21 +20,26 @@ import java.util.*;
  * @version 1.1
  */
 class TCPClient {
-    public static final String def_address = "localhost";
-    public static final int def_port = 6000;
-
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         Socket socket;
 
         PrintWriter output;
         BufferedReader input = null;
 
+        String hostname;
+        int defPort;
+
         try {
             // create socket connection
-            if (args.length == 2)
-                socket = new Socket(args[0], Integer.parseInt(args[1]));
-            else
-                socket = new Socket(def_address, def_port);
+
+            System.out.println("TCPServer Hostname: ");
+            hostname = sc.nextLine();
+
+            System.out.println("TCPSocket Port");
+            defPort = sc.nextInt();
+
+            socket = new Socket(hostname, defPort);
 
             // create streams for writing to and reading from the socket
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));

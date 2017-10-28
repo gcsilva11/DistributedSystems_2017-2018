@@ -18,22 +18,29 @@ public class Admin {
 
     public static void main(String[] args){
         String hostname;
-        int def_port;
+        int rmiPort;
         input = new Scanner(System.in);
         String choice;
 
         if (args.length == 2){
             hostname = args[0];
-            def_port = Integer.parseInt(args[1]);
+            rmiPort = Integer.parseInt(args[1]);
         }
         else{
             hostname = "localhost";
-            def_port = 6500;
+            rmiPort = 6500;
         }
 
+        System.out.println("RMI Hostname: ");
+        hostname = input.nextLine();
+
+        System.out.println("RMI Port");
+        rmiPort = input.nextInt();
+
+
         try{
-            VotingAdminInterface vote = (VotingAdminInterface) LocateRegistry.getRegistry(hostname,def_port).lookup("vote_booth");
-            elecCheck checkThread = new elecCheck(vote,hostname,def_port);
+            VotingAdminInterface vote = (VotingAdminInterface) LocateRegistry.getRegistry(hostname,rmiPort).lookup("vote_booth");
+            elecCheck checkThread = new elecCheck(vote,hostname,rmiPort);
             checkThread.start();
 
             boothCheck boothThread = new boothCheck(vote);

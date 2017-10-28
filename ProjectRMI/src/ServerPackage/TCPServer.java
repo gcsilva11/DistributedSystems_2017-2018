@@ -41,37 +41,20 @@ public class TCPServer {
     public static void main(String[] args) throws RemoteException {
         Scanner sc = new Scanner(System.in);
         int defPort, rmiPort, num_Cliente = 0;
-        String hostname, departmentID ;
+        String hostname;
 
-        if (args.length == 3){
-            hostname = args[0];
-            rmiPort = Integer.parseInt(args[1]);
-            defPort = Integer.parseInt(args[2]);
-        }
-        else{
-            hostname = "localhost";
-            rmiPort = 6500;
-            defPort = 6000;
-        }
+        System.out.println("RMI Hostname: ");
+        hostname = sc.nextLine();
 
-        System.out.println("Department ID:");
-        departmentID = sc.nextLine();
+        System.out.println("RMI Port");
+        rmiPort = sc.nextInt();
+
+        System.out.println("TCPSocket Port");
+        defPort = sc.nextInt();
 
         // Conecta ao RMI
         TCPServer tcpServer = new TCPServer(hostname, rmiPort);
-
-        // Recebe input na consola de qual é o departamento deste Servidor
-
-        boolean aux = false;
-        for (int i=0;i<tcp.getDepList().size();i++){
-            if(departmentID.equals(tcp.getDepList().get(i).getID()))
-                aux = true;
-        }
-        if(!aux) {
-            System.out.println("Department doesnt exist");
-            System.exit(0);
-        } else
-            System.out.println("Ready to receive user");
+        System.out.println("Ready to receive user");
 
         // while(true) a aceitar novos clientes
         ServerSocket listenSocket = null;
@@ -118,10 +101,6 @@ public class TCPServer {
                         for (int i = 0; i < user.size(); i++) {
                             if (user.get(i).getID().compareTo(data) == 0) {
                                 userID = user.get(i).getID();
-
-                                //
-                                System.out.println(user.get(i).getInfo());
-
                                 unblocks = true;
                             }
                         }
@@ -134,7 +113,7 @@ public class TCPServer {
                         // Thread Connection que trata da autentificação e do voto do cada cliente
                         else {
                             System.out.println("Vote terminal unblocked");
-                            Connection newClient = new Connection(clientSocket, userID, hostname, rmiPort, departmentID);
+                            Connection newClient = new Connection(clientSocket, userID, hostname, rmiPort);
                             newClient.start();
                         }
                     }
@@ -147,7 +126,7 @@ public class TCPServer {
     }
 }
 
-class Connection extends Thread{
+class Connection extends Thread {
     private BufferedReader input;
     private PrintWriter output;
 
@@ -162,15 +141,13 @@ class Connection extends Thread{
     private ArrayList<Election> election = new ArrayList<>();
 
     private String hostname;
+    private String userID;
     private int rmiPort;
 
-    private String userID;
-    private String departmentID;
-
     // Construtor: Inicializa dados do socket e do RMI
-    public Connection (Socket aClientSocket, String userID, String hostname, int rmiPort, String departmentID) {
+    public Connection(Socket aClientSocket, String userID, String hostname, int rmiPort) {
         this.clientSocket = aClientSocket;
-        try{
+        try {
             this.input = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
             this.output = new PrintWriter(this.clientSocket.getOutputStream(), true);
             this.user = tcpServer.tcp.getUsers();
@@ -181,8 +158,8 @@ class Connection extends Thread{
             this.hostname = hostname;
             this.rmiPort = rmiPort;
             this.tcpServer = new TCPServer(this.hostname, this.rmiPort);
-            this.departmentID = departmentID;
-        }catch(IOException e){ }
+        } catch (IOException e) {
+        }
     }
 
     // Run: Aceita Cliente
@@ -190,7 +167,7 @@ class Connection extends Thread{
         StringTokenizer tokenizer;
         String data = "", aux = "";
         int idElection = -1, idList = -1;
-        try{
+        try {
             output.println("-->Welcome to iVotas<--");
 
             // Recebe user e pass
@@ -201,7 +178,8 @@ class Connection extends Thread{
             try {
                 data = tokenizer.nextToken();
                 aux = tokenizer.nextToken();
-            } catch (NoSuchElementException e) { }
+            } catch (NoSuchElementException e) {
+            }
 
             // Autentica user
             if (authenticateUser(data, aux, userID)) {
@@ -213,15 +191,10 @@ class Connection extends Thread{
                 boolean auxB = false;
                 for (int i = 0; i < election.size(); i++) {
                     for (int j = 0; j < user.size(); j++) {
-                        for(int k = 0; k< tcpServer.tcp.checkTables().size();k++) {
-                            if (tcpServer.tcp.checkTables().get(k).getID().equals(departmentID)) {
-                                if (user.get(j).getID().equals(userID) && !user.get(j).hasVoted(election.get(i))) {
-                                    output.println(i + ". " + election.get(i).getTitle());
-                                    auxB = true;
-                                }
-                            }
+                        if (user.get(j).getID().equals(userID) && !user.get(j).hasVoted(election.get(i))) {
+                            output.println(i + ". " + election.get(i).getTitle());
+                            auxB = true;
                         }
-
                     }
                 }
                 if (auxB) {
@@ -312,13 +285,16 @@ class Connection extends Thread{
             }
         } catch (SocketTimeoutException e) {
             output.println("Session expired");
-            try { clientSocket.close(); } catch (IOException e1) { }
+            try {
+                clientSocket.close();
+            } catch (IOException e1) {
+            }
         } catch (IOException e) {
         }
     }
 
     //
-    public boolean authenticateUser (String username, String password, String userID) {
+    public boolean authenticateUser(String username, String password, String userID) {
         for (int i = 0; i < user.size(); i++) {
             if (user.get(i).getID().equals(userID) && user.get(i).getName().equals(username) && user.get(i).getPassword().equals(password))
                 return true;
@@ -327,7 +303,7 @@ class Connection extends Thread{
     }
 
     //
-    public void vote(String electionName, int idList) throws java.rmi.RemoteException{
+    public void vote(String electionName, int idList) throws java.rmi.RemoteException {
         Election e = tcpServer.tcp.getElection(electionName);
         // Voto nulo
         if (idList >= e.getCandidates().size()) {
@@ -359,9 +335,12 @@ class Connection extends Thread{
                     }
                 }
             }
+            output.println("Vote Accepted\n You can logout now");
+            try {
+                Thread.currentThread().join();
+            } catch (InterruptedException e1) {
+            }
         }
-        output.println("Vote Accepted\n You can logout now");
-        try { Thread.currentThread().join(); } catch (InterruptedException e1) { }
     }
 }
 
