@@ -531,7 +531,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 						users.getUsers().get(i).setVotes(elList.getElections().get(j), cl);
 						System.out.println(users.getUsers().get(i).getVotes());
 						System.out.println(e.getTitle() + " --- " + elList.getElections().get(j).nVotos + "votos");
-						elList.getElections().get(j).nVotos++;
+						elList.getElections().get(j).incrementVotes();
 						System.out.println(e.getTitle() + " --- " + elList.getElections().get(j).nVotos + "votos");
 					}
 				}
