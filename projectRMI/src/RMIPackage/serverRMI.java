@@ -701,7 +701,6 @@ class RMIFailover extends Thread {
 		try {
 			// Abre socket UDP
 			this.aSocket = new DatagramSocket(this.serverPort);
-			System.out.println("Main RMI Server started");
 
 			serverRMI serverRMI = new serverRMI();
 			serverRMI.startRMI(this.rmiPort);

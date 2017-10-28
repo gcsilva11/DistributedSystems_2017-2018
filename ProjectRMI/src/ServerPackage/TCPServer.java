@@ -283,6 +283,7 @@ class Connection extends Thread {
                 output.println("Failed authentication\n\tClosing session...");
                 System.out.println("Failed authentication\n\tClosing client's session...");
             }
+        } catch (NullPointerException e) {
         } catch (SocketTimeoutException e) {
             output.println("Session expired");
             try {
