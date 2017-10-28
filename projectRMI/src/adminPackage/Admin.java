@@ -604,7 +604,7 @@ class elecCheck extends Thread{
                 failed = 0;
             } catch (RemoteException e) {
                 failed++;
-                if(failed == 3){
+                if(failed == 6){
                     System.out.println("Timeout - RMI didn't respond for 30 seconds, trying to reconnect...");
                     try{
                         this.vote = (VotingAdminInterface) LocateRegistry.getRegistry(this.hostname,this.defPort).lookup("vote_booth");
@@ -678,13 +678,14 @@ class boothCheck extends Thread {
                     if(!checked){
                         System.out.println("Voting table removed in "+seen2.get(i).getDep());
                         seen2.remove(i);
+                        printable2.remove(i);
                     }
                     checked = false;
                 }
                 failed = 0;
             }catch(RemoteException e){
                 failed++;
-                if(failed == 3){
+                if(failed == 6){
                     System.out.println("Timeout - RMI didn't respond for 30 seconds, trying to reconnect...");
                     try{
                         this.vote = (VotingAdminInterface) LocateRegistry.getRegistry(6500).lookup("vote_booth");
