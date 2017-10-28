@@ -204,7 +204,7 @@ class Connection extends Thread{
             } catch (NoSuchElementException e) { }
 
             // Autentica user
-            if (authenticateUser(data, aux)) {
+            if (authenticateUser(data, aux, userID)) {
                 output.println("Authentication successfull");
 
                 // Lista as eleiçoes
@@ -213,10 +213,15 @@ class Connection extends Thread{
                 boolean auxB = false;
                 for (int i = 0; i < election.size(); i++) {
                     for (int j = 0; j < user.size(); j++) {
-                        if (user.get(j).getID().equals(userID) && !user.get(j).hasVoted(election.get(i))) {
-                            output.println(i + ". " + election.get(i).getTitle());
-                            auxB = true;
+                        for(int k = 0; k< tcpServer.tcp.checkTables().size();k++) {
+                            if (tcpServer.tcp.checkTables().get(k).getID().equals(departmentID)) {
+                                if (user.get(j).getID().equals(userID) && !user.get(j).hasVoted(election.get(i))) {
+                                    output.println(i + ". " + election.get(i).getTitle());
+                                    auxB = true;
+                                }
+                            }
                         }
+
                     }
                 }
                 if (auxB) {
@@ -313,9 +318,9 @@ class Connection extends Thread{
     }
 
     //
-    public boolean authenticateUser (String username, String password) {
+    public boolean authenticateUser (String username, String password, String userID) {
         for (int i = 0; i < user.size(); i++) {
-            if (user.get(i).getName().equals(username) && user.get(i).getPassword().equals(password))
+            if (user.get(i).getID().equals(userID) && user.get(i).getName().equals(username) && user.get(i).getPassword().equals(password))
                 return true;
         }
         return false;

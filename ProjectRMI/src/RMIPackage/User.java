@@ -105,8 +105,7 @@ public class User implements Serializable {
             return " ";
         }
         for (int i = 0;i<this.votedIn.size();i++){
-            aux = aux + "\t\t" + "election : " + this.votedIn.get(i).getTitle() + " - list: " + this.listVoted.get(i).getName() + "\n"
-            +" at "+this.whereVoted.get(i).getDep() + " at " + this.whenVoted.get(i).toString();
+            aux = aux + "\t\t" + "election : " + this.votedIn.get(i).getTitle() + " - list: " + this.listVoted.get(i).getName() + "\n";
         }
         return aux;
     }

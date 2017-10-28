@@ -15,4 +15,5 @@ public interface TCPServerInterface extends Remote {
     public void voteElection(User u, Election e, candidateList cl) throws RemoteException;
     boolean hasVoted(User u, Election e) throws RemoteException;
     ArrayList<Department> getDeps(Election e) throws RemoteException;
+    ArrayList<Department> checkTables() throws  java.rmi.RemoteException;
 }
