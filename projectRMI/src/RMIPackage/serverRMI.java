@@ -309,12 +309,29 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		boolean done = false;
 		Department addThisOne = null;
 
+		//Check if department is already added
+        for (int i = 0; i < elList.getElections().size(); i++) {
+            if (elList.getElections().get(i).getTitle().equals(elTitle)) {
+                if(!(elList.getElections().get(i).getViableDeps() ==null)) {
+                    for (int j = 0; j < elList.getElections().get(i).getViableDeps().size(); j++) {
+                        for (int k = 0; k < depId.size(); k++) {
+                            if (elList.getElections().get(i).getViableDeps().get(j).getID().equals(depId.get(k))) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
 		for (int i = 0; i < elList.getElections().size(); i++) {
 			if (elList.getElections().get(i).getTitle().equals(elTitle)) {
 				for (int j = 0; j < departments.getDeps().size(); j++) {
 					for (int k = 0; k < depId.size(); k++) {
 						if (departments.getDeps().get(j).getID().equals(depId.get(k))) {
                             System.out.println("Adding table");
+                            addThisOne = departments.getDeps().get(j);
                             elList.getElections().get(i).addDep(addThisOne);
 							depsWithBooth.getDeps().add(addThisOne);
 							done = true;
@@ -348,7 +365,6 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
         FicheiroDeObjectos fo = new FicheiroDeObjectos();
         boolean done = false;
-        Department delThisOne = null;
 
         for (int i = 0; i < elList.getElections().size(); i++) {
             if (elList.getElections().get(i).getTitle().equals(elTitle)) {
@@ -356,9 +372,10 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
                     for (int k=0;k<depId.size();k++){
                         if (elList.getElections().get(i).getViableDeps().get(j).getID().equals(depId.get(k))){
                             for(int l=0;l<depsWithBooth.getDeps().size();l++){
-                                System.out.println("removing table");
+                                System.out.println("Removing table");
                                 if(depsWithBooth.getDeps().get(l).getID().equals(depId.get(k))){
                                     depsWithBooth.getDeps().remove(l);
+                                    done = true;
                                 }
                             }
                             elList.getElections().get(i).getViableDeps().remove(j);
@@ -412,6 +429,19 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	}
 
 	//
+	public User getUser(String userID) throws java.rmi.RemoteException{
+
+		User toSend = null;
+
+		for(int i=0;i<users.getUsers().size();i++){
+			if(users.getUsers().get(i).getID().equals(userID)){
+				toSend = users.getUsers().get(i);
+			}
+		}
+
+		return toSend;
+	}
+	//
 	public ArrayList <Election> checkElecDate() throws java.rmi.RemoteException {
 
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
@@ -422,6 +452,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 				closedElections.addELection(elList.getElections().get(i));
 
 				System.out.println("Election closed.");
+
 
 				//Update ficheiro eleicoes
 				try {

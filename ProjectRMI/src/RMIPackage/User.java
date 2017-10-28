@@ -101,11 +101,22 @@ public class User implements Serializable {
 
     public String getVotes(){
         String aux="";
+        if(this.votedIn == null){
+            return " ";
+        }
         for (int i = 0;i<this.votedIn.size();i++){
-            aux = aux + "\t\t" + "eleição : " + this.votedIn.get(i).getTitle() + " - lista: " + this.listVoted.get(i).getName() + "\n";
+            aux = aux + "\t\t" + "election : " + this.votedIn.get(i).getTitle() + " - list: " + this.listVoted.get(i).getName() + "\n"
+            +" at "+this.whereVoted.get(i).getDep() + " at " + this.whenVoted.get(i).toString();
         }
         return aux;
     }
 
+    public ArrayList<Election>electionsVoted(){
+        return this.votedIn;
+    }
+
+    public ArrayList<candidateList> getListVoted() {
+        return listVoted;
+    }
 }
 

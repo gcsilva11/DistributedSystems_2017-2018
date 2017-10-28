@@ -34,15 +34,16 @@ public class Admin {
         try{
             VotingAdminInterface vote = (VotingAdminInterface) LocateRegistry.getRegistry(hostname,def_port).lookup("vote_booth");
             elecCheck checkThread = new elecCheck(vote,hostname,def_port);
-            boothCheck boothThread = new boothCheck(vote);
             checkThread.start();
+
+            boothCheck boothThread = new boothCheck(vote);
             boothThread.start();
 
             while(true) {
                 try {
                     System.out.println("Admin console ready.What do you want to do?\n1-Register a new user\n"
                             + "2-Add a new department\n3-Create an election\n4-Manage candidate lists"
-                            + "\n5-Edit an election\n6-Add/Remove tables");
+                            + "\n5-Edit an election\n6-Add/Remove tables\n7-Check user voting history\n8-Check voting table status");
                     choice = input.nextLine();
 
                     switch (choice) {
@@ -98,6 +99,7 @@ public class Admin {
                             } else {
                                 System.out.println("Error: Couldn't register new user...");
                             }
+                            Thread.sleep(2000);
                             break;
 
                         case "2":
@@ -127,7 +129,7 @@ public class Admin {
                             } else {
                                 System.out.println("Error adding the new department...");
                             }
-
+                            Thread.sleep(2000);
                             break;
 
                         case "3":
@@ -270,6 +272,7 @@ public class Admin {
                                     System.out.println("Error creating election...");
                                 }
                             }
+                            Thread.sleep(2000);
                             break;
                         case "4":
                             System.out.println("Manage candidate lists");
@@ -407,6 +410,7 @@ public class Admin {
                                     System.out.println("That option doesnt exist");
                                     break;
                             }
+                            Thread.sleep(2000);
                             break;
                         case "5":
 
@@ -458,6 +462,7 @@ public class Admin {
                                 System.out.println("Election with that title doesn't exist");
                                 break;
                             }
+                            Thread.sleep(2000);
                         break;
                         case "6":
                             System.out.println("1 - Add tables,2- Remove tables: ");
@@ -484,7 +489,7 @@ public class Admin {
 
                                     System.out.println("Removing voting tables,please choose election(by title):");
                                     String elecTitle2 = input.nextLine();
-                                    System.out.print("Add voting tables (by dep ID) to the election (0 to stop): ");
+                                    System.out.print("Remove voting tables by dep ID (0 to stop): ");
                                     ArrayList<String> depTables2 = new ArrayList<String>();
                                     String depId2 = input.nextLine();
                                     while (!depId2.equals("0")) {
@@ -493,15 +498,47 @@ public class Admin {
                                     }
                                     boolean boothDelAck = vote.removeBooth(elecTitle2, depTables2);
                                     if (boothDelAck) {
-                                        System.out.println("Booths added successfully");
+                                        System.out.println("Tables removed successfully");
                                     } else {
-                                        System.out.println("Error adding booths.");
+                                        System.out.println("Error removing tables.");
                                     }
                                     break;
                             }
+                            Thread.sleep(2000);
+                            break;
+                        case "7":
+                            System.out.println("Input the id of the user you want to check");
+                            String id = input.nextLine();
+                            User checkUser = vote.getUser(id);
+                            if(checkUser == null){
+                                System.out.println("Error getting user with that ID");
+                            }
+                            else {
+                                if (checkUser.getVotes().equals(" ")) {
+                                    System.out.println("No votes by this user yet");
+                                } else {
+                                    System.out.println(checkUser.getVotes());
+                                }
+                            }
+                            Thread.sleep(2000);
+                            break;
+                        case "8":
+                            System.out.println("These are the departments with tables that are online right now:");
+                            ArrayList <Department> activeBooths = new ArrayList<Department>();
+                            activeBooths = vote.checkTables();
+                            if(activeBooths.size()>0) {
+                                for (int i = 0; i < activeBooths.size();i++){
+                                    System.out.println("Dep name: "+activeBooths.get(i).getDep()+" Dep ID: "+activeBooths.get(i).getID()+" Area: "+ activeBooths.get(i).getFac());
+                                }
+                            }
+                            else{
+                                System.out.println("None");
+                            }
+                            Thread.sleep(2000);
                             break;
                         default:
                             System.out.println("Invalid choice, going back to menu");
+                            Thread.sleep(2000);
                             break;
                     }
                 }catch(Exception ex){
@@ -596,7 +633,7 @@ class boothCheck extends Thread {
     }
 
     public void run() {
-        System.out.println("Booth checking thread started.");
+        System.out.println("VOTING TABLE THREAD: Checking for updates on voting tables");
         int failed = 0;
         while(true){
             try {
@@ -624,10 +661,9 @@ class boothCheck extends Thread {
                 }
 
                 for(int i=0;i<seen2.size();i++){
-                    System.out.println(i);
                     if(printable2.get(i)==0){
                         printable2.set(i,1);
-                        System.out.println("Voting table added in " + seen2.get(i).getDep());
+                        System.out.println("Voting table in " + seen2.get(i).getDep());
                     }
                 }
 
