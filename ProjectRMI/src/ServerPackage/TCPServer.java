@@ -22,7 +22,7 @@ public class TCPServer {
         int failed = 0;
         while (failed <= 30) {
             try {
-                tcp = (TCPServerInterface) LocateRegistry.getRegistry(rmiPort).lookup("vote_booth");
+                tcp = (TCPServerInterface) LocateRegistry.getRegistry(6500).lookup("vote_booth");
                 break;
             } catch (RemoteException|NotBoundException e) {
                 System.out.println("RMI Timeout on User registry, trying to reconnect");

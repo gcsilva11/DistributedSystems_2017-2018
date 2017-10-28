@@ -3,11 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d94659c3-7663-4a7a-954b-c1093c75fd07" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/lists.dat" afterPath="$PROJECT_DIR$/out/lists.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/users.dat" afterPath="$PROJECT_DIR$/out/users.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/RMIPackage/Election.java" afterPath="$PROJECT_DIR$/src/RMIPackage/Election.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/deps.dat" afterPath="$PROJECT_DIR$/out/deps.dat" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ServerPackage/TCPServer.java" afterPath="$PROJECT_DIR$/src/ServerPackage/TCPServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/elections.dat" afterPath="$PROJECT_DIR$/out/elections.dat" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/bin/" />
@@ -26,11 +23,50 @@
       <file leaf-file-name="TCPServer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="33" column="38" lean-forward="false" selection-start-line="33" selection-start-column="38" selection-end-line="33" selection-end-column="38" />
+            <state relative-caret-position="15">
+              <caret line="30" column="52" lean-forward="false" selection-start-line="30" selection-start-column="52" selection-end-line="30" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#authenticateUser#0;class#Connection#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VotingAdminInterface.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/adminPackage/VotingAdminInterface.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="8" column="12" lean-forward="false" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TCPServerInterface.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServerInterface.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="14" column="65" lean-forward="false" selection-start-line="14" selection-start-column="65" selection-end-line="14" selection-end-column="65" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="serverRMI.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/RMIPackage/serverRMI.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="6555">
+              <caret line="581" column="0" lean-forward="false" selection-start-line="581" selection-start-column="0" selection-end-line="581" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#getList#0;class#serverRMI#0" expanded="false" />
+                <element signature="method#findId#0;class#serverRMI#0" expanded="false" />
+                <element signature="method#editList#0;class#serverRMI#0" expanded="false" />
+                <element signature="method#addBooth#0;class#serverRMI#0" expanded="false" />
+                <element signature="method#editElec#0;class#serverRMI#0" expanded="false" />
+                <element signature="method#checkElecDate#0;class#serverRMI#0" expanded="false" />
+                <marker date="1509146409674" expanded="false" signature="15727:15731" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -40,11 +76,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>host</find>
-      <find>7000</find>
-      <find>voto branc</find>
-      <find>6500</find>
-      <find>loccal</find>
       <find>ha</find>
       <find>error connec</find>
       <find>def_port</find>
@@ -70,6 +101,11 @@
       <find>tcp</find>
       <find>error connect</find>
       <find>TCPServer</find>
+      <find>out</find>
+      <find>out/</find>
+      <find>.dat</find>
+      <find>server</find>
+      <find>6000</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -98,8 +134,8 @@
         <option value="$PROJECT_DIR$/out/users.dat" />
         <option value="$PROJECT_DIR$/out/elections.dat" />
         <option value="$PROJECT_DIR$/out/lists.dat" />
-        <option value="$PROJECT_DIR$/src/RMIPackage/serverRMI.java" />
         <option value="$PROJECT_DIR$/src/RMIPackage/Election.java" />
+        <option value="$PROJECT_DIR$/src/RMIPackage/serverRMI.java" />
         <option value="$PROJECT_DIR$/src/ServerPackage/TCPServer.java" />
       </list>
     </option>
@@ -137,6 +173,11 @@
             <path>
               <item name="ProjectRMI" type="b2602c69:ProjectViewProjectNode" />
               <item name="ProjectRMI" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ProjectRMI" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ProjectRMI" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -162,6 +203,13 @@
               <item name="ProjectRMI" type="b2602c69:ProjectViewProjectNode" />
               <item name="ProjectRMI" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="RMIPackage" type="462c0819:PsiDirectoryNode" />
+              <item name="serverRMI.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </path>
+            <path>
+              <item name="ProjectRMI" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ProjectRMI" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="ServerPackage" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -170,6 +218,12 @@
       </pane>
       <pane id="PackagesPane" />
     </panes>
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/out" />
+      <recent name="$PROJECT_DIR$/src/RMIPackage" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -183,7 +237,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.TCPServer">
+  <component name="RunManager" selected="Application.TCPClient #2">
     <configuration name="Admin" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="adminPackage.Admin" />
@@ -212,11 +266,39 @@
       <module name="projectRMI" />
       <envs />
     </configuration>
+    <configuration name="TCPClient #2" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="ServerPackage.TCPClient" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 6001" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="projectRMI" />
+      <envs />
+    </configuration>
     <configuration name="TCPClient" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="ServerPackage.TCPClient" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 6000" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="projectRMI" />
+      <envs />
+    </configuration>
+    <configuration name="TCPServer #2" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="ServerPackage.TCPServer" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 6500 6001" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -230,7 +312,7 @@
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="ServerPackage.TCPServer" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 6500 6000" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -321,11 +403,13 @@
       <properties />
       <listeners />
     </configuration>
-    <list size="4">
+    <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Application.RMI" />
       <item index="1" class="java.lang.String" itemvalue="Application.TCPServer" />
-      <item index="2" class="java.lang.String" itemvalue="Application.Admin" />
-      <item index="3" class="java.lang.String" itemvalue="Application.TCPClient" />
+      <item index="2" class="java.lang.String" itemvalue="Application.TCPServer #2" />
+      <item index="3" class="java.lang.String" itemvalue="Application.Admin" />
+      <item index="4" class="java.lang.String" itemvalue="Application.TCPClient" />
+      <item index="5" class="java.lang.String" itemvalue="Application.TCPClient #2" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -352,45 +436,25 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22334455" sideWeight="0.504884" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3971341" sideWeight="0.495116" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40122825" sideWeight="0.495116" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32884398" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3306039" sideWeight="0.497558" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15567766" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24969475" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15567766" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24969475" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39918116" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22334455" sideWeight="0.504884" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24969475" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39918116" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3265097" sideWeight="0.495116" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40122825" sideWeight="0.495116" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32884398" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3306039" sideWeight="0.497558" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15567766" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -430,7 +494,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="45" />
+      <option name="time" value="47" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -459,30 +523,13 @@
           <caret line="14" column="29" lean-forward="false" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#registerUser#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#editDep#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#deleteDep#0;class#serverRMI#0" expanded="false" />
             <element signature="method#getList#0;class#serverRMI#0" expanded="false" />
-            <element signature="e#4141#4156#0" expanded="true" />
             <element signature="method#findId#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#createList#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#deleteList#0;class#serverRMI#0" expanded="false" />
             <element signature="method#editList#0;class#serverRMI#0" expanded="false" />
             <element signature="method#addBooth#0;class#serverRMI#0" expanded="false" />
             <element signature="method#editElec#0;class#serverRMI#0" expanded="false" />
             <element signature="method#checkElecDate#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#checkTables#0;class#serverRMI#0" expanded="false" />
-            <element signature="e#10419#10431#0" expanded="true" />
-            <element signature="method#voteElection#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#hasVoted#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#startRMI#0;class#serverRMI#0" expanded="false" />
-            <marker date="1509140849141" expanded="false" signature="11349:11380" ph="{...}" />
-            <marker date="1509140849141" expanded="false" signature="11489:11543" ph="{...}" />
-            <marker date="1509140849141" expanded="false" signature="11646:11682" ph="{...}" />
-            <marker date="1509140849141" expanded="false" signature="11751:11787" ph="{...}" />
-            <marker date="1509140849141" expanded="false" signature="11859:12084" ph="{...}" />
-            <marker date="1509140849141" expanded="false" signature="13179:13631" ph="{...}" />
-            <marker date="1509140849141" expanded="false" signature="13701:15640" ph="{...}" />
+            <marker date="1509146409674" expanded="false" signature="15727:15731" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -500,30 +547,13 @@
           <caret line="14" column="29" lean-forward="false" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#registerUser#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#editDep#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#deleteDep#0;class#serverRMI#0" expanded="false" />
             <element signature="method#getList#0;class#serverRMI#0" expanded="false" />
-            <element signature="e#4141#4156#0" expanded="true" />
             <element signature="method#findId#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#createList#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#deleteList#0;class#serverRMI#0" expanded="false" />
             <element signature="method#editList#0;class#serverRMI#0" expanded="false" />
             <element signature="method#addBooth#0;class#serverRMI#0" expanded="false" />
             <element signature="method#editElec#0;class#serverRMI#0" expanded="false" />
             <element signature="method#checkElecDate#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#checkTables#0;class#serverRMI#0" expanded="false" />
-            <element signature="e#10419#10431#0" expanded="true" />
-            <element signature="method#voteElection#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#hasVoted#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#startRMI#0;class#serverRMI#0" expanded="false" />
-            <marker date="1509140849141" expanded="false" signature="11349:11380" ph="{...}" />
-            <marker date="1509140849141" expanded="false" signature="11489:11543" ph="{...}" />
-            <marker date="1509140849141" expanded="false" signature="11646:11682" ph="{...}" />
-            <marker date="1509140849141" expanded="false" signature="11751:11787" ph="{...}" />
-            <marker date="1509140849141" expanded="false" signature="11859:12084" ph="{...}" />
-            <marker date="1509140849141" expanded="false" signature="13179:13631" ph="{...}" />
-            <marker date="1509140849141" expanded="false" signature="13701:15640" ph="{...}" />
+            <marker date="1509146409674" expanded="false" signature="15727:15731" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -574,13 +604,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/adminPackage/VotingAdminInterface.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="8" column="12" lean-forward="false" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/src.zip!/java/lang/Thread.java" />
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/rt.jar!/sun/reflect/NativeMethodAccessorImpl.class" />
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
@@ -594,7 +617,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="15" column="75" lean-forward="false" selection-start-line="15" selection-start-column="71" selection-end-line="15" selection-end-column="75" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -602,7 +624,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="8" column="34" lean-forward="false" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -610,7 +631,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="21" column="17" lean-forward="true" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -618,6 +638,55 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="9" column="25" lean-forward="true" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RMIPackage/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="104" column="42" lean-forward="false" selection-start-line="104" selection-start-column="42" selection-end-line="104" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/lists.dat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/deps.dat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="18" lean-forward="false" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/users.dat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RMIPackage/Election.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="14" column="45" lean-forward="false" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/elections.dat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/adminPackage/VotingAdminInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="8" column="12" lean-forward="false" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
           <folding />
         </state>
       </provider>
@@ -630,106 +699,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/RMIPackage/User.java">
+    <entry file="file://$PROJECT_DIR$/src/adminPackage/Admin.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="104" column="42" lean-forward="false" selection-start-line="104" selection-start-column="42" selection-end-line="104" selection-end-column="42" />
-          <folding>
-            <element signature="method#getInfo#0;class#User#0" expanded="false" />
-            <element signature="method#hasVoted#0;class#User#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/elections.dat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/lists.dat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/deps.dat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="18" lean-forward="false" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/users.dat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/RMIPackage/Election.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="14" column="45" lean-forward="false" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="45" />
-          <folding>
-            <element signature="method#addDep#0;class#Election#0" expanded="false" />
-            <element signature="method#getInfo#0;class#Election#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="193">
+          <caret line="43" column="50" lean-forward="false" selection-start-line="43" selection-start-column="50" selection-end-line="43" selection-end-column="50" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RMIPackage/serverRMI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="477">
-          <caret line="93" column="37" lean-forward="false" selection-start-line="93" selection-start-column="28" selection-end-line="93" selection-end-column="37" />
+        <state relative-caret-position="6555">
+          <caret line="581" column="0" lean-forward="false" selection-start-line="581" selection-start-column="0" selection-end-line="581" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#registerUser#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#editDep#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#deleteDep#0;class#serverRMI#0" expanded="false" />
             <element signature="method#getList#0;class#serverRMI#0" expanded="false" />
-            <element signature="e#4141#4156#0" expanded="true" />
             <element signature="method#findId#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#createList#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#deleteList#0;class#serverRMI#0" expanded="false" />
             <element signature="method#editList#0;class#serverRMI#0" expanded="false" />
             <element signature="method#addBooth#0;class#serverRMI#0" expanded="false" />
             <element signature="method#editElec#0;class#serverRMI#0" expanded="false" />
             <element signature="method#checkElecDate#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#checkTables#0;class#serverRMI#0" expanded="false" />
-            <element signature="e#10419#10431#0" expanded="true" />
-            <element signature="method#voteElection#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#hasVoted#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#startRMI#0;class#serverRMI#0" expanded="false" />
-            <marker date="1509140849141" expanded="false" signature="11349:11380" ph="{...}" />
-            <marker date="1509140849141" expanded="false" signature="11489:11543" ph="{...}" />
-            <marker date="1509140849141" expanded="false" signature="11646:11682" ph="{...}" />
-            <marker date="1509140849141" expanded="false" signature="11751:11787" ph="{...}" />
-            <marker date="1509140849141" expanded="false" signature="11859:12084" ph="{...}" />
-            <marker date="1509140849141" expanded="false" signature="13179:13631" ph="{...}" />
-            <marker date="1509140849141" expanded="false" signature="13701:15640" ph="{...}" />
+            <marker date="1509146409674" expanded="false" signature="15727:15731" ph="{...}" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/adminPackage/Admin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1403">
-          <caret line="453" column="40" lean-forward="true" selection-start-line="453" selection-start-column="40" selection-end-line="453" selection-end-column="40" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="33" column="38" lean-forward="false" selection-start-line="33" selection-start-column="38" selection-end-line="33" selection-end-column="38" />
+        <state relative-caret-position="15">
+          <caret line="30" column="52" lean-forward="false" selection-start-line="30" selection-start-column="52" selection-end-line="30" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#authenticateUser#0;class#Connection#0" expanded="false" />
