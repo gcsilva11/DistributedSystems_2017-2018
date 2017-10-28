@@ -16,6 +16,7 @@ import com.sun.org.apache.regexp.internal.RE;
 public class Admin {
     private static Scanner input;
 
+    //Metodo Main
     public static void main(String[] args){
         String hostname;
         int rmiPort;
@@ -39,13 +40,18 @@ public class Admin {
 
 
         try{
+        	//Ligacao ao RMI
             VotingAdminInterface vote = (VotingAdminInterface) LocateRegistry.getRegistry(hostname,rmiPort).lookup("vote_booth");
+            
+            //Criacao e iniciacao da thread que verifica quando acabam as eleicoes
             elecCheck checkThread = new elecCheck(vote,hostname,rmiPort);
             checkThread.start();
 
+            //Criacao e iniciacao da thread que verifica o estado das mesas de voto
             boothCheck boothThread = new boothCheck(vote);
             boothThread.start();
 
+            //Menu
             while(true) {
                 try {
                     System.out.println("Admin console ready.What do you want to do?\n1-Register a new user\n"
@@ -54,7 +60,12 @@ public class Admin {
                     choice = input.nextLine();
 
                     switch (choice) {
+                        
+
+                    	//Registo de um user
+                        
                         case "1":
+
                             // Informação user
                             String name;
                             String ID;
@@ -100,6 +111,7 @@ public class Admin {
 
                             User user = new User(name, ID, cal, phone, profession, department, password);
 
+                            //Pedido ao RMI
                             boolean ack = vote.registerUser(user);
                             if (ack) {
                                 System.out.println("Successfully registered!");
@@ -109,6 +121,7 @@ public class Admin {
                             Thread.sleep(2000);
                             break;
 
+                        //Registo de um novo departamento
                         case "2":
 
                             String depName;
@@ -130,6 +143,7 @@ public class Admin {
 
                             Department dep = new Department(depName, depID, facName);
 
+                            //Pedido ao RMI
                             boolean newDepAck = vote.registerDep(dep);
                             if (newDepAck) {
                                 System.out.println("New department added!");
@@ -139,6 +153,8 @@ public class Admin {
                             Thread.sleep(2000);
                             break;
 
+                        
+                        //Criacao de uma eleicao
                         case "3":
 
                             int type;
@@ -173,6 +189,7 @@ public class Admin {
                             Calendar cal3 = Calendar.getInstance();
                             cal3.setTime(endDate);
 
+                            //Eleicao de estudantes
                             if (type == 1) {
 
                                 System.out.print("Student election - Department(id):  ");
@@ -224,7 +241,9 @@ public class Admin {
                                 } else {
                                     System.out.println("Error creating election...");
                                 }
-                            } else {
+                            } 
+                            //Eleicao de concelho geral
+                            else {
 
                                 System.out.println("Council election");
                                 System.out.println("Viable lists: ");
@@ -281,6 +300,8 @@ public class Admin {
                             }
                             Thread.sleep(2000);
                             break;
+
+                        //Menu para gerir lista de candidatos
                         case "4":
                             System.out.println("Manage candidate lists");
 
@@ -289,6 +310,7 @@ public class Admin {
                             choice = input.nextLine();
 
                             switch (choice) {
+                            	//Criar lista de candidatos novos
                                 case "1":
                                     System.out.println("Create a new list");
                                     System.out.println("List type? 1- Student,2 - Teacher,3 - Employees");
@@ -321,7 +343,9 @@ public class Admin {
                                         } else {
                                             System.out.println("Problem creating the list...");
                                         }
-                                    } else if (listType == 2) {
+                                    } 
+                                    //Criacao de lista de docentes
+                                    else if (listType == 2) {
 
                                         System.out.println("Teacher list creation\nPlease input the IDs of teachers to add to the list(0 to exit):");
                                         ArrayList<User> teacherList = new ArrayList<User>();
@@ -352,7 +376,9 @@ public class Admin {
                                         }
                                         break;
 
-                                    } else {
+                                    } 
+                                    //Criacao de lista de empregados
+                                    else {
 
                                         System.out.println("Employee list creation\nPlease input the IDs of employees to add to the list(0 to exit):");
                                         ArrayList<User> employeeList = new ArrayList<User>();
@@ -384,7 +410,7 @@ public class Admin {
 
                                     }
                                 break;
-
+                                //Apagar uma lista de candidatos
                                 case "2":
 
                                     System.out.println("Delete a candidate list");
@@ -400,6 +426,7 @@ public class Admin {
                                     }
 
                                     break;
+                                //Editar uma lista de candidatos
                                 case "3":
                                     System.out.println("Edit a candidate list name");
                                     System.out.print("Input the ID of the list to edit: ");
@@ -419,6 +446,8 @@ public class Admin {
                             }
                             Thread.sleep(2000);
                             break;
+
+                        //Editar uma eleicao
                         case "5":
 
                             System.out.println("Edit election");
@@ -471,10 +500,13 @@ public class Admin {
                             }
                             Thread.sleep(2000);
                         break;
+
+                        //Adicionar e remover mesas de voto
                         case "6":
                             System.out.println("1 - Add tables,2- Remove tables: ");
                             choice = input.nextLine();
                             switch(choice){
+                            	//Adicionar mesas de voto
                                 case "1":
                                     System.out.println("Adding voting tables,please choose election(by title):");
                                     String elecTitle = input.nextLine();
@@ -492,6 +524,7 @@ public class Admin {
                                         System.out.println("Error adding booths.");
                                     }
                                      break;
+                                //Remover mesas de voto
                                 case "2":
 
                                     System.out.println("Removing voting tables,please choose election(by title):");
@@ -513,6 +546,7 @@ public class Admin {
                             }
                             Thread.sleep(2000);
                             break;
+                        //Verificar historico de votos de um eleitor
                         case "7":
                             System.out.println("Input the id of the user you want to check");
                             String id = input.nextLine();
@@ -529,6 +563,7 @@ public class Admin {
                             }
                             Thread.sleep(2000);
                             break;
+                        //Verificar estado actual das mesas de voto
                         case "8":
                             System.out.println("These are the departments with tables that are online right now:");
                             ArrayList <Department> activeBooths = new ArrayList<Department>();
@@ -560,6 +595,7 @@ public class Admin {
 }
 
 
+//Thread para verificar em real time quando uma eleicao expira
 class elecCheck extends Thread{
     private VotingAdminInterface vote;
     private ArrayList <Election> seen = new ArrayList <Election>();
@@ -584,15 +620,18 @@ class elecCheck extends Thread{
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 }
+                //Recebe lista de eleicoes que ja acabaram
                 ArrayList<Election> expired = vote.checkElecDate();
                 boolean checked=false;
                 Election toAdd = null;
+                //Verifica se ja viu que expirou
                 for (int i = 0; i < expired.size(); i++) {
                     for (int j = 0; j < seen.size(); j++) {
                         if (expired.get(i).getTitle().equals(seen.get(j).getTitle())) {
                             checked = true;
                         }
                     }
+                    //Se nao, acrescenta a a lista
                     if(checked==false){
                         toAdd = expired.get(i);
                         printable.add(0);
@@ -601,6 +640,7 @@ class elecCheck extends Thread{
                     checked = false;
                 }
 
+                //Imprime a informacao da eleicao nova
                 for(int i=0;i <seen.size();i++){
                     if(printable.get(i)==0){
                         printable.set(i,1);
@@ -609,7 +649,9 @@ class elecCheck extends Thread{
                 }
 
                 failed = 0;
+
             } catch (RemoteException e) {
+            	//Caso falhe a coneccao ao RMI, tenta ligar outra vez, se falhar durante 30 segundos tenta ligar ao secundario
                 failed++;
                 if(failed == 6){
                     System.out.println("Timeout - RMI didn't respond for 30 seconds, trying to reconnect...");
@@ -625,6 +667,7 @@ class elecCheck extends Thread{
     }
 }
 
+//Thread para controlar mesas de voto removidas/adicionadas
 class boothCheck extends Thread {
     private VotingAdminInterface vote;
 
