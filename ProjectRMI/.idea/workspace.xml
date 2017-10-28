@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d94659c3-7663-4a7a-954b-c1093c75fd07" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/deps.dat" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/users.dat" afterPath="$PROJECT_DIR$/out/users.dat" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ServerPackage/TCPServer.java" afterPath="$PROJECT_DIR$/src/ServerPackage/TCPServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/RMIPackage/serverRMI.java" afterPath="$PROJECT_DIR$/src/RMIPackage/serverRMI.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/bin/" />
@@ -25,8 +22,8 @@
       <file leaf-file-name="TCPServer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="48">
-              <caret line="243" column="46" lean-forward="false" selection-start-line="243" selection-start-column="46" selection-end-line="243" selection-end-column="46" />
+            <state relative-caret-position="156">
+              <caret line="267" column="21" lean-forward="true" selection-start-line="267" selection-start-column="21" selection-end-line="267" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#authenticateUser#0;class#Connection#0" expanded="false" />
@@ -35,28 +32,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Election.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/RMIPackage/Election.java">
+      <file leaf-file-name="Admin.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/adminPackage/Admin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="17" column="4" lean-forward="false" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
-              <folding>
-                <element signature="method#addDep#0;class#Election#0" expanded="false" />
-                <element signature="method#getInfo#0;class#Election#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="serverRMI.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/RMIPackage/serverRMI.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="334" column="11" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="693" selection-end-column="1" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <marker date="1509153525551" expanded="false" signature="16124:16128" ph="{...}" />
-              </folding>
+            <state relative-caret-position="180">
+              <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -65,7 +46,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>rmiPort</find>
       <find>departmentID</find>
       <find>has</find>
       <find>depart</find>
@@ -95,6 +75,7 @@
       <find>elections.da</find>
       <find>RMI Timeout on User registry, trying to reconnect</find>
       <find>choose</find>
+      <find>getRegistry</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -119,13 +100,13 @@
         <option value="$PROJECT_DIR$/.idea/workspace.xml" />
         <option value="$PROJECT_DIR$/src/ServerPackage/TCPServerInterface.java" />
         <option value="$PROJECT_DIR$/src/RMIPackage/User.java" />
-        <option value="$PROJECT_DIR$/src/adminPackage/Admin.java" />
         <option value="$PROJECT_DIR$/out/users.dat" />
         <option value="$PROJECT_DIR$/out/elections.dat" />
         <option value="$PROJECT_DIR$/out/lists.dat" />
-        <option value="$PROJECT_DIR$/src/RMIPackage/serverRMI.java" />
         <option value="$PROJECT_DIR$/src/RMIPackage/Election.java" />
+        <option value="$PROJECT_DIR$/src/RMIPackage/serverRMI.java" />
         <option value="$PROJECT_DIR$/src/ServerPackage/TCPServer.java" />
+        <option value="$PROJECT_DIR$/src/adminPackage/Admin.java" />
       </list>
     </option>
   </component>
@@ -174,14 +155,20 @@
               <item name="ProjectRMI" type="b2602c69:ProjectViewProjectNode" />
               <item name="ProjectRMI" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="RMIPackage" type="462c0819:PsiDirectoryNode" />
+              <item name="adminPackage" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ProjectRMI" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ProjectRMI" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="adminPackage" type="462c0819:PsiDirectoryNode" />
+              <item name="Admin.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
             </path>
             <path>
               <item name="ProjectRMI" type="b2602c69:ProjectViewProjectNode" />
               <item name="ProjectRMI" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="RMIPackage" type="462c0819:PsiDirectoryNode" />
-              <item name="serverRMI.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
             </path>
             <path>
               <item name="ProjectRMI" type="b2602c69:ProjectViewProjectNode" />
@@ -414,9 +401,9 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22334455" sideWeight="0.504884" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3899693" sideWeight="0.495116" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3899693" sideWeight="0.495116" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32884398" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3306039" sideWeight="0.497558" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3306039" sideWeight="0.497558" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15567766" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -472,7 +459,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="47" />
+      <option name="time" value="48" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -501,7 +488,7 @@
           <caret line="14" column="29" lean-forward="false" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1509153525551" expanded="false" signature="16124:16128" ph="{...}" />
+            <marker date="1509158016757" expanded="false" signature="17883:17887" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -519,7 +506,7 @@
           <caret line="14" column="29" lean-forward="false" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1509153525551" expanded="false" signature="16124:16128" ph="{...}" />
+            <marker date="1509158016757" expanded="false" signature="17883:17887" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -660,14 +647,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/adminPackage/Admin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="43" column="50" lean-forward="false" selection-start-line="43" selection-start-column="50" selection-end-line="43" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/out/elections.dat">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -676,13 +655,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServer.java">
+    <entry file="file://$PROJECT_DIR$/src/RMIPackage/serverRMI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="243" column="46" lean-forward="false" selection-start-line="243" selection-start-column="46" selection-end-line="243" selection-end-column="46" />
+        <state relative-caret-position="474">
+          <caret line="347" column="0" lean-forward="true" selection-start-line="347" selection-start-column="0" selection-end-line="347" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#authenticateUser#0;class#Connection#0" expanded="false" />
+            <marker date="1509158016757" expanded="false" signature="17883:17887" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -692,20 +671,55 @@
         <state relative-caret-position="179">
           <caret line="17" column="4" lean-forward="false" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
           <folding>
-            <element signature="method#addDep#0;class#Election#0" expanded="false" />
-            <element signature="method#getInfo#0;class#Election#0" expanded="false" />
+            <marker date="1509158016752" expanded="false" signature="881:885" ph=" { " />
+            <marker date="1509158016752" expanded="false" signature="899:902" ph=" }" />
+            <marker date="1509158016752" expanded="false" signature="929:933" ph=" { " />
+            <marker date="1509158016752" expanded="false" signature="951:954" ph=" }" />
+            <marker date="1509158016752" expanded="false" signature="992:1142" ph="{...}" />
+            <marker date="1509158016752" expanded="false" signature="1269:1272" ph=" }" />
+            <marker date="1509158016752" expanded="false" signature="1306:1310" ph=" { " />
+            <marker date="1509158016752" expanded="false" signature="1334:1337" ph=" }" />
+            <marker date="1509158016752" expanded="false" signature="1371:1375" ph=" { " />
+            <marker date="1509158016752" expanded="false" signature="1397:1400" ph=" }" />
+            <marker date="1509158016752" expanded="false" signature="1432:1436" ph=" { " />
+            <marker date="1509158016752" expanded="false" signature="1456:1459" ph=" }" />
+            <marker date="1509158016752" expanded="false" signature="1480:1484" ph=" { " />
+            <marker date="1509158016752" expanded="false" signature="1501:1504" ph=" }" />
+            <marker date="1509158016752" expanded="false" signature="1555:1559" ph=" { " />
+            <marker date="1509158016752" expanded="false" signature="1582:1585" ph=" }" />
+            <marker date="1509158016752" expanded="false" signature="1616:1620" ph=" { " />
+            <marker date="1509158016752" expanded="false" signature="1639:1642" ph=" }" />
+            <marker date="1509158016752" expanded="false" signature="1676:1680" ph=" { " />
+            <marker date="1509158016752" expanded="false" signature="1695:1698" ph=" }" />
+            <marker date="1509158016752" expanded="false" signature="1738:1742" ph=" { " />
+            <marker date="1509158016752" expanded="false" signature="1763:1766" ph=" }" />
+            <marker date="1509158016752" expanded="false" signature="1807:1811" ph=" { " />
+            <marker date="1509158016752" expanded="false" signature="1832:1835" ph=" }" />
+            <marker date="1509158016752" expanded="false" signature="1874:1878" ph=" { " />
+            <marker date="1509158016752" expanded="false" signature="1897:1900" ph=" }" />
+            <marker date="1509158016752" expanded="false" signature="1927:1931" ph=" { " />
+            <marker date="1509158016752" expanded="false" signature="1950:1953" ph=" }" />
+            <marker date="1509158016752" expanded="false" signature="1980:2096" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/RMIPackage/serverRMI.java">
+    <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="334" column="11" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="693" selection-end-column="1" />
+        <state relative-caret-position="156">
+          <caret line="267" column="21" lean-forward="true" selection-start-line="267" selection-start-column="21" selection-end-line="267" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1509153525551" expanded="false" signature="16124:16128" ph="{...}" />
+            <element signature="method#authenticateUser#0;class#Connection#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/adminPackage/Admin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

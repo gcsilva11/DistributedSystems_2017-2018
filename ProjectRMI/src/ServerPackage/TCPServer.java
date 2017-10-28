@@ -22,13 +22,13 @@ public class TCPServer {
         int failed = 0;
         while (failed <= 30) {
             try {
-                tcp = (TCPServerInterface) LocateRegistry.getRegistry(6500).lookup("vote_booth");
+                tcp = (TCPServerInterface) LocateRegistry.getRegistry(hostname,rmiPort).lookup("vote_booth");
                 break;
             } catch (RemoteException|NotBoundException e) {
                 System.out.println("RMI Timeout on User registry, trying to reconnect");
                 try {
                     Thread.sleep(500);
-                    tcp = (TCPServerInterface) LocateRegistry.getRegistry(6500).lookup("vote_booth");
+                    tcp = (TCPServerInterface) LocateRegistry.getRegistry(hostname,rmiPort).lookup("vote_booth");
                     break;
                 } catch (Exception e2) { failed++; }
                 try { Thread.sleep(500); } catch (InterruptedException e1) { }
@@ -268,7 +268,7 @@ class Connection extends Thread{
                 try {
                     Thread.sleep(500);
                     TCPServer tcpServer = new TCPServer(this.hostname, this.rmiPort);
-                    tcpServer.tcp = (TCPServerInterface) LocateRegistry.getRegistry(6500).lookup("vote_booth");
+                    tcpServer.tcp = (TCPServerInterface) LocateRegistry.getRegistry(this.hostname,this.rmiPort).lookup("vote_booth");
                     break;
                 } catch (Exception e2) {
                     failed++;

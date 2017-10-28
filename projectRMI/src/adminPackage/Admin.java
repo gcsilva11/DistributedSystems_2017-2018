@@ -32,8 +32,8 @@ public class Admin {
         }
 
         try{
-            VotingAdminInterface vote = (VotingAdminInterface) LocateRegistry.getRegistry(def_port).lookup("vote_booth");
-            elecCheck checkThread = new elecCheck(vote);
+            VotingAdminInterface vote = (VotingAdminInterface) LocateRegistry.getRegistry(hostname,def_port).lookup("vote_booth");
+            elecCheck checkThread = new elecCheck(vote,hostname,def_port);
             boothCheck boothThread = new boothCheck(vote);
             checkThread.start();
             boothThread.start();
@@ -521,8 +521,13 @@ class elecCheck extends Thread{
     private ArrayList <Election> seen = new ArrayList <Election>();
     private ArrayList<Integer> printable = new ArrayList<Integer>();
 
-    public elecCheck(VotingAdminInterface vote){
+    private String hostname;
+    private int defPort;
+
+    public elecCheck(VotingAdminInterface vote, String hostname, int defPort){
         this.vote = vote;
+        this.hostname = hostname;
+        this.defPort = defPort;
     }
 
     public void run() {
@@ -565,7 +570,7 @@ class elecCheck extends Thread{
                 if(failed == 3){
                     System.out.println("Timeout - RMI didn't respond for 30 seconds, trying to reconnect...");
                     try{
-                        this.vote = (VotingAdminInterface) LocateRegistry.getRegistry(6500).lookup("vote_booth");
+                        this.vote = (VotingAdminInterface) LocateRegistry.getRegistry(this.hostname,this.defPort).lookup("vote_booth");
                     } catch (Exception e2){
                         System.out.println("RMI server not responding, shutting down thread");
                         break;
@@ -581,6 +586,10 @@ class boothCheck extends Thread {
 
     private ArrayList <Department> seen2 = new ArrayList <Department>();
     private ArrayList<Integer> printable2 = new ArrayList<Integer>();
+
+    boothCheck(){
+
+    }
 
     public boothCheck(VotingAdminInterface vote) {
         this.vote = vote;
