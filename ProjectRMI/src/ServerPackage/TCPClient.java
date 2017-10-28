@@ -56,9 +56,9 @@ class TCPClient {
             while((messageFromServer = input.readLine()) != null)
                 System.out.println(messageFromServer);
         } catch (IOException e) {
-            if(input == null)
+            if (input == null)
                 System.out.println("\nUsage: java TCPClient <host> <port>\n");
-            System.out.println(e.getMessage());
+            else System.out.println("Session expired");
         } finally {
             try { input.close(); } catch (Exception e) {}
         }
