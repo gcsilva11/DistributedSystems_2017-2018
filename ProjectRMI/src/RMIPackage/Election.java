@@ -25,7 +25,6 @@ public class Election implements Serializable{
 		this.type = type;
 		this.closed = false;
 		this.candidates = candidates;
-		this.nVotos = 0;
 	}
 
 	public void incrementVotes(){

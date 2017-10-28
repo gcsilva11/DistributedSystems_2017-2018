@@ -215,7 +215,6 @@ public class Admin {
                                 } else {
                                     System.out.println("Error creating election...");
                                 }
-                                break;
                             } else {
 
                                 System.out.println("Council election");
@@ -254,7 +253,7 @@ public class Admin {
 
                                 if (genElecAdd) {
                                     System.out.println("Successfully created the election!");
-                                    System.out.print("Add voting tables (by dep ID) to the election (0 to stop): ");
+                                    System.out.print("Remove voting tables (by dep ID) for the chosen election (0 to stop): ");
                                     ArrayList<String> depTables = new ArrayList<String>();
                                     String depId = input.nextLine();
                                     while (!depId.equals("0")) {
@@ -263,9 +262,9 @@ public class Admin {
                                     }
                                     boolean boothAck = vote.addBooth(election.getTitle(), depTables);
                                     if (boothAck) {
-                                        System.out.println("Booths added successfully");
+                                        System.out.println("Booths removed successfully");
                                     } else {
-                                        System.out.println("Error adding booths.");
+                                        System.out.println("No tables removed.");
                                     }
                                 } else {
                                     System.out.println("Error creating election...");
@@ -341,6 +340,7 @@ public class Admin {
                                         } else {
                                             System.out.println("Problem creating the list...");
                                         }
+                                        break;
 
                                     } else {
 
@@ -373,7 +373,7 @@ public class Admin {
                                         }
 
                                     }
-                                    break;
+                                break;
 
                                 case "2":
 
@@ -403,7 +403,11 @@ public class Admin {
                                         System.out.println("Error editing name");
                                     }
                                     break;
+                                default:
+                                    System.out.println("That option doesnt exist");
+                                    break;
                             }
+                            break;
                         case "5":
 
                             System.out.println("Edit election");
@@ -415,7 +419,7 @@ public class Admin {
 
                                 //Verifica se esta a decorrer
                                 if (oldElec.getStartDate().before(Calendar.getInstance())) {
-                                    System.out.println("Election already ongoing, cannot edit");
+                                    System.out.println("Election already ongoing (or finished), cannot edit");
                                     break;
                                 } else {
                                     System.out.print("\nInsert new election title: ");
@@ -441,7 +445,7 @@ public class Admin {
                                     oldElec.setEndDate(cal5);
 
                                     //Substitui no rmi
-                                    boolean editElec = vote.editElec(oldElec);
+                                    boolean editElec = vote.editElec(oldElec,oldElecName);
 
                                     if (editElec) {
                                         System.out.println("Election edited successfully");
@@ -454,8 +458,48 @@ public class Admin {
                                 System.out.println("Election with that title doesn't exist");
                                 break;
                             }
+                        break;
+                        case "6":
+                            System.out.println("1 - Add tables,2- Remove tables: ");
+                            choice = input.nextLine();
+                            switch(choice){
+                                case "1":
+                                    System.out.println("Adding voting tables,please choose election(by title):");
+                                    String elecTitle = input.nextLine();
+                                    System.out.print("Add voting tables (by dep ID) to the election (0 to stop): ");
+                                    ArrayList<String> depTables = new ArrayList<String>();
+                                    String depId = input.nextLine();
+                                    while (!depId.equals("0")) {
+                                        depTables.add(depId);
+                                        depId = input.nextLine();
+                                    }
+                                    boolean boothAck = vote.addBooth(elecTitle, depTables);
+                                    if (boothAck) {
+                                        System.out.println("Booths added successfully");
+                                    } else {
+                                        System.out.println("Error adding booths.");
+                                    }
+                                     break;
+                                case "2":
 
-
+                                    System.out.println("Removing voting tables,please choose election(by title):");
+                                    String elecTitle2 = input.nextLine();
+                                    System.out.print("Add voting tables (by dep ID) to the election (0 to stop): ");
+                                    ArrayList<String> depTables2 = new ArrayList<String>();
+                                    String depId2 = input.nextLine();
+                                    while (!depId2.equals("0")) {
+                                        depTables2.add(depId2);
+                                        depId2 = input.nextLine();
+                                    }
+                                    boolean boothDelAck = vote.removeBooth(elecTitle2, depTables2);
+                                    if (boothDelAck) {
+                                        System.out.println("Booths added successfully");
+                                    } else {
+                                        System.out.println("Error adding booths.");
+                                    }
+                                    break;
+                            }
+                            break;
                         default:
                             System.out.println("Invalid choice, going back to menu");
                             break;

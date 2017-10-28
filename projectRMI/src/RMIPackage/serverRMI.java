@@ -314,7 +314,8 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 				for (int j = 0; j < departments.getDeps().size(); j++) {
 					for (int k = 0; k < depId.size(); k++) {
 						if (departments.getDeps().get(j).getID().equals(depId.get(k))) {
-							elList.getElections().get(i).addDep(addThisOne);
+                            System.out.println("Adding table");
+                            elList.getElections().get(i).addDep(addThisOne);
 							depsWithBooth.getDeps().add(addThisOne);
 							done = true;
 						}
@@ -343,14 +344,56 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	}
 
 	//
-	public boolean editElec(Election el) throws RemoteException {
+    public boolean removeBooth(String elTitle, ArrayList<String> depId) throws RemoteException {
+
+        FicheiroDeObjectos fo = new FicheiroDeObjectos();
+        boolean done = false;
+        Department delThisOne = null;
+
+        for (int i = 0; i < elList.getElections().size(); i++) {
+            if (elList.getElections().get(i).getTitle().equals(elTitle)) {
+                for (int j = 0; j < elList.getElections().get(i).getViableDeps().size(); j++) {
+                    for (int k=0;k<depId.size();k++){
+                        if (elList.getElections().get(i).getViableDeps().get(j).getID().equals(depId.get(k))){
+                            for(int l=0;l<depsWithBooth.getDeps().size();l++){
+                                System.out.println("removing table");
+                                if(depsWithBooth.getDeps().get(l).getID().equals(depId.get(k))){
+                                    depsWithBooth.getDeps().remove(l);
+                                }
+                            }
+                            elList.getElections().get(i).getViableDeps().remove(j);
+                        }
+                    }
+                }
+            }
+        }
+        //Update ficheiro
+        try {
+            fo.abreEscrita("out/elections.dat");
+            fo.escreveObjecto(elList);
+            fo.fechaEscrita();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try {
+            fo.abreEscrita("out/booths.dat");
+            fo.escreveObjecto(depsWithBooth);
+            fo.fechaEscrita();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return done;
+    }
+	//
+	public boolean editElec(Election el,String oldElecName) throws RemoteException {
 
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
 
 		boolean done = false;
 
 		for (int i = 0; i < elList.getElections().size(); i++) {
-			if (elList.getElections().get(i).getTitle().equals(el.getTitle())) {
+			if (elList.getElections().get(i).getTitle().equals(oldElecName)) {
 				elList.getElections().set(i, el);
 				//Update ficheiro
 				try {
