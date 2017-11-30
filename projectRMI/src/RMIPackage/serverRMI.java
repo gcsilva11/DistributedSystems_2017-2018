@@ -10,6 +10,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.*;
 import java.util.*;
+import java.sql.*;
 
 public class serverRMI extends UnicastRemoteObject implements VotingAdminInterface, TCPServerInterface {
 	private static final long serialVersionUID = 1L;
@@ -581,6 +582,93 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		// Inicia thread que lida com a conexão UDP
 		UDPConn = new RMIFailover(hostname, defPort, rmiPort);
 		UDPConn.start();
+
+		/*-----------------------------------------------------------------------------------------------------------------------*/
+
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+
+		} catch (ClassNotFoundException e) {
+
+			System.out.println("Driver not found, check if the jar is reachable !");
+			e.printStackTrace();
+			return;
+		}
+		Connection connection = null;
+		System.out.println("JDBC Driver funciona .. tentar a ligacao");
+		System.out.println("JDBC Driver works .. attempting connection");
+		try{
+			connection = DriverManager.getConnection(
+			"jdbc:mysql://127.0.0.1:3306/sdProjectDatabase",
+			"bd_user",
+			"password");
+		} catch (SQLException e) {
+			System.out.println("Ligacao falhou.. erro:");
+			System.out.println("Connection failed error:");
+			e.printStackTrace();
+			return;
+		}
+
+        if (connection != null) {
+		System.out.println("Ligação feita com sucessso");
+		System.out.println("Connected with success");
+		} else {
+			System.out.println("Nao conseguimos estabelecer a ligacao");
+			System.out.println("Connection not established");
+		}
+
+		try{
+			Statement stmt;
+
+			if(connection.createStatement() == null){
+				connection = DriverManager.getConnection(
+						"jdbc:mysql://127.0.0.1:3306/sdProjectDatabase",
+						"bd_user",
+						"password");
+			}
+
+			if((stmt = connection.createStatement()) == null) {
+				System.out.println("Erro nao foi possível criar uma statement ou retornou null");
+				System.exit(-1);
+			}
+
+			//String query = "select * from user;";
+
+
+			stmt.executeUpdate("insert into user values (4,'4','4','3',STR_TO_DATE('1-01-2012', '%d-%m-%Y'));");
+			// para podermos saber quantas colunas o resultado tem
+			// To check how many columns does the result holds
+
+			ResultSet res = stmt.executeQuery("select * from user;");
+
+			ResultSetMetaData rsmd = res.getMetaData();
+			int columnsNumber = rsmd.getColumnCount();
+
+			for(int i = 1 ; i <= columnsNumber ; i++){
+				System.out.print(rsmd.getColumnName(i));
+				if(i < columnsNumber) System.out.print(",  ");
+			}
+
+			System.out.println("");
+
+			while (res.next()) {
+				// Listar o resultado da query
+				// List the result from the query
+				for (int i = 1; i <= columnsNumber; i++) {
+					if (i > 1) System.out.print(",  ");
+					String columnValue = res.getString(i);
+					System.out.print(columnValue);
+				}
+				System.out.println("");
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+
+        /*-----------------------------------------------------------------------------------------------------------------------*/
 
 		// Atualiza dados ficheiros
 		setupObjectFiles();
