@@ -10,9 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d94659c3-7663-4a7a-954b-c1093c75fd07" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_5_1_44_bin.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ProjectRMI.iml" afterPath="$PROJECT_DIR$/ProjectRMI.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/RMIPackage/UserList.java" afterPath="$PROJECT_DIR$/src/RMIPackage/UserList.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/RMIPackage/serverRMI.java" afterPath="$PROJECT_DIR$/src/RMIPackage/serverRMI.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -30,11 +29,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="serverRMI.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="serverRMI.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/RMIPackage/serverRMI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-913">
-              <caret line="101" column="66" lean-forward="false" selection-start-line="101" selection-start-column="66" selection-end-line="101" selection-end-column="66" />
+            <state relative-caret-position="1980">
+              <caret line="596" column="58" lean-forward="true" selection-start-line="596" selection-start-column="58" selection-end-line="596" selection-end-column="58" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#serverRMI#0;class#serverRMI#0" expanded="false" />
@@ -63,12 +62,33 @@
                 <element signature="method#hasVoted#0;class#serverRMI#0" expanded="false" />
                 <element signature="method#setupObjectFiles#0;class#serverRMI#0" expanded="false" />
                 <element signature="method#startRMI#0;class#serverRMI#0" expanded="false" />
+                <element signature="method#connectDB#0;class#serverRMI#0" expanded="false" />
+                <element signature="method#updateDB#0;class#serverRMI#0" expanded="false" />
+                <element signature="method#queryDB#0;class#serverRMI#0" expanded="false" />
+                <element signature="class#RMIFailover#0" expanded="false" />
                 <element signature="method#RMIFailover#0;class#RMIFailover#0" expanded="false" />
-                <marker date="1512002211191" expanded="true" signature="17709:17727" ph="select * fro... user" />
-                <marker date="1512002211191" expanded="true" signature="17756:17832" ph="insert into user... " />
-                <marker date="1512002211191" expanded="true" signature="17988:18006" ph="select * fro... user" />
-                <marker date="1512002211191" expanded="false" signature="21248:21252" ph="{...}" />
+                <marker date="1512003596136" expanded="false" signature="19506:19510" ph="{...}" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserList.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/RMIPackage/UserList.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="8" column="29" lean-forward="false" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="User.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/RMIPackage/User.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="31" column="19" lean-forward="true" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -142,6 +162,7 @@
         <option value="$PROJECT_DIR$/src/ServerPackage/TCPServerInterface.java" />
         <option value="$PROJECT_DIR$/src/ServerPackage/TCPServer.java" />
         <option value="$PROJECT_DIR$/src/RMIPackage/serverRMI.java" />
+        <option value="$PROJECT_DIR$/src/RMIPackage/UserList.java" />
       </list>
     </option>
   </component>
@@ -201,13 +222,6 @@
               <item name="ProjectRMI" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="RMIPackage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ProjectRMI" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ProjectRMI" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="RMIPackage" type="462c0819:PsiDirectoryNode" />
-              <item name="serverRMI.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
             </path>
             <path>
               <item name="ProjectRMI" type="b2602c69:ProjectViewProjectNode" />
@@ -411,7 +425,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1967000" />
+    <option name="totallyTimeSpent" value="3601000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -424,7 +438,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958034" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -434,7 +447,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38894576" sideWeight="0.507326" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37154555" sideWeight="0.492674" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37154555" sideWeight="0.492674" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32884398" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3306039" sideWeight="0.497558" order="9" side_tool="false" content_ui="tabs" />
@@ -496,7 +509,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="54" />
+      <option name="time" value="55" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -551,11 +564,12 @@
             <element signature="method#hasVoted#0;class#serverRMI#0" expanded="false" />
             <element signature="method#setupObjectFiles#0;class#serverRMI#0" expanded="false" />
             <element signature="method#startRMI#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#connectDB#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#updateDB#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#queryDB#0;class#serverRMI#0" expanded="false" />
+            <element signature="class#RMIFailover#0" expanded="false" />
             <element signature="method#RMIFailover#0;class#RMIFailover#0" expanded="false" />
-            <marker date="1512002211191" expanded="true" signature="17709:17727" ph="select * fro... user" />
-            <marker date="1512002211191" expanded="true" signature="17756:17832" ph="insert into user... " />
-            <marker date="1512002211191" expanded="true" signature="17988:18006" ph="select * fro... user" />
-            <marker date="1512002211191" expanded="false" signature="21248:21252" ph="{...}" />
+            <marker date="1512003596136" expanded="false" signature="19506:19510" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -599,11 +613,12 @@
             <element signature="method#hasVoted#0;class#serverRMI#0" expanded="false" />
             <element signature="method#setupObjectFiles#0;class#serverRMI#0" expanded="false" />
             <element signature="method#startRMI#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#connectDB#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#updateDB#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#queryDB#0;class#serverRMI#0" expanded="false" />
+            <element signature="class#RMIFailover#0" expanded="false" />
             <element signature="method#RMIFailover#0;class#RMIFailover#0" expanded="false" />
-            <marker date="1512002211191" expanded="true" signature="17709:17727" ph="select * fro... user" />
-            <marker date="1512002211191" expanded="true" signature="17756:17832" ph="insert into user... " />
-            <marker date="1512002211191" expanded="true" signature="17988:18006" ph="select * fro... user" />
-            <marker date="1512002211191" expanded="false" signature="21248:21252" ph="{...}" />
+            <marker date="1512003596136" expanded="false" signature="19506:19510" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -663,13 +678,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/RMIPackage/UserList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="8" column="34" lean-forward="false" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/RMIPackage/Department.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -709,13 +717,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
           <caret line="30" column="30" lean-forward="false" selection-start-line="30" selection-start-column="16" selection-end-line="30" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/RMIPackage/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="106" column="128" lean-forward="false" selection-start-line="106" selection-start-column="128" selection-end-line="106" selection-end-column="128" />
         </state>
       </provider>
     </entry>
@@ -778,8 +779,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RMIPackage/serverRMI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-913">
-          <caret line="101" column="66" lean-forward="false" selection-start-line="101" selection-start-column="66" selection-end-line="101" selection-end-column="66" />
+        <state relative-caret-position="1980">
+          <caret line="596" column="58" lean-forward="true" selection-start-line="596" selection-start-column="58" selection-end-line="596" selection-end-column="58" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#serverRMI#0;class#serverRMI#0" expanded="false" />
@@ -808,12 +809,29 @@
             <element signature="method#hasVoted#0;class#serverRMI#0" expanded="false" />
             <element signature="method#setupObjectFiles#0;class#serverRMI#0" expanded="false" />
             <element signature="method#startRMI#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#connectDB#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#updateDB#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#queryDB#0;class#serverRMI#0" expanded="false" />
+            <element signature="class#RMIFailover#0" expanded="false" />
             <element signature="method#RMIFailover#0;class#RMIFailover#0" expanded="false" />
-            <marker date="1512002211191" expanded="true" signature="17709:17727" ph="select * fro... user" />
-            <marker date="1512002211191" expanded="true" signature="17756:17832" ph="insert into user... " />
-            <marker date="1512002211191" expanded="true" signature="17988:18006" ph="select * fro... user" />
-            <marker date="1512002211191" expanded="false" signature="21248:21252" ph="{...}" />
+            <marker date="1512003596136" expanded="false" signature="19506:19510" ph="{...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RMIPackage/UserList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="8" column="29" lean-forward="false" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RMIPackage/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="31" column="19" lean-forward="true" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class UserList implements Serializable{
 	private static final long serialVersionUID = 1L;
-	private ArrayList <User> users = new ArrayList <>();
+	private ArrayList <User>  = new ArrayList <>();
 
     UserList(){};
     /*UserList(ArrayList <User> a){

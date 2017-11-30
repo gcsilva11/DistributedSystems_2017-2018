@@ -15,6 +15,8 @@ import java.sql.*;
 public class serverRMI extends UnicastRemoteObject implements VotingAdminInterface, TCPServerInterface {
 	private static final long serialVersionUID = 1L;
 
+	private static Connection connection = null;
+
 	private static UserList users = new UserList();
 	private static DepList departments = new DepList();
 	private static candidateListList listOfCandidateLists = new candidateListList();
@@ -583,92 +585,32 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		UDPConn = new RMIFailover(hostname, defPort, rmiPort);
 		UDPConn.start();
 
-		/*-----------------------------------------------------------------------------------------------------------------------*/
+		if(connectDB()){
+			try{
 
-		try{
-			Class.forName("com.mysql.jdbc.Driver");
+				updateDB("insert into user values (5,'5','5','5',STR_TO_DATE('1-01-2012', '%d-%m-%Y'));");
+				ResultSet res = queryDB("select * from user;");
+				ResultSetMetaData rsmd = res.getMetaData();
 
-		} catch (ClassNotFoundException e) {
+				int columnsNumber = rsmd.getColumnCount();
 
-			System.out.println("Driver not found, check if the jar is reachable !");
-			e.printStackTrace();
-			return;
-		}
-		Connection connection = null;
-		System.out.println("JDBC Driver funciona .. tentar a ligacao");
-		System.out.println("JDBC Driver works .. attempting connection");
-		try{
-			connection = DriverManager.getConnection(
-			"jdbc:mysql://127.0.0.1:3306/sdProjectDatabase",
-			"bd_user",
-			"password");
-		} catch (SQLException e) {
-			System.out.println("Ligacao falhou.. erro:");
-			System.out.println("Connection failed error:");
-			e.printStackTrace();
-			return;
-		}
-
-        if (connection != null) {
-		System.out.println("Ligação feita com sucessso");
-		System.out.println("Connected with success");
-		} else {
-			System.out.println("Nao conseguimos estabelecer a ligacao");
-			System.out.println("Connection not established");
-		}
-
-		try{
-			Statement stmt;
-
-			if(connection.createStatement() == null){
-				connection = DriverManager.getConnection(
-						"jdbc:mysql://127.0.0.1:3306/sdProjectDatabase",
-						"bd_user",
-						"password");
-			}
-
-			if((stmt = connection.createStatement()) == null) {
-				System.out.println("Erro nao foi possível criar uma statement ou retornou null");
-				System.exit(-1);
-			}
-
-			//String query = "select * from user;";
-
-
-			stmt.executeUpdate("insert into user values (4,'4','4','3',STR_TO_DATE('1-01-2012', '%d-%m-%Y'));");
-			// para podermos saber quantas colunas o resultado tem
-			// To check how many columns does the result holds
-
-			ResultSet res = stmt.executeQuery("select * from user;");
-
-			ResultSetMetaData rsmd = res.getMetaData();
-			int columnsNumber = rsmd.getColumnCount();
-
-			for(int i = 1 ; i <= columnsNumber ; i++){
-				System.out.print(rsmd.getColumnName(i));
-				if(i < columnsNumber) System.out.print(",  ");
-			}
-
-			System.out.println("");
-
-			while (res.next()) {
-				// Listar o resultado da query
-				// List the result from the query
-				for (int i = 1; i <= columnsNumber; i++) {
-					if (i > 1) System.out.print(",  ");
-					String columnValue = res.getString(i);
-					System.out.print(columnValue);
+				for(int i = 1 ; i <= columnsNumber ; i++){
+					System.out.print(rsmd.getColumnName(i));
+					if(i < columnsNumber) System.out.print(",  ");
 				}
 				System.out.println("");
-
+				while (res.next()) {
+					for (int i = 1; i <= columnsNumber; i++) {
+						if (i > 1) System.out.print(",  ");
+						String columnValue = res.getString(i);
+						System.out.print(columnValue);
+					}
+					System.out.println("");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
-
-
-        /*-----------------------------------------------------------------------------------------------------------------------*/
 
 		// Atualiza dados ficheiros
 		setupObjectFiles();
@@ -768,6 +710,68 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		} catch (RemoteException e) {
 			System.out.println("Could not bind RMI registry");
 		}
+	}
+
+	// Cria conneção à base de dados
+	public static boolean connectDB(){
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			System.out.println("JDBC Driver not found");
+			return false;
+		}
+		connection = null;
+		try{
+			connection = DriverManager.getConnection(
+					"jdbc:mysql://127.0.0.1:3306/sdProjectDatabase",
+					"bd_user",
+					"password");
+		} catch (SQLException e) {
+			System.out.println("Connection to database failed");
+			return false;
+		}
+		return true;
+	}
+
+	// Executa update à base de dados
+	public static void updateDB(String str){
+		try {
+			Statement stmt;
+			if (connection.createStatement() == null) {
+				connection = DriverManager.getConnection(
+						"jdbc:mysql://127.0.0.1:3306/sdProjectDatabase",
+						"bd_user",
+						"password");
+			}
+			if ((stmt = connection.createStatement()) == null) {
+				System.out.println("Could not create statement");
+			}
+
+			stmt.executeUpdate(str);
+
+		}catch (SQLException e){
+			System.out.println("Error updating database");
+		}
+	}
+
+	// Executa query à base de dados
+	public static ResultSet queryDB(String str){
+		try {
+			Statement stmt;
+			if (connection.createStatement() == null) {
+				connection = DriverManager.getConnection(
+						"jdbc:mysql://127.0.0.1:3306/sdProjectDatabase",
+						"bd_user",
+						"password");
+			}
+			if ((stmt = connection.createStatement()) == null) {
+				System.out.println("Could not create statement");
+			}
+			return stmt.executeQuery(str);
+		}catch (SQLException e){
+			System.out.println("Error updating database");
+		}
+		return null;
 	}
 }
 
