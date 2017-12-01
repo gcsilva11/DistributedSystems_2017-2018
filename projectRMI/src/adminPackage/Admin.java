@@ -4,11 +4,13 @@ import java.awt.*;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
+
 
 import RMIPackage.*;
 import com.sun.org.apache.regexp.internal.RE;
@@ -50,7 +52,8 @@ public class Admin {
             //Criacao e iniciacao da thread que verifica o estado das mesas de voto
             boothCheck boothThread = new boothCheck(vote);
             boothThread.start();
-/*
+
+
             //Menu
             while(true) {
                 try {
@@ -68,11 +71,9 @@ public class Admin {
 
                             // Informação user
                             String name;
-                            String ID;
+                            int ID;
                             String myDate;
                             String phone;
-                            int profession;
-                            String department;
                             String password;
 
                             System.out.print("Register requested.\n");
@@ -83,44 +84,30 @@ public class Admin {
 
                             // No. ID
                             System.out.print("\nID: ");
-                            ID = input.nextLine();
+                            ID = Integer.parseInt(input.nextLine());
 
                             // Data expiração ID
-                            System.out.print("\nExpiration Date(dd-MM-yyy hh:mm:ss):");
+                            System.out.print("\nExpiration Date(dd-MM-yyyy hh:mm:ss):");
                             myDate = input.nextLine();
-                            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
-                            Date expDate = sdf.parse(myDate);
-                            Calendar cal = Calendar.getInstance();
-                            cal.setTime(expDate);
 
                             // No. Telefone
                             System.out.print("\nPhone number: ");
                             phone = input.nextLine();
 
-                            // Profissão
-                            System.out.print("\nProfession (1-Student, 2-Professor, 3- Employee): ");
-                            profession = Integer.parseInt(input.nextLine());
-
-                            // Departamento
-                            System.out.print("\nDepartment: ");
-                            department = input.nextLine();
-
                             // Password
                             System.out.print("\nPassword: ");
                             password = input.nextLine();
 
-                            User user = new User(name, ID, cal, phone, profession, department, password);
 
                             //Pedido ao RMI
-                            boolean ack = vote.registerUser(user);
-                            if (ack) {
+                            if (vote.registerUser(ID,name,password,phone,myDate)) {
                                 System.out.println("Successfully registered!");
                             } else {
                                 System.out.println("Error: Couldn't register new user...");
                             }
                             Thread.sleep(2000);
                             break;
-
+/*
                         //Registo de um novo departamento
                         case "2":
 
@@ -582,12 +569,12 @@ public class Admin {
                             System.out.println("Invalid choice, going back to menu");
                             Thread.sleep(2000);
                             break;
+                            */
                     }
                 }catch(Exception ex){
                     ex.printStackTrace();
                 }
             }
-            */
         }catch (Exception e) {
             System.out.println("Exception in main: " + e);
             e.printStackTrace();

@@ -12,7 +12,7 @@ public interface VotingAdminInterface extends Remote {
 	 * @return boolean consoante o sucesso da operacao
 	 * @throws java.rmi.RemoteException
 	 */
-	//boolean registerUser(User user) throws java.rmi.RemoteException;
+	boolean registerUser(int numberID, String name, String password, String phone, String date) throws java.rmi.RemoteException;
 
 	/**
 	 * Regista um novo departamento

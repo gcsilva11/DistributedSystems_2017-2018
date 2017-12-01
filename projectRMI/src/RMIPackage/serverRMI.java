@@ -9,6 +9,7 @@ import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.*;
+import java.sql.Date;
 import java.util.*;
 import java.sql.*;
 
@@ -24,47 +25,18 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 	// ==================================================================================================================
 	// VotingAdminInterface
-/*
+
 	// Regista um novo user no ficheiro
-	public boolean registerUser(User user) throws RemoteException {
-		FicheiroDeObjectos fo = new FicheiroDeObjectos();
+	public boolean registerUser(int numberID, String name, String password, String phone, String expDate) throws RemoteException {
+		String query = "INSERT INTO USER VALUES ("+numberID+",'"+name+"' ,'"+password+"' ,'"+phone+"' ,STR_TO_DATE('"+expDate+"', '%d-%m-%Y %H:%i:%s'));";
 
-		// Verifica se existe algum user com o mesmo ID
-		for (int i = 0; i < users.getUsers().size(); i++) {
-			if (user.getID().equals(users.getUsers().get(i).getID())) {
-				System.out.println("ID already exists.");
-				return false;
-			}
-		}
-
-		for (int i = 0; i < departments.getDeps().size(); i++) {
-			if (user.getDepartment().equals(departments.getDeps().get(i).getDep())) {
-
-				users.addUser(user);
-
-				// Update ficheiro
-				try {
-					fo.abreEscrita("out/users.dat");
-					fo.escreveObjecto(users);
-					fo.fechaEscrita();
-				} catch (Exception e) {
-				}
-
-				System.out.println("New user registered.");
-
+		if (connectDB()) {
+			if(serverRMI.updateDB(query))
 				return true;
-			}
 		}
-
-
-		System.out.println("Error: That department doesn't exist");
-
 		return false;
-
-
-
 	}
-
+/*
 	// Adiciona departamento ao ficheiro
 	public boolean registerDep(Department dep) throws RemoteException {
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
@@ -93,7 +65,8 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return true;
 
 	}
-
+	*/
+	/*
 	// Edita ficheiro departamento
 	public boolean editDep(Department dep) throws RemoteException {
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
@@ -237,7 +210,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			return false;
 		}
 
-        listOfCandidateLists.addCandidateList(cl);
+		listOfCandidateLists.addCandidateList(cl);
 		;
 
 		//Update ficheiro
@@ -261,7 +234,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 		for (int i = 0; i < listOfCandidateLists.getCandidateList().size(); i++) {
 			if (listOfCandidateLists.getCandidateList().get(i).getID().equals(id)) {
-                listOfCandidateLists.getCandidateList().remove(i);
+				listOfCandidateLists.getCandidateList().remove(i);
 				exists = true;
 				//Update file
 				try {
@@ -284,7 +257,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 		for (int i = 0; i < listOfCandidateLists.getCandidateList().size(); i++) {
 			if (listOfCandidateLists.getCandidateList().get(i).getID().equals(id)) {
-                listOfCandidateLists.getCandidateList().get(i).setName(title);
+				listOfCandidateLists.getCandidateList().get(i).setName(title);
 				done = true;
 				//Update file
 				try {
@@ -307,19 +280,19 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		Department addThisOne = null;
 
 		//Check if department is already added
-        for (int i = 0; i < elList.getElections().size(); i++) {
-            if (elList.getElections().get(i).getTitle().equals(elTitle)) {
-                if(!(elList.getElections().get(i).getViableDeps() ==null)) {
-                    for (int j = 0; j < elList.getElections().get(i).getViableDeps().size(); j++) {
-                        for (int k = 0; k < depId.size(); k++) {
-                            if (elList.getElections().get(i).getViableDeps().get(j).getID().equals(depId.get(k))) {
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+		for (int i = 0; i < elList.getElections().size(); i++) {
+			if (elList.getElections().get(i).getTitle().equals(elTitle)) {
+				if(!(elList.getElections().get(i).getViableDeps() ==null)) {
+					for (int j = 0; j < elList.getElections().get(i).getViableDeps().size(); j++) {
+						for (int k = 0; k < depId.size(); k++) {
+							if (elList.getElections().get(i).getViableDeps().get(j).getID().equals(depId.get(k))) {
+								return false;
+							}
+						}
+					}
+				}
+			}
+		}
 
 
 		for (int i = 0; i < elList.getElections().size(); i++) {
@@ -327,9 +300,9 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 				for (int j = 0; j < departments.getDeps().size(); j++) {
 					for (int k = 0; k < depId.size(); k++) {
 						if (departments.getDeps().get(j).getID().equals(depId.get(k))) {
-                            System.out.println("Adding table");
-                            addThisOne = departments.getDeps().get(j);
-                            elList.getElections().get(i).addDep(addThisOne);
+							System.out.println("Adding table");
+							addThisOne = departments.getDeps().get(j);
+							elList.getElections().get(i).addDep(addThisOne);
 							depsWithBooth.getDeps().add(addThisOne);
 							done = true;
 						}
@@ -347,60 +320,60 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			e.printStackTrace();
 		}
 
-        try {
-            fo.abreEscrita("out/booths.dat");
-            fo.escreveObjecto(depsWithBooth);
-            fo.fechaEscrita();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+		try {
+			fo.abreEscrita("out/booths.dat");
+			fo.escreveObjecto(depsWithBooth);
+			fo.fechaEscrita();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 		return done;
 	}
 
 	//
-    public boolean removeBooth(String elTitle, ArrayList<String> depId) throws RemoteException {
+	public boolean removeBooth(String elTitle, ArrayList<String> depId) throws RemoteException {
 
-        FicheiroDeObjectos fo = new FicheiroDeObjectos();
-        boolean done = false;
+		FicheiroDeObjectos fo = new FicheiroDeObjectos();
+		boolean done = false;
 
-        for (int i = 0; i < elList.getElections().size(); i++) {
-            if (elList.getElections().get(i).getTitle().equals(elTitle)) {
-                for (int j = 0; j < elList.getElections().get(i).getViableDeps().size(); j++) {
-                    for (int k=0;k<depId.size();k++){
-                        if (elList.getElections().get(i).getViableDeps().get(j).getID().equals(depId.get(k))){
-                            for(int l=0;l<depsWithBooth.getDeps().size();l++){
-                                System.out.println("Removing table");
-                                if(depsWithBooth.getDeps().get(l).getID().equals(depId.get(k))){
-                                    depsWithBooth.getDeps().remove(l);
-                                    done = true;
-                                }
-                            }
-                            elList.getElections().get(i).getViableDeps().remove(j);
-                        }
-                    }
-                }
-            }
-        }
-        //Update ficheiro
-        try {
-            fo.abreEscrita("out/elections.dat");
-            fo.escreveObjecto(elList);
-            fo.fechaEscrita();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+		for (int i = 0; i < elList.getElections().size(); i++) {
+			if (elList.getElections().get(i).getTitle().equals(elTitle)) {
+				for (int j = 0; j < elList.getElections().get(i).getViableDeps().size(); j++) {
+					for (int k=0;k<depId.size();k++){
+						if (elList.getElections().get(i).getViableDeps().get(j).getID().equals(depId.get(k))){
+							for(int l=0;l<depsWithBooth.getDeps().size();l++){
+								System.out.println("Removing table");
+								if(depsWithBooth.getDeps().get(l).getID().equals(depId.get(k))){
+									depsWithBooth.getDeps().remove(l);
+									done = true;
+								}
+							}
+							elList.getElections().get(i).getViableDeps().remove(j);
+						}
+					}
+				}
+			}
+		}
+		//Update ficheiro
+		try {
+			fo.abreEscrita("out/elections.dat");
+			fo.escreveObjecto(elList);
+			fo.fechaEscrita();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 
-        try {
-            fo.abreEscrita("out/booths.dat");
-            fo.escreveObjecto(depsWithBooth);
-            fo.fechaEscrita();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        return done;
-    }
+		try {
+			fo.abreEscrita("out/booths.dat");
+			fo.escreveObjecto(depsWithBooth);
+			fo.fechaEscrita();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		return done;
+	}
 
-    //
+	//
 	public boolean editElec(Election el,String oldElecName) throws RemoteException {
 
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
@@ -417,13 +390,13 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 					fo.fechaEscrita();
 				} catch (Exception e) {
 				}
-                System.out.println("Election edited");
-                done = true;
+				System.out.println("Election edited");
+				done = true;
 			}
 		}
 
-        System.out.println("Couldn't find election title");
-        return done;
+		System.out.println("Couldn't find election title");
+		return done;
 	}
 
 	//
@@ -479,8 +452,8 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	}
 
 	public ArrayList <Department> checkTables() throws java.rmi.RemoteException{
-        return depsWithBooth.getDeps();
-    }
+		return depsWithBooth.getDeps();
+	}
 
 	// ==================================================================================================================
 	// TCPServerInterface
@@ -556,7 +529,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		}
 		return false;
 	}
-*/
+	*/
 	// ==================================================================================================================
 	// Main
 	public static void main(String args[]) {
@@ -579,32 +552,6 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		UDPConn = new RMIFailover(hostname, defPort, rmiPort);
 		UDPConn.start();
 
-		if(connectDB()){
-			try{
-
-				//updateDB("insert into user values (5,'5','5','5',STR_TO_DATE('1-01-2012', '%d-%m-%Y'));");
-				ResultSet res = queryDB("select * from user;");
-				ResultSetMetaData rsmd = res.getMetaData();
-
-				int columnsNumber = rsmd.getColumnCount();
-
-				for(int i = 1 ; i <= columnsNumber ; i++){
-					System.out.print(rsmd.getColumnName(i));
-					if(i < columnsNumber) System.out.print(",  ");
-				}
-				System.out.println("");
-				while (res.next()) {
-					for (int i = 1; i <= columnsNumber; i++) {
-						if (i > 1) System.out.print(",  ");
-						String columnValue = res.getString(i);
-						System.out.print(columnValue);
-					}
-					System.out.println("");
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 
 	// Seleciona se vai ser Main ou Backup RMI
@@ -635,14 +582,15 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 					"bd_user",
 					"password");
 		} catch (SQLException e) {
-			System.out.println("Connection to database failed");
+			System.err.println("Database connection failed");
 			return false;
 		}
+		System.out.println("Connected to database");
 		return true;
 	}
 
 	// Executa update à base de dados
-	public static void updateDB(String str){
+	public static boolean updateDB(String str){
 		try {
 			Statement stmt;
 			if (connection.createStatement() == null) {
@@ -654,12 +602,14 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			if ((stmt = connection.createStatement()) == null) {
 				System.out.println("Could not create statement");
 			}
-
 			stmt.executeUpdate(str);
-
 		}catch (SQLException e){
-			System.out.println("Error updating database");
+			System.err.println("Database update failed");
+			e.printStackTrace();
+			return false;
 		}
+		System.out.println("Successfully updated database");
+		return true;
 	}
 
 	// Executa query à base de dados
@@ -677,8 +627,9 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			}
 			return stmt.executeQuery(str);
 		}catch (SQLException e){
-			System.out.println("Error updating database");
+			System.err.println("Error querying database");
 		}
+		System.out.println("Successfully queried database");
 		return null;
 	}
 }
@@ -722,7 +673,7 @@ class RMIFailover extends Thread {
 
 		} catch (SocketException e) {
 			System.out.println("Backup RMI Server started");
-			int heartbeatsFailed = 0, maxHeartbeats = 10;
+			int heartbeatsFailed = 0, maxHeartbeats = 5;
 			byte[] buffer = new byte[1000];
 
 			try {
@@ -766,3 +717,29 @@ class RMIFailover extends Thread {
 		} finally { if (this.aSocket != null) this.aSocket.close(); }
 	}
 }
+
+
+
+
+/*
+
+
+ResultSet res = serverRMI.queryDB("select * from user;");
+				ResultSetMetaData rsmd = res.getMetaData();
+
+				int columnsNumber = rsmd.getColumnCount();
+
+				for (int i = 1; i <= columnsNumber; i++) {
+					System.out.print(rsmd.getColumnName(i));
+					if (i < columnsNumber) System.out.print(",\t");
+				}
+				System.out.println("");
+				while (res.next()) {
+					for (int i = 1; i <= columnsNumber; i++) {
+						if (i > 1) System.out.print(",\t");
+						String columnValue = res.getString(i);
+						System.out.print(columnValue);
+					}
+					System.out.println("");
+				}
+ */
