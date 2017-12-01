@@ -71,7 +71,7 @@ public class TCPServer {
                 PrintWriter output = new PrintWriter(clientSocket.getOutputStream(), true);
 
                 // Thread que trata da identificação de users no TCP Server
-                new Thread() {
+                /*new Thread() {
                     // getListaUsers
                     // Identifica user
                     public void run() {
@@ -117,7 +117,7 @@ public class TCPServer {
                             newClient.start();
                         }
                     }
-                }.start();
+                }.start();*/
             } catch (IOException e) {
                 System.out.println("Error creating TCP socket");
             }
@@ -135,10 +135,10 @@ class Connection extends Thread {
     private StringTokenizer token;
 
     private TCPServer tcpServer;
-    private ArrayList<User> user = new ArrayList<>();
-    private ArrayList<candidateList> candidateList = new ArrayList<>();
-    private ArrayList<Department> department = new ArrayList<>();
-    private ArrayList<Election> election = new ArrayList<>();
+    //private ArrayList<User> user = new ArrayList<>();
+    //private ArrayList<candidateList> candidateList = new ArrayList<>();
+    //private ArrayList<Department> department = new ArrayList<>();
+    //private ArrayList<Election> election = new ArrayList<>();
 
     private String hostname;
     private String userID;
@@ -150,10 +150,10 @@ class Connection extends Thread {
         try {
             this.input = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
             this.output = new PrintWriter(this.clientSocket.getOutputStream(), true);
-            this.user = tcpServer.tcp.getUsers();
-            this.candidateList = tcpServer.tcp.getCandidateList();
-            this.department = tcpServer.tcp.getDepList();
-            this.election = tcpServer.tcp.getElList();
+            //this.user = tcpServer.tcp.getUsers();
+            //this.candidateList = tcpServer.tcp.getCandidateList();
+            //this.department = tcpServer.tcp.getDepList();
+            //this.election = tcpServer.tcp.getElList();
             this.userID = userID;
             this.hostname = hostname;
             this.rmiPort = rmiPort;
@@ -163,7 +163,7 @@ class Connection extends Thread {
     }
 
     // Run: Aceita Cliente
-    public void run() {
+    public void run() {/*
         StringTokenizer tokenizer;
         String data = "", aux = "";
         int idElection = -1, idList = -1;
@@ -293,9 +293,9 @@ class Connection extends Thread {
             } catch (IOException e1) {
             }
         } catch (IOException e) {
-        }
+        }*/
     }
-
+/*
     // Autentica Cliente
     public boolean authenticateUser(String username, String password, String userID) {
         for (int i = 0; i < user.size(); i++) {
@@ -345,5 +345,6 @@ class Connection extends Thread {
             }
         }
     }
+    */
 }
 

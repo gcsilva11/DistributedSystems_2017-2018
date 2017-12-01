@@ -12,7 +12,7 @@ public interface VotingAdminInterface extends Remote {
 	 * @return boolean consoante o sucesso da operacao
 	 * @throws java.rmi.RemoteException
 	 */
-	boolean registerUser(User user) throws java.rmi.RemoteException;
+	//boolean registerUser(User user) throws java.rmi.RemoteException;
 
 	/**
 	 * Regista um novo departamento
@@ -20,7 +20,7 @@ public interface VotingAdminInterface extends Remote {
 	 * @return boolean consoante o sucesso da operacao
 	 * @throws java.rmi.RemoteException
 	 */
-	boolean registerDep(Department dep) throws java.rmi.RemoteException;
+	//boolean registerDep(Department dep) throws java.rmi.RemoteException;
 
 	/**
 	 * Edita um departamento ja existente
@@ -28,7 +28,7 @@ public interface VotingAdminInterface extends Remote {
 	 * @return boolean consoante o sucesso da operacao
 	 * @throws java.rmi.RemoteException
 	 */
-	boolean editDep(Department dep) throws java.rmi.RemoteException;
+	//boolean editDep(Department dep) throws java.rmi.RemoteException;
 
 	/**
 	 * Apaga um departamento ja existente
@@ -36,7 +36,7 @@ public interface VotingAdminInterface extends Remote {
 	 * @return boolean consoante o sucesso da operacao
 	 * @throws java.rmi.RemoteException
 	 */
-	boolean deleteDep(Department dep) throws java.rmi.RemoteException;
+	//boolean deleteDep(Department dep) throws java.rmi.RemoteException;
 
 	/**
 	 * Retorna todas as listas de um tipo
@@ -44,7 +44,7 @@ public interface VotingAdminInterface extends Remote {
 	 * @return ArrayList de listas candidatas
 	 * @throws java.rmi.RemoteException
 	 */
-	ArrayList <candidateList> getList(int type) throws java.rmi.RemoteException;
+	//ArrayList <candidateList> getList(int type) throws java.rmi.RemoteException;
 
 	/**
 	 * Regista uma nova eleicao
@@ -52,7 +52,7 @@ public interface VotingAdminInterface extends Remote {
 	 * @return boolean consoante o sucesso da operacao
 	 * @throws java.rmi.RemoteException
 	 */
-	boolean newElection(Election election) throws java.rmi.RemoteException;
+	//boolean newElection(Election election) throws java.rmi.RemoteException;
 
 	/**
 	 * Regista uma nova mesa de voto
@@ -61,7 +61,7 @@ public interface VotingAdminInterface extends Remote {
 	 * @return boolean consoante o sucesso da operacao
 	 * @throws java.rmi.RemoteException
 	 */
-	boolean addBooth(String elTitle,ArrayList <String> depId)throws java.rmi.RemoteException;
+	//boolean addBooth(String elTitle,ArrayList <String> depId)throws java.rmi.RemoteException;
 
 	/**
 	 * Remove uma mesa de voto
@@ -70,7 +70,7 @@ public interface VotingAdminInterface extends Remote {
 	 * @return boolean consoante o sucesso da operacao
 	 * @throws java.rmi.RemoteException
 	 */
-	boolean removeBooth(String elTitle,ArrayList <String> depId)throws java.rmi.RemoteException;
+	//boolean removeBooth(String elTitle,ArrayList <String> depId)throws java.rmi.RemoteException;
 
 	/**
 	 * Encontra um user pelo ID e profissao
@@ -79,7 +79,7 @@ public interface VotingAdminInterface extends Remote {
 	 * @return User
 	 * @throws java.rmi.RemoteException
 	 */
-	User findId(String s,int type) throws java.rmi.RemoteException;
+	//User findId(String s,int type) throws java.rmi.RemoteException;
 
 	/**
 	 * Regista uma lista de candidatos
@@ -87,7 +87,7 @@ public interface VotingAdminInterface extends Remote {
 	 * @return boolean consoante o sucesso da operacao
 	 * @throws java.rmi.RemoteException
 	 */
-	boolean createList(candidateList cl) throws java.rmi.RemoteException;
+	//boolean createList(candidateList cl) throws java.rmi.RemoteException;
 
 	/**
 	 * Apaga uma lista de candidatos
@@ -95,7 +95,7 @@ public interface VotingAdminInterface extends Remote {
 	 * @return boolean consoante o sucesso da operacao
 	 * @throws java.rmi.RemoteException
 	 */
-	boolean deleteList(String id) throws java.rmi.RemoteException;
+	//boolean deleteList(String id) throws java.rmi.RemoteException;
 
 	/**
 	 * Edita uma lista de candidatos
@@ -104,7 +104,7 @@ public interface VotingAdminInterface extends Remote {
 	 * @return boolean consoante o sucesso da operacao
 	 * @throws java.rmi.RemoteException
 	 */
-	boolean editList(String id,String title)throws java.rmi.RemoteException;
+	//boolean editList(String id,String title)throws java.rmi.RemoteException;
 
 	/**
 	 * Edita uma eleicao
@@ -113,7 +113,7 @@ public interface VotingAdminInterface extends Remote {
 	 * @return boolean consoante o sucesso da operacao
 	 * @throws java.rmi.RemoteException
 	 */
-	boolean editElec(Election el,String oldElecDate)throws java.rmi.RemoteException;
+	//boolean editElec(Election el,String oldElecDate)throws java.rmi.RemoteException;
 
 	/**
 	 * Procura uma eleicao por titulo
@@ -121,21 +121,21 @@ public interface VotingAdminInterface extends Remote {
 	 * @return Eleicao
 	 * @throws java.rmi.RemoteException
 	 */
-	Election getElection(String title)throws java.rmi.RemoteException;
+	//Election getElection(String title)throws java.rmi.RemoteException;
 
 	/**
 	 * Fecha eleicao caso data ja tenha passado
 	 * @return ArrayList de Eleicoes
 	 * @throws java.rmi.RemoteException
 	 */
-	ArrayList <Election> checkElecDate()throws java.rmi.RemoteException;
+	//ArrayList <Election> checkElecDate()throws java.rmi.RemoteException;
 
 	/**
 	 * Retorna departamentos que tem mesas de voto ativas
 	 * @return ArrayList de Departamentos
 	 * @throws java.rmi.RemoteException
 	 */
-	ArrayList <Department> checkTables()throws java.rmi.RemoteException;
+	//ArrayList <Department> checkTables()throws java.rmi.RemoteException;
 
 	/**
 	 * Retorna user por ID
@@ -143,5 +143,6 @@ public interface VotingAdminInterface extends Remote {
 	 * @return User
 	 * @throws java.rmi.RemoteException
 	 */
-	User getUser(String userID) throws java.rmi.RemoteException;
+
+	//User getUser(String userID) throws java.rmi.RemoteException;
 }

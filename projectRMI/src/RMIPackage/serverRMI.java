@@ -17,12 +17,6 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 	private static Connection connection = null;
 
-	private static UserList users = new UserList();
-	private static DepList departments = new DepList();
-	private static candidateListList listOfCandidateLists = new candidateListList();
-	private static ElectionList elList = new ElectionList();
-	private static ElectionList closedElections = new ElectionList();
-	private static DepList depsWithBooth = new DepList();
 
 	public serverRMI() throws RemoteException {
 		super();
@@ -30,7 +24,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 	// ==================================================================================================================
 	// VotingAdminInterface
-
+/*
 	// Regista um novo user no ficheiro
 	public boolean registerUser(User user) throws RemoteException {
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
@@ -562,7 +556,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		}
 		return false;
 	}
-
+*/
 	// ==================================================================================================================
 	// Main
 	public static void main(String args[]) {
@@ -588,7 +582,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		if(connectDB()){
 			try{
 
-				updateDB("insert into user values (5,'5','5','5',STR_TO_DATE('1-01-2012', '%d-%m-%Y'));");
+				//updateDB("insert into user values (5,'5','5','5',STR_TO_DATE('1-01-2012', '%d-%m-%Y'));");
 				ResultSet res = queryDB("select * from user;");
 				ResultSetMetaData rsmd = res.getMetaData();
 
@@ -611,92 +605,6 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 				e.printStackTrace();
 			}
 		}
-
-		// Atualiza dados ficheiros
-		setupObjectFiles();
-
-	}
-
-	// Atualiza dados ficheiros
-	public static void setupObjectFiles() {
-
-		FicheiroDeObjectos foUser = new FicheiroDeObjectos();
-		FicheiroDeObjectos foDeps = new FicheiroDeObjectos();
-		FicheiroDeObjectos foLists = new FicheiroDeObjectos();
-		FicheiroDeObjectos foElections = new FicheiroDeObjectos();
-		FicheiroDeObjectos foClosedElections = new FicheiroDeObjectos();
-        FicheiroDeObjectos foDepBooth = new FicheiroDeObjectos();
-
-		String path;
-
-		// Lê ficheiro users e adiciona-o a um array
-		try {
-			path = "out/users.dat";
-			if (foUser.abreLeitura(path)) {
-				users = (UserList) foUser.leObjecto();
-				foUser.fechaLeitura();
-			}
-
-		} catch (Exception e) {
-			System.out.println("Exception caught reading users.dat - " + e);
-		}
-
-		// Lê ficheiro departamentos e adiciona-o a um array
-		try {
-			path = "out/deps.dat";
-			if (foDeps.abreLeitura(path)) {
-				departments = (DepList) foDeps.leObjecto();
-				foDeps.fechaLeitura();
-			}
-
-		} catch (Exception e) {
-			System.out.println("Exception caught reading deps.dat - " + e);
-		}
-
-		// Lê ficheiro lista de candidatos e adiciona-o a um array
-		try {
-			path = "out/lists.dat";
-			if (foLists.abreLeitura(path)) {
-                listOfCandidateLists = (candidateListList) foLists.leObjecto();
-				foLists.fechaLeitura();
-			}
-
-		} catch (Exception e) {
-			System.out.println("Exception caught reading lists.dat - " + e);
-		}
-
-		// Lê ficheiro eleiçoes e adiciona-o a um array
-		try {
-			path = "out/elections.dat";
-			if (foElections.abreLeitura(path)) {
-				elList = (ElectionList) foElections.leObjecto();
-				foElections.fechaLeitura();
-			}
-		} catch (Exception e) {
-			System.out.println("Exception caught reading elections.dat - " + e);
-		}
-
-		// Le ficheiro de eleicoes fechadas e poe no array
-		try {
-			path = "out/closedelections.dat";
-			if (foClosedElections.abreLeitura(path)) {
-				closedElections = (ElectionList) foClosedElections.leObjecto();
-				foClosedElections.fechaLeitura();
-			}
-
-		} catch (Exception e) {
-			System.out.println("Exception caught reading elections.dat - " + e);
-		}
-        try {
-            path = "out/booths.dat";
-            if (foDepBooth.abreLeitura(path)) {
-                depsWithBooth = (DepList) foDepBooth.leObjecto();
-                foDepBooth.fechaLeitura();
-            }
-
-        } catch (Exception e) {
-            System.out.println("Exception caught reading lists.dat - " + e);
-        }
 	}
 
 	// Seleciona se vai ser Main ou Backup RMI

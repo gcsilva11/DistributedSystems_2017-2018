@@ -50,7 +50,7 @@ public class Admin {
             //Criacao e iniciacao da thread que verifica o estado das mesas de voto
             boothCheck boothThread = new boothCheck(vote);
             boothThread.start();
-
+/*
             //Menu
             while(true) {
                 try {
@@ -587,10 +587,12 @@ public class Admin {
                     ex.printStackTrace();
                 }
             }
+            */
         }catch (Exception e) {
             System.out.println("Exception in main: " + e);
             e.printStackTrace();
         }
+
     }
 }
 
@@ -598,7 +600,7 @@ public class Admin {
 //Thread para verificar em real time quando uma eleicao expira
 class elecCheck extends Thread{
     private VotingAdminInterface vote;
-    private ArrayList <Election> seen = new ArrayList <Election>();
+    //private ArrayList <Election> seen = new ArrayList <Election>();
     private ArrayList<Integer> printable = new ArrayList<Integer>();
 
     private String hostname;
@@ -613,7 +615,7 @@ class elecCheck extends Thread{
     public void run() {
         System.out.println("ELECTION THREAD: Checking for expired elections");
         int failed=0;
-        while (true) {
+        /*while (true) {
             try {
                 try {
                     Thread.sleep(5000);
@@ -664,6 +666,7 @@ class elecCheck extends Thread{
                 }
             }
         }
+        */
     }
 }
 
@@ -671,8 +674,8 @@ class elecCheck extends Thread{
 class boothCheck extends Thread {
     private VotingAdminInterface vote;
 
-    private ArrayList <Department> seen2 = new ArrayList <Department>();
-    private ArrayList<Integer> printable2 = new ArrayList<Integer>();
+    //private ArrayList <Department> seen2 = new ArrayList <Department>();
+    //private ArrayList<Integer> printable2 = new ArrayList<Integer>();
 
     boothCheck(){
 
@@ -685,7 +688,7 @@ class boothCheck extends Thread {
     public void run() {
         System.out.println("VOTING TABLE THREAD: Checking for updates on voting tables");
         int failed = 0;
-        while(true){
+        /*while(true){
             try {
                 try {
                     Thread.sleep(5000);
@@ -746,5 +749,6 @@ class boothCheck extends Thread {
                 }
             }
         }
+        */
     }
 }
