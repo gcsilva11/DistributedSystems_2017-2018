@@ -36,7 +36,7 @@ public interface VotingAdminInterface extends Remote {
 	 * @return boolean consoante o sucesso da operacao
 	 * @throws java.rmi.RemoteException
 	 */
-	//boolean deleteDep(Department dep) throws java.rmi.RemoteException;
+	public boolean deleteFac(int numberID) throws java.rmi.RemoteException;
 
 	/**
 	 * Retorna todas as listas de um tipo

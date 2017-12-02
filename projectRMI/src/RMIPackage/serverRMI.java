@@ -44,13 +44,12 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	}
 
 	public boolean deleteUser(int numberID){
-		String query = "DELETE FROM user WHERE NUMBERID = "+numberID+";";
-		if(serverRMI.updateDB(query))
+		if(serverRMI.updateDB("DELETE FROM user WHERE NUMBERID = "+numberID+";"))
 			return true;
 		return false;
 	}
 
-	public boolean registerFac(String facName, String depName) {
+	public boolean registerFac(String facName, String depName) throws RemoteException {
 		int id = 0;
 		ResultSet res;
 		ResultSetMetaData rsmd;
@@ -97,42 +96,17 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return false;
 	}
 
-	public boolean deleteFac(int numberID){
-		String query = "DELETE FROM faculdade WHERE facid = "+numberID+";";
-		if(serverRMI.updateDB(query))
-			return true;
+	public boolean deleteFac(int numberID) throws RemoteException {
+		if(serverRMI.updateDB("DELETE FROM departamento WHERE faculdade_facid = "+numberID+";")) {
+			if (serverRMI.updateDB("DELETE FROM faculdade WHERE facid = " + numberID + ";"))
+				return true;
+		} else if (serverRMI.updateDB("DELETE FROM unidade_organica WHERE faculdade_facid = "+numberID+";")){
+			if (serverRMI.updateDB("DELETE FROM faculdade WHERE facid = " + numberID + ";"))
+				return true;
+		}
 		return false;
 	}
-/*
-	// Adiciona departamento ao ficheiro
-	public boolean registerDep(Department dep) throws RemoteException {
-		FicheiroDeObjectos fo = new FicheiroDeObjectos();
 
-		// Verifica se departamento já existe
-		for (int i = 0; i < departments.getDeps().size(); i++) {
-			if (dep.getID().equals(departments.getDeps().get(i).getID())) {
-				System.out.println("Department ID already exists.");
-				return false;
-			}
-		}
-
-		departments.addDep(dep);
-
-		//Update object file
-		try {
-			fo.abreEscrita("out/deps.dat");
-			fo.escreveObjecto(departments);
-			fo.fechaEscrita();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		System.out.println("New department registered.");
-
-		return true;
-
-	}
-	*/
 	/*
 	// Edita ficheiro departamento
 	public boolean editDep(Department dep) throws RemoteException {
