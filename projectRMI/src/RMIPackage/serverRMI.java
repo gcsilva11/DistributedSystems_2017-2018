@@ -3,6 +3,7 @@ package RMIPackage;
 import ServerPackage.TCPServerInterface;
 import adminPackage.VotingAdminInterface;
 
+import javax.xml.transform.Result;
 import java.io.IOException;
 import java.net.*;
 import java.rmi.*;
@@ -27,13 +28,79 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	// VotingAdminInterface
 
 	// Regista um novo user no ficheiro
-	public boolean registerUser(int numberID, String name, String password, String phone, String expDate) throws RemoteException {
-		String query = "INSERT INTO USER VALUES ("+numberID+",'"+name+"' ,'"+password+"' ,'"+phone+"' ,STR_TO_DATE('"+expDate+"', '%d-%m-%Y %H:%i:%s'));";
+	public boolean registerUser(int numberID, String name, String password, String phone, String expDate, int profession) throws RemoteException {
 
-		if (connectDB()) {
-			if(serverRMI.updateDB(query))
-				return true;
+		if(updateDB("INSERT INTO user VALUES ("+numberID+",'"+name+"' ,'"+password+"' ,'"+phone+"' ,STR_TO_DATE('"+expDate+"', '%d-%m-%Y %H:%i:%s'));"))
+			switch (profession){
+				case 1: if(updateDB("INSERT INTO estudante VALUES("+numberID+");"))
+						return true;
+				case 2: if(updateDB("INSERT INTO professor VALUES("+numberID+");"))
+						return true;
+				case 3: if(updateDB("INSERT INTO funcionario VALUES("+numberID+");"))
+						return true;
 		}
+		deleteUser(numberID);
+		return false;
+	}
+
+	public boolean deleteUser(int numberID){
+		String query = "DELETE FROM user WHERE NUMBERID = "+numberID+";";
+		if(serverRMI.updateDB(query))
+			return true;
+		return false;
+	}
+
+	public boolean registerFac(String facName, String depName) {
+		int id = 0;
+		ResultSet res;
+		ResultSetMetaData rsmd;
+
+		try {
+			// Adiciona Unidade Organica
+			if (depName.equals(facName)){
+				if (updateDB("INSERT INTO faculdade VALUES ((null),'" + depName + "');")) {
+					res = queryDB("SELECT * FROM faculdade WHERE name = '" + facName + "';");
+					rsmd = res.getMetaData();
+					if(res.next()) {
+						id = Integer.parseInt(res.getString("facid"));
+						if (updateDB("INSERT INTO unidade_organica VALUES (" + id + ");"))
+							return true;
+					}
+				}
+			} else {
+				// Verifica se já existe faculdade com o mesmo nome
+				res = queryDB("SELECT * FROM faculdade WHERE name = '"+facName+"';");
+				rsmd = res.getMetaData();
+
+				// Adiciona Departamento
+				if(res.next()) {
+					id = Integer.parseInt(res.getString("facid"));
+					if (updateDB("INSERT INTO departamento VALUES ((null)," + id + ",'" + depName + "');")) ;
+					return true;
+				// Adiciona Faculdade e Departamento
+				} else{
+					if(updateDB("INSERT INTO faculdade VALUES ((null),'" + facName + "');")){
+						res = queryDB("SELECT * FROM faculdade WHERE name = '" + facName + "';");
+						rsmd = res.getMetaData();
+						if(res.next()) {
+							id = Integer.parseInt(res.getString("facid"));
+							if (updateDB("INSERT INTO departamento VALUES ((null)," + id + ",'" + depName + "');"))
+								return true;
+						}
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		deleteFac(id);
+		return false;
+	}
+
+	public boolean deleteFac(int numberID){
+		String query = "DELETE FROM faculdade WHERE facid = "+numberID+";";
+		if(serverRMI.updateDB(query))
+			return true;
 		return false;
 	}
 /*
@@ -551,19 +618,20 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		// Inicia thread que lida com a conexão UDP
 		UDPConn = new RMIFailover(hostname, defPort, rmiPort);
 		UDPConn.start();
-
 	}
 
 	// Seleciona se vai ser Main ou Backup RMI
 	public void startRMI(int rmiPort) {
-		try {
-			// Criação RMI
-			serverRMI server = new serverRMI();
-			Registry reg = LocateRegistry.createRegistry(rmiPort);
-			reg.rebind("vote_booth", server);
-			System.out.println("RMI Server connected");
-		} catch (RemoteException e) {
-			System.out.println("Could not bind RMI registry");
+		if (connectDB()) {
+			try {
+				// Criação RMI
+				serverRMI server = new serverRMI();
+				Registry reg = LocateRegistry.createRegistry(rmiPort);
+				reg.rebind("vote_booth", server);
+				System.out.println("RMI Server connected");
+			} catch(RemoteException e){
+				System.out.println("Could not bind RMI registry");
+			}
 		}
 	}
 
@@ -578,7 +646,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		connection = null;
 		try{
 			connection = DriverManager.getConnection(
-					"jdbc:mysql://127.0.0.1:3306/sdProjectDatabase",
+					"jdbc:mysql://127.0.0.1:3306/sdProjectDatabase?autoReconnect=true&useSSL=false",
 					"bd_user",
 					"password");
 		} catch (SQLException e) {
@@ -600,15 +668,15 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 						"password");
 			}
 			if ((stmt = connection.createStatement()) == null) {
-				System.out.println("Could not create statement");
+				System.err.println("Error creating statement");
 			}
 			stmt.executeUpdate(str);
 		}catch (SQLException e){
-			System.err.println("Database update failed");
+			System.err.println("Error executing "+str);
 			e.printStackTrace();
 			return false;
 		}
-		System.out.println("Successfully updated database");
+		System.out.println("Success executing "+str);
 		return true;
 	}
 
@@ -623,13 +691,13 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 						"password");
 			}
 			if ((stmt = connection.createStatement()) == null) {
-				System.out.println("Could not create statement");
+				System.err.println("Error creating statement");
 			}
 			return stmt.executeQuery(str);
 		}catch (SQLException e){
-			System.err.println("Error querying database");
+			System.err.println("Error executing "+str);
 		}
-		System.out.println("Successfully queried database");
+		System.out.println("Success executing "+str);
 		return null;
 	}
 }

@@ -76,6 +76,8 @@ public class Admin {
                             String phone;
                             String password;
 
+                            int profession;
+
                             System.out.print("Register requested.\n");
 
                             // Nome
@@ -98,49 +100,42 @@ public class Admin {
                             System.out.print("\nPassword: ");
                             password = input.nextLine();
 
+                            // Profissão
+                            System.out.print("\nProfession (1-Student, 2-Professor, 3- Employee): ");
+                            profession = Integer.parseInt(input.nextLine());
 
                             //Pedido ao RMI
-                            if (vote.registerUser(ID,name,password,phone,myDate)) {
+                            if (vote.registerUser(ID,name,password,phone,myDate,profession) && (profession == 1 || profession == 2 || profession == 3)) {
                                 System.out.println("Successfully registered!");
                             } else {
-                                System.out.println("Error: Couldn't register new user...");
+                                System.err.println("Error: Couldn't register new user...");
                             }
                             Thread.sleep(2000);
                             break;
-/*
-                        //Registo de um novo departamento
+
+                        // Registo de uma nova faculdade
                         case "2":
 
-                            String depName;
-                            String depID;
-                            String facName;
+                            String facName, depName;
+                            int depID;
 
-                            System.out.println("\nAdd a new department:");
+                            System.out.println("\nAdd a new Department:");
                             // Nome departamento
-                            System.out.print("\nDepartment Name: ");
+                            System.out.print("\nName: ");
                             depName = input.nextLine();
 
-                            // ID
-                            System.out.print("\nDepartment ID: ");
-                            depID = input.nextLine();
-
-                            // Faculdade
-                            System.out.print("\nFaculty name: ");
+                            // Nome faculdade
+                            System.out.println("Faculty Name: ");
                             facName = input.nextLine();
 
-                            Department dep = new Department(depName, depID, facName);
-
-                            //Pedido ao RMI
-                            boolean newDepAck = vote.registerDep(dep);
-                            if (newDepAck) {
+                            if(vote.registerFac(facName,depName))
                                 System.out.println("New department added!");
-                            } else {
-                                System.out.println("Error adding the new department...");
-                            }
+                            else
+                                System.err.println("Error adding the new department...");
                             Thread.sleep(2000);
                             break;
 
-                        
+                        /*
                         //Criacao de uma eleicao
                         case "3":
 
