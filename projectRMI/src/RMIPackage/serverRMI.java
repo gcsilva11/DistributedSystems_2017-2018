@@ -2,6 +2,7 @@ package RMIPackage;
 
 import ServerPackage.TCPServerInterface;
 import adminPackage.VotingAdminInterface;
+import com.sun.org.apache.regexp.internal.RE;
 
 import javax.xml.transform.Result;
 import java.io.IOException;
@@ -43,128 +44,102 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return false;
 	}
 
-	public boolean deleteUser(int numberID){
+	public boolean deleteUser(int numberID) throws RemoteException{
 		if(serverRMI.updateDB("DELETE FROM user WHERE NUMBERID = "+numberID+";"))
 			return true;
 		return false;
 	}
 
-	public boolean registerFac(String facName, String depName) throws RemoteException {
-		int id = 0;
+	public boolean registerFac(String facName) throws RemoteException {
 		ResultSet res;
-		ResultSetMetaData rsmd;
 
 		try {
-			// Adiciona Unidade Organica
-			if (depName.equals(facName)){
-				if (updateDB("INSERT INTO faculdade VALUES ((null),'" + depName + "');")) {
-					res = queryDB("SELECT * FROM faculdade WHERE name = '" + facName + "';");
-					rsmd = res.getMetaData();
-					if(res.next()) {
-						id = Integer.parseInt(res.getString("facid"));
-						if (updateDB("INSERT INTO unidade_organica VALUES (" + id + ");"))
-							return true;
-					}
-				}
-			} else {
-				// Verifica se já existe faculdade com o mesmo nome
-				res = queryDB("SELECT * FROM faculdade WHERE name = '"+facName+"';");
-				rsmd = res.getMetaData();
+			res = queryDB("SELECT * FROM faculdade WHERE name = '"+facName+"';");
+			// Nao existe faculdade com o mesmo nome
+			if(!res.next())
+				if(updateDB("INSERT INTO faculdade VALUES ((null),'" + facName + "');")) return true;
+		} catch (SQLException e) { e.printStackTrace(); }
+		return false;
+	}
 
-				// Adiciona Departamento
-				if(res.next()) {
-					id = Integer.parseInt(res.getString("facid"));
-					if (updateDB("INSERT INTO departamento VALUES ((null)," + id + ",'" + depName + "');")) ;
-					return true;
-				// Adiciona Faculdade e Departamento
-				} else{
-					if(updateDB("INSERT INTO faculdade VALUES ((null),'" + facName + "');")){
-						res = queryDB("SELECT * FROM faculdade WHERE name = '" + facName + "';");
-						rsmd = res.getMetaData();
-						if(res.next()) {
-							id = Integer.parseInt(res.getString("facid"));
-							if (updateDB("INSERT INTO departamento VALUES ((null)," + id + ",'" + depName + "');"))
-								return true;
-						}
-					}
-				}
-			}
+	public boolean registerDep(String depName, int facID) throws RemoteException{
+		ResultSet res;
+
+		try {
+			res = queryDB("SELECT * FROM departamento WHERE name = '" + depName + "';");
+			// Nao existe faculdade com o mesmo nome
+			if(!res.next())
+				if(updateDB("INSERT INTO departamento VALUES ((null),"+facID+",'" + depName + "');")) return true;
+		} catch (SQLException e) { e.printStackTrace(); }
+		return false;
+	}
+
+	public boolean registerUnit(int facID) throws RemoteException {
+		ResultSet res;
+			if(updateDB("INSERT INTO unidade_organica VALUES ("+facID+");")) return true;
+		return false;
+	}
+
+	public boolean editFac(int facID, String facName) throws RemoteException{
+		ResultSet res;
+
+		try {
+			res = queryDB("SELECT * FROM faculdade WHERE facid = '"+facID+"';");
+			// A faculdade existe
+			if(res.next())
+				if(updateDB("UPDATE faculdade SET name = '"+facName+"' WHERE facid = '"+facID+"';")) return true;
+		} catch (SQLException e) { e.printStackTrace(); }
+		return false;
+	}
+
+	public boolean editDep(int depID, String depName) throws RemoteException{
+		ResultSet res;
+
+		try {
+			res = queryDB("SELECT * FROM departamento WHERE depid = '"+depID+"';");
+			// A faculdade existe
+			if(res.next())
+				if(updateDB("UPDATE departamento SET name = '"+depName+"' WHERE depid = '"+depID+"';")) return true;
+		} catch (SQLException e) { e.printStackTrace(); }
+		return false;
+	}
+
+	public boolean deleteFac(int facID) throws RemoteException {
+		ResultSet res;
+
+		try {
+			res = queryDB("SELECT * FROM departamento WHERE faculdade_facid = "+facID+";");
+			while (res.next())
+				deleteDep(Integer.parseInt(res.getString("depid")));
+
+			res = queryDB("SELECT * FROM unidade_organica WHERE faculdade_facid = " + facID + ";");
+			while (res.next())
+				deleteUnit(Integer.parseInt(res.getString("faculdade_facid")));
+
+			if(serverRMI.updateDB("DELETE FROM faculdade WHERE facid = " + facID + ";"))
+				return true;
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		deleteFac(id);
 		return false;
 	}
 
-	public boolean deleteFac(int numberID) throws RemoteException {
-		if(serverRMI.updateDB("DELETE FROM departamento WHERE faculdade_facid = "+numberID+";")) {
-			if (serverRMI.updateDB("DELETE FROM faculdade WHERE facid = " + numberID + ";"))
-				return true;
-		} else if (serverRMI.updateDB("DELETE FROM unidade_organica WHERE faculdade_facid = "+numberID+";")){
-			if (serverRMI.updateDB("DELETE FROM faculdade WHERE facid = " + numberID + ";"))
+	public boolean deleteDep(int depID) throws RemoteException {
+		if(serverRMI.updateDB("DELETE FROM departamento WHERE depid = " + depID + ";")) return true;
+		return false;
+	}
+
+	public boolean deleteUnit(int facID) throws RemoteException {
+		if(serverRMI.updateDB("DELETE FROM unidade_organica WHERE faculdade_facid = " + facID + ";")){
+			if(serverRMI.updateDB("DELETE FROM faculdade WHERE facid = " + facID + ";"))
 				return true;
 		}
 		return false;
 	}
+
 
 	/*
-	// Edita ficheiro departamento
-	public boolean editDep(Department dep) throws RemoteException {
-		FicheiroDeObjectos fo = new FicheiroDeObjectos();
-
-		// Verifica se o departamento existe
-		for (int i = 0; i < departments.getDeps().size(); i++) {
-			if (dep.getID().equals(departments.getDeps().get(i).getID())) {
-				departments.getDeps().get(i).setDep(dep.getDep());
-				departments.getDeps().get(i).setFac(dep.getFac());
-
-				// Update ficheiro
-				try {
-					fo.abreEscrita("out/deps.dat");
-					fo.escreveObjecto(departments);
-					fo.fechaEscrita();
-				} catch (Exception e) {
-				}
-
-
-				System.out.println("Department edited!");
-				return true;
-			}
-		}
-
-		System.out.println("Department ID not found...");
-		return false;
-
-	}
-
-	// Apaga informação departamento
-	public boolean deleteDep(Department dep) throws RemoteException {
-		FicheiroDeObjectos fo = new FicheiroDeObjectos();
-
-		// Verifica se o departamento existe
-		for (int i = 0; i < departments.getDeps().size(); i++) {
-			if (dep.getID().equals(departments.getDeps().get(i).getID())) {
-
-				departments.getDeps().remove(i);
-
-				// Update ficheiro
-				try {
-					fo.abreEscrita("out/deps.dat");
-					fo.escreveObjecto(departments);
-					fo.fechaEscrita();
-				} catch (Exception e) {
-				}
-
-
-				System.out.println("Department removed!");
-				return true;
-			}
-		}
-
-		System.out.println("Department ID not found...");
-		return false;
-
-	}
 
 	// Procura candidatos por ID
 	public ArrayList<candidateList> getList(int type) {

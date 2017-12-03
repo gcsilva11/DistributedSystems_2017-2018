@@ -12,7 +12,9 @@ public interface VotingAdminInterface extends Remote {
 	 * @return boolean consoante o sucesso da operacao
 	 * @throws java.rmi.RemoteException
 	 */
-	boolean registerUser(int numberID, String name, String password, String phone, String date, int profession) throws java.rmi.RemoteException;
+	boolean registerUser(int numberID, String name, String password, String phone, String date, int profession) throws RemoteException;
+
+	public boolean deleteUser(int numberID) throws RemoteException;
 
 	/**
 	 * Regista um novo departamento
@@ -20,7 +22,11 @@ public interface VotingAdminInterface extends Remote {
 	 * @return boolean consoante o sucesso da operacao
 	 * @throws java.rmi.RemoteException
 	 */
-	boolean registerFac(String facName, String depName) throws java.rmi.RemoteException;
+	public boolean registerFac(String facName) throws RemoteException;
+
+	public boolean registerDep(String depName, int facID) throws RemoteException;
+
+	public boolean registerUnit(int facID) throws RemoteException;
 
 	/**
 	 * Edita um departamento ja existente
@@ -28,7 +34,9 @@ public interface VotingAdminInterface extends Remote {
 	 * @return boolean consoante o sucesso da operacao
 	 * @throws java.rmi.RemoteException
 	 */
-	//boolean editDep(Department dep) throws java.rmi.RemoteException;
+	public boolean editFac(int facID, String facName) throws RemoteException;
+
+	boolean editDep(int depID, String depName) throws RemoteException;
 
 	/**
 	 * Apaga um departamento ja existente
@@ -36,7 +44,9 @@ public interface VotingAdminInterface extends Remote {
 	 * @return boolean consoante o sucesso da operacao
 	 * @throws java.rmi.RemoteException
 	 */
-	public boolean deleteFac(int numberID) throws java.rmi.RemoteException;
+	public boolean deleteFac(int facID) throws RemoteException;
+	public boolean deleteDep(int depID) throws RemoteException;
+	public boolean deleteUnit(int facID) throws RemoteException;
 
 	/**
 	 * Retorna todas as listas de um tipo

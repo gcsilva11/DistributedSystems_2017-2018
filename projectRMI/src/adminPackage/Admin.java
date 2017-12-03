@@ -23,7 +23,7 @@ public class Admin {
         String hostname;
         int rmiPort;
         input = new Scanner(System.in);
-        String choice;
+        String choice, choice2;
 
         if (args.length == 2){
             hostname = args[0];
@@ -57,83 +57,202 @@ public class Admin {
             //Menu
             while(true) {
                 try {
-                    System.out.println("Admin console ready.What do you want to do?\n1-Register a new user\n"
-                            + "2-Add a new department\n3-Create an election\n4-Manage candidate lists"
-                            + "\n5-Edit an election\n6-Add/Remove tables\n7-Check user voting history\n8-Check voting table status");
+                    System.out.println("Consola ADMIN. O que quer fazer\n1-User\n"
+                            + "2-Faculdade e Departamentos\n3-Eleiçao\n4-Listas de candidatos"
+                            + "\n5-Mesas de Voto\n6-Historia de voto de user\n7-Estado Mesa de Voto");
                     choice = input.nextLine();
 
                     switch (choice) {
-                        
-
                     	//Registo de um user
-                        
                         case "1":
 
-                            // Informação user
-                            String name;
-                            int ID;
-                            String myDate;
-                            String phone;
-                            String password;
+                            System.out.println("1-Registar User\n2-Apagar User");
+                            choice2 = input.nextLine();
 
-                            int profession;
+                            String name, myDate, phone, password;
+                            int ID, profession;
 
-                            System.out.print("Register requested.\n");
+                            switch (choice2){
+                                case "1":
+                                    System.out.print("Novo user\n");
 
-                            // Nome
-                            System.out.print("Name: ");
-                            name = input.nextLine();
+                                    // Nome
+                                    System.out.print("Nome: ");
+                                    name = input.nextLine();
 
-                            // No. ID
-                            System.out.print("\nID: ");
-                            ID = Integer.parseInt(input.nextLine());
+                                    // No. ID
+                                    System.out.print("\nID: ");
+                                    ID = Integer.parseInt(input.nextLine());
 
-                            // Data expiração ID
-                            System.out.print("\nExpiration Date(dd-MM-yyyy hh:mm:ss):");
-                            myDate = input.nextLine();
+                                    // Data expiração ID
+                                    System.out.print("\nData de validade(dd-MM-yyyy hh:mm:ss):");
+                                    myDate = input.nextLine();
 
-                            // No. Telefone
-                            System.out.print("\nPhone number: ");
-                            phone = input.nextLine();
+                                    // No. Telefone
+                                    System.out.print("\nTelemovel: ");
+                                    phone = input.nextLine();
 
-                            // Password
-                            System.out.print("\nPassword: ");
-                            password = input.nextLine();
+                                    // Password
+                                    System.out.print("\nPassword: ");
+                                    password = input.nextLine();
 
-                            // Profissão
-                            System.out.print("\nProfession (1-Student, 2-Professor, 3- Employee): ");
-                            profession = Integer.parseInt(input.nextLine());
+                                    // Profissão
+                                    System.out.print("\nTipo de User (1-Estudante, 2-Professor, 3- Funcionario): ");
+                                    profession = Integer.parseInt(input.nextLine());
 
-                            //Pedido ao RMI
-                            if (vote.registerUser(ID,name,password,phone,myDate,profession) && (profession == 1 || profession == 2 || profession == 3)) {
-                                System.out.println("Successfully registered!");
-                            } else {
-                                System.err.println("Error: Couldn't register new user...");
+                                    //Pedido ao RMI
+                                    if (vote.registerUser(ID,name,password,phone,myDate,profession) && (profession == 1 || profession == 2 || profession == 3))
+                                        System.out.println("Registo efetuado!");
+                                    else
+                                        System.err.println("Registo falhado");
+                                    Thread.sleep(2000);
+                                    break;
+                                case "2":
+                                    System.out.println("Apagar User");
+
+                                    // No. ID
+                                    System.out.print("\nID: ");
+                                    ID = Integer.parseInt(input.nextLine());
+
+                                    if (vote.deleteUser(ID))
+                                        System.out.println("Eliminacao efetuada!");
+                                    else
+                                        System.err.println("Eliminacao falhada");
+                                    Thread.sleep(2000);
+                                    break;
+                                default:
+                                    System.out.println("Opcao Invalida");
+                                    break;
                             }
-                            Thread.sleep(2000);
-                            break;
+
+
+
+
+
 
                         // Registo de uma nova faculdade
                         case "2":
 
+                            System.out.println("1-Adicionar Faculdade\n2-Adicionar Departamento\n3-Adicionar Unidade Organica\n4-Editar Faculdade\n5-Editar Departamento\n6-Apagar Faculdade\n7-Apagar Departamento\n8-Apgar Unidade Organica");
+                            choice2 = input.nextLine();
+
                             String facName, depName;
-                            int depID;
+                            int facID,depID;
 
-                            System.out.println("\nAdd a new Department:");
-                            // Nome departamento
-                            System.out.print("\nName: ");
-                            depName = input.nextLine();
+                            switch (choice2) {
+                                case "1":
+                                    System.out.println("Nova Faculdade");
 
-                            // Nome faculdade
-                            System.out.println("Faculty Name: ");
-                            facName = input.nextLine();
+                                    System.out.println("\nNome: ");
+                                    facName = input.nextLine();
 
-                            if(vote.registerFac(facName,depName))
-                                System.out.println("New department added!");
-                            else
-                                System.err.println("Error adding the new department...");
-                            Thread.sleep(2000);
+                                    if(vote.registerFac(facName))
+                                        System.out.println("Registo efetuado!");
+                                    else
+                                        System.err.println("Registo falhado");
+                                    Thread.sleep(2000);
+                                    break;
+                                case "2":
+                                    System.out.println("Novo Departamento (Necessita de uma faculdade já criada)");
+
+                                    System.out.println("\nNome: ");
+                                    depName = input.nextLine();
+
+                                    System.out.println("\nID da faculdade a associar: ");
+                                    facID = Integer.parseInt(input.nextLine());
+
+                                    if(vote.registerDep(depName,facID))
+                                        System.out.println("Registo efetuado!");
+                                    else
+                                        System.err.println("Registo falhado");
+                                    Thread.sleep(2000);
+                                    break;
+                                case "3":
+                                    System.out.println("Nova Unidade Organica (Necessita de uma faculdade já criada)");
+
+                                    System.out.println("\nID da faculdade a associar: ");
+                                    facID = Integer.parseInt(input.nextLine());
+
+                                    if(vote.registerUnit(facID))
+                                        System.out.println("Registo efetuado!");
+                                    else
+                                        System.err.println("Registo falhado");
+                                    Thread.sleep(2000);
+                                    break;
+                                case "4":
+                                    System.out.println("Editar Faculdade");
+
+                                    System.out.println("ID da faculdade: ");
+                                    facID = Integer.parseInt(input.nextLine());
+
+                                    System.out.println("Novo nome:");
+                                    facName = input.nextLine();
+
+                                    if(vote.editFac(facID,facName))
+                                        System.out.println("Edicao efetuada!");
+                                    else
+                                        System.err.println("Edicao falhada");
+                                    Thread.sleep(2000);
+                                    break;
+                                case "5":
+                                    System.out.println("Editar Departamento");
+
+                                    System.out.println("ID do departamento:");
+                                    depID = Integer.parseInt(input.nextLine());
+
+                                    System.out.println("Novo nome:");
+                                    depName = input.nextLine();
+
+                                    if(vote.editDep(depID,depName))
+                                        System.out.println("Edicao efetuada!");
+                                    else
+                                        System.err.println("Edicao falhada");
+                                    Thread.sleep(2000);
+                                    break;
+                                case "6":
+                                    System.out.println("Apagar Faculdade (Ira remover todos os departamentos associados)");
+
+                                    System.out.println("ID da Faculdade: ");
+                                    facID = Integer.parseInt(input.nextLine());
+
+                                    if(vote.deleteFac(facID))
+                                        System.out.println("Eliminicao efetuada!");
+                                    else
+                                        System.err.println("Eliminicao falhada");
+                                    Thread.sleep(2000);
+                                    break;
+                                case "7":
+                                    System.out.println("Apagar Departamento");
+
+                                    System.out.println("ID do Departamento: ");
+                                    depID = Integer.parseInt(input.nextLine());
+
+                                    if(vote.deleteDep(depID))
+                                        System.out.println("Eliminicao efetuada!");
+                                    else
+                                        System.err.println("Eliminicao falhada");
+                                    Thread.sleep(2000);
+                                    break;
+                                case "8":
+                                    System.out.println("Apagar Unidade Organica");
+
+                                    System.out.println("ID da Faculdade: ");
+                                    facID = Integer.parseInt(input.nextLine());
+
+                                    if(vote.deleteUnit(facID))
+                                        System.out.println("Eliminicao efetuada!");
+                                    else
+                                        System.err.println("Eliminicao falhada");
+                                    Thread.sleep(2000);
+                                    break;
+
+                                default:
+                                    System.out.println("Opcao Invalida");
+                                    break;
+                            }
                             break;
+                        case "3":
+
 
                         /*
                         //Criacao de uma eleicao

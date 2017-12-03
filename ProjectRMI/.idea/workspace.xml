@@ -10,8 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d94659c3-7663-4a7a-954b-c1093c75fd07" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_5_1_44_bin.xml" afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_5_1_44_bin.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/RMIPackage/serverRMI.java" afterPath="$PROJECT_DIR$/src/RMIPackage/serverRMI.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/adminPackage/Admin.java" afterPath="$PROJECT_DIR$/src/adminPackage/Admin.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/adminPackage/VotingAdminInterface.java" afterPath="$PROJECT_DIR$/src/adminPackage/VotingAdminInterface.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -33,7 +35,7 @@
       <file leaf-file-name="TCPServer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1920">
+            <state relative-caret-position="0">
               <caret line="16" column="13" lean-forward="false" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -45,7 +47,7 @@
       <file leaf-file-name="TCPServerInterface.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServerInterface.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="491">
+            <state relative-caret-position="855">
               <caret line="61" column="6" lean-forward="false" selection-start-line="61" selection-start-column="6" selection-end-line="61" selection-end-column="6" />
               <folding />
             </state>
@@ -55,10 +57,11 @@
       <file leaf-file-name="VotingAdminInterface.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/adminPackage/VotingAdminInterface.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="38" column="43" lean-forward="false" selection-start-line="38" selection-start-column="43" selection-end-line="38" selection-end-column="43" />
+            <state relative-caret-position="495">
+              <caret line="38" column="70" lean-forward="false" selection-start-line="38" selection-start-column="70" selection-end-line="38" selection-end-column="70" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="docComment;method#registerUser#0;class#VotingAdminInterface#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -67,18 +70,19 @@
       <file leaf-file-name="serverRMI.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/RMIPackage/serverRMI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="364">
-              <caret line="102" column="85" lean-forward="false" selection-start-line="102" selection-start-column="85" selection-end-line="102" selection-end-column="85" />
+            <state relative-caret-position="51">
+              <caret line="50" column="5" lean-forward="false" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
               <folding>
-                <element signature="imports" expanded="true" />
                 <element signature="method#registerUser#0;class#serverRMI#0" expanded="false" />
                 <element signature="method#deleteUser#0;class#serverRMI#0" expanded="false" />
                 <element signature="method#registerFac#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#connectDB#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#updateDB#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#queryDB#0;class#serverRMI#0" expanded="false" />
-                <element signature="class#RMIFailover#0" expanded="false" />
-                <marker date="1512174351814" expanded="false" signature="18888:18978" ph="{...}" />
+                <element signature="method#registerDep#0;class#serverRMI#0" expanded="false" />
+                <element signature="method#registerUnit#0;class#serverRMI#0" expanded="false" />
+                <element signature="method#editFac#0;class#serverRMI#0" expanded="false" />
+                <element signature="method#editDep#0;class#serverRMI#0" expanded="false" />
+                <element signature="method#deleteFac#0;class#serverRMI#0" expanded="false" />
+                <element signature="method#deleteDep#0;class#serverRMI#0" expanded="false" />
+                <element signature="method#deleteUnit#0;class#serverRMI#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -87,11 +91,12 @@
       <file leaf-file-name="Admin.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/adminPackage/Admin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="289" column="73" lean-forward="false" selection-start-line="289" selection-start-column="67" selection-end-line="289" selection-end-column="73" />
+            <state relative-caret-position="-802">
+              <caret line="111" column="0" lean-forward="true" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#30413#30422#0" expanded="true" />
+                <element signature="e#36909#36918#0" expanded="true" />
+                <element signature="e#39822#39823#0" expanded="true" />
+                <element signature="e#39854#39855#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -101,10 +106,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Election(</find>
-      <find>addEle</find>
-      <find>nVotos</find>
-      <find>nVotes</find>
       <find>nv</find>
       <find>new Election</find>
       <find>vote(</find>
@@ -131,6 +132,10 @@
       <find>maxhear</find>
       <find>query</find>
       <find>delete</find>
+      <find>editar</find>
+      <find>Department</find>
+      <find>defau</find>
+      <find>rsmd</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -163,9 +168,9 @@
         <option value="$PROJECT_DIR$/src/RMIPackage/candidateList.java" />
         <option value="$PROJECT_DIR$/src/ServerPackage/TCPServerInterface.java" />
         <option value="$PROJECT_DIR$/src/ServerPackage/TCPServer.java" />
-        <option value="$PROJECT_DIR$/src/adminPackage/Admin.java" />
         <option value="$PROJECT_DIR$/src/adminPackage/VotingAdminInterface.java" />
         <option value="$PROJECT_DIR$/src/RMIPackage/serverRMI.java" />
+        <option value="$PROJECT_DIR$/src/adminPackage/Admin.java" />
       </list>
     </option>
   </component>
@@ -195,7 +200,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -244,9 +249,9 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="AndroidView" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -255,6 +260,7 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -423,6 +429,9 @@
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="d94659c3-7663-4a7a-954b-c1093c75fd07" name="Default" comment="" />
@@ -436,7 +445,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17052000" />
+    <option name="totallyTimeSpent" value="25294000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -449,7 +458,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958034" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -457,23 +465,21 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38894576" sideWeight="0.507326" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37154555" sideWeight="0.509768" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36745137" sideWeight="0.492674" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32884398" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37154555" sideWeight="0.490232" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3306039" sideWeight="0.497558" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15934066" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16117217" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958034" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24969475" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39918116" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39918116" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -489,11 +495,11 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39918116" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958034" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3265097" sideWeight="0.492674" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37154555" sideWeight="0.492674" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32884398" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3306039" sideWeight="0.497558" order="9" side_tool="false" content_ui="tabs" />
@@ -564,15 +570,16 @@
         <state relative-caret-position="105">
           <caret line="14" column="29" lean-forward="false" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="method#registerUser#0;class#serverRMI#0" expanded="false" />
             <element signature="method#deleteUser#0;class#serverRMI#0" expanded="false" />
             <element signature="method#registerFac#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#connectDB#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#updateDB#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#queryDB#0;class#serverRMI#0" expanded="false" />
-            <element signature="class#RMIFailover#0" expanded="false" />
-            <marker date="1512174351814" expanded="false" signature="18888:18978" ph="{...}" />
+            <element signature="method#registerDep#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#registerUnit#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#editFac#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#editDep#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#deleteFac#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#deleteDep#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#deleteUnit#0;class#serverRMI#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -589,15 +596,16 @@
         <state relative-caret-position="105">
           <caret line="14" column="29" lean-forward="false" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="method#registerUser#0;class#serverRMI#0" expanded="false" />
             <element signature="method#deleteUser#0;class#serverRMI#0" expanded="false" />
             <element signature="method#registerFac#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#connectDB#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#updateDB#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#queryDB#0;class#serverRMI#0" expanded="false" />
-            <element signature="class#RMIFailover#0" expanded="false" />
-            <marker date="1512174351814" expanded="false" signature="18888:18978" ph="{...}" />
+            <element signature="method#registerDep#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#registerUnit#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#editFac#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#editDep#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#deleteFac#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#deleteDep#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#deleteUnit#0;class#serverRMI#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -628,7 +636,6 @@
     <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPClient2.java" />
     <entry file="file://$PROJECT_DIR$/out/closedelections.dat" />
     <entry file="file://$PROJECT_DIR$/src/RMIPackage/candidateListList.java" />
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/src.zip!/java/lang/Thread.java" />
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/rt.jar!/sun/reflect/NativeMethodAccessorImpl.class" />
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
@@ -681,7 +688,7 @@
     <entry file="file://$PROJECT_DIR$/src/RMIPackage/candidateList.java" />
     <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1920">
+        <state relative-caret-position="0">
           <caret line="16" column="13" lean-forward="false" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -691,7 +698,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServerInterface.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="491">
+        <state relative-caret-position="855">
           <caret line="61" column="6" lean-forward="false" selection-start-line="61" selection-start-column="6" selection-end-line="61" selection-end-column="6" />
           <folding />
         </state>
@@ -705,41 +712,52 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/src.zip!/java/lang/Thread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="747" column="0" lean-forward="false" selection-start-line="747" selection-start-column="0" selection-end-line="747" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/adminPackage/VotingAdminInterface.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="38" column="43" lean-forward="false" selection-start-line="38" selection-start-column="43" selection-end-line="38" selection-end-column="43" />
+        <state relative-caret-position="495">
+          <caret line="38" column="70" lean-forward="false" selection-start-line="38" selection-start-column="70" selection-end-line="38" selection-end-column="70" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="docComment;method#registerUser#0;class#VotingAdminInterface#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RMIPackage/serverRMI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="102" column="85" lean-forward="false" selection-start-line="102" selection-start-column="85" selection-end-line="102" selection-end-column="85" />
+        <state relative-caret-position="51">
+          <caret line="50" column="5" lean-forward="false" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="method#registerUser#0;class#serverRMI#0" expanded="false" />
             <element signature="method#deleteUser#0;class#serverRMI#0" expanded="false" />
             <element signature="method#registerFac#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#connectDB#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#updateDB#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#queryDB#0;class#serverRMI#0" expanded="false" />
-            <element signature="class#RMIFailover#0" expanded="false" />
-            <marker date="1512174351814" expanded="false" signature="18888:18978" ph="{...}" />
+            <element signature="method#registerDep#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#registerUnit#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#editFac#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#editDep#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#deleteFac#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#deleteDep#0;class#serverRMI#0" expanded="false" />
+            <element signature="method#deleteUnit#0;class#serverRMI#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/adminPackage/Admin.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="289" column="73" lean-forward="false" selection-start-line="289" selection-start-column="67" selection-end-line="289" selection-end-column="73" />
+        <state relative-caret-position="-802">
+          <caret line="111" column="0" lean-forward="true" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#30413#30422#0" expanded="true" />
+            <element signature="e#36909#36918#0" expanded="true" />
+            <element signature="e#39822#39823#0" expanded="true" />
+            <element signature="e#39854#39855#0" expanded="true" />
           </folding>
         </state>
       </provider>
