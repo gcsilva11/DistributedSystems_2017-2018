@@ -70,9 +70,9 @@ public class Admin {
                             choice2 = input.nextLine();
 
                             String name, myDate, phone, password;
-                            int ID, profession;
+                            int ID, profession, faculdadeID;
 
-                            switch (choice2){
+                            switch (choice2) {
                                 case "1":
                                     System.out.print("Novo user\n");
 
@@ -85,7 +85,7 @@ public class Admin {
                                     ID = Integer.parseInt(input.nextLine());
 
                                     // Data expiração ID
-                                    System.out.print("\nData de validade(dd-MM-yyyy hh:mm:ss):");
+                                    System.out.print("\nData de validade(yyyy-MM-dd hh:mm:ss):");
                                     myDate = input.nextLine();
 
                                     // No. Telefone
@@ -101,35 +101,49 @@ public class Admin {
                                     profession = Integer.parseInt(input.nextLine());
 
                                     //Pedido ao RMI
-                                    if (vote.registerUser(ID,name,password,phone,myDate,profession) && (profession == 1 || profession == 2 || profession == 3))
+                                    if (vote.registerUser(ID, name, password, phone, myDate, profession) && (profession == 1 || profession == 2 || profession == 3))
                                         System.out.println("Registo efetuado!");
                                     else
                                         System.err.println("Registo falhado");
-                                    Thread.sleep(2000);
+
+                                    // Faculdade
+                                    System.out.println("\nInsira faculdades a associar (0 para parar): ");
+                                    faculdadeID = Integer.parseInt(input.nextLine());
+                                    while (faculdadeID != 0) {
+                                        if(vote.addUserFac(ID,faculdadeID))
+                                            System.out.println("Faculdade Inserida");
+                                        else
+                                            System.out.println("Faculdade não existe");
+                                        faculdadeID = Integer.parseInt(input.nextLine());
+                                    }
+
+
+                                    Thread.sleep(500);
                                     break;
                                 case "2":
                                     System.out.println("Apagar User");
+
+                                    // Profissão
+                                    System.out.print("\nTipo de User (1-Estudante, 2-Professor, 3- Funcionario): ");
+                                    profession = Integer.parseInt(input.nextLine());
 
                                     // No. ID
                                     System.out.print("\nID: ");
                                     ID = Integer.parseInt(input.nextLine());
 
-                                    if (vote.deleteUser(ID))
+                                    if (vote.deleteUser(ID,profession))
                                         System.out.println("Eliminacao efetuada!");
                                     else
                                         System.err.println("Eliminacao falhada");
-                                    Thread.sleep(2000);
+                                    Thread.sleep(500);
                                     break;
                                 default:
                                     System.out.println("Opcao Invalida");
                                     break;
                             }
 
-
-
-
-
-
+                            Thread.sleep(500);
+                            break;
                         // Registo de uma nova faculdade
                         case "2":
 
@@ -150,7 +164,7 @@ public class Admin {
                                         System.out.println("Registo efetuado!");
                                     else
                                         System.err.println("Registo falhado");
-                                    Thread.sleep(2000);
+                                    Thread.sleep(500);
                                     break;
                                 case "2":
                                     System.out.println("Novo Departamento (Necessita de uma faculdade já criada)");
@@ -165,7 +179,7 @@ public class Admin {
                                         System.out.println("Registo efetuado!");
                                     else
                                         System.err.println("Registo falhado");
-                                    Thread.sleep(2000);
+                                    Thread.sleep(500);
                                     break;
                                 case "3":
                                     System.out.println("Nova Unidade Organica (Necessita de uma faculdade já criada)");
@@ -177,7 +191,7 @@ public class Admin {
                                         System.out.println("Registo efetuado!");
                                     else
                                         System.err.println("Registo falhado");
-                                    Thread.sleep(2000);
+                                    Thread.sleep(500);
                                     break;
                                 case "4":
                                     System.out.println("Editar Faculdade");
@@ -192,7 +206,7 @@ public class Admin {
                                         System.out.println("Edicao efetuada!");
                                     else
                                         System.err.println("Edicao falhada");
-                                    Thread.sleep(2000);
+                                    Thread.sleep(500);
                                     break;
                                 case "5":
                                     System.out.println("Editar Departamento");
@@ -207,7 +221,7 @@ public class Admin {
                                         System.out.println("Edicao efetuada!");
                                     else
                                         System.err.println("Edicao falhada");
-                                    Thread.sleep(2000);
+                                    Thread.sleep(500);
                                     break;
                                 case "6":
                                     System.out.println("Apagar Faculdade (Ira remover todos os departamentos associados)");
@@ -219,7 +233,7 @@ public class Admin {
                                         System.out.println("Eliminicao efetuada!");
                                     else
                                         System.err.println("Eliminicao falhada");
-                                    Thread.sleep(2000);
+                                    Thread.sleep(500);
                                     break;
                                 case "7":
                                     System.out.println("Apagar Departamento");
@@ -231,7 +245,7 @@ public class Admin {
                                         System.out.println("Eliminicao efetuada!");
                                     else
                                         System.err.println("Eliminicao falhada");
-                                    Thread.sleep(2000);
+                                    Thread.sleep(500);
                                     break;
                                 case "8":
                                     System.out.println("Apagar Unidade Organica");
@@ -243,7 +257,7 @@ public class Admin {
                                         System.out.println("Eliminicao efetuada!");
                                     else
                                         System.err.println("Eliminicao falhada");
-                                    Thread.sleep(2000);
+                                    Thread.sleep(500);
                                     break;
 
                                 default:

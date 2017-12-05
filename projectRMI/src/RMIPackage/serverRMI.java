@@ -30,23 +30,30 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 	// Regista um novo user no ficheiro
 	public boolean registerUser(int numberID, String name, String password, String phone, String expDate, int profession) throws RemoteException {
-
-		if(updateDB("INSERT INTO user VALUES ("+numberID+",'"+name+"' ,'"+password+"' ,'"+phone+"' ,STR_TO_DATE('"+expDate+"', '%d-%m-%Y %H:%i:%s'));"))
-			switch (profession){
-				case 1: if(updateDB("INSERT INTO estudante VALUES("+numberID+");"))
-						return true;
-				case 2: if(updateDB("INSERT INTO professor VALUES("+numberID+");"))
-						return true;
-				case 3: if(updateDB("INSERT INTO funcionario VALUES("+numberID+");"))
-						return true;
-		}
-		deleteUser(numberID);
+		if(updateDB("CALL add_user("+numberID+","+name+","+password+","+phone+",'"+expDate+"',"+profession+");"))
+			return true;
 		return false;
 	}
 
-	public boolean deleteUser(int numberID) throws RemoteException{
-		if(serverRMI.updateDB("DELETE FROM user WHERE NUMBERID = "+numberID+";"))
+	public boolean addUserFac(int numberID, int faculdadeID) throws RemoteException{
+		if(updateDB("CALL add_user_faculdade("+numberID+","+faculdadeID+");"))
 			return true;
+		return false;
+	}
+
+	public boolean deleteUser(int numberID, int profession) throws RemoteException{
+		if(profession==1) {
+			if(updateDB("DELETE FROM estudante WHERE user_numberid = "+numberID+";"))
+				return true;
+		}
+		else if(profession==2) {
+			if(updateDB("DELETE FROM professor WHERE user_numberid = "+numberID+";"))
+				return true;
+		}
+		else if(profession==3) {
+			if(updateDB("DELETE FROM funcionario WHERE user_numberid = "+numberID+";"))
+				return true;
+		}
 		return false;
 	}
 
