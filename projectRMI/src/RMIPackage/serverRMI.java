@@ -30,7 +30,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 	// Regista um novo user no ficheiro
 	public boolean registerUser(int numberID, String name, String password, String phone, String expDate, int profession) throws RemoteException {
-		if(updateDB("CALL add_user("+numberID+","+name+","+password+","+phone+",'"+expDate+"',"+profession+");"))
+		if(updateDB("CALL add_user("+numberID+",'"+name+"','"+password+"','"+phone+"','"+expDate+"',"+profession+");"))
 			return true;
 		return false;
 	}
@@ -43,16 +43,31 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 	public boolean deleteUser(int numberID, int profession) throws RemoteException{
 		if(profession==1) {
-			if(updateDB("DELETE FROM estudante WHERE user_numberid = "+numberID+";"))
-				return true;
+			if(updateDB("DELETE FROM estudante WHERE user_numberid = "+numberID+";")){
+				if(updateDB("DELETE FROM user_faculdade WHERE user_numberid = "+numberID+";")){
+					if (updateDB("DELETE FROM user WHERE numberid = " + numberID + ";")) {
+						return true;
+					}
+				}
+			}
 		}
 		else if(profession==2) {
-			if(updateDB("DELETE FROM professor WHERE user_numberid = "+numberID+";"))
-				return true;
+			if(updateDB("DELETE FROM professor WHERE user_numberid = "+numberID+";")){
+				if(updateDB("DELETE FROM user_faculdade WHERE user_numberid = "+numberID+";")){
+					if (updateDB("DELETE FROM user WHERE numberid = " + numberID + ";")) {
+						return true;
+					}
+				}
+			}
 		}
 		else if(profession==3) {
-			if(updateDB("DELETE FROM funcionario WHERE user_numberid = "+numberID+";"))
-				return true;
+			if(updateDB("DELETE FROM funcionario WHERE user_numberid = "+numberID+";")){
+				if(updateDB("DELETE FROM user_faculdade WHERE user_numberid = "+numberID+";")){
+					if (updateDB("DELETE FROM user WHERE numberid = " + numberID + ";")) {
+						return true;
+					}
+				}
+			}
 		}
 		return false;
 	}
@@ -142,6 +157,18 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			if(serverRMI.updateDB("DELETE FROM faculdade WHERE facid = " + facID + ";"))
 				return true;
 		}
+		return false;
+	}
+
+	public boolean addEl(int eleicaoID, String title, String description, int type, int closed, String startDate, String endDate) throws RemoteException{
+		if(updateDB("CALL add_eleicao("+eleicaoID+",'"+title+"','"+description+"',"+type+","+closed+",'"+startDate+"','"+endDate+"');"))
+			return true;
+		return false;
+	}
+
+	public boolean addLista(String name, int type, int numvotes, int eleicaoID) throws RemoteException{
+		if(updateDB("CALL add_lista_candidata('"+name+"',"+type+","+numvotes+","+eleicaoID+");"))
+			return true;
 		return false;
 	}
 

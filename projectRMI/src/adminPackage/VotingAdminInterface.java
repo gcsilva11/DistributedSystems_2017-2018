@@ -49,6 +49,9 @@ public interface VotingAdminInterface extends Remote {
 	public boolean deleteDep(int depID) throws RemoteException;
 	public boolean deleteUnit(int facID) throws RemoteException;
 
+	boolean addEl(int eleicaoID, String title, String description, int type, int closed, String startDate, String endDate) throws RemoteException;
+	boolean addLista(String name, int type, int numvotes, int eleicaoID) throws RemoteException;
+
 	/**
 	 * Retorna todas as listas de um tipo
 	 * @param type Tipo de lista

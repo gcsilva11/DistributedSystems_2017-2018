@@ -58,7 +58,7 @@ public class Admin {
             while(true) {
                 try {
                     System.out.println("Consola ADMIN. O que quer fazer\n1-User\n"
-                            + "2-Faculdade e Departamentos\n3-Eleiçao\n4-Listas de candidatos"
+                            + "2-Faculdade e Departamentos\n3-Criar Eleicao\n4-Listas de candidatos"
                             + "\n5-Mesas de Voto\n6-Historia de voto de user\n7-Estado Mesa de Voto");
                     choice = input.nextLine();
 
@@ -265,7 +265,45 @@ public class Admin {
                                     break;
                             }
                             break;
+
+                        // ELEICAO
                         case "3":
+
+                            int electionID,type;
+                            String title;
+                            String description;
+                            String startDate;
+                            String endDate;
+
+                            System.out.println("\nNova eleicao");
+
+                            System.out.println("\nID: ");
+                            electionID = Integer.parseInt(input.nextLine());
+
+                            System.out.println("\nNome: ");
+                            title = input.nextLine();
+
+                            System.out.println("\nDescricao: ");
+                            description = input.nextLine();
+
+                            System.out.print("\nData de inicio(yyyy-MM-dd hh:mm:ss):");
+                            startDate = input.nextLine();
+
+                            System.out.print("\nData de termino(yyyy-MM-dd hh:mm:ss):");
+                            endDate = input.nextLine();
+
+                            System.out.print("\nTipo de Eleicao (1-Conselho geral, 2-Nucleos): ");
+                            type = Integer.parseInt(input.nextLine());
+
+                            if(vote.addEl(electionID,title,description,type,0,startDate,endDate))
+                                System.out.println("Criacao efetuada!");
+                            else
+                                System.err.println("Criacao falhada");
+                            Thread.sleep(500);
+                            break;
+
+                        case "4":
+
 
 
                         /*
