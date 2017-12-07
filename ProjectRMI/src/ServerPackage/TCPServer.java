@@ -71,53 +71,25 @@ public class TCPServer {
                 PrintWriter output = new PrintWriter(clientSocket.getOutputStream(), true);
 
                 // Thread que trata da identificação de users no TCP Server
-                /*new Thread() {
+                new Thread() {
                     // getListaUsers
                     // Identifica user
                     public void run() {
-                        TCPServer tcpServer = new TCPServer(hostname, rmiPort);
-                        ArrayList<User> user = new ArrayList<>();
-
                         try {
-                            user = tcpServer.tcp.getUsers();
-                        } catch (RemoteException e) {
-                        }
-                        identifyUser(user);
-                    }
+                            while (true) {
+                                Scanner sc = new Scanner(System.in);
 
-                    // Identifica user e desbloqueia terminal de voto (Thread Connection)
-                    public void identifyUser(ArrayList<User> user) {
-                        int failed = 0;
-                        Scanner sc = new Scanner(System.in);
-
-                        System.out.println("Identify yourself by ID: ");
-
-                        String data = sc.nextLine();
-
-                        System.out.println();
-
-                        // Procura ID
-                        boolean unblocks = false;
-                        for (int i = 0; i < user.size(); i++) {
-                            if (user.get(i).getID().compareTo(data) == 0) {
-                                userID = user.get(i).getID();
-                                unblocks = true;
+                                System.out.println("\nIdentify yourself by ID: ");
+                                int data = Integer.parseInt(sc.nextLine());
+                                if (tcp.identifyID(data)) {
+                                    System.out.println("\nVote terminal unblocked");
+                                    Connection newClient = new Connection(clientSocket, data, hostname, rmiPort, tcp);
+                                    newClient.start();
+                                } else { System.out.println("\nID not found"); }
                             }
-                        }
-
-                        // Nao encontrou ID
-                        if (!unblocks) {
-                            System.out.println("ID not found");
-                            identifyUser(user);
-                        }
-                        // Thread Connection que trata da autentificação e do voto do cada cliente
-                        else {
-                            System.out.println("Vote terminal unblocked");
-                            Connection newClient = new Connection(clientSocket, userID, hostname, rmiPort);
-                            newClient.start();
-                        }
+                        } catch (RemoteException e) { }
                     }
-                }.start();*/
+                }.start();
             } catch (IOException e) {
                 System.out.println("Error creating TCP socket");
             }
@@ -135,35 +107,29 @@ class Connection extends Thread {
     private StringTokenizer token;
 
     private TCPServer tcpServer;
-    //private ArrayList<User> user = new ArrayList<>();
-    //private ArrayList<candidateList> candidateList = new ArrayList<>();
-    //private ArrayList<Department> department = new ArrayList<>();
-    //private ArrayList<Election> election = new ArrayList<>();
+
+    private TCPServerInterface tcp;
 
     private String hostname;
-    private String userID;
-    private int rmiPort;
+    private int userID, rmiPort;
 
     // Construtor: Inicializa dados do socket e do RMI
-    public Connection(Socket aClientSocket, String userID, String hostname, int rmiPort) {
+    public Connection(Socket aClientSocket, int userID, String hostname, int rmiPort, TCPServerInterface tcp) {
         this.clientSocket = aClientSocket;
         try {
             this.input = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
             this.output = new PrintWriter(this.clientSocket.getOutputStream(), true);
-            //this.user = tcpServer.tcp.getUsers();
-            //this.candidateList = tcpServer.tcp.getCandidateList();
-            //this.department = tcpServer.tcp.getDepList();
-            //this.election = tcpServer.tcp.getElList();
             this.userID = userID;
             this.hostname = hostname;
             this.rmiPort = rmiPort;
             this.tcpServer = new TCPServer(this.hostname, this.rmiPort);
+            this.tcp = tcp;
         } catch (IOException e) {
         }
     }
 
     // Run: Aceita Cliente
-    public void run() {/*
+    public void run() {
         StringTokenizer tokenizer;
         String data = "", aux = "";
         int idElection = -1, idList = -1;
@@ -171,7 +137,7 @@ class Connection extends Thread {
             output.println("-->Welcome to iVotas<--");
 
             // Recebe user e pass
-            output.println("Insert [username]/[password]");
+            output.println("\nInsert [username]/[password]");
             data = input.readLine();
 
             // Trata dados recebidos
@@ -183,9 +149,9 @@ class Connection extends Thread {
             }
 
             // Autentica user
-            if (authenticateUser(data, aux, userID)) {
-                output.println("Authentication successfull");
-
+            if(tcp.authenticateUser(userID, data, aux)){
+                output.println("\nAuthentication successfull");
+/*
                 // Lista as eleiçoes
                 output.println("Choose election to vote on: ");
                 boolean auxB = false;
@@ -278,7 +244,7 @@ class Connection extends Thread {
                 } else {
                     output.println("No elections to vote on\n\tClosing session...");
                     System.out.println("No elections for user to vote on\n\tClosing client's session...");
-                }
+                }*/
             }
             // Rejeita autenticaçao e fecha thread
             else {
@@ -293,7 +259,7 @@ class Connection extends Thread {
             } catch (IOException e1) {
             }
         } catch (IOException e) {
-        }*/
+        }
     }
 /*
     // Autentica Cliente
