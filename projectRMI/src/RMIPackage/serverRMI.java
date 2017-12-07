@@ -28,441 +28,195 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	// ==================================================================================================================
 	// VotingAdminInterface
 
-	// Regista um novo user no ficheiro
+	// Adiciona User na BD
 	public boolean registerUser(int numberID, String name, String password, String phone, String expDate, int profession) throws RemoteException {
 		if(updateDB("CALL add_user("+numberID+",'"+name+"','"+password+"','"+phone+"','"+expDate+"',"+profession+");"))
 			return true;
 		return false;
 	}
 
+	// Associa Faculdade a User
 	public boolean addUserFac(int numberID, int faculdadeID) throws RemoteException{
 		if(updateDB("CALL add_user_faculdade("+numberID+","+faculdadeID+");"))
 			return true;
 		return false;
 	}
 
-	public boolean deleteUser(int numberID, int profession) throws RemoteException{
-		if(profession==1) {
-			if(updateDB("DELETE FROM estudante WHERE user_numberid = "+numberID+";")){
-				if(updateDB("DELETE FROM user_faculdade WHERE user_numberid = "+numberID+";")){
-					if (updateDB("DELETE FROM user WHERE numberid = " + numberID + ";")) {
-						return true;
-					}
-				}
-			}
-		}
-		else if(profession==2) {
-			if(updateDB("DELETE FROM professor WHERE user_numberid = "+numberID+";")){
-				if(updateDB("DELETE FROM user_faculdade WHERE user_numberid = "+numberID+";")){
-					if (updateDB("DELETE FROM user WHERE numberid = " + numberID + ";")) {
-						return true;
-					}
-				}
-			}
-		}
-		else if(profession==3) {
-			if(updateDB("DELETE FROM funcionario WHERE user_numberid = "+numberID+";")){
-				if(updateDB("DELETE FROM user_faculdade WHERE user_numberid = "+numberID+";")){
-					if (updateDB("DELETE FROM user WHERE numberid = " + numberID + ";")) {
-						return true;
-					}
-				}
-			}
-		}
+	// Associa User a uma lista
+	public boolean addUserLista(int listid, int userid) throws RemoteException{
+		if(updateDB("CALL add_lista_candidata_user("+listid+","+userid+");"))
+			return true;
 		return false;
+
 	}
 
-	public boolean registerFac(String facName) throws RemoteException {
-		ResultSet res;
-
-		try {
-			res = queryDB("SELECT * FROM faculdade WHERE name = '"+facName+"';");
-			// Nao existe faculdade com o mesmo nome
-			if(!res.next())
-				if(updateDB("INSERT INTO faculdade VALUES ((null),'" + facName + "');")) return true;
-		} catch (SQLException e) { e.printStackTrace(); }
-		return false;
-	}
-
-	public boolean registerDep(String depName, int facID) throws RemoteException{
-		ResultSet res;
-
-		try {
-			res = queryDB("SELECT * FROM departamento WHERE name = '" + depName + "';");
-			// Nao existe faculdade com o mesmo nome
-			if(!res.next())
-				if(updateDB("INSERT INTO departamento VALUES ((null),"+facID+",'" + depName + "');")) return true;
-		} catch (SQLException e) { e.printStackTrace(); }
-		return false;
-	}
-
-	public boolean registerUnit(int facID) throws RemoteException {
-		ResultSet res;
-			if(updateDB("INSERT INTO unidade_organica VALUES ("+facID+");")) return true;
-		return false;
-	}
-
-	public boolean editFac(int facID, String facName) throws RemoteException{
-		ResultSet res;
-
-		try {
-			res = queryDB("SELECT * FROM faculdade WHERE facid = '"+facID+"';");
-			// A faculdade existe
-			if(res.next())
-				if(updateDB("UPDATE faculdade SET name = '"+facName+"' WHERE facid = '"+facID+"';")) return true;
-		} catch (SQLException e) { e.printStackTrace(); }
-		return false;
-	}
-
-	public boolean editDep(int depID, String depName) throws RemoteException{
-		ResultSet res;
-
-		try {
-			res = queryDB("SELECT * FROM departamento WHERE depid = '"+depID+"';");
-			// A faculdade existe
-			if(res.next())
-				if(updateDB("UPDATE departamento SET name = '"+depName+"' WHERE depid = '"+depID+"';")) return true;
-		} catch (SQLException e) { e.printStackTrace(); }
-		return false;
-	}
-
-	public boolean deleteFac(int facID) throws RemoteException {
-		ResultSet res;
-
-		try {
-			res = queryDB("SELECT * FROM departamento WHERE faculdade_facid = "+facID+";");
-			while (res.next())
-				deleteDep(Integer.parseInt(res.getString("depid")));
-
-			res = queryDB("SELECT * FROM unidade_organica WHERE faculdade_facid = " + facID + ";");
-			while (res.next())
-				deleteUnit(Integer.parseInt(res.getString("faculdade_facid")));
-
-			if(serverRMI.updateDB("DELETE FROM faculdade WHERE facid = " + facID + ";"))
-				return true;
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	public boolean deleteDep(int depID) throws RemoteException {
-		if(serverRMI.updateDB("DELETE FROM departamento WHERE depid = " + depID + ";")) return true;
-		return false;
-	}
-
-	public boolean deleteUnit(int facID) throws RemoteException {
-		if(serverRMI.updateDB("DELETE FROM unidade_organica WHERE faculdade_facid = " + facID + ";")){
-			if(serverRMI.updateDB("DELETE FROM faculdade WHERE facid = " + facID + ";"))
-				return true;
-		}
-		return false;
-	}
-
-	public boolean addEl(int eleicaoID, String title, String description, int type, int closed, String startDate, String endDate) throws RemoteException{
-		if(updateDB("CALL add_eleicao("+eleicaoID+",'"+title+"','"+description+"',"+type+","+closed+",'"+startDate+"','"+endDate+"');"))
+	// Apaga User e todos os seus dados
+	public boolean deleteUser(int numberID) throws RemoteException{
+		if(updateDB("CALL delete_user("+numberID+");"))
 			return true;
 		return false;
 	}
 
+	// Adiciona Faculdade
+	public boolean registerFac(String facName) throws RemoteException {
+		if(updateDB("CALL add_faculdade('"+facName+"');"))
+			return true;
+		return false;
+	}
+
+	// Adiciona Departamento
+	public boolean registerDep(String depName, int facID) throws RemoteException{
+		if(updateDB("CALL add_departamento('"+depName+"',"+facID+");"))
+			return true;
+		return false;
+	}
+
+	// Adiciona Unidade Orgânica
+	public boolean registerUnit(int facID) throws RemoteException {
+		if(updateDB("CALL add_unit("+facID+");"))
+			return true;
+		return false;
+	}
+
+	// Edita nome de uma Faculdade
+	public boolean editFac(int facID, String facName) throws RemoteException{
+		if(updateDB("CALL edit_faculdade("+facID+",'"+facName+"');"))
+			return true;
+		return false;
+	}
+
+	// Edita nome de um Departamento
+	public boolean editDep(int depID, String depName) throws RemoteException{
+		if(updateDB("CALL edit_departamento("+depID+",'"+depName+"');"))
+			return true;
+		return false;
+	}
+
+	// Elimina Faculdade
+	public boolean deleteFac(int facID) throws RemoteException {
+		if(updateDB("CALL delete_faculdade("+facID+");"))
+			return true;
+		return false;
+	}
+
+	// Elimina Departamento
+	public boolean deleteDep(int depID) throws RemoteException {
+		if(updateDB("CALL delete_departamento("+depID+");"))
+			return true;
+		return false;
+	}
+
+	// Elimina Unidade Organica
+	public boolean deleteUnit(int facID) throws RemoteException {
+		if(updateDB("CALL delete_unit("+facID+");"))
+			return true;
+		return false;
+	}
+
+	// Adiciona Eleicao(Conselho Geral: adiciona uma mesa de voto em cada faculdade, Nucleos: adiciona uma mesa de voto na faculdade em questão)
+	public boolean addEl(int eleicaoID, String title, String description, int type, int closed, String startDate, String endDate,int faculdadeID) throws RemoteException{
+		if(updateDB("CALL add_eleicao("+eleicaoID+",'"+title+"','"+description+"',"+type+","+closed+",'"+startDate+"','"+endDate+"',"+faculdadeID+");"))
+			return true;
+		return false;
+	}
+
+	// Apaga Eleicao por ID
+	public boolean deleteEL(int eleicaoID) throws RemoteException{
+		if(updateDB("CALL delete_eleicao("+eleicaoID+");"))
+			return true;
+		return false;
+	}
+
+	// Edita titulo e descricao de uma Eleicao por ID
+	public boolean editELText(int eleicaoID, String title, String description) throws RemoteException{
+		if(updateDB("CALL edit_eleicao_text("+eleicaoID+",'"+title+"','"+description+"');"))
+			return true;
+		return false;
+	}
+
+	// Edita datas de uma Eleicao por ID
+	public boolean editElDate(int eleicaoID, String startdate, String enddate) throws RemoteException{
+		if(updateDB("CALL edit_eleicao_date("+eleicaoID+",'"+startdate+"','"+enddate+"');"))
+			return true;
+		return false;
+	}
+
+	// Adiciona uma Lista Candidata a uma determinada eleicao
 	public boolean addLista(String name, int type, int numvotes, int eleicaoID) throws RemoteException{
 		if(updateDB("CALL add_lista_candidata('"+name+"',"+type+","+numvotes+","+eleicaoID+");"))
 			return true;
 		return false;
 	}
 
+	// Elimina uma Lista Candidata por ID
+	public boolean deleteLista(int listid) throws RemoteException{
+		if(updateDB("CALL delete_lista_candidata("+listid+");"))
+			return true;
+		return false;
+	}
+
+	// Adiciona Mesa de Voto
+	public boolean addBooth(int facid, int electionid) throws RemoteException{
+		if(updateDB("CALL add_mesa_de_voto("+facid+","+electionid+");"))
+			return true;
+		return false;
+	}
+
+	// Apaga Mesa de Voto
+	public boolean deleteBooth(int facid, int electionid) throws RemoteException{
+		if(updateDB("CALL delete_mesa_de_voto("+facid+","+electionid+");"))
+			return true;
+		return false;
+	}
+
+	// Retorna tipo de Eleicao por ID
+	public int getElectionType(int id) throws RemoteException{
+		try {
+			ResultSet rs = queryDB("SELECT type FROM eleicao WHERE electionid = "+id+";");
+			if(rs.next())
+				return Integer.parseInt(rs.getString("type"));
+		} catch (SQLException e) { }
+		return 0;
+	}
+
+	// Retorna tipo de Lista por ID
+	public int getListType(int id) throws RemoteException{
+		try {
+			ResultSet rs = queryDB("SELECT type FROM lista_candidata WHERE electionid = "+id+";");
+			if(rs.next())
+				return Integer.parseInt(rs.getString("type"));
+		} catch (SQLException e) { }
+		return 0;
+	}
+
+	// Retorna tipo de User por ID
+	public int getUserType(int id) throws RemoteException{
+		ResultSet rs;
+		try {
+			rs = queryDB("SELECT * FROM estudante WHERE user_numberid = "+id+";");
+			if(rs.next())
+				return 1;
+			rs = queryDB("SELECT * FROM professor WHERE user_numberid = "+id+";");
+			if(rs.next())
+				return 2;
+			rs = queryDB("SELECT * FROM funcionario WHERE user_numberid = "+id+";");
+			if(rs.next())
+				return 3;
+		} catch (SQLException e) { }
+		return 0;
+	}
+
+	// Retorna ID da lista por nome
+	public int getListID(String name, int electionID) throws RemoteException{
+		try {
+			ResultSet rs = queryDB("SELECT listid FROM lista_candidata WHERE name = '"+name+"' AND eleicao_electionid = "+electionID+";");
+			if(rs.next())
+				return Integer.parseInt(rs.getString("listid"));
+		} catch (SQLException e) { }
+		return 0;
+	}
 
 	/*
-
-	// Procura candidatos por ID
-	public ArrayList<candidateList> getList(int type) {
-		ArrayList<candidateList> chosenLists = new ArrayList<candidateList>();
-		if (type == 1) {
-			for (int i = 0; i < listOfCandidateLists.getCandidateList().size(); i++) {
-				if (listOfCandidateLists.getCandidateList().get(i).getType() == type) {
-					chosenLists.add(listOfCandidateLists.getCandidateList().get(i));
-				}
-			}
-		} else {
-			for (int i = 0; i < listOfCandidateLists.getCandidateList().size(); i++) {
-				chosenLists.add(listOfCandidateLists.getCandidateList().get(i));
-			}
-		}
-		return chosenLists;
-	}
-
-	//Create a new election
-	public boolean newElection(Election el) throws RemoteException {
-		FicheiroDeObjectos fo = new FicheiroDeObjectos();
-		boolean exists = false;
-
-		// Verifica  se titulo da eleicao ja existe
-		for (int i = 0; i < elList.getElections().size(); i++) {
-			if (el.getTitle().equals(elList.getElections().get(i).getTitle())) {
-				exists = true;
-			}
-		}
-
-		if (exists) {
-			System.out.println("Election title already exists...");
-			return false;
-		}
-
-		elList.addELection(el);
-
-		//Update ficheiro
-		try {
-			fo.abreEscrita("out/elections.dat");
-			fo.escreveObjecto(elList);
-			fo.fechaEscrita();
-		} catch (Exception e) {
-		}
-
-		System.out.println("Election created");
-		return true;
-
-	}
-
-	//Procura id do tipo de pessoa definida
-	public User findId(String s, int type) throws RemoteException {
-
-		User sendUser = null;
-
-		for (int i = 0; i < users.getUsers().size(); i++) {
-			if (users.getUsers().get(i).getID().equals(s)) {
-				if (users.getUsers().get(i).getProfession() == type) {
-					sendUser = new User(users.getUsers().get(i).getName(), users.getUsers().get(i).getID(), users.getUsers().get(i).getExpDate(), users.getUsers().get(i).getPhone(), users.getUsers().get(i).getProfession(), users.getUsers().get(i).getDepartment(), users.getUsers().get(i).getPassword());
-				} else {
-					sendUser = new User();
-				}
-			}
-		}
-
-		return sendUser;
-	}
-
-	//
-	public boolean createList(candidateList cl) throws RemoteException {
-
-		FicheiroDeObjectos fo = new FicheiroDeObjectos();
-		boolean exists = false;
-
-		// Verifica se ID da lista de candidatos ja existe
-		for (int i = 0; i < listOfCandidateLists.getCandidateList().size(); i++) {
-			if (listOfCandidateLists.getCandidateList().get(i).getID() == cl.getID()) {
-				exists = true;
-			}
-		}
-
-		if (exists) {
-			System.out.println("List ID already exists...");
-			return false;
-		}
-
-		listOfCandidateLists.addCandidateList(cl);
-		;
-
-		//Update ficheiro
-		try {
-			fo.abreEscrita("out/lists.dat");
-			fo.escreveObjecto(listOfCandidateLists);
-			fo.fechaEscrita();
-		} catch (Exception e) {
-		}
-
-		System.out.println("Candidate List created");
-		return true;
-
-	}
-
-	//
-	public boolean deleteList(String id) throws java.rmi.RemoteException {
-
-		FicheiroDeObjectos fo = new FicheiroDeObjectos();
-		boolean exists = false;
-
-		for (int i = 0; i < listOfCandidateLists.getCandidateList().size(); i++) {
-			if (listOfCandidateLists.getCandidateList().get(i).getID().equals(id)) {
-				listOfCandidateLists.getCandidateList().remove(i);
-				exists = true;
-				//Update file
-				try {
-					fo.abreEscrita("out/lists.dat");
-					fo.escreveObjecto(listOfCandidateLists);
-					fo.fechaEscrita();
-				} catch (Exception e) {
-				}
-
-			}
-		}
-		return exists;
-	}
-
-	//
-	public boolean editList(String id, String title) throws RemoteException {
-
-		FicheiroDeObjectos fo = new FicheiroDeObjectos();
-		boolean done = false;
-
-		for (int i = 0; i < listOfCandidateLists.getCandidateList().size(); i++) {
-			if (listOfCandidateLists.getCandidateList().get(i).getID().equals(id)) {
-				listOfCandidateLists.getCandidateList().get(i).setName(title);
-				done = true;
-				//Update file
-				try {
-					fo.abreEscrita("out/lists.dat");
-					fo.escreveObjecto(listOfCandidateLists);
-					fo.fechaEscrita();
-				} catch (Exception e) {
-				}
-			}
-		}
-
-		return done;
-	}
-
-	//
-	public boolean addBooth(String elTitle, ArrayList<String> depId) throws RemoteException {
-
-		FicheiroDeObjectos fo = new FicheiroDeObjectos();
-		boolean done = false;
-		Department addThisOne = null;
-
-		//Check if department is already added
-		for (int i = 0; i < elList.getElections().size(); i++) {
-			if (elList.getElections().get(i).getTitle().equals(elTitle)) {
-				if(!(elList.getElections().get(i).getViableDeps() ==null)) {
-					for (int j = 0; j < elList.getElections().get(i).getViableDeps().size(); j++) {
-						for (int k = 0; k < depId.size(); k++) {
-							if (elList.getElections().get(i).getViableDeps().get(j).getID().equals(depId.get(k))) {
-								return false;
-							}
-						}
-					}
-				}
-			}
-		}
-
-
-		for (int i = 0; i < elList.getElections().size(); i++) {
-			if (elList.getElections().get(i).getTitle().equals(elTitle)) {
-				for (int j = 0; j < departments.getDeps().size(); j++) {
-					for (int k = 0; k < depId.size(); k++) {
-						if (departments.getDeps().get(j).getID().equals(depId.get(k))) {
-							System.out.println("Adding table");
-							addThisOne = departments.getDeps().get(j);
-							elList.getElections().get(i).addDep(addThisOne);
-							depsWithBooth.getDeps().add(addThisOne);
-							done = true;
-						}
-					}
-
-				}
-			}
-		}
-		//Update ficheiro
-		try {
-			fo.abreEscrita("out/elections.dat");
-			fo.escreveObjecto(elList);
-			fo.fechaEscrita();
-		} catch (Exception e){
-			e.printStackTrace();
-		}
-
-		try {
-			fo.abreEscrita("out/booths.dat");
-			fo.escreveObjecto(depsWithBooth);
-			fo.fechaEscrita();
-		} catch (Exception e){
-			e.printStackTrace();
-		}
-		return done;
-	}
-
-	//
-	public boolean removeBooth(String elTitle, ArrayList<String> depId) throws RemoteException {
-
-		FicheiroDeObjectos fo = new FicheiroDeObjectos();
-		boolean done = false;
-
-		for (int i = 0; i < elList.getElections().size(); i++) {
-			if (elList.getElections().get(i).getTitle().equals(elTitle)) {
-				for (int j = 0; j < elList.getElections().get(i).getViableDeps().size(); j++) {
-					for (int k=0;k<depId.size();k++){
-						if (elList.getElections().get(i).getViableDeps().get(j).getID().equals(depId.get(k))){
-							for(int l=0;l<depsWithBooth.getDeps().size();l++){
-								System.out.println("Removing table");
-								if(depsWithBooth.getDeps().get(l).getID().equals(depId.get(k))){
-									depsWithBooth.getDeps().remove(l);
-									done = true;
-								}
-							}
-							elList.getElections().get(i).getViableDeps().remove(j);
-						}
-					}
-				}
-			}
-		}
-		//Update ficheiro
-		try {
-			fo.abreEscrita("out/elections.dat");
-			fo.escreveObjecto(elList);
-			fo.fechaEscrita();
-		} catch (Exception e){
-			e.printStackTrace();
-		}
-
-		try {
-			fo.abreEscrita("out/booths.dat");
-			fo.escreveObjecto(depsWithBooth);
-			fo.fechaEscrita();
-		} catch (Exception e){
-			e.printStackTrace();
-		}
-		return done;
-	}
-
-	//
-	public boolean editElec(Election el,String oldElecName) throws RemoteException {
-
-		FicheiroDeObjectos fo = new FicheiroDeObjectos();
-
-		boolean done = false;
-
-		for (int i = 0; i < elList.getElections().size(); i++) {
-			if (elList.getElections().get(i).getTitle().equals(oldElecName)) {
-				elList.getElections().set(i, el);
-				//Update ficheiro
-				try {
-					fo.abreEscrita("out/elections.dat");
-					fo.escreveObjecto(elList);
-					fo.fechaEscrita();
-				} catch (Exception e) {
-				}
-				System.out.println("Election edited");
-				done = true;
-			}
-		}
-
-		System.out.println("Couldn't find election title");
-		return done;
-	}
-
-	//
-	public User getUser(String userID) throws java.rmi.RemoteException{
-
-		User toSend = null;
-
-		for(int i=0;i<users.getUsers().size();i++){
-			if(users.getUsers().get(i).getID().equals(userID)){
-				toSend = users.getUsers().get(i);
-			}
-		}
-
-		return toSend;
-	}
-	//
 	public ArrayList <Election> checkElecDate() throws java.rmi.RemoteException {
 
 		FicheiroDeObjectos fo = new FicheiroDeObjectos();
@@ -500,86 +254,50 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return closedElections.getElections();
 
 	}
-
-	public ArrayList <Department> checkTables() throws java.rmi.RemoteException{
-		return depsWithBooth.getDeps();
-	}
+	*/
 
 	// ==================================================================================================================
 	// TCPServerInterface
 
-	// Devolve lista de users
-	public ArrayList<User> getUsers() throws RemoteException {
-		return users.getUsers();
-	}
-
-	// Devolve lista de candidatos
-	public ArrayList<candidateList> getCandidateList() throws RemoteException {
-		return listOfCandidateLists.getCandidateList();
-	}
-
-	// Devolve lista de departamentos
-	public ArrayList<Department> getDepList() throws RemoteException {
-		return departments.getDeps();
-	}
-
-	//
-	public ArrayList<Election> getElList() throws RemoteException {
-		return elList.getElections();
-	}
-
-	//
-	public Election getElection(String title) throws RemoteException {
-
-		Election toSend = null;
-
-		for (int i = 0; i < elList.getElections().size(); i++) {
-			if (elList.getElections().get(i).getTitle().equals(title)) {
-				toSend = elList.getElections().get(i);
-			}
-		}
-
-		return toSend;
-	}
-
-	//
-	public void voteElection(User u, Election e, candidateList cl) throws RemoteException {
-		FicheiroDeObjectos fo = new FicheiroDeObjectos();
-
-		for (int i = 0; i < users.getUsers().size(); i++) {
-			for(int j = 0;j<elList.getElections().size();j++){
-				if(elList.getElections().get(j).getTitle().equals(e.getTitle())){
-					if (users.getUsers().get(i).getID().equals(u.getID())) {
-						users.getUsers().get(i).setVotes(elList.getElections().get(j), cl);
-						elList.getElections().get(j).incrementVotes();
-
-						System.out.println(users.getUsers().get(i).getVotes());
-					}
-				}
-			}
-
-
-		}
-		// Update ficheiro
-		try {
-			fo.abreEscrita("out/users.dat");
-			fo.escreveObjecto(users);
-			fo.fechaEscrita();
-		} catch (Exception ei) {
-		}
-	}
-
-	//
-	public boolean hasVoted(User u, Election e) throws RemoteException {
-		for (int i = 0; i < users.getUsers().size(); i++) {
-			if (users.getUsers().get(i).getID().equals(u.getID())) {
-				if (users.getUsers().get(i).hasVoted(e))
-					return true;
-			}
-		}
+	// Regista Voto
+	public boolean voteElection(int userID, int electionID, int listID) throws RemoteException {
+		if(updateDB("CALL vote("+userID+","+electionID+","+listID+");"))
+			return true;
 		return false;
 	}
-	*/
+
+	// Verifica se user já votou em eleição
+	public boolean hasVoted(int userID, int electionID) throws RemoteException {
+		try {
+			ResultSet rs = queryDB("SELECT * FROM eleicao_user WHERE eleicao_electionid = "+electionID+" AND user_numberid = "+userID+";");
+			if(rs.next())
+                return true;
+		} catch (SQLException e) { }
+		return false;
+	}
+
+	// Identifica utilizador por ID
+	public boolean identifyID(int userID) throws  RemoteException {
+		try {
+			ResultSet rs = queryDB("SELECT * FROM user WHERE numberid = "+userID+";");
+			if(rs.next())
+				return true;
+		} catch (SQLException e) { }
+		return false;
+	}
+
+	// Log in User
+	public boolean authenticateUser(int id, String name, String password) throws RemoteException{
+		try{
+			ResultSet rs = queryDB("SELECT password FROM user WHERE name = '"+name+"' AND numberid = "+id+";");
+			if(rs.next()){
+				if(rs.getString("password").equals(password))
+					return true;
+			}
+		}catch (SQLException e){ }
+		return false;
+	}
+
 	// ==================================================================================================================
 	// Main
 	public static void main(String args[]) {
@@ -768,29 +486,3 @@ class RMIFailover extends Thread {
 		} finally { if (this.aSocket != null) this.aSocket.close(); }
 	}
 }
-
-
-
-
-/*
-
-
-ResultSet res = serverRMI.queryDB("select * from user;");
-				ResultSetMetaData rsmd = res.getMetaData();
-
-				int columnsNumber = rsmd.getColumnCount();
-
-				for (int i = 1; i <= columnsNumber; i++) {
-					System.out.print(rsmd.getColumnName(i));
-					if (i < columnsNumber) System.out.print(",\t");
-				}
-				System.out.println("");
-				while (res.next()) {
-					for (int i = 1; i <= columnsNumber; i++) {
-						if (i > 1) System.out.print(",\t");
-						String columnValue = res.getString(i);
-						System.out.print(columnValue);
-					}
-					System.out.println("");
-				}
- */

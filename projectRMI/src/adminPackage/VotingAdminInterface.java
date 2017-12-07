@@ -14,8 +14,9 @@ public interface VotingAdminInterface extends Remote {
 	 */
 	boolean registerUser(int numberID, String name, String password, String phone, String date, int profession) throws RemoteException;
 	boolean addUserFac(int numberID, int faculdadeID) throws RemoteException;
+	boolean addUserLista(int listid, int userid) throws RemoteException;
 
-	public boolean deleteUser(int numberID, int profession) throws RemoteException;
+	public boolean deleteUser(int numberID) throws RemoteException;
 
 	/**
 	 * Regista um novo departamento
@@ -49,9 +50,21 @@ public interface VotingAdminInterface extends Remote {
 	public boolean deleteDep(int depID) throws RemoteException;
 	public boolean deleteUnit(int facID) throws RemoteException;
 
-	boolean addEl(int eleicaoID, String title, String description, int type, int closed, String startDate, String endDate) throws RemoteException;
-	boolean addLista(String name, int type, int numvotes, int eleicaoID) throws RemoteException;
+	boolean addEl(int eleicaoID, String title, String description, int type, int closed, String startDate, String endDate, int faculdadeID) throws RemoteException;
+	boolean deleteEL(int eleicaoID) throws RemoteException;
+	boolean editELText(int eleicaoID, String title, String description) throws RemoteException;
+	boolean editElDate(int eleicaoID, String startdate, String enddate) throws RemoteException;
 
+	boolean addLista(String name, int type, int numvotes, int eleicaoID) throws RemoteException;
+	boolean deleteLista(int listid) throws RemoteException;
+
+	boolean addBooth(int facid, int electionid) throws RemoteException;
+	boolean deleteBooth(int facid, int electionid) throws RemoteException;
+
+	int getElectionType(int id) throws RemoteException;
+	int getListType(int id) throws RemoteException;
+	int getListID(String name, int electionID) throws RemoteException;
+	int getUserType(int id) throws RemoteException;
 	/**
 	 * Retorna todas as listas de um tipo
 	 * @param type Tipo de lista

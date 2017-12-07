@@ -53,121 +53,102 @@ public class Admin {
             boothCheck boothThread = new boothCheck(vote);
             boothThread.start();
 
+            int electionID, type, ID, profession, faculdadeID, facID, depID;
+            String title, description, startDate, endDate, facName, depName, name, myDate, phone, password;
 
             //Menu
             while(true) {
                 try {
                     System.out.println("Consola ADMIN. O que quer fazer\n1-User\n"
-                            + "2-Faculdade e Departamentos\n3-Criar Eleicao\n4-Listas de candidatos"
+                            + "2-Faculdade e Departamentos\n3-Eleicoes\n4-Listas de candidatos"
                             + "\n5-Mesas de Voto\n6-Historia de voto de user\n7-Estado Mesa de Voto");
                     choice = input.nextLine();
 
                     switch (choice) {
-                    	//Registo de um user
+                        // USER
                         case "1":
-
                             System.out.println("1-Registar User\n2-Apagar User");
                             choice2 = input.nextLine();
-
-                            String name, myDate, phone, password;
-                            int ID, profession, faculdadeID;
-
                             switch (choice2) {
+                                // REGISTAR
                                 case "1":
-                                    System.out.print("Novo user\n");
+                                    System.out.print("\nNovo user");
 
-                                    // Nome
-                                    System.out.print("Nome: ");
+                                    System.out.print("\nNome: ");
                                     name = input.nextLine();
 
-                                    // No. ID
                                     System.out.print("\nID: ");
                                     ID = Integer.parseInt(input.nextLine());
 
-                                    // Data expiração ID
                                     System.out.print("\nData de validade(yyyy-MM-dd hh:mm:ss):");
                                     myDate = input.nextLine();
 
-                                    // No. Telefone
                                     System.out.print("\nTelemovel: ");
                                     phone = input.nextLine();
 
-                                    // Password
                                     System.out.print("\nPassword: ");
                                     password = input.nextLine();
 
-                                    // Profissão
                                     System.out.print("\nTipo de User (1-Estudante, 2-Professor, 3- Funcionario): ");
                                     profession = Integer.parseInt(input.nextLine());
 
-                                    //Pedido ao RMI
                                     if (vote.registerUser(ID, name, password, phone, myDate, profession) && (profession == 1 || profession == 2 || profession == 3))
-                                        System.out.println("Registo efetuado!");
+                                        System.out.println("\nRegisto efetuado!");
                                     else
-                                        System.err.println("Registo falhado");
+                                        System.err.println("\nRegisto falhado");
 
-                                    // Faculdade
                                     System.out.println("\nInsira faculdades a associar (0 para parar): ");
                                     faculdadeID = Integer.parseInt(input.nextLine());
                                     while (faculdadeID != 0) {
-                                        if(vote.addUserFac(ID,faculdadeID))
-                                            System.out.println("Faculdade Inserida");
+                                        if (vote.addUserFac(ID, faculdadeID))
+                                            System.out.println("\nFaculdade Inserida");
                                         else
-                                            System.out.println("Faculdade não existe");
+                                            System.out.println("\nFaculdade não existe");
                                         faculdadeID = Integer.parseInt(input.nextLine());
                                     }
-
-
                                     Thread.sleep(500);
                                     break;
+                                // APAGAR
                                 case "2":
-                                    System.out.println("Apagar User");
-
-                                    // Profissão
-                                    System.out.print("\nTipo de User (1-Estudante, 2-Professor, 3- Funcionario): ");
-                                    profession = Integer.parseInt(input.nextLine());
+                                    System.out.println("\nApagar User");
 
                                     // No. ID
                                     System.out.print("\nID: ");
                                     ID = Integer.parseInt(input.nextLine());
 
-                                    if (vote.deleteUser(ID,profession))
-                                        System.out.println("Eliminacao efetuada!");
+                                    if (vote.deleteUser(ID))
+                                        System.out.println("\nEliminacao efetuada!");
                                     else
-                                        System.err.println("Eliminacao falhada");
+                                        System.err.println("\nEliminacao falhada");
                                     Thread.sleep(500);
                                     break;
                                 default:
-                                    System.out.println("Opcao Invalida");
+                                    System.out.println("\nOpcao Invalida");
                                     break;
                             }
-
                             Thread.sleep(500);
                             break;
-                        // Registo de uma nova faculdade
+                        // FACULDADE & DEPARTAMENTOS
                         case "2":
 
-                            System.out.println("1-Adicionar Faculdade\n2-Adicionar Departamento\n3-Adicionar Unidade Organica\n4-Editar Faculdade\n5-Editar Departamento\n6-Apagar Faculdade\n7-Apagar Departamento\n8-Apgar Unidade Organica");
+                            System.out.println("\n1-Adicionar Faculdade\n2-Adicionar Departamento\n3-Adicionar Unidade Organica\n4-Editar Faculdade\n5-Editar Departamento\n6-Apagar Faculdade\n7-Apagar Departamento\n8-Apgar Unidade Organica");
                             choice2 = input.nextLine();
-
-                            String facName, depName;
-                            int facID,depID;
 
                             switch (choice2) {
                                 case "1":
-                                    System.out.println("Nova Faculdade");
+                                    System.out.println("\nNova Faculdade");
 
                                     System.out.println("\nNome: ");
                                     facName = input.nextLine();
 
-                                    if(vote.registerFac(facName))
-                                        System.out.println("Registo efetuado!");
+                                    if (vote.registerFac(facName))
+                                        System.out.println("\nRegisto efetuado!");
                                     else
-                                        System.err.println("Registo falhado");
+                                        System.err.println("\nRegisto falhado");
                                     Thread.sleep(500);
                                     break;
                                 case "2":
-                                    System.out.println("Novo Departamento (Necessita de uma faculdade já criada)");
+                                    System.out.println("\nNovo Departamento (Necessita de uma faculdade já criada)");
 
                                     System.out.println("\nNome: ");
                                     depName = input.nextLine();
@@ -175,285 +156,292 @@ public class Admin {
                                     System.out.println("\nID da faculdade a associar: ");
                                     facID = Integer.parseInt(input.nextLine());
 
-                                    if(vote.registerDep(depName,facID))
-                                        System.out.println("Registo efetuado!");
+                                    if (vote.registerDep(depName, facID))
+                                        System.out.println("\nRegisto efetuado!");
                                     else
-                                        System.err.println("Registo falhado");
+                                        System.err.println("\nRegisto falhado");
                                     Thread.sleep(500);
                                     break;
                                 case "3":
-                                    System.out.println("Nova Unidade Organica (Necessita de uma faculdade já criada)");
+                                    System.out.println("\nNova Unidade Organica (Necessita de uma faculdade já criada)");
 
                                     System.out.println("\nID da faculdade a associar: ");
                                     facID = Integer.parseInt(input.nextLine());
 
-                                    if(vote.registerUnit(facID))
-                                        System.out.println("Registo efetuado!");
+                                    if (vote.registerUnit(facID))
+                                        System.out.println("\nRegisto efetuado!");
                                     else
-                                        System.err.println("Registo falhado");
+                                        System.err.println("\nRegisto falhado");
                                     Thread.sleep(500);
                                     break;
                                 case "4":
-                                    System.out.println("Editar Faculdade");
+                                    System.out.println("\nEditar Faculdade");
 
-                                    System.out.println("ID da faculdade: ");
+                                    System.out.println("\nID da faculdade: ");
                                     facID = Integer.parseInt(input.nextLine());
 
-                                    System.out.println("Novo nome:");
+                                    System.out.println("\nNovo nome:");
                                     facName = input.nextLine();
 
-                                    if(vote.editFac(facID,facName))
-                                        System.out.println("Edicao efetuada!");
+                                    if (vote.editFac(facID, facName))
+                                        System.out.println("\nEdicao efetuada!");
                                     else
-                                        System.err.println("Edicao falhada");
+                                        System.err.println("\nEdicao falhada");
                                     Thread.sleep(500);
                                     break;
                                 case "5":
-                                    System.out.println("Editar Departamento");
+                                    System.out.println("\nEditar Departamento");
 
-                                    System.out.println("ID do departamento:");
+                                    System.out.println("\nID do departamento:");
                                     depID = Integer.parseInt(input.nextLine());
 
-                                    System.out.println("Novo nome:");
+                                    System.out.println("\nNovo nome:");
                                     depName = input.nextLine();
 
-                                    if(vote.editDep(depID,depName))
-                                        System.out.println("Edicao efetuada!");
+                                    if (vote.editDep(depID, depName))
+                                        System.out.println("\nEdicao efetuada!");
                                     else
-                                        System.err.println("Edicao falhada");
+                                        System.err.println("\nEdicao falhada");
                                     Thread.sleep(500);
                                     break;
                                 case "6":
-                                    System.out.println("Apagar Faculdade (Ira remover todos os departamentos associados)");
+                                    System.out.println("\nApagar Faculdade");
 
-                                    System.out.println("ID da Faculdade: ");
+                                    System.out.println("\nID da Faculdade: ");
                                     facID = Integer.parseInt(input.nextLine());
 
-                                    if(vote.deleteFac(facID))
-                                        System.out.println("Eliminicao efetuada!");
+                                    if (vote.deleteFac(facID))
+                                        System.out.println("\nEliminicao efetuada!");
                                     else
-                                        System.err.println("Eliminicao falhada");
+                                        System.err.println("\nEliminicao falhada");
                                     Thread.sleep(500);
                                     break;
                                 case "7":
-                                    System.out.println("Apagar Departamento");
+                                    System.out.println("\nApagar Departamento");
 
-                                    System.out.println("ID do Departamento: ");
+                                    System.out.println("\nID do Departamento: ");
                                     depID = Integer.parseInt(input.nextLine());
 
-                                    if(vote.deleteDep(depID))
-                                        System.out.println("Eliminicao efetuada!");
+                                    if (vote.deleteDep(depID))
+                                        System.out.println("\nEliminicao efetuada!");
                                     else
-                                        System.err.println("Eliminicao falhada");
+                                        System.err.println("\nEliminicao falhada");
                                     Thread.sleep(500);
                                     break;
                                 case "8":
-                                    System.out.println("Apagar Unidade Organica");
+                                    System.out.println("\nApagar Unidade Organica");
 
-                                    System.out.println("ID da Faculdade: ");
+                                    System.out.println("\nID da Faculdade: ");
                                     facID = Integer.parseInt(input.nextLine());
 
-                                    if(vote.deleteUnit(facID))
-                                        System.out.println("Eliminicao efetuada!");
+                                    if (vote.deleteUnit(facID))
+                                        System.out.println("\nEliminicao efetuada!");
                                     else
-                                        System.err.println("Eliminicao falhada");
+                                        System.err.println("\nEliminicao falhada");
                                     Thread.sleep(500);
                                     break;
 
                                 default:
-                                    System.out.println("Opcao Invalida");
+                                    System.out.println("\nOpcao Invalida");
+                                    Thread.sleep(500);
                                     break;
                             }
                             break;
 
                         // ELEICAO
                         case "3":
+                            System.out.println("\n1-Criar eleicao\n2-Editar texto eleicoes\n3-Editar texto eleicoes\n4-Apagar eleicao");
 
-                            int electionID,type;
-                            String title;
-                            String description;
-                            String startDate;
-                            String endDate;
+                            choice2 = input.nextLine();
 
-                            System.out.println("\nNova eleicao");
+                            switch (choice2) {
+                                case "1":
+                                    System.out.println("\nID: ");
+                                    electionID = Integer.parseInt(input.nextLine());
 
-                            System.out.println("\nID: ");
-                            electionID = Integer.parseInt(input.nextLine());
+                                    System.out.println("\nNome: ");
+                                    title = input.nextLine();
 
-                            System.out.println("\nNome: ");
-                            title = input.nextLine();
+                                    System.out.println("\nDescricao: ");
+                                    description = input.nextLine();
 
-                            System.out.println("\nDescricao: ");
-                            description = input.nextLine();
+                                    System.out.print("\nData de inicio(yyyy-MM-dd hh:mm:ss):");
+                                    startDate = input.nextLine();
 
-                            System.out.print("\nData de inicio(yyyy-MM-dd hh:mm:ss):");
-                            startDate = input.nextLine();
+                                    System.out.print("\nData de termino(yyyy-MM-dd hh:mm:ss):");
+                                    endDate = input.nextLine();
 
-                            System.out.print("\nData de termino(yyyy-MM-dd hh:mm:ss):");
-                            endDate = input.nextLine();
+                                    System.out.print("\nTipo de Eleicao (1-Conselho geral, 2-Nucleos): ");
+                                    type = Integer.parseInt(input.nextLine());
+                                    if (type == 1) {
+                                        if (vote.addEl(electionID, title, description, type, 0, startDate, endDate, 0))
+                                            System.out.println("\nCriacao efetuada!");
+                                        else
+                                            System.err.println("\nCriacao falhada");
+                                    } else if (type == 2) {
+                                        System.out.println("\nFaculdade onde decorre: ");
+                                        facID = Integer.parseInt(input.nextLine());
+                                        if (vote.addEl(electionID, title, description, type, 0, startDate, endDate, facID))
+                                            System.out.println("\nCriacao efetuada!");
+                                        else
+                                            System.err.println("\nCriacao falhada");
+                                    }
+                                    Thread.sleep(500);
+                                    break;
+                                case "2":
+                                    System.out.println("\nID: ");
+                                    electionID = Integer.parseInt(input.nextLine());
 
-                            System.out.print("\nTipo de Eleicao (1-Conselho geral, 2-Nucleos): ");
-                            type = Integer.parseInt(input.nextLine());
+                                    System.out.println("\nNome: ");
+                                    title = input.nextLine();
 
-                            if(vote.addEl(electionID,title,description,type,0,startDate,endDate))
-                                System.out.println("Criacao efetuada!");
-                            else
-                                System.err.println("Criacao falhada");
+                                    System.out.println("\nDescricao: ");
+                                    description = input.nextLine();
+
+                                    if (vote.editELText(electionID,title,description))
+                                        System.out.println("\nEdicao efetuada!");
+                                    else
+                                        System.err.println("\nEdicao falhada");
+                                    Thread.sleep(500);
+                                    break;
+                                case "3":
+                                    System.out.println("\nID: ");
+                                    electionID = Integer.parseInt(input.nextLine());
+
+                                    System.out.print("\nData de inicio(yyyy-MM-dd hh:mm:ss):");
+                                    startDate = input.nextLine();
+
+                                    System.out.print("\nData de termino(yyyy-MM-dd hh:mm:ss):");
+                                    endDate = input.nextLine();
+
+                                    if (vote.editElDate(electionID,startDate,endDate))
+                                        System.out.println("\nEdicao efetuada!");
+                                    else
+                                        System.err.println("\nEdicao falhada");
+                                    Thread.sleep(500);
+                                    break;
+                                case "4":
+                                    System.out.println("\nID: ");
+                                    electionID = Integer.parseInt(input.nextLine());
+
+                                    if (vote.deleteEL(electionID))
+                                        System.out.println("\nEliminacao efetuada!");
+                                    else
+                                        System.err.println("\nEliminacao falhada");
+                                    Thread.sleep(500);
+                                    break;
+                                default:
+                                    System.out.println("\nOpcao Invalida");
+                                    Thread.sleep(500);
+                                    break;
+                            }
+                            Thread.sleep(500);
+                            break;
+                        // LISTAS CANDIDATOS
+                        case "4":
+                            System.out.println("\n1-Criar lista\n2-Editar lista\n3-Apagar lista");
+                            choice2 = input.nextLine();
+
+                            switch (choice2) {
+                                case "1":
+                                    System.out.println("\nCriar lista");
+
+                                    System.out.println("\nNome: ");
+                                    title = input.nextLine();
+
+                                    System.out.println("\nTipo (1-Conselho geral, 2-Nucleos): ");
+                                    type = Integer.parseInt(input.nextLine());
+
+                                    System.out.println("\nID eleicao a associar: ");
+                                    electionID = Integer.parseInt(input.nextLine());
+
+                                    System.out.println(vote.getElectionType(electionID));
+
+                                    if (vote.getElectionType(electionID) == type) {
+                                        if (vote.addLista(title, type, 0, electionID))
+                                            System.out.println("\nCriacao efetuada!");
+                                        else
+                                            System.err.println("\nCriacao falhada");
+                                    } else {
+                                        System.err.println("\nTipo de eleicao e lista nao coincidem");
+                                    }
+
+                                    System.out.println("\nInsira users a associar à lista (0 para parar): ");
+                                    ID = Integer.parseInt(input.nextLine());
+                                    while (ID != 0) {
+                                        if (type != 2) {
+                                            if (vote.addUserLista(vote.getListID(title, electionID), ID))
+                                                System.out.println("\nUser Inserido");
+                                            else
+                                                System.out.println("\nUser não existe");
+                                        } else if (type == 2) {
+                                            if (vote.getUserType(ID) == 1) {
+                                                if (vote.addUserLista(vote.getListID(title, electionID), ID))
+                                                    System.out.println("\nUser Inserido");
+                                                else
+                                                    System.out.println("\nUser não existe");
+                                            } else {
+                                                System.out.println("\nUser não é estudante");
+                                            }
+                                        }
+                                        ID = Integer.parseInt(input.nextLine());
+                                    }
+                                    Thread.sleep(500);
+                                    break;
+
+                                default:
+                                    System.out.println("\nOpcao Invalida");
+                                    Thread.sleep(500);
+                                    break;
+                            }
+                            break;
+                        // MESAS DE VOTO
+                        case "5":
+                            System.out.println("\n1-Criar mesa\n2-Apagar mesa");
+                            choice2 = input.nextLine();
+
+                            switch (choice2) {
+                                case "1":
+                                    System.out.println("\nFaculdade: ");
+                                    facID = Integer.parseInt(input.nextLine());
+
+                                    System.out.println("\nEleicao: ");
+                                    electionID = Integer.parseInt(input.nextLine());
+
+                                    if(vote.addBooth(facID,electionID))
+                                        System.out.println("\nUser Inserido");
+                                    else
+                                        System.out.println("\nUser não existe");
+
+                                    Thread.sleep(500);
+                                    break;
+                                case "2":
+                                    System.out.println("\nFaculdade: ");
+                                    facID = Integer.parseInt(input.nextLine());
+
+                                    System.out.println("\nEleicao: ");
+                                    electionID = Integer.parseInt(input.nextLine());
+
+                                    if(vote.deleteBooth(facID,electionID))
+                                        System.out.println("\nCriacao efetuada!");
+                                    else
+                                        System.out.println("\nCriacao falhada");
+
+                                    Thread.sleep(500);
+                                    break;
+                                default:
+                                    System.out.println("\nOpcao Invalida");
+                                    Thread.sleep(500);
+                                    break;
+                            }
+
+                        default:
+                            System.out.println("\nOpcao Invalida");
                             Thread.sleep(500);
                             break;
 
-                        case "4":
-
-
-
+                    }
                         /*
-                        //Criacao de uma eleicao
-                        case "3":
-
-                            int type;
-                            String title;
-                            String description;
-                            String date;
-                            Date startDate;
-                            Date endDate;
-
-                            System.out.println("\nCreate an election");
-
-                            System.out.print("\nElection type(1-Student Association 2- General Council: ");
-                            type = Integer.parseInt(input.nextLine());
-
-                            System.out.print("\nTitle: ");
-                            title = input.nextLine();
-
-                            System.out.print("\nDescription: ");
-                            description = input.nextLine();
-
-                            System.out.print("\nStart date (dd-MM-yyy hh:mm:ss): ");
-                            date = input.nextLine();
-                            SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
-                            startDate = sdf2.parse(date);
-                            Calendar cal2 = Calendar.getInstance();
-                            cal2.setTime(startDate);
-
-                            System.out.print("\nEnd date (dd-MM-yyy hh:mm:ss): ");
-                            date = input.nextLine();
-                            SimpleDateFormat sdf3 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
-                            endDate = sdf3.parse(date);
-                            Calendar cal3 = Calendar.getInstance();
-                            cal3.setTime(endDate);
-
-                            //Eleicao de estudantes
-                            if (type == 1) {
-
-                                System.out.print("Student election - Department(id):  ");
-                                depID = input.nextLine();
-                                System.out.print("\nViable lists: \n");
-
-                                ArrayList<candidateList> available;
-
-                                available = vote.getList(1);
-
-                                for (int i = 0; i < available.size(); i++) {
-                                    System.out.println("Title: " + available.get(i).getName() + " ID: " + available.get(i).getID());
-                                }
-
-                                System.out.println("Input the ID of the lists you want to add (0 to stop):");
-                                ArrayList<candidateList> toAdd = new ArrayList<candidateList>();
-                                candidateList nullVote = new candidateList("NULLVOTE", "NULLVOTE", 1, null);
-                                candidateList blankVote = new candidateList("BLANKVOTE", "BLANKVOTE", 1, null);
-                                toAdd.add(nullVote);
-                                toAdd.add(blankVote);
-                                String IDchoice = input.nextLine();
-                                while (!IDchoice.equals("0")) {
-                                    for (int i = 0; i < available.size(); i++) {
-                                        if (IDchoice.equals(available.get(i).getID())) {
-                                            toAdd.add(available.get(i));
-                                        }
-                                    }
-                                    IDchoice = input.nextLine();
-                                }
-
-
-                                Election election = new Election(title, description, cal2, cal3, type, toAdd);
-                                boolean studElecAdd = vote.newElection(election);
-                                if (studElecAdd) {
-                                    System.out.println("Successfully created the election!");
-                                    System.out.print("Add voting tables (by dep ID) to the election (0 to stop): ");
-                                    ArrayList<String> depTables = new ArrayList<String>();
-                                    String depId = input.nextLine();
-                                    while (!depId.equals("0")) {
-                                        depTables.add(depId);
-                                        depId = input.nextLine();
-                                    }
-                                    boolean boothAck = vote.addBooth(election.getTitle(), depTables);
-                                    if (boothAck) {
-                                        System.out.println("Voting tables added successfully");
-                                    } else {
-                                        System.out.println("No voting tables were added.");
-                                    }
-                                } else {
-                                    System.out.println("Error creating election...");
-                                }
-                            } 
-                            //Eleicao de concelho geral
-                            else {
-
-                                System.out.println("Council election");
-                                System.out.println("Viable lists: ");
-
-                                ArrayList<candidateList> available = new ArrayList<candidateList>();
-
-                                available = vote.getList(2);
-
-                                for (int i = 0; i < available.size(); i++) {
-                                    System.out.println("Title: " + available.get(i).getName() + " ID: " + available.get(i).getID());
-                                }
-
-                                System.out.println("Input the ID of the lists you want to add:");
-
-                                ArrayList<candidateList> toAdd = new ArrayList<candidateList>();
-
-                                candidateList nullVote = new candidateList("NULLVOTE", "NULLVOTE", 1, null);
-                                candidateList blankVote = new candidateList("BLANKVOTE", "BLANKVOTE", 1, null);
-                                toAdd.add(nullVote);
-                                toAdd.add(blankVote);
-
-                                String IDchoice = input.nextLine();
-                                while (!IDchoice.equals("0")) {
-                                    for (int i = 0; i < available.size(); i++) {
-                                        if (IDchoice.equals(available.get(i).getID())) {
-                                            toAdd.add(available.get(i));
-                                        }
-                                    }
-                                    IDchoice = input.nextLine();
-                                }
-
-                                Election election = new Election(title, description, cal2, cal3, type, toAdd);
-
-                                boolean genElecAdd = vote.newElection(election);
-
-                                if (genElecAdd) {
-                                    System.out.println("Successfully created the election!");
-                                    System.out.print("Remove voting tables (by dep ID) for the chosen election (0 to stop): ");
-                                    ArrayList<String> depTables = new ArrayList<String>();
-                                    String depId = input.nextLine();
-                                    while (!depId.equals("0")) {
-                                        depTables.add(depId);
-                                        depId = input.nextLine();
-                                    }
-                                    boolean boothAck = vote.addBooth(election.getTitle(), depTables);
-                                    if (boothAck) {
-                                        System.out.println("Booths removed successfully");
-                                    } else {
-                                        System.out.println("No tables removed.");
-                                    }
-                                } else {
-                                    System.out.println("Error creating election...");
-                                }
-                            }
-                            Thread.sleep(2000);
-                            break;
-
                         //Menu para gerir lista de candidatos
                         case "4":
                             System.out.println("Manage candidate lists");
@@ -736,7 +724,6 @@ public class Admin {
                             Thread.sleep(2000);
                             break;
                             */
-                    }
                 }catch(Exception ex){
                     ex.printStackTrace();
                 }
@@ -841,7 +828,8 @@ class boothCheck extends Thread {
     public void run() {
         System.out.println("VOTING TABLE THREAD: Checking for updates on voting tables");
         int failed = 0;
-        /*while(true){
+        /*
+        while(true){
             try {
                 try {
                     Thread.sleep(5000);
