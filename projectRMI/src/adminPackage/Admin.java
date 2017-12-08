@@ -250,7 +250,7 @@ public class Admin {
 
                         // ELEICAO
                         case "3":
-                            System.out.println("\n1-Criar eleicao\n2-Editar texto eleicoes\n3-Editar texto eleicoes\n4-Apagar eleicao");
+                            System.out.println("\n1-Criar eleicao\n2-Editar texto eleicoes\n3-Editar data eleicoes\n4-Apagar eleicao");
 
                             choice2 = input.nextLine();
 
@@ -274,14 +274,14 @@ public class Admin {
                                     System.out.print("\nTipo de Eleicao (1-Conselho geral, 2-Nucleos): ");
                                     type = Integer.parseInt(input.nextLine());
                                     if (type == 1) {
-                                        if (vote.addEl(electionID, title, description, type, 0, startDate, endDate, 0))
+                                        if (vote.addEl(electionID, title, description, type, startDate, endDate, 0))
                                             System.out.println("\nCriacao efetuada!");
                                         else
                                             System.err.println("\nCriacao falhada");
                                     } else if (type == 2) {
                                         System.out.println("\nFaculdade onde decorre: ");
                                         facID = Integer.parseInt(input.nextLine());
-                                        if (vote.addEl(electionID, title, description, type, 0, startDate, endDate, facID))
+                                        if (vote.addEl(electionID, title, description, type, startDate, endDate, facID))
                                             System.out.println("\nCriacao efetuada!");
                                         else
                                             System.err.println("\nCriacao falhada");

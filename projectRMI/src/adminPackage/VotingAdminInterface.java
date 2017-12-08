@@ -50,7 +50,7 @@ public interface VotingAdminInterface extends Remote {
 	public boolean deleteDep(int depID) throws RemoteException;
 	public boolean deleteUnit(int facID) throws RemoteException;
 
-	boolean addEl(int eleicaoID, String title, String description, int type, int closed, String startDate, String endDate, int faculdadeID) throws RemoteException;
+	boolean addEl(int eleicaoID, String title, String description, int type, String startDate, String endDate, int faculdadeID) throws RemoteException;
 	boolean deleteEL(int eleicaoID) throws RemoteException;
 	boolean editELText(int eleicaoID, String title, String description) throws RemoteException;
 	boolean editElDate(int eleicaoID, String startdate, String enddate) throws RemoteException;

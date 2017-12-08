@@ -114,8 +114,8 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	}
 
 	// Adiciona Eleicao(Conselho Geral: adiciona uma mesa de voto em cada faculdade, Nucleos: adiciona uma mesa de voto na faculdade em questão)
-	public boolean addEl(int eleicaoID, String title, String description, int type, int closed, String startDate, String endDate,int faculdadeID) throws RemoteException{
-		if(updateDB("CALL add_eleicao("+eleicaoID+",'"+title+"','"+description+"',"+type+","+closed+",'"+startDate+"','"+endDate+"',"+faculdadeID+");"))
+	public boolean addEl(int eleicaoID, String title, String description, int type, String startDate, String endDate,int faculdadeID) throws RemoteException{
+		if(updateDB("CALL add_eleicao("+eleicaoID+",'"+title+"','"+description+"',"+type+",'"+startDate+"','"+endDate+"',"+faculdadeID+");"))
 			return true;
 		return false;
 	}
@@ -260,8 +260,8 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	// TCPServerInterface
 
 	// Regista Voto
-	public boolean voteElection(int userID, int electionID, int listID) throws RemoteException {
-		if(updateDB("CALL vote("+userID+","+electionID+","+listID+");"))
+	public boolean voteElection(int userID, int electionID, int listID, int facID) throws RemoteException {
+		if(updateDB("CALL vote("+userID+","+electionID+","+listID+","+facID+");"))
 			return true;
 		return false;
 	}
@@ -276,16 +276,6 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return false;
 	}
 
-	// Identifica utilizador por ID
-	public boolean identifyID(int userID) throws  RemoteException {
-		try {
-			ResultSet rs = queryDB("SELECT * FROM user WHERE numberid = "+userID+";");
-			if(rs.next())
-				return true;
-		} catch (SQLException e) { }
-		return false;
-	}
-
 	// Log in User
 	public boolean authenticateUser(int id, String name, String password) throws RemoteException{
 		try{
@@ -296,6 +286,69 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			}
 		}catch (SQLException e){ }
 		return false;
+	}
+
+	// Retorna faculdades a que user pertence
+	public boolean identifyID(int userID, int facID) throws RemoteException{
+		try{
+			ResultSet rs = queryDB("SELECT user_numberid,faculdade_facid FROM user_faculdade WHERE user_numberid = "+userID+" AND faculdade_facid = "+facID+";");
+			if(rs.next()){
+				return true;
+			}
+		}catch (SQLException e){ }
+		return false;
+	}
+
+	// Retorna eleicoes elegiveis para determinada faculdade
+	public int[] getMesaDeVotoEls(int facid) throws RemoteException{
+		int[] aux = new int[100];
+		Arrays.fill(aux,0);
+		try{
+			ResultSet rs = queryDB("SELECT eleicao_electionid FROM mesa_de_voto WHERE faculdade_facid = "+facid+";");
+			int i = 0;
+			while (rs.next()){
+				aux[i] = Integer.parseInt(rs.getString("eleicao_electionid"));
+				i++;
+			}
+		} catch (SQLException e){}
+		return aux;
+	}
+
+	// Retorna nome eleicao por ID
+	public String getElName(int id) throws RemoteException{
+		try{
+			ResultSet rs = queryDB("SELECT title FROM eleicao WHERE electionid = "+id+";");
+			if(rs.next()){
+				return rs.getString("title");
+			}
+		}catch (SQLException e){ }
+		return "";
+	}
+
+	// Retorna listas elegiveis para determinada eleicao
+	public int[] getElectionLists(int electionid) throws RemoteException{
+		int[] aux = new int[100];
+		Arrays.fill(aux,-1);
+		try{
+			ResultSet rs = queryDB("SELECT listid FROM lista_candidata WHERE eleicao_electionid = "+electionid+";");
+			int i = 0;
+			while (rs.next()){
+				aux[i] = Integer.parseInt(rs.getString("listid"));
+				i++;
+			}
+		} catch (SQLException e){ }
+		return aux;
+	}
+
+	// Retorna nome lista por ID
+	public String getListName(int id) throws RemoteException{
+		try{
+			ResultSet rs = queryDB("SELECT name FROM lista_candidata WHERE listid = "+id+";");
+			if(rs.next()){
+				return rs.getString("name");
+			}
+		}catch (SQLException e){ }
+		return "";
 	}
 
 	// ==================================================================================================================

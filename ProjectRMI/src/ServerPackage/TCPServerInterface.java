@@ -7,10 +7,15 @@ import java.rmi.*;
 import java.util.*;
 
 public interface TCPServerInterface extends Remote {
-    boolean identifyID(int userID) throws  RemoteException;
     boolean hasVoted(int userID, int electionID) throws RemoteException;
-    boolean voteElection(int userID, int electionID, int listID) throws RemoteException;
+    boolean voteElection(int userID, int electionID, int listID, int facID) throws RemoteException;
     boolean authenticateUser(int id, String name, String password) throws RemoteException;
+    boolean identifyID(int userID, int facID) throws RemoteException;
+
+    int[] getMesaDeVotoEls(int facid) throws RemoteException;
+    String getElName(int id) throws RemoteException;
+    int[] getElectionLists(int electionid) throws RemoteException;
+    String getListName(int id) throws RemoteException;
     /**
      * Retorna lista de user
      * @return ArrayList de users

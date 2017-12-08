@@ -31,7 +31,6 @@ CREATE TABLE eleicao(
 	electionid	 int,
 	title	 varchar(1024) UNIQUE NOT NULL,
 	description varchar(1024) NOT NULL,
-	type	 int NOT NULL,
 	closed	 bool NOT NULL DEFAULT false,
 	startdate	 datetime NOT NULL,
 	enddate	 datetime NOT NULL,
