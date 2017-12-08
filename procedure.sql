@@ -116,7 +116,7 @@ DELIMITER //
 DROP PROCEDURE IF EXISTS add_eleicao //
 CREATE PROCEDURE add_eleicao (IN electionid int(11),IN title varchar(1024),IN descp varchar(1024),IN type int(11),IN startdate datetime,IN enddate datetime, IN faculdadeID int)
 BEGIN
-	INSERT INTO eleicao VALUES (electionid,title,descp,STR_TO_DATE(startdate,"%Y-%m-%d %H:%i:%s"),STR_TO_DATE(enddate,"%Y-%m-%d %H:%i:%s"),type);
+	INSERT INTO eleicao VALUES (electionid,title,descp,type,STR_TO_DATE(startdate,"%Y-%m-%d %H:%i:%s"),STR_TO_DATE(enddate,"%Y-%m-%d %H:%i:%s"));
 	IF type = 1 THEN
 		INSERT INTO conselho_geral VALUES (electionid);
 		INSERT INTO mesa_de_voto SELECT facid,electionid FROM faculdade;
@@ -149,6 +149,7 @@ DELIMITER //
 DROP PROCEDURE IF EXISTS delete_eleicao //
 CREATE PROCEDURE delete_eleicao (IN eleicaoID int(11))
 BEGIN
+	delete from lista_candidata where eleicao_electionid = eleicaoID;
 	DELETE FROM mesa_de_voto WHERE eleicao_electionid = eleicaoID;
 	DELETE FROM conselho_geral WHERE eleicao_electionid = eleicaoID;
 	DELETE FROM nucleos WHERE eleicao_electionid = eleicaoID;
@@ -210,5 +211,13 @@ CREATE PROCEDURE vote (IN uID int(11),IN eID int(11),IN lID int(11),IN fID int(1
 BEGIN
 	INSERT INTO eleicao_user SELECT e.electionid,u.numberid,f.facid FROM eleicao e, user u, faculdade f WHERE e.electionid = eID AND u.numberid = uID AND f.facid = fID; 
 	UPDATE lista_candidata SET numvotes = numvotes + 1 WHERE listid = lID;
+END //
+DELIMITER ;
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS check_date //
+CREATE PROCEDURE check_date (IN eleicaoID int(11))
+BEGIN
+	SELECT electionid FROM eleicao WHERE (startdate < CURRENT_TIMESTAMP) AND (enddate > CURRENT_TIMESTAMP) AND electionid = eleicaoID;
 END //
 DELIMITER ;

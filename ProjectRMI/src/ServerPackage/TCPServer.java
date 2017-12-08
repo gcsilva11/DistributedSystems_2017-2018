@@ -157,7 +157,13 @@ class Connection extends Thread {
                 int[] eleicoes = tcp.getMesaDeVotoEls(facID);
                 output.println("\nEscolha eleicao para votar: ");
                 for (int i = 0; i < eleicoes.length; i++) {
-                    if (!tcp.getElName(eleicoes[i]).equals("") && !tcp.hasVoted(userID,eleicoes[i]))
+                    System.out.println(eleicoes[i]);
+                    System.out.println(!tcp.getElName(eleicoes[i]).equals(""));
+                    System.out.println(!tcp.hasVoted(userID,eleicoes[i]));
+                    System.out.println(tcp.userCanVote(userID,eleicoes[i]));
+                    System.out.println(tcp.isElActive(eleicoes[i]));
+                    System.out.println("\n\n");
+                    if (!tcp.getElName(eleicoes[i]).equals("") && !tcp.hasVoted(userID,eleicoes[i]) && tcp.userCanVote(userID,eleicoes[i]) && tcp.isElActive(eleicoes[i]))
                         output.println(eleicoes[i] + ". " + tcp.getElName(eleicoes[i]));
                 }
                 aux = input.readLine();

@@ -12,6 +12,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.*;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.sql.*;
 
@@ -20,10 +21,10 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 	private static Connection connection = null;
 
-
 	public serverRMI() throws RemoteException {
 		super();
 	}
+
 
 	// ==================================================================================================================
 	// VotingAdminInterface
@@ -174,7 +175,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		try {
 			ResultSet rs = queryDB("SELECT type FROM eleicao WHERE electionid = "+id+";");
 			if(rs.next())
-				return Integer.parseInt(rs.getString("type"));
+				return rs.getInt("type");
 		} catch (SQLException e) { }
 		return 0;
 	}
@@ -184,7 +185,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		try {
 			ResultSet rs = queryDB("SELECT type FROM lista_candidata WHERE electionid = "+id+";");
 			if(rs.next())
-				return Integer.parseInt(rs.getString("type"));
+				return rs.getInt("type");
 		} catch (SQLException e) { }
 		return 0;
 	}
@@ -211,50 +212,11 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		try {
 			ResultSet rs = queryDB("SELECT listid FROM lista_candidata WHERE name = '"+name+"' AND eleicao_electionid = "+electionID+";");
 			if(rs.next())
-				return Integer.parseInt(rs.getString("listid"));
+				return rs.getInt("listid");
 		} catch (SQLException e) { }
 		return 0;
 	}
 
-	/*
-	public ArrayList <Election> checkElecDate() throws java.rmi.RemoteException {
-
-		FicheiroDeObjectos fo = new FicheiroDeObjectos();
-
-		for (int i = 0; i < elList.getElections().size(); i++) {
-			if (elList.getElections().get(i).getEndDate().before(Calendar.getInstance()) && elList.getElections().get(i).getClosed() == false) {
-				elList.getElections().get(i).setClosed();
-				closedElections.addELection(elList.getElections().get(i));
-
-				System.out.println("Election closed.");
-
-
-				//Update ficheiro eleicoes
-				try {
-					fo.abreEscrita("out/elections.dat");
-					fo.escreveObjecto(elList);
-					fo.fechaEscrita();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-				//Update ficheiro eleicoes
-				try {
-					fo.abreEscrita("out/closedelections.dat");
-					fo.escreveObjecto(closedElections);
-					fo.fechaEscrita();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-				return closedElections.getElections();
-			}
-		}
-
-		return closedElections.getElections();
-
-	}
-	*/
 
 	// ==================================================================================================================
 	// TCPServerInterface
@@ -273,6 +235,34 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			if(rs.next())
                 return true;
 		} catch (SQLException e) { }
+		return false;
+	}
+
+	// Verifica se user já pode votar em determinada eleicao
+	public boolean userCanVote (int userID, int electionID) throws RemoteException{
+		int user = -1, eleicaoType = -1;
+		try {
+			ResultSet rs = queryDB("SELECT type FROM eleicao WHERE electionid = "+electionID+";");
+			if(rs.next()) {
+				eleicaoType = (rs.getInt("type"));
+				if (eleicaoType == 2){
+					rs = queryDB("SELECT user_numberid FROM estudante WHERE user_numberid= "+userID+";");
+					if(rs.next()) return true;
+				}
+				else return true;
+			}
+		} catch (SQLException e) { }
+		return false;
+	}
+
+	// Verifica se a eleicao está ativa
+	public boolean isElActive (int electionID) throws RemoteException {
+		try{
+			ResultSet rs = queryDB("CALL check_date(" + electionID + ");");
+			if(rs.next()){
+				return true;
+			}
+		}catch (SQLException e){ }
 		return false;
 	}
 
@@ -307,7 +297,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			ResultSet rs = queryDB("SELECT eleicao_electionid FROM mesa_de_voto WHERE faculdade_facid = "+facid+";");
 			int i = 0;
 			while (rs.next()){
-				aux[i] = Integer.parseInt(rs.getString("eleicao_electionid"));
+				aux[i] = rs.getInt("eleicao_electionid");
 				i++;
 			}
 		} catch (SQLException e){}
@@ -333,7 +323,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			ResultSet rs = queryDB("SELECT listid FROM lista_candidata WHERE eleicao_electionid = "+electionid+";");
 			int i = 0;
 			while (rs.next()){
-				aux[i] = Integer.parseInt(rs.getString("listid"));
+				aux[i] = rs.getInt("listid");
 				i++;
 			}
 		} catch (SQLException e){ }
@@ -350,6 +340,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		}catch (SQLException e){ }
 		return "";
 	}
+
 
 	// ==================================================================================================================
 	// Main
@@ -456,7 +447,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	}
 }
 
-	// Thread que trata do Failover
+// Thread que trata do Failover
 class RMIFailover extends Thread {
 	private DatagramSocket aSocket = null;
 
@@ -520,7 +511,6 @@ class RMIFailover extends Thread {
 					}
 				}
 
-				//
 				if(heartbeatsFailed >= maxHeartbeats) {
 					this.aSocket.close();
 					UDPConn = new RMIFailover(this.hostname, this.serverPort, this.rmiPort);
