@@ -61,7 +61,7 @@ public class Admin {
                 try {
                     System.out.println("Consola ADMIN. O que quer fazer\n1-User\n"
                             + "2-Faculdade e Departamentos\n3-Eleicoes\n4-Listas de candidatos"
-                            + "\n5-Mesas de Voto\n6-Historia de voto de user\n7-Estado Mesa de Voto");
+                            + "\n5-Mesas de Voto");
                     choice = input.nextLine();
 
                     switch (choice) {
