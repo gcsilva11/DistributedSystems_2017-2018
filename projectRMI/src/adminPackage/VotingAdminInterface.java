@@ -12,12 +12,25 @@ public interface VotingAdminInterface extends Remote {
 	 * @param name
 	 * @param password
 	 * @param phone
+	 * @param address
 	 * @param date
 	 * @param profession
 	 * @return
 	 * @throws RemoteException
 	 */
-	boolean registerUser(int numberID, String name, String password, String phone, String date, int profession) throws RemoteException;
+	boolean registerUser(int numberID, String name, String password, String phone, String address, String date, int profession) throws RemoteException;
+
+	/**
+	 *
+	 * @param numberID
+	 * @param name
+	 * @param password
+	 * @param phone
+	 * @param expDate
+	 * @param address
+	 * @throws RemoteException
+	 */
+	void editUser(int numberID, String name, String password, String phone, String expDate, String address) throws RemoteException;
 
 	/**
 	 *

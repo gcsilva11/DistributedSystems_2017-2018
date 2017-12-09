@@ -29,11 +29,35 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	// ==================================================================================================================
 	// VotingAdminInterface
 
+	// Verfica o departamento
+	public boolean checkFaculdade(int facID) throws RemoteException{
+		try {
+			ResultSet rs = queryDB("SELECT faculdade_facid FROM mesa_de_voto WHERE faculdade_facid = "+facID+";");
+			if(rs.next())
+				return true;
+		} catch (SQLException e) { }
+		return false;
+	}
+
 	// Adiciona User na BD
-	public boolean registerUser(int numberID, String name, String password, String phone, String expDate, int profession) throws RemoteException {
-		if(updateDB("CALL add_user("+numberID+",'"+name+"','"+password+"','"+phone+"','"+expDate+"',"+profession+");"))
+	public boolean registerUser(int numberID, String name, String password, String phone, String address, String expDate, int profession) throws RemoteException {
+		if(updateDB("CALL add_user("+numberID+",'"+name+"','"+password+"','"+phone+"','"+address+"','"+expDate+"',"+profession+");"))
 			return true;
 		return false;
+	}
+
+	// Edita dados User
+	public void editUser(int numberID, String name, String password, String phone, String expDate, String address) throws RemoteException {
+		if(!name.equals(""))
+			updateDB("CALL edit_name("+numberID+",'"+name+"');");
+		if(!password.equals(""))
+			updateDB("CALL edit_password("+numberID+",'"+password+"');");
+		if(!phone.equals(""))
+			updateDB("CALL edit_phone("+numberID+",'"+phone+"');");
+		if(!expDate.equals(""))
+			updateDB("CALL edit_expdate("+numberID+",'"+expDate+"');");
+		if(!address.equals(""))
+			updateDB("CALL edit_address("+numberID+",'"+address+"');");
 	}
 
 	// Associa Faculdade a User
@@ -291,6 +315,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 
 	// Retorna eleicoes elegiveis para determinada faculdade
 	public int[] getMesaDeVotoEls(int facid) throws RemoteException{
+
 		int[] aux = new int[100];
 		Arrays.fill(aux,0);
 		try{

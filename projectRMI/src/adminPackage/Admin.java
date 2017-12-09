@@ -54,7 +54,7 @@ public class Admin {
             boothThread.start();
 
             int electionID, type, ID, profession, faculdadeID, facID, depID;
-            String title, description, startDate, endDate, facName, depName, name, myDate, phone, password;
+            String title, description, startDate, endDate, facName, depName, name, myDate, phone, password, address;
 
             //Menu
             while(true) {
@@ -67,7 +67,7 @@ public class Admin {
                     switch (choice) {
                         // USER
                         case "1":
-                            System.out.println("1-Registar User\n2-Apagar User");
+                            System.out.println("1-Registar User\n2-Editar User\n3-Apagar User");
                             choice2 = input.nextLine();
                             switch (choice2) {
                                 // REGISTAR
@@ -86,13 +86,16 @@ public class Admin {
                                     System.out.print("\nTelemovel: ");
                                     phone = input.nextLine();
 
+                                    System.out.print("\nMorada: ");
+                                    address = input.nextLine();
+
                                     System.out.print("\nPassword: ");
                                     password = input.nextLine();
 
                                     System.out.print("\nTipo de User (1-Estudante, 2-Professor, 3- Funcionario): ");
                                     profession = Integer.parseInt(input.nextLine());
 
-                                    if (vote.registerUser(ID, name, password, phone, myDate, profession) && (profession == 1 || profession == 2 || profession == 3))
+                                    if (vote.registerUser(ID, name, password, phone, address, myDate, profession) && (profession == 1 || profession == 2 || profession == 3))
                                         System.out.println("\nRegisto efetuado!");
                                     else
                                         System.err.println("\nRegisto falhado");
@@ -108,8 +111,35 @@ public class Admin {
                                     }
                                     Thread.sleep(500);
                                     break;
-                                // APAGAR
+                                // EDITAR
                                 case "2":
+                                    System.out.println("Editar User");
+
+                                    System.out.print("\nID: ");
+                                    ID = Integer.parseInt(input.nextLine());
+
+                                    System.out.println("\n\t\t*String vazia para nao alterar");
+
+                                    System.out.print("\nNovo nome: ");
+                                    name = input.nextLine();
+
+                                    System.out.print("\nNova data de validade(yyyy-MM-dd hh:mm:ss):");
+                                    myDate = input.nextLine();
+
+                                    System.out.print("\nNovo telemovel: ");
+                                    phone = input.nextLine();
+
+                                    System.out.print("\nMorada: ");
+                                    address = input.nextLine();
+
+                                    System.out.print("\nNova password: ");
+                                    password = input.nextLine();
+
+                                    vote.editUser(ID, name, password, phone, myDate, address);
+                                    System.out.println("\nEdicao efetuada!");
+                                    break;
+                                // APAGAR
+                                case "3":
                                     System.out.println("\nApagar User");
 
                                     // No. ID
@@ -409,9 +439,9 @@ public class Admin {
                                     electionID = Integer.parseInt(input.nextLine());
 
                                     if(vote.addBooth(facID,electionID))
-                                        System.out.println("\nUser Inserido");
+                                        System.out.println("\nCriacao efetuada!");
                                     else
-                                        System.out.println("\nUser não existe");
+                                        System.out.println("\nCriacao falhada");
 
                                     Thread.sleep(500);
                                     break;
@@ -423,9 +453,9 @@ public class Admin {
                                     electionID = Integer.parseInt(input.nextLine());
 
                                     if(vote.deleteBooth(facID,electionID))
-                                        System.out.println("\nCriacao efetuada!");
+                                        System.out.println("\nEliminacao efetuada!");
                                     else
-                                        System.out.println("\nCriacao falhada");
+                                        System.out.println("\nEliminacao falhada");
 
                                     Thread.sleep(500);
                                     break;

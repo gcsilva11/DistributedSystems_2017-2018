@@ -8,6 +8,7 @@ CREATE TABLE user(
 	password	 varchar(1024) NOT NULL,
 	phone	 varchar(1024),
 	expdate	 datetime NOT NULL,
+	morada varchar (1024),
 	PRIMARY KEY(numberid)
 );
 # User (Estudante)

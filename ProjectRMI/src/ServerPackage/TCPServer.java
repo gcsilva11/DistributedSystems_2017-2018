@@ -56,45 +56,55 @@ public class TCPServer {
         System.out.println("ID da faculdade:");
         int facID = sc.nextInt();
 
-        // while(true) a aceitar novos clientes
-        ServerSocket listenSocket = null;
-        while (true) {
-            try {
+        if(tcp.checkFaculdade(facID)) {
 
-                // Cria e aceita socket connection
-                listenSocket = new ServerSocket(defPort);
-                Socket clientSocket = listenSocket.accept();
+            // while(true) a aceitar novos clientes
+            ServerSocket listenSocket = null;
+            while (true) {
+                try {
+                    System.out.println("\nPronto para receber user");
+                    // Cria e aceita socket connection
+                    listenSocket = new ServerSocket(defPort);
+                    Socket clientSocket = listenSocket.accept();
 
-                clientSocket.setSoTimeout(120000);
+                    clientSocket.setSoTimeout(120000);
 
-                BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                PrintWriter output = new PrintWriter(clientSocket.getOutputStream(), true);
+                    BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                    PrintWriter output = new PrintWriter(clientSocket.getOutputStream(), true);
 
-                // Thread que trata da identificação de users no TCP Server
-                new Thread() {
-                    // getListaUsers
-                    // Identifica user
-                    public void run() {
-                        try {
-                            while (true) {
-                                Scanner sc = new Scanner(System.in);
+                    // Thread que trata da identificação de users no TCP Server
+                    new Thread() {
+                        // getListaUsers
+                        // Identifica user
+                        public void run() {
+                            try {
+                                while (true) {
+                                    Scanner sc = new Scanner(System.in);
 
-                                System.out.println("\nIdentificacao por ID: ");
-                                int data = Integer.parseInt(sc.nextLine());
-                                if (tcp.identifyID(data,facID)) {
-                                    System.out.println("\nTerminal de Voto desbloqueado");
-                                    Connection newClient = new Connection(clientSocket, data, hostname, rmiPort, tcp, facID);
-                                    newClient.start();
-                                } else { System.out.println("\nID nao encontrado"); }
+                                    System.out.println("\nIdentificacao por ID: ");
+                                    int data = Integer.parseInt(sc.nextLine());
+                                    if (tcp.identifyID(data, facID)) {
+                                        System.out.println("\nTerminal de Voto desbloqueado");
+                                        Connection newClient = new Connection(clientSocket, data, hostname, rmiPort, tcp, facID);
+                                        newClient.start();
+                                    } else {
+                                        System.out.println("\nID nao encontrado");
+                                    }
+                                }
+                            } catch (RemoteException e) {
                             }
-                        } catch (RemoteException e) { }
-                    }
-                }.start();
-            } catch (IOException e) {
-                System.out.println("Error creating TCP socket");
+                        }
+                    }.start();
+                } catch (IOException e) {
+                    System.out.println("Error creating TCP socket");
+                }
+                try {
+                    listenSocket.close();
+                } catch (IOException e) {
+                }
             }
-            try { listenSocket.close(); } catch (IOException e) { }
-        }
+
+        } else System.out.println("Faculdade nao existente");
     }
 }
 
@@ -157,12 +167,6 @@ class Connection extends Thread {
                 int[] eleicoes = tcp.getMesaDeVotoEls(facID);
                 output.println("\nEscolha eleicao para votar: ");
                 for (int i = 0; i < eleicoes.length; i++) {
-                    System.out.println(eleicoes[i]);
-                    System.out.println(!tcp.getElName(eleicoes[i]).equals(""));
-                    System.out.println(!tcp.hasVoted(userID,eleicoes[i]));
-                    System.out.println(tcp.userCanVote(userID,eleicoes[i]));
-                    System.out.println(tcp.isElActive(eleicoes[i]));
-                    System.out.println("\n\n");
                     if (!tcp.getElName(eleicoes[i]).equals("") && !tcp.hasVoted(userID,eleicoes[i]) && tcp.userCanVote(userID,eleicoes[i]) && tcp.isElActive(eleicoes[i]))
                         output.println(eleicoes[i] + ". " + tcp.getElName(eleicoes[i]));
                 }

@@ -1,9 +1,9 @@
 # USER /-------------------------/
 DELIMITER //
 DROP PROCEDURE IF EXISTS add_user //
-CREATE PROCEDURE add_user (IN numberid int(11), IN name varchar(1024), password varchar(1024), phone varchar(1024), expdate datetime, profession int)
+CREATE PROCEDURE add_user (IN numberid int(11), IN name varchar(1024), IN password varchar(1024), IN phone varchar(1024), IN address varchar(1024), IN expdate datetime, IN profession int)
 BEGIN
-	INSERT INTO user VALUES (numberid,name,password,phone,STR_TO_DATE(expdate,"%Y-%m-%d %H:%i:%s"));
+	INSERT INTO user VALUES (numberid,name,password,phone,STR_TO_DATE(expdate,"%Y-%m-%d %H:%i:%s"),address);
 	IF profession = 1 THEN INSERT INTO estudante VALUES (numberid);
 	ELSEIF profession = 2 THEN INSERT INTO professor VALUES (numberid);
 	ELSEIF profession = 3 THEN INSERT INTO funcionario VALUES (numberid);
@@ -16,6 +16,46 @@ DROP PROCEDURE IF EXISTS add_user_faculdade //
 CREATE PROCEDURE add_user_faculdade (IN numberid int(11), IN faculdadeid int)
 BEGIN
 	INSERT INTO user_faculdade VALUES(numberid,faculdadeid);
+END //
+DELIMITER ;
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS edit_name //
+CREATE PROCEDURE edit_name (IN userid int(11), IN newname varchar(1024))
+BEGIN
+	UPDATE user SET name = newname WHERE numberid = userid;
+END //
+DELIMITER ;
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS edit_password //
+CREATE PROCEDURE edit_password (IN userid int(11), IN newpassword varchar(1024))
+BEGIN
+	UPDATE user SET password = newpassword WHERE numberid = userid;
+END //
+DELIMITER ;
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS edit_phone //
+CREATE PROCEDURE edit_phone (IN userid int(11), IN newphone varchar(1024))
+BEGIN
+	UPDATE user SET phone = newphone WHERE numberid = userid;
+END //
+DELIMITER ;
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS edit_expdate //
+CREATE PROCEDURE edit_expdate (IN userid int(11), IN newexpdate varchar(1024))
+BEGIN
+	UPDATE user SET expdate = STR_TO_DATE(newexpdate,"%Y-%m-%d %H:%i:%s") WHERE numberid = userid;
+END //
+DELIMITER ;
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS edit_address //
+CREATE PROCEDURE edit_address (IN userid int(11), IN newaddress varchar(1024))
+BEGIN
+	UPDATE user SET morada = newaddress WHERE numberid = userid;
 END //
 DELIMITER ;
 

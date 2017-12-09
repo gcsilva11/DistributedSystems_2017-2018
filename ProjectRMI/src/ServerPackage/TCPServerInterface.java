@@ -9,6 +9,14 @@ import java.util.*;
 public interface TCPServerInterface extends Remote {
     /**
      *
+     * @param facID
+     * @return
+     * @throws RemoteException
+     */
+    boolean checkFaculdade(int facID) throws RemoteException;
+
+    /**
+     *
      * @param userID
      * @param electionID
      * @return
