@@ -17,6 +17,33 @@ public interface TCPServerInterface extends Remote {
 
     /**
      *
+     * @param id
+     * @param name
+     * @param password
+     * @return
+     * @throws RemoteException
+     */
+    boolean authenticateUser(int id, String name, String password) throws RemoteException;
+
+    /**
+     *
+     * @param userID
+     * @param facID
+     * @return
+     * @throws RemoteException
+     */
+    boolean identifyID(int userID, int facID) throws RemoteException;
+
+    /**
+     *
+     * @param facid
+     * @return
+     * @throws RemoteException
+     */
+    int[] getMesaDeVotoEls(int facid) throws RemoteException;
+
+    /**
+     *
      * @param userID
      * @param electionID
      * @return
@@ -35,36 +62,6 @@ public interface TCPServerInterface extends Remote {
 
     /**
      *
-     * @param userID
-     * @param electionID
-     * @param listID
-     * @param facID
-     * @return
-     * @throws RemoteException
-     */
-    boolean voteElection(int userID, int electionID, int listID, int facID) throws RemoteException;
-
-    /**
-     *
-     * @param userID
-     * @param facID
-     * @return
-     * @throws RemoteException
-     */
-    boolean identifyID(int userID, int facID) throws RemoteException;
-
-    /**
-     *
-     * @param id
-     * @param name
-     * @param password
-     * @return
-     * @throws RemoteException
-     */
-    boolean authenticateUser(int id, String name, String password) throws RemoteException;
-
-    /**
-     *
      * @param electionID
      * @return
      * @throws RemoteException
@@ -73,11 +70,14 @@ public interface TCPServerInterface extends Remote {
 
     /**
      *
-     * @param facid
+     * @param userID
+     * @param electionID
+     * @param listID
+     * @param facID
      * @return
      * @throws RemoteException
      */
-    int[] getMesaDeVotoEls(int facid) throws RemoteException;
+    boolean voteElection(int userID, int electionID, int listID, int facID) throws RemoteException;
 
     /**
      *

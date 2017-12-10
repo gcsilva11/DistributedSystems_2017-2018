@@ -7,7 +7,6 @@ import java.util.*;
 
 public interface VotingAdminInterface extends Remote {
 	/**
-	 *
 	 * @param numberID
 	 * @param name
 	 * @param password
@@ -21,7 +20,14 @@ public interface VotingAdminInterface extends Remote {
 	boolean registerUser(int numberID, String name, String password, String phone, String address, String date, int profession) throws RemoteException;
 
 	/**
-	 *
+	 * @param numberID
+	 * @param faculdadeID
+	 * @return
+	 * @throws RemoteException
+	 */
+	boolean addUserFac(int numberID, int faculdadeID) throws RemoteException;
+
+	/**
 	 * @param numberID
 	 * @param name
 	 * @param password
@@ -33,25 +39,6 @@ public interface VotingAdminInterface extends Remote {
 	void editUser(int numberID, String name, String password, String phone, String expDate, String address) throws RemoteException;
 
 	/**
-	 *
-	 * @param numberID
-	 * @param faculdadeID
-	 * @return
-	 * @throws RemoteException
-	 */
-	boolean addUserFac(int numberID, int faculdadeID) throws RemoteException;
-
-	/**
-	 *
-	 * @param listid
-	 * @param userid
-	 * @return
-	 * @throws RemoteException
-	 */
-	boolean addUserLista(int listid, int userid) throws RemoteException;
-
-	/**
-	 *
 	 * @param numberID
 	 * @return
 	 * @throws RemoteException
@@ -59,7 +46,6 @@ public interface VotingAdminInterface extends Remote {
 	boolean deleteUser(int numberID) throws RemoteException;
 
 	/**
-	 *
 	 * @param facName
 	 * @return
 	 * @throws RemoteException
@@ -67,7 +53,6 @@ public interface VotingAdminInterface extends Remote {
 	boolean registerFac(String facName) throws RemoteException;
 
 	/**
-	 *
 	 * @param depName
 	 * @param facID
 	 * @return
@@ -76,7 +61,6 @@ public interface VotingAdminInterface extends Remote {
 	boolean registerDep(String depName, int facID) throws RemoteException;
 
 	/**
-	 *
 	 * @param facID
 	 * @return
 	 * @throws RemoteException
@@ -84,7 +68,6 @@ public interface VotingAdminInterface extends Remote {
 	boolean registerUnit(int facID) throws RemoteException;
 
 	/**
-	 *
 	 * @param facID
 	 * @param facName
 	 * @return
@@ -93,7 +76,6 @@ public interface VotingAdminInterface extends Remote {
 	boolean editFac(int facID, String facName) throws RemoteException;
 
 	/**
-	 *
 	 * @param depID
 	 * @param depName
 	 * @return
@@ -102,7 +84,6 @@ public interface VotingAdminInterface extends Remote {
 	boolean editDep(int depID, String depName) throws RemoteException;
 
 	/**
-	 *
 	 * @param facID
 	 * @return
 	 * @throws RemoteException
@@ -110,7 +91,6 @@ public interface VotingAdminInterface extends Remote {
 	boolean deleteFac(int facID) throws RemoteException;
 
 	/**
-	 *
 	 * @param depID
 	 * @return
 	 * @throws RemoteException
@@ -118,7 +98,6 @@ public interface VotingAdminInterface extends Remote {
 	boolean deleteDep(int depID) throws RemoteException;
 
 	/**
-	 *
 	 * @param facID
 	 * @return
 	 * @throws RemoteException
@@ -126,7 +105,6 @@ public interface VotingAdminInterface extends Remote {
 	boolean deleteUnit(int facID) throws RemoteException;
 
 	/**
-	 *
 	 * @param eleicaoID
 	 * @param title
 	 * @param description
@@ -140,7 +118,6 @@ public interface VotingAdminInterface extends Remote {
 	boolean addEl(int eleicaoID, String title, String description, int type, String startDate, String endDate, int faculdadeID) throws RemoteException;
 
 	/**
-	 *
 	 * @param eleicaoID
 	 * @return
 	 * @throws RemoteException
@@ -148,7 +125,6 @@ public interface VotingAdminInterface extends Remote {
 	boolean deleteEL(int eleicaoID) throws RemoteException;
 
 	/**
-	 *
 	 * @param eleicaoID
 	 * @param title
 	 * @param description
@@ -158,7 +134,6 @@ public interface VotingAdminInterface extends Remote {
 	boolean editELText(int eleicaoID, String title, String description) throws RemoteException;
 
 	/**
-	 *
 	 * @param eleicaoID
 	 * @param startdate
 	 * @param enddate
@@ -168,7 +143,6 @@ public interface VotingAdminInterface extends Remote {
 	boolean editElDate(int eleicaoID, String startdate, String enddate) throws RemoteException;
 
 	/**
-	 *
 	 * @param name
 	 * @param type
 	 * @param numvotes
@@ -179,7 +153,14 @@ public interface VotingAdminInterface extends Remote {
 	boolean addLista(String name, int type, int numvotes, int eleicaoID) throws RemoteException;
 
 	/**
-	 *
+	 * @param listid
+	 * @param userid
+	 * @return
+	 * @throws RemoteException
+	 */
+	boolean addUserLista(int listid, int userid) throws RemoteException;
+
+	/**
 	 * @param listid
 	 * @return
 	 * @throws RemoteException
@@ -187,7 +168,6 @@ public interface VotingAdminInterface extends Remote {
 	boolean deleteLista(int listid) throws RemoteException;
 
 	/**
-	 *
 	 * @param facid
 	 * @param electionid
 	 * @return
@@ -196,7 +176,6 @@ public interface VotingAdminInterface extends Remote {
 	boolean addBooth(int facid, int electionid) throws RemoteException;
 
 	/**
-	 *
 	 * @param facid
 	 * @param electionid
 	 * @return
@@ -206,6 +185,25 @@ public interface VotingAdminInterface extends Remote {
 
 	/**
 	 *
+	 * @param userID
+	 * @param facID
+	 * @param electionID
+	 * @return
+	 * @throws RemoteException
+	 */
+	boolean addUserBooth(int userID, int facID , int electionID) throws RemoteException;
+
+	/**
+	 *
+	 * @param userID
+	 * @param facID
+	 * @param electionID
+	 * @return
+	 * @throws RemoteException
+	 */
+	boolean removeUserBooth(int userID, int facID , int electionID) throws RemoteException;
+
+	/**
 	 * @param id
 	 * @return
 	 * @throws RemoteException
@@ -213,7 +211,6 @@ public interface VotingAdminInterface extends Remote {
 	int getElectionType(int id) throws RemoteException;
 
 	/**
-	 *
 	 * @param id
 	 * @return
 	 * @throws RemoteException
@@ -221,7 +218,6 @@ public interface VotingAdminInterface extends Remote {
 	int getListType(int id) throws RemoteException;
 
 	/**
-	 *
 	 * @param name
 	 * @param electionID
 	 * @return
@@ -231,9 +227,106 @@ public interface VotingAdminInterface extends Remote {
 
 	/**
 	 *
+	 * @param electionID
+	 * @return
+	 * @throws RemoteException
+	 */
+	boolean elAntecipated(int electionID) throws RemoteException;
+
+	/**
+	 *
+	 * @param electionID
+	 * @return
+	 * @throws RemoteException
+	 */
+	boolean elTerminated(int electionID) throws RemoteException;
+
+	/**
 	 * @param id
 	 * @return
 	 * @throws RemoteException
 	 */
 	int getUserType(int id) throws RemoteException;
+
+	/**
+	 * @param userID
+	 * @param electionID
+	 * @param listID
+	 * @return
+	 * @throws RemoteException
+	 */
+	boolean antecipatedVote(int userID, int electionID, int listID) throws RemoteException;
+
+	/**
+	 * @param id
+	 * @return
+	 * @throws RemoteException
+	 */
+	String getElName(int id) throws RemoteException;
+
+	/**
+	 * @param electionid
+	 * @return
+	 * @throws RemoteException
+	 */
+	int[] getElectionLists(int electionid) throws RemoteException;
+
+	/**
+	 * @param id
+	 * @return
+	 * @throws RemoteException
+	 */
+	String getListName(int id) throws RemoteException;
+
+	/**
+	 *
+	 * @return
+	 * @throws RemoteException
+	 */
+	int[] getEls() throws RemoteException;
+
+	/**
+	 * @param userID
+	 * @param electionID
+	 * @return
+	 * @throws RemoteException
+	 */
+	boolean hasVoted(int userID, int electionID) throws RemoteException;
+
+	/**
+	 * @param userID
+	 * @param electionID
+	 * @return
+	 * @throws RemoteException
+	 */
+	boolean userCanVote(int userID, int electionID) throws RemoteException;
+
+	/**
+	 * @param electionID
+	 * @return
+	 * @throws RemoteException
+	 */
+	boolean pastEl(int electionID) throws RemoteException;
+
+	/**
+	 * @param listID
+	 * @return
+	 * @throws RemoteException
+	 */
+	int getVotes(int listID) throws RemoteException;
+
+	/**
+	 * @param electionID
+	 * @return
+	 * @throws RemoteException
+	 */
+	int getTotalVotes(int electionID) throws RemoteException;
+
+	/**
+	 * @param userID
+	 * @param electionID
+	 * @return
+	 * @throws RemoteException
+	 */
+	String getFaculdadeVoted(int userID, int electionID) throws RemoteException;
 }

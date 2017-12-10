@@ -107,12 +107,13 @@ CREATE TABLE user_faculdade(
 	faculdade_facid int,
 	PRIMARY KEY(user_numberid,faculdade_facid)
 );
-# 
-#CREATE TABLE mesa_de_voto_user(
-#	user_numberid int,
-#	mesa_de_voto_faculdade_facid int,
-#	PRIMARY KEY(user_numberid,mesa_de_voto_faculdade_facid)
-#);
+
+CREATE TABLE mesa_de_voto_user(
+	user_numberid int,
+	mesa_de_voto_faculdade_facid int,
+	mesa_de_voto_eleicao_electionid int,
+	PRIMARY KEY(user_numberid,mesa_de_voto_faculdade_facid,mesa_de_voto_eleicao_electionid)
+);
 
 #----------------------------------------------------------------------------#
 # Foreign Keys
@@ -143,5 +144,6 @@ ALTER TABLE lista_candidata_user ADD CONSTRAINT lista_candidata_user_user_number
 ALTER TABLE user_faculdade ADD CONSTRAINT user_faculdade_fk1 FOREIGN KEY (user_numberid) REFERENCES user(numberid);
 ALTER TABLE user_faculdade ADD CONSTRAINT user_faculdade_fk2 FOREIGN KEY (faculdade_facid) REFERENCES faculdade(facid);
 
-#ALTER TABLE mesa_de_voto_user ADD CONSTRAINT mesa_de_voto_user_fk1 FOREIGN KEY (user_numberid) REFERENCES user(numberid);
-#ALTER TABLE mesa_de_voto_user ADD CONSTRAINT mesa_de_voto_user_fk2 FOREIGN KEY (mesa_de_voto_faculdade_facid) REFERENCES mesa_de_voto(faculdade_facid);
+ALTER TABLE mesa_de_voto_user ADD CONSTRAINT mesa_de_voto_user_fk1 FOREIGN KEY (user_numberid) REFERENCES user(numberid);
+ALTER TABLE mesa_de_voto_user ADD CONSTRAINT mesa_de_voto_user_fk2 FOREIGN KEY (mesa_de_voto_faculdade_facid) REFERENCES mesa_de_voto(faculdade_facid);
+ALTER TABLE mesa_de_voto_user ADD CONSTRAINT mesa_de_voto_user_fk3 FOREIGN KEY (mesa_de_voto_eleicao_electionid) REFERENCES mesa_de_voto(eleicao_electionid);

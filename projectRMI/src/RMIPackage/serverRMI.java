@@ -25,7 +25,6 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		super();
 	}
 
-
 	// ==================================================================================================================
 	// VotingAdminInterface
 
@@ -46,6 +45,13 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return false;
 	}
 
+	// Associa Faculdade a User
+	public boolean addUserFac(int numberID, int faculdadeID) throws RemoteException{
+		if(updateDB("CALL add_user_faculdade("+numberID+","+faculdadeID+");"))
+			return true;
+		return false;
+	}
+
 	// Edita dados User
 	public void editUser(int numberID, String name, String password, String phone, String expDate, String address) throws RemoteException {
 		if(!name.equals(""))
@@ -58,21 +64,6 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			updateDB("CALL edit_expdate("+numberID+",'"+expDate+"');");
 		if(!address.equals(""))
 			updateDB("CALL edit_address("+numberID+",'"+address+"');");
-	}
-
-	// Associa Faculdade a User
-	public boolean addUserFac(int numberID, int faculdadeID) throws RemoteException{
-		if(updateDB("CALL add_user_faculdade("+numberID+","+faculdadeID+");"))
-			return true;
-		return false;
-	}
-
-	// Associa User a uma lista
-	public boolean addUserLista(int listid, int userid) throws RemoteException{
-		if(updateDB("CALL add_lista_candidata_user("+listid+","+userid+");"))
-			return true;
-		return false;
-
 	}
 
 	// Apaga User e todos os seus dados
@@ -145,13 +136,6 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return false;
 	}
 
-	// Apaga Eleicao por ID
-	public boolean deleteEL(int eleicaoID) throws RemoteException{
-		if(updateDB("CALL delete_eleicao("+eleicaoID+");"))
-			return true;
-		return false;
-	}
-
 	// Edita titulo e descricao de uma Eleicao por ID
 	public boolean editELText(int eleicaoID, String title, String description) throws RemoteException{
 		if(updateDB("CALL edit_eleicao_text("+eleicaoID+",'"+title+"','"+description+"');"))
@@ -166,11 +150,26 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return false;
 	}
 
+	// Apaga Eleicao por ID
+	public boolean deleteEL(int eleicaoID) throws RemoteException{
+		if(updateDB("CALL delete_eleicao("+eleicaoID+");"))
+			return true;
+		return false;
+	}
+
 	// Adiciona uma Lista Candidata a uma determinada eleicao
 	public boolean addLista(String name, int type, int numvotes, int eleicaoID) throws RemoteException{
 		if(updateDB("CALL add_lista_candidata('"+name+"',"+type+","+numvotes+","+eleicaoID+");"))
 			return true;
 		return false;
+	}
+
+	// Associa User a uma lista
+	public boolean addUserLista(int listid, int userid) throws RemoteException{
+		if(updateDB("CALL add_lista_candidata_user("+listid+","+userid+");"))
+			return true;
+		return false;
+
 	}
 
 	// Elimina uma Lista Candidata por ID
@@ -194,13 +193,38 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return false;
 	}
 
+	// Acresenta User a uma Mesa de Voto
+	public boolean addUserBooth(int userID, int facID , int electionID) throws RemoteException{
+		try{
+			ResultSet rs = queryDB("SELECT COUNT(*) FROM mesa_de_voto_user WHERE mesa_de_voto_faculdade_facid = "+facID+" AND mesa_de_voto_eleicao_electionid = "+electionID+";");
+			if(rs.next()){
+				if(rs.getInt("COUNT(*)")<3) {
+					if (updateDB("call add_mesa_de_voto_user(" + userID + "," + facID + "," + electionID + ");"))
+						return true;
+				}
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	// Remove User de uma Mesa de Voto
+	public boolean removeUserBooth(int userID, int facID , int electionID) throws RemoteException{
+		if(updateDB("call delete_mesa_de_voto_user("+userID+","+facID+","+electionID+");"))
+			return true;
+		return false;
+	}
+
 	// Retorna tipo de Eleicao por ID
 	public int getElectionType(int id) throws RemoteException{
 		try {
 			ResultSet rs = queryDB("SELECT type FROM eleicao WHERE electionid = "+id+";");
 			if(rs.next())
 				return rs.getInt("type");
-		} catch (SQLException e) { }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return 0;
 	}
 
@@ -210,7 +234,9 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			ResultSet rs = queryDB("SELECT type FROM lista_candidata WHERE electionid = "+id+";");
 			if(rs.next())
 				return rs.getInt("type");
-		} catch (SQLException e) { }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return 0;
 	}
 
@@ -227,7 +253,9 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			rs = queryDB("SELECT * FROM funcionario WHERE user_numberid = "+id+";");
 			if(rs.next())
 				return 3;
-		} catch (SQLException e) { }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return 0;
 	}
 
@@ -237,13 +265,185 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			ResultSet rs = queryDB("SELECT listid FROM lista_candidata WHERE name = '"+name+"' AND eleicao_electionid = "+electionID+";");
 			if(rs.next())
 				return rs.getInt("listid");
-		} catch (SQLException e) { }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return 0;
+	}
+
+	// Verifica se eleicao ainda nao acabou
+	public boolean elAntecipated(int electionID) throws RemoteException{
+		try{
+			ResultSet rs = queryDB("SELECT electionid FROM eleicao WHERE (enddate > CURRENT_TIMESTAMP) AND (startdate > CURRENT_TIMESTAMP) AND electionid = "+electionID+";");
+			if(rs.next()){
+				return true;
+			}
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	// Verifica se eleicao ainda nao acabou
+	public boolean elTerminated(int electionID) throws RemoteException{
+		try{
+			ResultSet rs = queryDB("SELECT electionid FROM eleicao WHERE (enddate < CURRENT_TIMESTAMP) AND electionid = "+electionID+";");
+			if(rs.next()){
+				return true;
+			}
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	// Voto antecipado
+	public boolean antecipatedVote(int userID, int electionID, int listID) throws RemoteException{
+		if(updateDB("CALL antecipated_vote("+userID+","+electionID+","+listID+");"))
+			return true;
+		return false;
+	}
+
+	// Retorna id maximo das eleicoes
+	public int[] getEls() throws RemoteException{
+		int[] aux = new int[100];
+		Arrays.fill(aux,0);
+		try{
+			ResultSet rs = queryDB("SELECT electionid FROM eleicao;");
+			int i = 0;
+			while (rs.next()){
+				aux[i] = rs.getInt("electionid");
+				i++;
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		return aux;
+	}
+
+	// Verifica se a eleicao ja acabou
+	public boolean pastEl(int electionID) throws RemoteException{
+		try {
+			ResultSet rs = queryDB("SELECT electionid FROM eleicao WHERE enddate < CURRENT_TIMESTAMP AND electionid = "+electionID+";");
+			if(rs.next())
+				return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	// Retorna numero de votos numa lista
+	public int getVotes(int listID) throws RemoteException{
+		try {
+			ResultSet rs = queryDB("SELECT numvotes FROM lista_candidata WHERE listid = "+listID+";");
+			if(rs.next())
+				return rs.getInt("numvotes");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	// Retorna numero total de votos de uma eleicao
+	public int getTotalVotes(int electionID) throws RemoteException{
+		try {
+			ResultSet rs = queryDB("SELECT SUM(numvotes) FROM lista_candidata WHERE eleicao_electionid = "+electionID+";");
+			if(rs.next())
+				return rs.getInt("SUM(numvotes)");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+
+	}
+
+	// Retorna ID da faculdade onde utilizador votou
+	public String getFaculdadeVoted(int userID, int electionID) throws RemoteException{
+		try {
+			ResultSet rs = queryDB("SELECT faculdade_facid FROM eleicao_user WHERE eleicao_electionid = "+electionID+" AND user_numberid = "+userID+";");
+			if(rs.next()) {
+				int aux = rs.getInt("faculdade_facid");
+				return getFacName(aux);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+
+	// Retorna nome de faculade por ID
+	public String getFacName(int facID){
+		try {
+			ResultSet rs = queryDB("SELECT name FROM faculdade WHERE facid = "+facID+";");
+			if(rs.next())
+				return rs.getString("name");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "";
 	}
 
 
 	// ==================================================================================================================
 	// TCPServerInterface
+
+	// Log in User
+	public boolean authenticateUser(int id, String name, String password) throws RemoteException{
+		try{
+			ResultSet rs = queryDB("SELECT password FROM user WHERE name = '"+name+"' AND numberid = "+id+";");
+			if(rs.next()){
+				if(rs.getString("password").equals(password))
+					return true;
+			}
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	// Retorna faculdades a que user pertence
+	public boolean identifyID(int userID, int facID) throws RemoteException{
+		try{
+			ResultSet rs = queryDB("SELECT user_numberid,faculdade_facid FROM user_faculdade WHERE user_numberid = "+userID+" AND faculdade_facid = "+facID+";");
+			if(rs.next()){
+				return true;
+			}
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	// Retorna eleicoes elegiveis para determinada faculdade
+	public int[] getMesaDeVotoEls(int facid) throws RemoteException{
+		int[] aux = new int[100];
+		Arrays.fill(aux,0);
+		try{
+			ResultSet rs = queryDB("SELECT eleicao_electionid FROM mesa_de_voto WHERE faculdade_facid = "+facid+";");
+			int i = 0;
+			while (rs.next()){
+				aux[i] = rs.getInt("eleicao_electionid");
+				i++;
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		return aux;
+	}
+
+	// Verifica se a eleicao está ativa
+	public boolean isElActive (int electionID) throws RemoteException {
+		try{
+			ResultSet rs = queryDB("SELECT electionid FROM eleicao WHERE (startdate < CURRENT_TIMESTAMP) AND (enddate > CURRENT_TIMESTAMP) AND electionid = "+electionID+";");
+			if(rs.next()){
+				return true;
+			}
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 	// Regista Voto
 	public boolean voteElection(int userID, int electionID, int listID, int facID) throws RemoteException {
@@ -252,12 +452,17 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return false;
 	}
 
+
+
+	// ==================================================================================================================
+	// Both Interfaces
+
 	// Verifica se user já votou em eleição
 	public boolean hasVoted(int userID, int electionID) throws RemoteException {
 		try {
 			ResultSet rs = queryDB("SELECT * FROM eleicao_user WHERE eleicao_electionid = "+electionID+" AND user_numberid = "+userID+";");
 			if(rs.next())
-                return true;
+				return true;
 		} catch (SQLException e) { }
 		return false;
 	}
@@ -277,56 +482,6 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			}
 		} catch (SQLException e) { }
 		return false;
-	}
-
-	// Verifica se a eleicao está ativa
-	public boolean isElActive (int electionID) throws RemoteException {
-		try{
-			ResultSet rs = queryDB("CALL check_date(" + electionID + ");");
-			if(rs.next()){
-				return true;
-			}
-		}catch (SQLException e){ }
-		return false;
-	}
-
-	// Log in User
-	public boolean authenticateUser(int id, String name, String password) throws RemoteException{
-		try{
-			ResultSet rs = queryDB("SELECT password FROM user WHERE name = '"+name+"' AND numberid = "+id+";");
-			if(rs.next()){
-				if(rs.getString("password").equals(password))
-					return true;
-			}
-		}catch (SQLException e){ }
-		return false;
-	}
-
-	// Retorna faculdades a que user pertence
-	public boolean identifyID(int userID, int facID) throws RemoteException{
-		try{
-			ResultSet rs = queryDB("SELECT user_numberid,faculdade_facid FROM user_faculdade WHERE user_numberid = "+userID+" AND faculdade_facid = "+facID+";");
-			if(rs.next()){
-				return true;
-			}
-		}catch (SQLException e){ }
-		return false;
-	}
-
-	// Retorna eleicoes elegiveis para determinada faculdade
-	public int[] getMesaDeVotoEls(int facid) throws RemoteException{
-
-		int[] aux = new int[100];
-		Arrays.fill(aux,0);
-		try{
-			ResultSet rs = queryDB("SELECT eleicao_electionid FROM mesa_de_voto WHERE faculdade_facid = "+facid+";");
-			int i = 0;
-			while (rs.next()){
-				aux[i] = rs.getInt("eleicao_electionid");
-				i++;
-			}
-		} catch (SQLException e){}
-		return aux;
 	}
 
 	// Retorna nome eleicao por ID
@@ -365,6 +520,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		}catch (SQLException e){ }
 		return "";
 	}
+
 
 
 	// ==================================================================================================================

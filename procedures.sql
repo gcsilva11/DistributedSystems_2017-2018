@@ -71,7 +71,7 @@ BEGIN
 
 	DELETE FROM eleicao_user WHERE user_numberid = ID;
 	DELETE FROM lista_candidata_user WHERE user_numberid = ID;
-	DELETE FROM mesa_de_voto_user WHERE user_numberid = ID;
+	#DELETE FROM mesa_de_voto_user WHERE user_numberid = ID;
 
 	DELETE FROM user WHERE numberid = ID;
 END //
@@ -243,6 +243,21 @@ BEGIN
 END //
 DELIMITER ;
 
+DELIMITER //
+DROP PROCEDURE IF EXISTS add_mesa_de_voto_user //
+CREATE PROCEDURE add_mesa_de_voto_user (IN uID int(11),IN fID int(11),IN eID int(11))
+BEGIN
+	INSERT INTO mesa_de_voto_user SELECT u.numberid, m.faculdade_facid, m.eleicao_electionid FROM user u, mesa_de_voto m WHERE u.numberid = uID AND m.faculdade_facid = fID AND m.eleicao_electionid = eID;
+END //
+DELIMITER ;
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS delete_mesa_de_voto_user //
+CREATE PROCEDURE delete_mesa_de_voto_user (IN uID int(11),IN fID int(11),IN eID int(11))
+BEGIN
+	DELETE FROM mesa_de_voto_user WHERE user_numberid = uID AND mesa_de_voto_faculdade_facid = fID AND mesa_de_voto_eleicao_electionid = eID;
+END //
+DELIMITER ;
 
 # VOTING /-------------------------/
 DELIMITER //
@@ -255,9 +270,10 @@ END //
 DELIMITER ;
 
 DELIMITER //
-DROP PROCEDURE IF EXISTS check_date //
-CREATE PROCEDURE check_date (IN eleicaoID int(11))
+DROP PROCEDURE IF EXISTS antecipated_vote //
+CREATE PROCEDURE antecipated_vote (IN uID int(11),IN eID int(11),IN lID int(11))
 BEGIN
-	SELECT electionid FROM eleicao WHERE (startdate < CURRENT_TIMESTAMP) AND (enddate > CURRENT_TIMESTAMP) AND electionid = eleicaoID;
+	INSERT INTO eleicao_user SELECT e.electionid,u.numberid,NULL FROM eleicao e, user u WHERE e.electionid = eID AND u.numberid = uID; 
+	UPDATE lista_candidata SET numvotes = numvotes + 1 WHERE listid = lID;
 END //
 DELIMITER ;
