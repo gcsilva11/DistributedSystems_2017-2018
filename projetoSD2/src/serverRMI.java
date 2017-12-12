@@ -1,20 +1,13 @@
-package RMIPackage;
-
-import com.sun.org.apache.regexp.internal.RE;
-
-import javax.xml.transform.Result;
 import java.io.IOException;
 import java.net.*;
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.*;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.sql.*;
 
-public class serverRMI extends UnicastRemoteObject {
+public class serverRMI extends UnicastRemoteObject implements IserverRMI {
     private static final long serialVersionUID = 1L;
 
     private static Connection connection = null;
