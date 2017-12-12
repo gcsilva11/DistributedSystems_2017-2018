@@ -364,7 +364,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			ResultSet rs = queryDB("SELECT faculdade_facid FROM eleicao_user WHERE eleicao_electionid = "+electionID+" AND user_numberid = "+userID+";");
 			if(rs.next()) {
 				int aux = rs.getInt("faculdade_facid");
-				return getFacName(aux);
+					return getFacName(aux);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
