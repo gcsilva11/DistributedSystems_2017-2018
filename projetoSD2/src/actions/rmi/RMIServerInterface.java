@@ -1,3 +1,5 @@
+package actions.rmi;
+
 import java.rmi.RemoteException;
 
 public interface RMIServerInterface {

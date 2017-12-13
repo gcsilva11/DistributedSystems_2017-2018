@@ -5,4 +5,31 @@
         "http://struts.apache.org/dtds/struts-2.5.dtd">
 
 <struts>
+
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.ui.theme" value="simple" />
+
+    <package name="iVotas" extends="struts-default">
+
+        <default-action-ref name="index"/>
+
+        <global-results>
+            <result name="error">/error.jsp</result>
+        </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="error" />
+        </global-exception-mappings>
+
+        <action name="index">
+            <result>/index.jsp</result>
+        </action>
+
+        <action name="login" class="actions.Login.LoginAction" method ="execute">
+            <result name="loginSuccess">/error.jsp</result>
+            <result name="loginFail">/index.jsp</result>
+        </action>
+
+    </package>
+
 </struts>
