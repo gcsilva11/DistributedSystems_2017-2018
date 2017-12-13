@@ -7,7 +7,11 @@
         <element id="directory" name="classes">
           <element id="module-output" name="projetoSD2" />
         </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Struts 2-2.5.14.1" />
+        </element>
       </element>
+      <element id="library" level="project" name="Struts 2-2.5.14.1" />
     </root>
   </artifact>
 </component>
