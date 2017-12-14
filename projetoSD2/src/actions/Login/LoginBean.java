@@ -15,8 +15,7 @@ public class LoginBean{
 	public LoginBean() {
 		try {
 			server = (RMIServerInterface) Naming.lookup("rmi://" + hostname + ":" + rmiPort + "/" + "vote_booth");
-		}
-		catch(MalformedURLException|NotBoundException|RemoteException e) {
+		} catch(MalformedURLException|NotBoundException|RemoteException e) {
 			e.printStackTrace();
 		}
 	}
