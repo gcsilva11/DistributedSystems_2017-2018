@@ -1,10 +1,9 @@
-import actions.Login.RMIServerInterface;
+package actions.rmi;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.*;
 import java.rmi.*;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
+import java.rmi.registry.*;
 import java.rmi.server.*;
 import java.util.*;
 import java.sql.*;
@@ -377,9 +376,9 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     }
 
     // Log in User
-    public boolean authenticateUser(int id, String name, String password) throws RemoteException{
+    public boolean authenticateUser(String name, String password) throws RemoteException{
         try{
-            ResultSet rs = queryDB("SELECT password FROM user WHERE name = '"+name+"' AND numberid = "+id+";");
+            ResultSet rs = queryDB("SELECT password FROM user WHERE name = '"+name+"';");
             if(rs.next()){
                 if(rs.getString("password").equals(password))
                     return true;

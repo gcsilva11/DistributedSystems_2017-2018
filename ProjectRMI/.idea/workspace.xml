@@ -13,8 +13,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d94659c3-7663-4a7a-954b-c1093c75fd07" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/RMIPackage/serverRMI.java" afterPath="$PROJECT_DIR$/src/RMIPackage/serverRMI.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../projetoSD2/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../projetoSD2/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../projetoSD2/src/actions/Login/LoginBean.java" afterPath="$PROJECT_DIR$/../projetoSD2/src/actions/Login/LoginBean.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../projetoSD2/src/actions/rmi/RMIServer.java" afterPath="$PROJECT_DIR$/../projetoSD2/src/actions/rmi/RMIServer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../projetoSD2/src/actions/rmi/RMIServerInterface.java" afterPath="$PROJECT_DIR$/../projetoSD2/src/actions/rmi/RMIServerInterface.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/bin/" />
@@ -183,7 +185,7 @@
       <file leaf-file-name="TCPServer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1110">
+            <state relative-caret-position="1065">
               <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -290,6 +292,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -337,13 +340,12 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
       <pane id="Scratches" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -545,11 +547,12 @@
       <workItem from="1512926288959" duration="1071000" />
       <workItem from="1513002261141" duration="1176000" />
       <workItem from="1513041665113" duration="24000" />
+      <workItem from="1513214695562" duration="21000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="90456000" />
+    <option name="totallyTimeSpent" value="90477000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -859,7 +862,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1110">
+        <state relative-caret-position="1065">
           <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1016,7 +1019,6 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>

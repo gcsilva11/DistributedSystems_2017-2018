@@ -4,6 +4,7 @@ package actions.Login;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.SessionAware;
 
+import java.rmi.RemoteException;
 import java.util.Map;
 
 public class LoginAction extends ActionSupport implements SessionAware {
@@ -12,15 +13,20 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	private String username = null, password = null;
 
 	@Override
-	public String execute() {
+	public String execute() throws Exception{
 
 		// any username is accepted without confirmation (should check using RMI)
 		if(this.username != null && !username.equals("")) {
 			this.getLoginBean().setUsername(this.username);
 			this.getLoginBean().setPassword(this.password);
-			session.put("username", username);
-			session.put("loggedin", true); // this marks the user as logged in
-			return "loginSuccess";
+
+			if(this.getLoginBean().getAuthenticateUser()) {
+				session.put("username", username);
+				session.put("loggedin", true); // this marks the user as logged in
+				return "loginSuccess";
+			}
+			else
+				return "loginFail";
 		}
 		else
 			return "loginFail";
@@ -34,6 +40,14 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 	public void setLoginBean(LoginBean loginBean) {
 		this.session.put("loginBean", loginBean);
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override

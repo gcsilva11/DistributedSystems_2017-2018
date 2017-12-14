@@ -12,10 +12,8 @@
 <H1>iVotas - Voting online</H1>
 <h3>SD 17/18</h3>
 <s:form action="login" method="post">
-  <s:text name="Username:" />
-  <s:textfield name="username" />
-  <s:text name ="Password:" />
-  <s:password name="password"/><br>
+  <li>Username: <s:textfield name="username" /></li>
+  <li>Password: <s:password name="password"/><br></li>
   <s:submit/>
 </s:form>
 </body>

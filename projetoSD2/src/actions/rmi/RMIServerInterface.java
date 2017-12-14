@@ -1,8 +1,8 @@
 package actions.rmi;
 
-import java.rmi.RemoteException;
+import java.rmi.*;
 
-public interface RMIServerInterface {
+public interface RMIServerInterface extends Remote {
 
     boolean checkFaculdade(int facID) throws RemoteException;
     boolean registerUser(int numberID, String name, String password, String phone, String address, String expDate, int profession) throws RemoteException;
@@ -40,8 +40,7 @@ public interface RMIServerInterface {
     int getVotes(int listID) throws RemoteException;
     int getTotalVotes(int electionID) throws RemoteException;
     String getFaculdadeVoted(int userID, int electionID) throws RemoteException;
-    String getFacName(int facID);
-    boolean authenticateUser(int id, String name, String password) throws RemoteException;
+    boolean authenticateUser(String name, String password) throws RemoteException;
     boolean identifyID(int userID, int facID) throws RemoteException;
     int[] getMesaDeVotoEls(int facid) throws RemoteException;
     boolean isElActive (int electionID) throws RemoteException;
