@@ -9,8 +9,8 @@ public class LoginBean{
 	private String username; // username and password supplied by the user
 	private String password;
 	private RMIServerInterface server;
-	String hostname = "localhost";
-	int rmiPort = 6500;
+	private String hostname = "localhost";
+	private int rmiPort = 7000;
 
 	public LoginBean() {
 		try {

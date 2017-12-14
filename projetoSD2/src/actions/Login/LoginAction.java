@@ -1,6 +1,5 @@
 package actions.Login;
 
-
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -15,7 +14,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	@Override
 	public String execute() throws Exception{
 
-		// any username is accepted without confirmation (should check using RMI)
 		if(this.username != null && !username.equals("")) {
 			this.getLoginBean().setUsername(this.username);
 			this.getLoginBean().setPassword(this.password);

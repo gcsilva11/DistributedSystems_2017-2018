@@ -26,7 +26,7 @@
         </action>
 
         <action name="login" class="actions.Login.LoginAction" method ="execute">
-            <result name="loginSuccess">/error.jsp</result>
+            <result name="loginSuccess">/usermenu.jsp</result>
             <result name="loginFail">/index.jsp</result>
         </action>
 
