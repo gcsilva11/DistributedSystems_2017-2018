@@ -15,17 +15,7 @@
 
 <div>
 
-    <s:form action="listElection" method="get"/>
 
-    <java:forEach items="${eleicao}" var="eleicoes">
-        <tr>
-            <td>${eleicao}</td>
-        </tr>
-    </java:forEach>
-
-    <s:form>
-        <li>ID Eleição: <s:textfield name="electionid"/></li>
-    </s:form>
 
 
 </div>

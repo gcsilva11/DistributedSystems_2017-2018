@@ -117,8 +117,8 @@
       <file leaf-file-name="usermenu.jsp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/usermenu.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+            <state relative-caret-position="270">
+              <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -519,12 +519,12 @@
       <workItem from="1513211495114" duration="6647000" />
       <workItem from="1513290246228" duration="492000" />
       <workItem from="1513340859634" duration="11405000" />
-      <workItem from="1513374165748" duration="618000" />
+      <workItem from="1513374165748" duration="730000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30784000" />
+    <option name="totallyTimeSpent" value="30896000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -989,8 +989,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/usermenu.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        <state relative-caret-position="270">
+          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding />
         </state>
       </provider>
