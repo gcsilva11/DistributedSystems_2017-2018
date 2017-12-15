@@ -11,6 +11,10 @@
     <h1>Menu Admin</h1>
 </div>
 
+<div>
+    <button href="<s:url action = "registerUserMenu"/>" Register a new user/>
+</div>
+
 </body>
 
 </html>

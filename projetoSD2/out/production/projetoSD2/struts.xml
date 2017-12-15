@@ -31,7 +31,13 @@
             <result name="loginFail">/index.jsp</result>
         </action>
 
-        <action name="listElection" class="Web.Actions.VoteAction" method="execute">
+        <action name="registerUser" class="Web.Actions.RegisterUserAction" method ="execute">
+            <result name="registerSuccess">/adminmenu.jsp</result>
+            <result name="registerFail">/error.jsp</result>
+        </action>
+
+        <action name="registerUserMenu">
+            <result name="success">/registerUser.jsp</result>
         </action>
 
     </package>
