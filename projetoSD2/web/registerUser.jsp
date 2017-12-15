@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>iVotas - Menu Admin</title>
+    <title>iVotas - Admin</title>
 
 </head>
 <body>
@@ -12,7 +12,9 @@
 </div>
 
 <div>
-    <button href="<s:url action = "registerUserMenu"/>" Register a new user/>
+    <s:form action="registerUser" method="post">
+        <s:submit value="Register New User...." class="btn btn-default" />
+    </s:form>
 </div>
 
 </body>

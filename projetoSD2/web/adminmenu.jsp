@@ -11,6 +11,12 @@
     <h1>Menu Admin</h1>
 </div>
 
+<div>
+    <s:form action="registerUserMenu" method="POST">
+        <s:submit  class="btn btn-default" />
+    </s:form>
+</div
+
 </body>
 
 </html>
