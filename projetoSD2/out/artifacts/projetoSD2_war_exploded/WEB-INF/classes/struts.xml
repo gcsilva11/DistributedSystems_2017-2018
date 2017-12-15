@@ -31,6 +31,9 @@
             <result name="loginFail">/index.jsp</result>
         </action>
 
+        <action name="listElection" class="Web.Actions.VoteAction" method="execute">
+        </action>
+
     </package>
 
 </struts>

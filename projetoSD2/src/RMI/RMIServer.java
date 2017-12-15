@@ -250,6 +250,18 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
         return 0;
     }
 
+    // Retorna ID de um user por nome
+    public int getUserID(String name) throws RemoteException{
+        try {
+            ResultSet rs = queryDB("SELECT numberid FROM user WHERE name = '"+name+"';");
+            if(rs.next())
+                return rs.getInt("numberid");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     // Retorna ID da lista por nome
     public int getListID(String name, int electionID) throws RemoteException{
         try {

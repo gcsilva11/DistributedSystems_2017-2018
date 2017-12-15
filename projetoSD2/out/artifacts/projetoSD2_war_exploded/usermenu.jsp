@@ -1,14 +1,27 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="java" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
-    <title>iVotas - Menu Utilizador</title>
+    <title>iVotas - Menu de Voto</title>
 
 </head>
 <body>
 <div>
-    <h1>Menu onde votar</h1>
+
+    <s:form action="listElection" method="get"/>
+
+    <java:forEach items="${eleicao}" var="eleicoes">
+        <tr>
+            <td>${eleicao}</td>
+        </tr>
+    </java:forEach>
+
+    <s:form>
+        <li>ID Eleição: <s:textfield name="electionid"/></li>
+    </s:form>
+
+
 </div>
 
 </body>
