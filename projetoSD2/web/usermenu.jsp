@@ -13,44 +13,6 @@
     <java:redirect url="index.jsp"/>
 </java:if>
 
-
-    <div>
-        <java:choose>
-            <java:when test="${userBean.eleicoes.length == 0}">
-                <div>
-                    <h1>Nao ha eleicoes.</h1>
-                </div>
-
-            </java:when>
-            <java:otherwise>
-                <div>
-                    <java:forEach items="${userBean.eleicoes}" var="eleicoes">
-                        <table class="table table-bordered">
-                            <tr>
-                                <td><java:out value="${}" /></td>
-                                <td>
-                                    <s:form action="detailsAuction" method="POST">
-                                        <input type="hidden" name="id" value="${auction.getId()}"/>
-                                        <s:submit value="Details" class="btn btn-default"/>
-                                    </s:form>
-                                </td>
-                            </tr>
-                        </table>
-                    </java:forEach>
-                </div>
-            </java:otherwise>
-        </java:choose>
-    </div>
-
-
-
-
-
-
-
-
-
-
 <div>
 
     <s:form action="listElection" method="get"/>
