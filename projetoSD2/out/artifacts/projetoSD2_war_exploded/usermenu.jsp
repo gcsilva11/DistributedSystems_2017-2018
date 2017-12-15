@@ -1,13 +1,14 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>iVotas - Voter Menu</title>
+    <title>iVotas - Menu Utilizador</title>
 
 </head>
 <body>
 <div>
-    <h1>This is the menu where you will vote</h1>
+    <h1>Menu onde votar</h1>
 </div>
 
 </body>

@@ -3,12 +3,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>iVotas - Menu Utilizador</title>
+    <title>iVotas - Menu Admin</title>
 
 </head>
 <body>
 <div>
-    <h1>Menu onde votar</h1>
+    <h1>Menu Admin</h1>
 </div>
 
 </body>

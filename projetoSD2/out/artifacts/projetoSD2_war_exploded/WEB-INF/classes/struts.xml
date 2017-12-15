@@ -25,8 +25,9 @@
             <result>/index.jsp</result>
         </action>
 
-        <action name="login" class="actions.Login.LoginAction" method ="execute">
+        <action name="login" class="Web.Actions.LoginAction" method ="execute">
             <result name="loginSuccess">/usermenu.jsp</result>
+            <result name="loginAdmin">/adminmenu.jsp</result>
             <result name="loginFail">/index.jsp</result>
         </action>
 

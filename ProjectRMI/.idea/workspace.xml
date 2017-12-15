@@ -13,10 +13,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d94659c3-7663-4a7a-954b-c1093c75fd07" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../projetoSD2/src/actions/Login/LoginAction.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../projetoSD2/src/actions/Login/LoginBean.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../projetoSD2/src/actions/rmi/RMIServer.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../projetoSD2/src/actions/rmi/RMIServerInterface.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../projetoSD2/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../projetoSD2/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../projetoSD2/src/actions/Login/LoginBean.java" afterPath="$PROJECT_DIR$/../projetoSD2/src/actions/Login/LoginBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../projetoSD2/src/actions/rmi/RMIServer.java" afterPath="$PROJECT_DIR$/../projetoSD2/src/actions/rmi/RMIServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../projetoSD2/src/actions/rmi/RMIServerInterface.java" afterPath="$PROJECT_DIR$/../projetoSD2/src/actions/rmi/RMIServerInterface.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../projetoSD2/out/artifacts/projetoSD2_war_exploded/WEB-INF/classes/struts.xml" afterPath="$PROJECT_DIR$/../projetoSD2/out/artifacts/projetoSD2_war_exploded/WEB-INF/classes/struts.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../projetoSD2/out/artifacts/projetoSD2_war_exploded/index.jsp" afterPath="$PROJECT_DIR$/../projetoSD2/out/artifacts/projetoSD2_war_exploded/index.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../projetoSD2/out/artifacts/projetoSD2_war_exploded/usermenu.jsp" afterPath="$PROJECT_DIR$/../projetoSD2/out/artifacts/projetoSD2_war_exploded/usermenu.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../projetoSD2/out/production/projetoSD2/struts.xml" afterPath="$PROJECT_DIR$/../projetoSD2/out/production/projetoSD2/struts.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../projetoSD2/src/struts.xml" afterPath="$PROJECT_DIR$/../projetoSD2/src/struts.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../projetoSD2/web/index.jsp" afterPath="$PROJECT_DIR$/../projetoSD2/web/index.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../projetoSD2/web/usermenu.jsp" afterPath="$PROJECT_DIR$/../projetoSD2/web/usermenu.jsp" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/bin/" />
@@ -34,158 +43,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="VotingAdminInterface.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/adminPackage/VotingAdminInterface.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1335">
-              <caret line="235" column="4" lean-forward="false" selection-start-line="235" selection-start-column="4" selection-end-line="235" selection-end-column="4" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="docComment;method#registerUser#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#addUserFac#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#editUser#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#deleteUser#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#registerFac#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#registerDep#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#registerUnit#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#editFac#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#editDep#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#deleteFac#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#deleteDep#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#deleteUnit#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#addEl#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#deleteEL#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#editELText#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#editElDate#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#addLista#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#addUserLista#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#deleteLista#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#addBooth#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#deleteBooth#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#addUserBooth#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#removeUserBooth#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#getElectionType#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#getListType#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#getListID#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#elAntecipated#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#elTerminated#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#getUserType#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#antecipatedVote#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#getElName#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#getElectionLists#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#getListName#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#getEls#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#hasVoted#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#userCanVote#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#pastEl#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#getVotes#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#getTotalVotes#0;class#VotingAdminInterface#0" expanded="false" />
-                <element signature="docComment;method#getFaculdadeVoted#0;class#VotingAdminInterface#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TCPServerInterface.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServerInterface.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="70" column="4" lean-forward="false" selection-start-line="70" selection-start-column="4" selection-end-line="70" selection-end-column="4" />
-              <folding>
-                <element signature="docComment;method#checkFaculdade#0;class#TCPServerInterface#0" expanded="false" />
-                <element signature="docComment;method#authenticateUser#0;class#TCPServerInterface#0" expanded="false" />
-                <element signature="docComment;method#identifyID#0;class#TCPServerInterface#0" expanded="false" />
-                <element signature="docComment;method#getMesaDeVotoEls#0;class#TCPServerInterface#0" expanded="false" />
-                <element signature="docComment;method#hasVoted#0;class#TCPServerInterface#0" expanded="false" />
-                <element signature="docComment;method#userCanVote#0;class#TCPServerInterface#0" expanded="false" />
-                <element signature="docComment;method#isElActive#0;class#TCPServerInterface#0" expanded="false" />
-                <element signature="docComment;method#voteElection#0;class#TCPServerInterface#0" expanded="false" />
-                <element signature="docComment;method#getElName#0;class#TCPServerInterface#0" expanded="false" />
-                <element signature="docComment;method#getElectionLists#0;class#TCPServerInterface#0" expanded="false" />
-                <element signature="docComment;method#getListName#0;class#TCPServerInterface#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="serverRMI.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/RMIPackage/serverRMI.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="366" column="43" lean-forward="false" selection-start-line="366" selection-start-column="20" selection-end-line="366" selection-end-column="43" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#checkFaculdade#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#registerUser#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#addUserFac#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#editUser#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#deleteUser#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#registerFac#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#registerDep#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#registerUnit#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#editFac#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#editDep#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#deleteFac#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#deleteDep#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#deleteUnit#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#addEl#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#editELText#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#editElDate#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#deleteEL#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#addLista#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#addUserLista#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#deleteLista#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#addBooth#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#deleteBooth#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#addUserBooth#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#removeUserBooth#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#getElectionType#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#getListType#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#getUserType#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#getListID#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#elAntecipated#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#elTerminated#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#antecipatedVote#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#getEls#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#pastEl#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#getVotes#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#getTotalVotes#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#getFacName#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#authenticateUser#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#identifyID#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#getMesaDeVotoEls#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#isElActive#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#voteElection#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#hasVoted#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#userCanVote#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#getElName#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#getElectionLists#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#getListName#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#main#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#startRMI#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#connectDB#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#updateDB#0;class#serverRMI#0" expanded="false" />
-                <element signature="method#queryDB#0;class#serverRMI#0" expanded="false" />
-                <element signature="class#RMIFailover#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Admin.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/adminPackage/Admin.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8385">
-              <caret line="571" column="67" lean-forward="false" selection-start-line="571" selection-start-column="50" selection-end-line="571" selection-end-column="67" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TCPServer.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TCPServer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1065">
+            <state relative-caret-position="538">
               <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -292,7 +153,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -339,9 +200,9 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -372,7 +233,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.TCPClient">
+  <component name="RunManager" selected="Application.Admin">
     <configuration name="Admin" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="adminPackage.Admin" />
@@ -548,11 +409,13 @@
       <workItem from="1513002261141" duration="1176000" />
       <workItem from="1513041665113" duration="24000" />
       <workItem from="1513214695562" duration="21000" />
+      <workItem from="1513345535239" duration="460000" />
+      <workItem from="1513351187442" duration="13000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="90477000" />
+    <option name="totallyTimeSpent" value="90950000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -565,7 +428,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958034" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -579,7 +441,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3306039" sideWeight="0.497558" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17032968" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17023809" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24969475" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -810,98 +672,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/adminPackage/VotingAdminInterface.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1335">
-          <caret line="235" column="4" lean-forward="false" selection-start-line="235" selection-start-column="4" selection-end-line="235" selection-end-column="4" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="docComment;method#registerUser#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#addUserFac#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#editUser#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#deleteUser#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#registerFac#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#registerDep#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#registerUnit#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#editFac#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#editDep#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#deleteFac#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#deleteDep#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#deleteUnit#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#addEl#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#deleteEL#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#editELText#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#editElDate#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#addLista#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#addUserLista#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#deleteLista#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#addBooth#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#deleteBooth#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#addUserBooth#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#removeUserBooth#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getElectionType#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getListType#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getListID#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#elAntecipated#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#elTerminated#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getUserType#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#antecipatedVote#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getElName#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getElectionLists#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getListName#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getEls#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#hasVoted#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#userCanVote#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#pastEl#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getVotes#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getTotalVotes#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getFaculdadeVoted#0;class#VotingAdminInterface#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1065">
-          <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/adminPackage/Admin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8385">
-          <caret line="571" column="67" lean-forward="false" selection-start-line="571" selection-start-column="50" selection-end-line="571" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServerInterface.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="70" column="4" lean-forward="false" selection-start-line="70" selection-start-column="4" selection-end-line="70" selection-end-column="4" />
-          <folding>
-            <element signature="docComment;method#checkFaculdade#0;class#TCPServerInterface#0" expanded="false" />
-            <element signature="docComment;method#authenticateUser#0;class#TCPServerInterface#0" expanded="false" />
-            <element signature="docComment;method#identifyID#0;class#TCPServerInterface#0" expanded="false" />
-            <element signature="docComment;method#getMesaDeVotoEls#0;class#TCPServerInterface#0" expanded="false" />
-            <element signature="docComment;method#hasVoted#0;class#TCPServerInterface#0" expanded="false" />
-            <element signature="docComment;method#userCanVote#0;class#TCPServerInterface#0" expanded="false" />
-            <element signature="docComment;method#isElActive#0;class#TCPServerInterface#0" expanded="false" />
-            <element signature="docComment;method#voteElection#0;class#TCPServerInterface#0" expanded="false" />
-            <element signature="docComment;method#getElName#0;class#TCPServerInterface#0" expanded="false" />
-            <element signature="docComment;method#getElectionLists#0;class#TCPServerInterface#0" expanded="false" />
-            <element signature="docComment;method#getListName#0;class#TCPServerInterface#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/RMIPackage/serverRMI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="366" column="43" lean-forward="false" selection-start-line="366" selection-start-column="20" selection-end-line="366" selection-end-column="43" />
+        <state relative-caret-position="150">
+          <caret line="384" column="5" lean-forward="true" selection-start-line="384" selection-start-column="5" selection-end-line="384" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#checkFaculdade#0;class#serverRMI#0" expanded="false" />
@@ -956,6 +730,82 @@
             <element signature="method#updateDB#0;class#serverRMI#0" expanded="false" />
             <element signature="method#queryDB#0;class#serverRMI#0" expanded="false" />
             <element signature="class#RMIFailover#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServerInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="69" column="4" lean-forward="false" selection-start-line="69" selection-start-column="4" selection-end-line="69" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/adminPackage/VotingAdminInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="235" column="4" lean-forward="false" selection-start-line="235" selection-start-column="4" selection-end-line="235" selection-end-column="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="docComment;method#registerUser#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#addUserFac#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#editUser#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#deleteUser#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#registerFac#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#registerDep#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#registerUnit#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#editFac#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#editDep#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#deleteFac#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#deleteDep#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#deleteUnit#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#addEl#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#deleteEL#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#editELText#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#editElDate#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#addLista#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#addUserLista#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#deleteLista#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#addBooth#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#deleteBooth#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#addUserBooth#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#removeUserBooth#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#getElectionType#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#getListType#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#getListID#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#elAntecipated#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#elTerminated#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#getUserType#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#antecipatedVote#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#getElName#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#getElectionLists#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#getListName#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#getEls#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#hasVoted#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#userCanVote#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#pastEl#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#getVotes#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#getTotalVotes#0;class#VotingAdminInterface#0" expanded="false" />
+            <element signature="docComment;method#getFaculdadeVoted#0;class#VotingAdminInterface#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/adminPackage/Admin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="538">
+          <caret line="571" column="67" lean-forward="false" selection-start-line="571" selection-start-column="50" selection-end-line="571" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="538">
+          <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -1,4 +1,4 @@
-package actions.rmi;
+package RMI;
 
 import java.io.*;
 import java.net.*;
@@ -402,6 +402,23 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
         return false;
     }
 
+    // Retorna faculdades a que user pertence
+    public boolean identifyName(String name, int facID) throws RemoteException{
+        try{
+            ResultSet rs = queryDB("SELECT numberid FROM user WHERE name = '"+name+"';");
+            if(rs.next()){
+                ResultSet rs2 = queryDB("SELECT * FROM user_faculdade WHERE user_numberid = "+rs.getString("numberid"));
+                while (rs2.next()){
+                    if(rs2.getInt("faculdade_facid")==facID)
+                        return true;
+                }
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     // Retorna eleicoes elegiveis para determinada faculdade
     public int[] getMesaDeVotoEls(int facid) throws RemoteException{
         int[] aux = new int[100];
@@ -502,6 +519,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
         }catch (SQLException e){ }
         return "";
     }
+
 
     // =================================================================================================================
     // Main
