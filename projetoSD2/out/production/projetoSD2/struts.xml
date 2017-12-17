@@ -26,9 +26,9 @@
         </action>
 
         <action name="login" class="Web.Actions.LoginAction" method ="execute">
-            <result name="loginSuccess">/listelections.jsp</result>
-            <result name="loginAdmin">/adminmenu.jsp</result>
-            <result name="loginFail">/index.jsp</result>
+            <result name="LOGIN_SUCCESS">/listelections.jsp</result>
+            <result name="LOGIN_ADMIN">/adminmenu.jsp</result>
+            <result name="LOGIN_FAIL">/index.jsp</result>
         </action>
 
         <action name="registerUser" class="Web.Actions.RegisterUserAction" method ="execute">
@@ -39,15 +39,21 @@
         <action name="registerUserMenu">
             <result name="success">/registerUser.jsp</result>
         </action>
+        <action name="menuButtonAdmin">
+            <result name="success">/adminmenu.jsp</result>
+        </action>
+        <action name="createElection">
+            <result name="success">/createelection.jsp</result>
+        </action>
 
         <action name="chooseElection" class="Web.Actions.ChooseElectionAction" method="execute">
-            <result name="success">listelectionslists.jsp</result>
-            <result name="error">index.jsp</result>
+            <result name="success">/listelectionlists.jsp</result>
+            <result name="error">/index.jsp</result>
         </action>
 
         <action name="chooseList" class="Web.Actions.ChooseListAction" method="execute">
-            <result name="success">index.jsp</result>
-            <result name="error">index.jsp</result>
+            <result name="success">/index.jsp</result>
+            <result name="error">/index.jsp</result>
         </action>
 
     </package>

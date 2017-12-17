@@ -9,6 +9,7 @@
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Struts 2-2.5.14.1" />
+          <element id="library" level="project" name="mysql-connector-java-5.1.44-bin" />
         </element>
       </element>
     </root>

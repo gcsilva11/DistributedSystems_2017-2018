@@ -43,7 +43,12 @@ public class AdminBean extends RMIBean{
 		this.profType=Integer.parseInt(prof);
 	}
 
-	public boolean getRegistrationSucess() throws RemoteException{
-		return this.server.registerUser(this.id,this.username,this.password,this.phone,this.address,this.expDate,this.profType);
+	public boolean getRegistrationSuccess() throws RemoteException{
+		if(this.server.registerUser(this.id,this.username,this.password,this.phone,this.address,this.expDate,this.profType)){
+			return(this.server.addUserFac(this.id,this.faculdade));
+		}
+		else{
+			return false;
+		}
 	}
 }

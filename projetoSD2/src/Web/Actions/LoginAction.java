@@ -44,9 +44,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 							}
 						}
 						this.session.put("eleicoes",elNames);
-
-
-						return "loginSuccess";
+						return "LOGIN_SUCCESS";
 					} else {
 						session.put("message","Credenciais incorretas");
 					}
@@ -57,11 +55,12 @@ public class LoginAction extends ActionSupport implements SessionAware {
 				session.put("message","Faculdade não existe");
 			}
 		} else if(this.username.equals("admin") && this.password.equals("admin") && this.faculdade.equals("")){
-			return "loginAdmin";
+			session.put("Admin",true);
+			return "LOGIN_ADMIN";
 		} else {
 			session.put("message","Fail no login");
 		}
-		return "loginFail";
+		return "LOGIN_FAIL";
 	}
 
 	public LoginBean getLoginBean() {

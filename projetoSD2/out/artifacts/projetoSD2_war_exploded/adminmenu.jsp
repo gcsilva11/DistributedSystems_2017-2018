@@ -7,7 +7,7 @@
 
 </head>
 <body>
-<java:if test="${session.loggedin != true || session.username == null}">
+<java:if test="${session.Admin != true}">
     <java:redirect url="index.jsp"/>
 </java:if>
 <div>
@@ -16,7 +16,19 @@
 
 <div>
     <s:form action="registerUserMenu">
-        <s:submit  class="button" />
+        <s:submit  value= "Register New User" class="button" />
+    </s:form>
+
+    <s:form action="createElection">
+        <s:submit  value= "Create election" class="button" />
+    </s:form>
+
+    <s:form action="registerUserMenu">
+        <s:submit  value= "Create candidate list" class="button" />
+    </s:form>
+
+    <s:form action="registerUserMenu">
+        <s:submit  value= "List current elections" class="button" />
     </s:form>
 </div
 
