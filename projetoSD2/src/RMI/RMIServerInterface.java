@@ -1,6 +1,7 @@
 package RMI;
 
 import java.rmi.*;
+import java.util.ArrayList;
 
 public interface RMIServerInterface extends Remote {
 
@@ -66,7 +67,7 @@ public interface RMIServerInterface extends Remote {
 
     boolean antecipatedVote(int userID, int electionID, int listID) throws RemoteException;
 
-    int[] getEls() throws RemoteException;
+    ArrayList<Integer> getEls() throws RemoteException;
 
     boolean pastEl(int electionID) throws RemoteException;
 
@@ -82,7 +83,7 @@ public interface RMIServerInterface extends Remote {
 
     boolean identifyName(String name, int facID) throws RemoteException;
 
-    int[] getMesaDeVotoEls(int facid) throws RemoteException;
+    ArrayList<Integer> getMesaDeVotoEls(int facid) throws RemoteException;
 
     boolean isElActive(int electionID) throws RemoteException;
 
@@ -94,7 +95,7 @@ public interface RMIServerInterface extends Remote {
 
     String getElName(int id) throws RemoteException;
 
-    int[] getElectionLists(int electionid) throws RemoteException;
+    ArrayList<Integer> getElectionLists(int electionid) throws RemoteException;
 
     String getListName(int id) throws RemoteException;
 

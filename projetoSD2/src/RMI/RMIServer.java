@@ -308,15 +308,12 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     }
 
     // Retorna id maximo das eleicoes
-    public int[] getEls() throws RemoteException{
-        int[] aux = new int[100];
-        Arrays.fill(aux,0);
+    public ArrayList<Integer> getEls() throws RemoteException{
+        ArrayList<Integer> aux = new ArrayList<>();
         try{
             ResultSet rs = queryDB("SELECT electionid FROM eleicao;");
-            int i = 0;
             while (rs.next()){
-                aux[i] = rs.getInt("electionid");
-                i++;
+                aux.add(rs.getInt("electionid"));
             }
         } catch (SQLException e){
             e.printStackTrace();
@@ -432,15 +429,12 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     }
 
     // Retorna eleicoes elegiveis para determinada faculdade
-    public int[] getMesaDeVotoEls(int facid) throws RemoteException{
-        int[] aux = new int[100];
-        Arrays.fill(aux,0);
+    public ArrayList<Integer> getMesaDeVotoEls(int facid) throws RemoteException{
+        ArrayList<Integer> aux = new ArrayList<>();
         try{
             ResultSet rs = queryDB("SELECT eleicao_electionid FROM mesa_de_voto WHERE faculdade_facid = "+facid+";");
-            int i = 0;
             while (rs.next()){
-                aux[i] = rs.getInt("eleicao_electionid");
-                i++;
+                aux.add(rs.getInt("eleicao_electionid"));
             }
         } catch (SQLException e){
             e.printStackTrace();
@@ -507,15 +501,12 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     }
 
     // Retorna listas elegiveis para determinada eleicao
-    public int[] getElectionLists(int electionid) throws RemoteException{
-        int[] aux = new int[100];
-        Arrays.fill(aux,-1);
+    public ArrayList<Integer> getElectionLists(int electionid) throws RemoteException{
+        ArrayList<Integer> aux = new ArrayList<>();
         try{
             ResultSet rs = queryDB("SELECT listid FROM lista_candidata WHERE eleicao_electionid = "+electionid+";");
-            int i = 0;
             while (rs.next()){
-                aux[i] = rs.getInt("listid");
-                i++;
+                aux.add(rs.getInt("listid"));
             }
         } catch (SQLException e){ }
         return aux;

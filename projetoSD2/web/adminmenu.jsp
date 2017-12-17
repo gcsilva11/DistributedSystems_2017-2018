@@ -7,13 +7,16 @@
 
 </head>
 <body>
+<java:if test="${session.loggedin != true || session.username == null}">
+    <java:redirect url="index.jsp"/>
+</java:if>
 <div>
     <h1>Menu Admin</h1>
 </div>
 
 <div>
-    <s:form action="registerUserMenu" method="POST">
-        <s:submit  class="btn btn-default" />
+    <s:form action="registerUserMenu">
+        <s:submit  class="button" />
     </s:form>
 </div
 

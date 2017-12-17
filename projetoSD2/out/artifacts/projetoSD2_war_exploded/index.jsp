@@ -14,7 +14,7 @@
   <li>Faculdade: <s:textfield name="votebooth"/></li>
   <li>Nome: <s:textfield name="username"/></li>
   <li>Password: <s:password name="password"/><br></li>
-  <s:submit/>
+  <s:submit value="LOGIN"/>
 </s:form>
 <h4>${message}</h4>
 

@@ -1,9 +1,11 @@
 package Web.Actions;
 
 import Web.Beans.LoginBean;
+import Web.Beans.UserBean;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.SessionAware;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class LoginAction extends ActionSupport implements SessionAware {
@@ -27,6 +29,23 @@ public class LoginAction extends ActionSupport implements SessionAware {
 					if (this.getLoginBean().getAuthenticateUser()) {
 						session.put("username", this.username);
 						session.put("loggedin", true); // this marks the user as logged in
+
+						this.getUserBean().setUsername(this.username);
+						this.getUserBean().setIdFac(Integer.parseInt(this.faculdade));
+						this.getUserBean().setIdUser();
+
+						ArrayList<Integer> eleicoes = this.getUserBean().getMesaDeVotoEls();
+						ArrayList<String> elNames = new ArrayList<>();
+
+						for(int i = 0;i<eleicoes.size();i++) {
+							this.getUserBean().setIdElection(i);
+							if (!this.getUserBean().getElName().equals("") && !this.getUserBean().hasVoted() && this.getUserBean().userCanVote() && this.getUserBean().IsElActive()) {
+								elNames.add(this.getUserBean().getElName());
+							}
+						}
+						this.session.put("eleicoes",elNames);
+
+
 						return "loginSuccess";
 					} else {
 						session.put("message","Credenciais incorretas");
@@ -53,6 +72,16 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 	public void setLoginBean(LoginBean loginBean) {
 		this.session.put("loginBean", loginBean);
+	}
+
+	public UserBean getUserBean() {
+		if(!session.containsKey("userBean"))
+			this.setUserBean(new UserBean());
+		return (UserBean) session.get("userBean");
+	}
+
+	public void setUserBean(UserBean userBean) {
+		this.session.put("userBean", userBean);
 	}
 
 	public void setUsername(String username) {
