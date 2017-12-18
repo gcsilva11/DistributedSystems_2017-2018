@@ -36,14 +36,27 @@
             <result name="registerFail">/error.jsp</result>
         </action>
 
+        <action name="createElection" class="Web.Actions.CreateElectionAction" method ="execute">
+            <result name="ELECREATE_SUCCESS">/adminmenu.jsp</result>
+            <result name="ELECREATE_FAIL">/error.jsp</result>
+        </action>
+
+        <action name="createList" class="Web.Actions.CreateListAction" method ="execute">
+            <result name="LISTCREATE_SUCCESS">/usertolist.jsp</result>
+            <result name="LISTCREATE_FAIL">/error.jsp</result>
+        </action>
+
         <action name="registerUserMenu">
             <result name="success">/registerUser.jsp</result>
         </action>
         <action name="menuButtonAdmin">
             <result name="success">/adminmenu.jsp</result>
         </action>
-        <action name="createElection">
+        <action name="createElectionMenu">
             <result name="success">/createelection.jsp</result>
+        </action>
+        <action name="CreateListMenu">
+            <result name="success">/createlist.jsp</result>
         </action>
 
         <action name="chooseElection" class="Web.Actions.ChooseElectionAction" method="execute">

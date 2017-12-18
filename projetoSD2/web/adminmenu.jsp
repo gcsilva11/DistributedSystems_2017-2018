@@ -19,7 +19,7 @@
         <s:submit  value= "Register New User" class="button" />
     </s:form>
 
-    <s:form action="createElection">
+    <s:form action="createElectionMenu">
         <s:submit  value= "Create election" class="button" />
     </s:form>
 

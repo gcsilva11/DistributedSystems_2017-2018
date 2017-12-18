@@ -51,24 +51,27 @@
         <li>Descriçao: <s:textfield name="elecDescription"/></li>
         <li>Data de Inicio: <s:textfield name="elecStartDate"/></li>
         <li>Data de Fim: <s:textfield name="elecEndDate"/></li>
-        <li>Faculdade(ID): <s:textfield name="elecFacID"/></li><br>
+        <li>Faculdade(ID): <s:textfield name="elecFacID"/></li>
+        <s:textfield name="elecType" value = "2" type="hidden"/></li><br>
         <s:submit value="Create Election"/>
     </s:form>
 </div>
 <div style="display:none;" id='genEle'>
     <s:form action="createElection" method="post">
-        <br>Eleição De Estudantes:<br>
+        <br>Eleição Geral:<br>
         <li>ID da Eleição: <s:textfield name="elecID"/></li>
         <li>Nome: <s:textfield name="elecName"/></li>
         <li>Descriçao: <s:textfield name="elecDescription"/></li>
         <li>Data de Inicio: <s:textfield name="elecStartDate"/></li>
-        <li>Data de Fim: <s:textfield name="elecEndDate"/></li><br>
+        <li>Data de Fim: <s:textfield name="elecEndDate"/></li>
+        <s:textfield name="elecFacID" value = "0" type ="hidden"/></li>
+        <s:textfield name="elecType" value = "1" type="hidden"/></li><br>
         <s:submit value="Create Election"/>
     </s:form>
 </div>
 <div>
     <s:form action="menuButtonAdmin">
-        <s:submit  value= "Back To Menu" class="button" />
+        <s:submit value="Back To Menu" class="button" />
     </s:form>
 </div>
 </body>

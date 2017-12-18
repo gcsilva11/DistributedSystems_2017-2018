@@ -73,6 +73,4 @@ public class RegisterUserAction extends ActionSupport implements SessionAware {
     public void setPassword(String password) {
         this.password = password;
     }
-
-
 }
