@@ -11,11 +11,11 @@ public class LoginBean extends RMIBean{
 	}
 
 	public boolean getAuthenticateUser() throws RemoteException{
-		return this.server.authenticateUser(username, password);
+		return this.server.authenticateUser(this.username, this.password);
 	}
 
 	public boolean getIdentifyName() throws RemoteException{
-		return this.server.identifyName(username,faculdade);
+		return this.server.identifyName(this.username,this.faculdade);
 	}
 
 	public boolean getCheckFaculdade() throws RemoteException{

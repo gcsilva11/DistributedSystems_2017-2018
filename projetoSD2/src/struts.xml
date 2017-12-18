@@ -26,9 +26,9 @@
         </action>
 
         <action name="login" class="Web.Actions.LoginAction" method ="execute">
-            <result name="loginSuccess">/listelections.jsp</result>
-            <result name="loginAdmin">/adminmenu.jsp</result>
-            <result name="loginFail">/index.jsp</result>
+            <result name="LOGIN_SUCCESS">/listelections.jsp</result>
+            <result name="LOGIN_ADMIN">/adminmenu.jsp</result>
+            <result name="LOGIN_FAIL">/index.jsp</result>
         </action>
 
         <action name="registerUser" class="Web.Actions.RegisterUserAction" method ="execute">
@@ -36,18 +36,42 @@
             <result name="registerFail">/error.jsp</result>
         </action>
 
+        <action name="createElection" class="Web.Actions.CreateElectionAction" method ="execute">
+            <result name="ELECREATE_SUCCESS">/adminmenu.jsp</result>
+            <result name="ELECREATE_FAIL">/error.jsp</result>
+        </action>
+
+        <action name="createList" class="Web.Actions.CreateListAction" method ="execute">
+            <result name="LISTCREATE_SUCCESS">/usertolist.jsp</result>
+            <result name="LISTCREATE_FAIL">/error.jsp</result>
+        </action>
+
+        <action name="addUserToList" class="Web.Actions.CreateListAction" method ="executeAdd">
+            <result name="USER_ADD">/usertolist.jsp</result>
+            <result name="USER_FAIL">/error.jsp</result>
+        </action>
+
         <action name="registerUserMenu">
             <result name="success">/registerUser.jsp</result>
         </action>
+        <action name="menuButtonAdmin">
+            <result name="success">/adminmenu.jsp</result>
+        </action>
+        <action name="createElectionMenu">
+            <result name="success">/createelection.jsp</result>
+        </action>
+        <action name="CreateListMenu">
+            <result name="success">/createlist.jsp</result>
+        </action>
 
         <action name="chooseElection" class="Web.Actions.ChooseElectionAction" method="execute">
-            <result name="success">listelectionslists.jsp</result>
-            <result name="error">index.jsp</result>
+            <result name="success">/listelectionlists.jsp</result>
+            <result name="error">/index.jsp</result>
         </action>
 
         <action name="chooseList" class="Web.Actions.ChooseListAction" method="execute">
-            <result name="success">index.jsp</result>
-            <result name="error">index.jsp</result>
+            <result name="success">/index.jsp</result>
+            <result name="error">/index.jsp</result>
         </action>
 
     </package>

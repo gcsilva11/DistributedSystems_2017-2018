@@ -33,7 +33,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
 						this.getUserBean().setUsername(this.username);
 						this.getUserBean().setIdFac(Integer.parseInt(this.faculdade));
 						this.getUserBean().setIdUser();
-
 						this.session.put("userBean",this.getUserBean());
 						return "loginSuccess";
 					} else {
@@ -46,11 +45,12 @@ public class LoginAction extends ActionSupport implements SessionAware {
 				this.session.put("message","Faculdade não existe");
 			}
 		} else if(this.username.equals("admin") && this.password.equals("admin") && this.faculdade.equals("")){
-			return "loginAdmin";
+			session.put("Admin",true);
+			return "LOGIN_ADMIN";
 		} else {
 			this.session.put("message","Fail no login");
 		}
-		return "loginFail";
+		return "LOGIN_FAIL";
 	}
 
 	public LoginBean getLoginBean() {
