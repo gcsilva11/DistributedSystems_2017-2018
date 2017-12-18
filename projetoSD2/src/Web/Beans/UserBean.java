@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class UserBean extends RMIBean {
     private int idElection, idList, idFac, idUser;
     private String username;
+    private ArrayList<String> eleicoes, listas;
 
     public UserBean() {
         super();
@@ -47,6 +48,10 @@ public class UserBean extends RMIBean {
         return this.server.voteElection(idUser, idElection, idList, idFac);
     }
 
+    public int getIdUser() {
+        return idUser;
+    }
+
     public void setIdUser() throws RemoteException {
         idUser = this.server.getUserID(username);
     }
@@ -66,4 +71,16 @@ public class UserBean extends RMIBean {
     public void setIdFac(int idFac) {
         this.idFac = idFac;
     }
+/*
+    ArrayList<Integer> eleicoes = this.getUserBean().getMesaDeVotoEls();
+    ArrayList<String> elNames = new ArrayList<>();
+
+						for(int i = 0;i<eleicoes.size();i++) {
+        this.getUserBean().setIdElection(i);
+        if (!this.getUserBean().getElName().equals("") && !this.getUserBean().hasVoted() && this.getUserBean().userCanVote() && this.getUserBean().IsElActive()) {
+            elNames.add(this.getUserBean().getElName());
+        }
+    }
+						this.session.put("eleicoes",elNames);
+    */
 }

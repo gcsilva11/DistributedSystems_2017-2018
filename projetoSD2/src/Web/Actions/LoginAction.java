@@ -20,46 +20,35 @@ public class LoginAction extends ActionSupport implements SessionAware {
 			this.getLoginBean().setFaculdade(this.faculdade);
 
 			if (this.getLoginBean().getCheckFaculdade()) {
-				session.put("votebooth", this.faculdade);
+				this.session.put("votebooth", this.faculdade);
 
 				this.getLoginBean().setUsername(this.username);
 				this.getLoginBean().setPassword(this.password);
 
 				if (this.getLoginBean().getIdentifyName()) {
 					if (this.getLoginBean().getAuthenticateUser()) {
-						session.put("username", this.username);
-						session.put("loggedin", true); // this marks the user as logged in
+						this.session.put("username", this.username);
+						this.session.put("loggedin", true); // this marks the user as logged in
 
 						this.getUserBean().setUsername(this.username);
 						this.getUserBean().setIdFac(Integer.parseInt(this.faculdade));
 						this.getUserBean().setIdUser();
 
-						ArrayList<Integer> eleicoes = this.getUserBean().getMesaDeVotoEls();
-						ArrayList<String> elNames = new ArrayList<>();
-
-						for(int i = 0;i<eleicoes.size();i++) {
-							this.getUserBean().setIdElection(i);
-							if (!this.getUserBean().getElName().equals("") && !this.getUserBean().hasVoted() && this.getUserBean().userCanVote() && this.getUserBean().IsElActive()) {
-								elNames.add(this.getUserBean().getElName());
-							}
-						}
-						this.session.put("eleicoes",elNames);
-
-
+						this.session.put("userBean",this.getUserBean());
 						return "loginSuccess";
 					} else {
-						session.put("message","Credenciais incorretas");
+						this.session.put("message","Credenciais incorretas");
 					}
 				} else {
-					session.put("message","User não pertence à faculdade");
+					this.session.put("message","User não pertence à faculdade");
 				}
 			} else {
-				session.put("message","Faculdade não existe");
+				this.session.put("message","Faculdade não existe");
 			}
 		} else if(this.username.equals("admin") && this.password.equals("admin") && this.faculdade.equals("")){
 			return "loginAdmin";
 		} else {
-			session.put("message","Fail no login");
+			this.session.put("message","Fail no login");
 		}
 		return "loginFail";
 	}
@@ -75,9 +64,9 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	}
 
 	public UserBean getUserBean() {
-		if(!session.containsKey("userBean"))
+		if(!this.session.containsKey("userBean"))
 			this.setUserBean(new UserBean());
-		return (UserBean) session.get("userBean");
+		return (UserBean) this.session.get("userBean");
 	}
 
 	public void setUserBean(UserBean userBean) {
