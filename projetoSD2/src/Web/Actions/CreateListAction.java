@@ -1,6 +1,5 @@
 package Web.Actions;
 
-import Web.Beans.CreateElectionBean;
 import Web.Beans.CreateListBean;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.SessionAware;
@@ -23,12 +22,16 @@ public class CreateListAction extends ActionSupport implements SessionAware {
         return "LISTCREATE_FAIL";
 	}
 
-	public String execute2() throws Exception {
+	public String executeAdd() throws Exception {
         this.getCreateListBean().setUserID(this.userID);
         if(this.getCreateListBean().getUserAddSuccess()){
+            this.session.put("message","User acrescentado com sucesso");
             return "USER_ADD";
         }
-        return "USER_FAIL";
+        else {
+            this.session.put("message", "Erro a acrescentar user!");
+            return "USER_ADD";
+        }
     }
 
     public CreateListBean getCreateListBean() {

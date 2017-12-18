@@ -16,7 +16,7 @@
   <li>Password: <s:password name="password"/><br></li>
   <s:submit value="LOGIN"/>
 </s:form>
-<h4>${message}</h4>
+<h4>${session.message}</h4>
 
 </body>
 </html>

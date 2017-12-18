@@ -23,12 +23,12 @@
         <s:submit  value= "Create election" class="button" />
     </s:form>
 
-    <s:form action="registerUserMenu">
+    <s:form action="CreateListMenu">
         <s:submit  value= "Create candidate list" class="button" />
     </s:form>
 
-    <s:form action="registerUserMenu">
-        <s:submit  value= "List current elections" class="button" />
+    <s:form action="VoteBoothMenu">
+        <s:submit  value= "Add/Remove Booths" class="button" />
     </s:form>
 </div
 

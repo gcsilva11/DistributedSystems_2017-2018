@@ -51,6 +51,17 @@
             <result name="USER_FAIL">/error.jsp</result>
         </action>
 
+        <action name="addBooth" class="Web.Actions.BoothAction" method ="executeAdd">
+            <result name="BOOTH_ADD_SUCCESS">/voteboothmenu.jsp</result>
+            <result name="BOOTH_ADD_FAIL">/voteboothmenu.jsp</result>
+        </action>
+
+        <action name="removeBooth" class="Web.Actions.BoothAction" method ="executeRemove">
+            <result name="BOOTH_REMOVE_SUCCESS">/voteboothmenu.jsp</result>
+            <result name="BOOTH_REMOVE_FAIL">/voteboothmenu.jsp</result>
+        </action>
+
+        <!--Navigation Actions-->
         <action name="registerUserMenu">
             <result name="success">/registerUser.jsp</result>
         </action>
@@ -64,6 +75,12 @@
             <result name="success">/createlist.jsp</result>
         </action>
 
+        <action name="VoteBoothMenu">
+            <result name="success">/voteboothmenu.jsp</result>
+        </action>
+
+        <!---                                         -->
+
         <action name="chooseElection" class="Web.Actions.ChooseElectionAction" method="execute">
             <result name="success">/listelectionlists.jsp</result>
             <result name="error">/index.jsp</result>
@@ -73,7 +90,6 @@
             <result name="success">/index.jsp</result>
             <result name="error">/index.jsp</result>
         </action>
-
     </package>
 
 </struts>
