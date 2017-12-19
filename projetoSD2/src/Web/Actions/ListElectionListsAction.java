@@ -24,6 +24,7 @@ public class ListElectionListsAction extends ActionSupport implements SessionAwa
             this.session.put("eleicao", this.getUserBean().getElectionID(this.nomeEleicao));
 
             for (int i = 0; i < this.getUserBean().getListas().size(); i++) {
+                this.getUserBean().setIdList(this.getUserBean().getListas().get(i));
                 if(!this.getUserBean().getListName().equals("NULLVOTE")) {
                     this.getUserBean().setIdList(this.getUserBean().getListas().get(i));
                     this.listas.add(this.getUserBean().getListName());
