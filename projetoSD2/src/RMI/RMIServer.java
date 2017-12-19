@@ -442,6 +442,20 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
         return aux;
     }
 
+    // Retorna id de todas as eleicoes
+    public ArrayList<Integer> getElsID() throws RemoteException{
+        ArrayList<Integer> aux = new ArrayList<>();
+        try{
+            ResultSet rs= queryDB("SELECT electionid FROM eleicao;");
+            while (rs.next()){
+                aux.add(rs.getInt("electionid"));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return aux;
+    }
+
     // Verifica se a eleicao está ativa
     public boolean isElActive (int electionID) throws RemoteException {
         try{
@@ -498,6 +512,21 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
             }
         }catch (SQLException e){ }
         return "";
+    }
+
+    // Retorna dados de uma eleicao
+    public ArrayList<String> getEl(int id) throws RemoteException{
+        ArrayList<String> aux = new ArrayList<>();
+        try{
+            ResultSet rs = queryDB("SELECT title,description,startdate,enddate FROM eleicao WHERE electionid = "+id+";");
+            if(rs.next()){
+                aux.add(rs.getString("title"));
+                aux.add(rs.getString("description"));
+                aux.add(rs.getString("startdate"));
+                aux.add(rs.getString("enddate"));
+            }
+        }catch (SQLException e){ }
+        return aux;
     }
 
     // Retorna listas elegiveis para determinada eleicao

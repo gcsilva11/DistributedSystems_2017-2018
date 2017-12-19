@@ -16,7 +16,6 @@ public class UserBean extends RMIBean {
         super();
     }
 
-
     public boolean getJaVotou() throws RemoteException{
         return this.server.hasVoted(this.idUser,this.idElection);
     }
@@ -49,7 +48,6 @@ public class UserBean extends RMIBean {
         this.eleicoes = eleicoes;
     }
 
-
     public ArrayList<Integer> getListas() throws RemoteException{
         return this.server.getElectionLists(this.idElection);
     }
@@ -58,7 +56,6 @@ public class UserBean extends RMIBean {
         this.listas = listas;
     }
 
-
     public int getIdUser() throws RemoteException {
         return this.server.getUserID(this.username);
     }
@@ -66,7 +63,6 @@ public class UserBean extends RMIBean {
     public void setIdUser(int idUser) {
         this.idUser = idUser;
     }
-
 
     public void setUsername(String username) {
         this.username = username;
@@ -111,6 +107,7 @@ public class UserBean extends RMIBean {
     }
 
     public ArrayList<String> getLNames() {
+
         return lnames;
     }
 

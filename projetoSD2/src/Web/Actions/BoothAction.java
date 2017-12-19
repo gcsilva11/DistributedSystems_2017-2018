@@ -15,10 +15,10 @@ public class BoothAction extends ActionSupport implements SessionAware {
         this.getBoothBean().setElecID(elecID);
         this.getBoothBean().setFacID(facID);
         if(this.getBoothBean().getAddBoothSuccess()){
-            this.session.put("message","Mesa acrescentada com sucesso");
+            addActionMessage("Mesa acrescentada com sucesso");
             return "BOOTH_ADD_SUCCESS";
         }
-        this.session.put("message","Erro a adicionar a mesa - verifique se eleiçao/departamento existem mesmo");
+        addActionMessage("Erro a acrescentar a mesa...");
         return "BOOTH_ADD_FAIL";
     }
 
@@ -26,10 +26,10 @@ public class BoothAction extends ActionSupport implements SessionAware {
         this.getBoothBean().setElecID(elecID);
         this.getBoothBean().setFacID(facID);
         if(this.getBoothBean().getRemoveBoothSuccess()){
-            this.session.put("message","Mesa removida com sucesso");
+            addActionMessage("Mesa removida com sucesso");
             return "BOOTH_REMOVE_SUCCESS";
         }
-        this.session.put("message","Problema a remover mesa - verifique se eleicao/departamento existem e a mesa está ativa");
+        addActionMessage("Erro a remover mesa de voto...");
         return "BOOTH_REMOVE_FAIL";
     }
 

@@ -25,11 +25,11 @@ public class CreateListAction extends ActionSupport implements SessionAware {
 	public String executeAdd() throws Exception {
         this.getCreateListBean().setUserID(this.userID);
         if(this.getCreateListBean().getUserAddSuccess()){
-            this.session.put("message","User acrescentado com sucesso");
+            addActionMessage("User acrescentado com sucesso");
             return "USER_ADD";
         }
         else {
-            this.session.put("message", "Erro a acrescentar user!");
+            addActionMessage("Erro a acrescentar user");
             return "USER_ADD";
         }
     }

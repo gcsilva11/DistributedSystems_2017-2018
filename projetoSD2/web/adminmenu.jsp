@@ -27,8 +27,24 @@
         <s:submit  value= "Create candidate list" class="button" />
     </s:form>
 
+    <s:form action="EditElectionMenu">
+        <s:submit  value= "Edit Elections" class="button" />
+    </s:form>
+
     <s:form action="VoteBoothMenu">
         <s:submit  value= "Add/Remove Booths" class="button" />
+    </s:form>
+
+    <s:form action="ElectionListMenu">
+        <s:submit  value= "Election List" class="button" />
+    </s:form>
+
+    <s:form action="ElectionDetailsMenu">
+        <s:submit  value= "Election Details" class="button" />
+    </s:form>
+
+    <s:form action="VoteHistoryMenu">
+        <s:submit  value= "User Vote History" class="button" />
     </s:form>
 </div
 

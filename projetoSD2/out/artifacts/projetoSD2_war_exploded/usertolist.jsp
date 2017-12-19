@@ -13,7 +13,9 @@
   <li>ID do user a acrescentar: <s:textfield name="userID"/></li><br>
   <s:submit value="Adicionar User"/>
 </s:form>
-<h4>${message}</h4>
+<s:if test="hasActionMessages()">
+    <s:actionmessage/>
+</s:if>
 
 <div>
     <s:form action="menuButtonAdmin">

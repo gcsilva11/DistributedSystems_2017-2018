@@ -85,6 +85,8 @@ public interface RMIServerInterface extends Remote {
 
     ArrayList<Integer> getMesaDeVotoEls(int facid) throws RemoteException;
 
+    ArrayList<Integer> getElsID() throws RemoteException;
+
     boolean isElActive(int electionID) throws RemoteException;
 
     boolean voteElection(int userID, int electionID, int listID, int facID) throws RemoteException;
@@ -94,6 +96,8 @@ public interface RMIServerInterface extends Remote {
     boolean userCanVote(int userID, int electionID) throws RemoteException;
 
     String getElName(int id) throws RemoteException;
+
+    ArrayList<String> getEl(int id) throws RemoteException;
 
     ArrayList<Integer> getElectionLists(int electionid) throws RemoteException;
 

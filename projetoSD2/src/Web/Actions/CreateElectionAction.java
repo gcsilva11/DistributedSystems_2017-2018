@@ -23,8 +23,10 @@ public class CreateElectionAction extends ActionSupport implements SessionAware 
         this.getCreateElectionBean().setEleEndDate(this.endDate);
         this.getCreateElectionBean().setElecFacID(this.elecFacID);
         if(this.getCreateElectionBean().getEleCreateSuccess()){
+            addActionMessage("Eleição criada com sucesso");
             return "ELECREATE_SUCCESS";
         }
+        addActionMessage("Erro a criar eleição");
         return "ELECREATE_FAIL";
 	}
 

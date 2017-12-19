@@ -51,8 +51,8 @@
         </action>
 
         <action name="createElection" class="Web.Actions.CreateElectionAction" method ="execute">
-            <result name="ELECREATE_SUCCESS">/adminmenu.jsp</result>
-            <result name="ELECREATE_FAIL">/error.jsp</result>
+            <result name="ELECREATE_SUCCESS">/createelection.jsp</result>
+            <result name="ELECREATE_FAIL">/createelection.jsp</result>
         </action>
 
         <action name="createList" class="Web.Actions.CreateListAction" method ="execute">
@@ -60,9 +60,14 @@
             <result name="LISTCREATE_FAIL">/error.jsp</result>
         </action>
 
-        <action name="addUserToList" class="Web.Actions.CreateListAction" method ="executeAdd">
-            <result name="USER_ADD">/usertolist.jsp</result>
-            <result name="USER_FAIL">/error.jsp</result>
+        <action name="editElText" class="Web.Actions.EditElectionAction" method ="executeText">
+            <result name="ELE_TEXT_SUCCESS">/editelection.jsp</result>
+            <result name="ELE_TEXT_FAIL">/editelection.jsp</result>
+        </action>
+
+        <action name="editElDate" class="Web.Actions.EditElectionAction" method ="executeDate">
+            <result name="ELE_DATE_SUCCESS">/editelection.jsp</result>
+            <result name="ELE_DATE_FAIL">/editelection.jsp</result>
         </action>
 
         <action name="addBooth" class="Web.Actions.BoothAction" method ="executeAdd">
@@ -79,17 +84,29 @@
         <action name="registerUserMenu">
             <result name="success">/registerUser.jsp</result>
         </action>
-        <!--action name="menuButtonAdmin">
+        <action name="menuButtonAdmin">
             <result name="success">/adminmenu.jsp</result>
-        </action-->
+        </action>
         <action name="createElectionMenu">
             <result name="success">/createelection.jsp</result>
+        </action>
+        <action name="EditElectionMenu">
+            <result name="success">/editelection.jsp</result>
         </action>
         <action name="CreateListMenu">
             <result name="success">/createlist.jsp</result>
         </action>
         <action name="VoteBoothMenu">
             <result name="success">/voteboothmenu.jsp</result>
+        </action>
+        <action name="ElectionListMenu">
+            <result name="success">/electionlistmenu.jsp</result>
+        </action>
+        <action name="ElectionDetailsMenu">
+            <result name="success">/electiondetailsmenu.jsp</result>
+        </action>
+        <action name="VoteHistoryMenu">
+            <result name="success">/votehistorymenu.jsp</result>
         </action>
 
         <!---                                         -->

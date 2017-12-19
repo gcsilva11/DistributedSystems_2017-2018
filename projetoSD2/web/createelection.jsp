@@ -69,6 +69,9 @@
         <s:submit value="Create Election"/>
     </s:form>
 </div>
+<s:if test="hasActionMessages()">
+    <s:actionmessage/>
+</s:if>
 <div>
     <s:form action="menuButtonAdmin">
         <s:submit value="Back To Menu" class="button" />
