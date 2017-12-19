@@ -15,5 +15,11 @@
 </s:form>
 <h4>${message}</h4>
 
+<div>
+    <s:form action="menuButtonAdmin">
+        <s:submit value="Voltar ao Menu" class="button" />
+    </s:form>
+</div>
+
 </body>
 </html>

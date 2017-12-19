@@ -33,6 +33,16 @@ public class CreateListBean extends RMIBean{
 
     public boolean getUserAddSuccess() throws RemoteException {
 	    int findListID = this.server.getListID(this.listName,this.elecID);
-        return this.server.addUserLista(findListID,this.userID);
+        if(listType!=2){
+            return this.server.addUserLista(findListID,this.userID);
+        }
+        else {
+            if(this.server.getUserType(this.userID)==1){
+                return this.server.addUserLista(findListID,this.userID);
+            }
+            else{
+                return false;
+            }
+        }
     }
 }
