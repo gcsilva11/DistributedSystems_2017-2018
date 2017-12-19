@@ -46,6 +46,10 @@
     <s:form action="VoteHistoryMenu">
         <s:submit  value= "User Vote History" class="button" />
     </s:form>
+
+    <s:form action="AdminLogout">
+    <s:submit  value= "Exit Admin" class="button" />
+    </s:form>
 </div
 
 </body>

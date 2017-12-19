@@ -80,6 +80,14 @@
             <result name="BOOTH_REMOVE_FAIL">/voteboothmenu.jsp</result>
         </action>
 
+        <action name="listAllElections" class="Web.Actions.ListAllElectionsAction" method="execute">
+            <result name="LIST_ALL_ELECTIONS_SUCCESS">/electionlistmenu.jsp</result>
+        </action>
+
+        <action name="AdminLogout" class="Web.Actions.AdminLogoutAction" method ="execute">
+            <result name="LOGOUT">/index.jsp</result>
+        </action>
+
         <!--Navigation Actions-->
         <action name="registerUserMenu">
             <result name="success">/registerUser.jsp</result>
@@ -100,7 +108,7 @@
             <result name="success">/voteboothmenu.jsp</result>
         </action>
         <action name="ElectionListMenu">
-            <result name="success">/voteboothmenu.jsp</result>
+            <result name="success">/electionlistmenu.jsp</result>
         </action>
         <action name="ElectionDetailsMenu">
             <result name="success">/electiondetailsmenu.jsp</result>
