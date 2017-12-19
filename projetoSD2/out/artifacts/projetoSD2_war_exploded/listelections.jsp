@@ -12,9 +12,15 @@
     <java:redirect url="index.jsp"/>
 </java:if>
 
-<div>
-    <java:out value = "${userBean.Username}"/>
+<div class="container">
+    <div class="row">
+        <s:form action="listElectionLists">
+            <s:select label="ListaEleicoes" headerValue="ListaEleicoes" list="userBean.elNames" name="nomeEleicao"/>
+            <s:submit value="Escolher Eleição" class="button"/>
+        </s:form>
+    </div>
 </div>
+
 
 </body>
 

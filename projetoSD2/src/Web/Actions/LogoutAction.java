@@ -5,19 +5,15 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import java.util.Map;
 
-public class ChooseListAction extends ActionSupport implements SessionAware {
-    private static final long serialVersionUID = 4L;
+public class LogoutAction extends ActionSupport implements SessionAware {
+        private static final long serialVersionUID = 4L;
     private Map<String, Object> session;
 
-    private String username = null, idLista = null;
-
     @Override
-    public String execute() throws Exception {
-        this.session.get("");
-
-
-
-        return "";
+    public String execute() throws Exception{
+        if((boolean)this.session.get("loggedin"))
+            this.session.put("loggedin",false);
+        return "LOGOUT";
     }
 
     @Override

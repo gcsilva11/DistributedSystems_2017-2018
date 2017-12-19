@@ -1,12 +1,10 @@
 package Web.Actions;
 
-import Web.Beans.LoginBean;
-import Web.Beans.UserBean;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.SessionAware;
 
-import java.util.ArrayList;
-import java.util.Map;
+import Web.Beans.*;
+import java.util.*;
 
 public class LoginAction extends ActionSupport implements SessionAware {
 	private static final long serialVersionUID = 4L;
@@ -30,11 +28,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 						this.session.put("username", this.username);
 						this.session.put("loggedin", true); // this marks the user as logged in
 
-						this.getUserBean().setUsername(this.username);
-						this.getUserBean().setIdFac(Integer.parseInt(this.faculdade));
-						this.getUserBean().setIdUser();
-						this.session.put("userBean",this.getUserBean());
-						return "loginSuccess";
+						return "LOGIN_SUCCESS";
 					} else {
 						this.session.put("message","Credenciais incorretas");
 					}
@@ -61,16 +55,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 	public void setLoginBean(LoginBean loginBean) {
 		this.session.put("loginBean", loginBean);
-	}
-
-	public UserBean getUserBean() {
-		if(!this.session.containsKey("userBean"))
-			this.setUserBean(new UserBean());
-		return (UserBean) this.session.get("userBean");
-	}
-
-	public void setUserBean(UserBean userBean) {
-		this.session.put("userBean", userBean);
 	}
 
 	public void setUsername(String username) {

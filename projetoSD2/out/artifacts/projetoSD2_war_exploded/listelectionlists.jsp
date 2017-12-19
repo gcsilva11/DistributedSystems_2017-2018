@@ -1,11 +1,7 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: joaoferreiro
-  Date: 17/12/2017
-  Time: 02:03
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="java" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
     <title>iVotas - Menu de Voto</title>
@@ -15,14 +11,13 @@
     <java:redirect url="index.jsp"/>
 </java:if>
 
-<div>
-    ${idEleicao}
-    <%--<java:forEach var="nomeLista" items="${listas}">
-        <s:form action="vote" method="post">
-            ${nomeLista}<br>
+<div class="container">
+    <div class="row">
+        <s:form action="vote">
+            <s:select label="ListaListas" headerValue="ListaListas" list="userBean.LNames" name="nomeLista"/>
+            <s:submit value="Escolher Lista" class="button"/>
         </s:form>
-    </java:forEach>--%>
-    oi
+    </div>
 </div>
 
 </body>

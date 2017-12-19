@@ -97,7 +97,9 @@ public interface RMIServerInterface extends Remote {
 
     ArrayList<Integer> getElectionLists(int electionid) throws RemoteException;
 
-    String getListName(int id) throws RemoteException;
+    String getListName(int id, int eleicaoid) throws RemoteException;
 
     int getUserID(String name) throws RemoteException;
+
+    int getElectionID(String name) throws RemoteException;
 }

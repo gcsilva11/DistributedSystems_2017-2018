@@ -513,9 +513,9 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     }
 
     // Retorna nome lista por ID
-    public String getListName(int id) throws RemoteException{
+    public String getListName(int id, int eleicaoid) throws RemoteException{
         try{
-            ResultSet rs = queryDB("SELECT name FROM lista_candidata WHERE listid = "+id+";");
+            ResultSet rs = queryDB("SELECT name FROM lista_candidata WHERE listid = "+id+" AND eleicao_electionid = "+eleicaoid+";");
             if(rs.next()){
                 return rs.getString("name");
             }
@@ -523,6 +523,16 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
         return "";
     }
 
+    public int getElectionID(String name) throws RemoteException{
+        try {
+            ResultSet rs = queryDB("SELECT electionid FROM eleicao WHERE title = '"+name+"';");
+            if(rs.next())
+                return rs.getInt("electionid");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
     // =================================================================================================================
     // Main

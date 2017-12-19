@@ -4,17 +4,14 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-  <title>iVotas - Online auction</title>
+  <title>iVotas - Adicionar User</title>
 </head>
 <body>
 
-<H1>iVotas - Voting online</H1>
-<h3>SD 17/18</h3>
-<s:form action="login" method="post">
-  <li>Faculdade: <s:textfield name="votebooth"/></li>
-  <li>Nome: <s:textfield name="username"/></li>
-  <li>Password: <s:password name="password"/><br></li>
-  <s:submit value="LOGIN"/>
+<H1>Add user to list</H1>
+<s:form action="addUserToList" method="post">
+  <li>ID do user a acrescentar: <s:textfield name="userID"/></li><br>
+  <s:submit value="Adicionar User"/>
 </s:form>
 <h4>${message}</h4>
 

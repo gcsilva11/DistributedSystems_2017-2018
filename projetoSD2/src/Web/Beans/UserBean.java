@@ -1,59 +1,79 @@
 package Web.Beans;
 
+import com.sun.org.apache.regexp.internal.RE;
+
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public class UserBean extends RMIBean {
-    private int idElection, idList, idFac, idUser;
-    private String username;
-    private ArrayList<String> eleicoes, listas;
+    private int idFac, idUser, idElection, idList;
+    private String username, electionName, listName;
+
+    private ArrayList<Integer> eleicoes = null, listas = null;
+    private ArrayList<String> elnames = null, lnames = null;
 
     public UserBean() {
         super();
     }
 
-    public int getIdFac() {
-        return idFac;
+
+    public boolean getJaVotou() throws RemoteException{
+        return this.server.hasVoted(this.idUser,this.idElection);
     }
 
-    public ArrayList<Integer> getMesaDeVotoEls() throws RemoteException{
-        return this.server.getMesaDeVotoEls(idFac);
+    public boolean getUserPodeVotar() throws RemoteException{
+        return this.server.userCanVote(this.idUser,this.idElection);
     }
 
-    public boolean IsElActive() throws RemoteException {
-        return this.server.isElActive(idElection);
+    public boolean getEleicaoEstaAtiva() throws RemoteException{
+        return this.server.isElActive(this.idElection);
     }
 
-    public boolean hasVoted() throws RemoteException {
-        return this.server.hasVoted(idUser, idElection);
+    public int getElectionID(String name) throws RemoteException{
+        return this.server.getElectionID(name);
     }
 
-    public boolean userCanVote() throws RemoteException {
-        return this.server.userCanVote(idUser, idElection);
+    public int getListID(String name) throws RemoteException{
+        return this.server.getListID(name,this.idElection);
     }
 
-    public String getElName() throws RemoteException {
-        return this.server.getElName(idElection);
+    public boolean getVote() throws RemoteException{
+        return this.server.voteElection(this.idUser,this.idElection,this.idList,this.idFac);
     }
 
-    public ArrayList<Integer> getElectionLists() throws RemoteException {
-        return this.server.getElectionLists(idElection);
+    public ArrayList<Integer> getEleicoes() throws RemoteException{
+        return this.server.getMesaDeVotoEls(this.idFac);
     }
 
-    public String getListName() throws RemoteException {
-        return this.server.getListName(idList);
+    public void setEleicoes(ArrayList<Integer> eleicoes) {
+        this.eleicoes = eleicoes;
     }
 
-    public boolean voteElection() throws RemoteException {
-        return this.server.voteElection(idUser, idElection, idList, idFac);
+
+    public ArrayList<Integer> getListas() throws RemoteException{
+        return this.server.getElectionLists(this.idElection);
     }
 
-    public int getIdUser() {
-        return idUser;
+    public void setListas(ArrayList<Integer> listas) throws RemoteException{
+        this.listas = listas;
     }
 
-    public void setIdUser() throws RemoteException {
-        idUser = this.server.getUserID(username);
+
+    public int getIdUser() throws RemoteException {
+        return this.server.getUserID(this.username);
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
+
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setIdFac(int idFac) {
+        this.idFac = idFac;
     }
 
     public void setIdElection(int idElection) {
@@ -64,23 +84,37 @@ public class UserBean extends RMIBean {
         this.idList = idList;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+
+    public String getElectionName() throws RemoteException{
+        return this.server.getElName(this.idElection);
     }
 
-    public void setIdFac(int idFac) {
-        this.idFac = idFac;
+    public void setElectionName(String electionName) {
+        this.electionName = electionName;
     }
-/*
-    ArrayList<Integer> eleicoes = this.getUserBean().getMesaDeVotoEls();
-    ArrayList<String> elNames = new ArrayList<>();
 
-						for(int i = 0;i<eleicoes.size();i++) {
-        this.getUserBean().setIdElection(i);
-        if (!this.getUserBean().getElName().equals("") && !this.getUserBean().hasVoted() && this.getUserBean().userCanVote() && this.getUserBean().IsElActive()) {
-            elNames.add(this.getUserBean().getElName());
-        }
+    public String getListName() throws  RemoteException{
+        return this.server.getListName(this.idList, this.idElection);
     }
-						this.session.put("eleicoes",elNames);
-    */
+
+    public void setListName(String listName) {
+        this.listName = listName;
+    }
+
+
+    public ArrayList<String> getElNames() {
+        return elnames;
+    }
+
+    public void setElNames(ArrayList<String> elNames) {
+        this.elnames = elNames;
+    }
+
+    public ArrayList<String> getLNames() {
+        return lnames;
+    }
+
+    public void setLNames(ArrayList<String> lnames) {
+        this.lnames = lnames;
+    }
 }

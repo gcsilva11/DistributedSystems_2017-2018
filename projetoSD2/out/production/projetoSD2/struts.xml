@@ -13,24 +13,39 @@
 
         <default-action-ref name="index"/>
 
-        <global-results>
-            <result name="error">/error.jsp</result>
-        </global-results>
-
-        <global-exception-mappings>
-            <exception-mapping exception="java.lang.Exception" result="error" />
-        </global-exception-mappings>
-
         <action name="index">
             <result>/index.jsp</result>
         </action>
 
         <action name="login" class="Web.Actions.LoginAction" method ="execute">
-            <result name="LOGIN_SUCCESS">/listelections.jsp</result>
+            <result name="LOGIN_SUCCESS">/usermenu.jsp</result>
             <result name="LOGIN_ADMIN">/adminmenu.jsp</result>
             <result name="LOGIN_FAIL">/index.jsp</result>
         </action>
 
+        <action name="logout" class="Web.Actions.LogoutAction" method ="execute">
+            <result name="LOGOUT">/index.jsp</result>
+        </action>
+
+        <!-- User Actions-->
+        <action name="listElections" class="Web.Actions.ListElectionAction" method="execute">
+            <result name="success">/listelections.jsp</result>
+            <result name="error">/usermenu.jsp</result>
+            <result name="error_login">/index.jsp</result>
+        </action>
+
+        <action name="listElectionLists" class="Web.Actions.ListElectionListsAction" method="execute">
+            <result name="success">/listelectionlists.jsp</result>
+            <result name="error">/usermenu.jsp</result>
+            <result name="errorLogin">/index.jsp</result>
+        </action>
+
+        <action name="vote" class="Web.Actions.VoteAction" method="execute">
+            <result name="success">/usermenu.jsp </result>
+            <result name="error">/usermenu.jsp</result>
+        </action>
+
+        <!-- Admin Actions-->
         <action name="registerUser" class="Web.Actions.RegisterUserAction" method ="execute">
             <result name="registerSuccess">/adminmenu.jsp</result>
             <result name="registerFail">/error.jsp</result>
@@ -46,6 +61,11 @@
             <result name="LISTCREATE_FAIL">/error.jsp</result>
         </action>
 
+        <action name="addUserToList" class="Web.Actions.CreateListAction" method ="executeAdd">
+            <result name="USER_ADD">/usertolist.jsp</result>
+            <result name="USER_FAIL">/error.jsp</result>
+        </action>
+
         <action name="registerUserMenu">
             <result name="success">/registerUser.jsp</result>
         </action>
@@ -57,16 +77,6 @@
         </action>
         <action name="CreateListMenu">
             <result name="success">/createlist.jsp</result>
-        </action>
-
-        <action name="chooseElection" class="Web.Actions.ChooseElectionAction" method="execute">
-            <result name="success">/listelectionlists.jsp</result>
-            <result name="error">/index.jsp</result>
-        </action>
-
-        <action name="chooseList" class="Web.Actions.ChooseListAction" method="execute">
-            <result name="success">/index.jsp</result>
-            <result name="error">/index.jsp</result>
         </action>
 
     </package>
