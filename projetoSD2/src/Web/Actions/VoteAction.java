@@ -14,7 +14,6 @@ public class VoteAction extends ActionSupport implements SessionAware {
     public String execute() throws Exception {
         if((boolean)this.session.get("loggedin") && this.session.get("username") != null) {
             this.getUserBean().setUsername((String) this.session.get("username"));
-            this.getUserBean().setIdFac(Integer.parseInt((String) this.session.get("votebooth")));
             this.getUserBean().setIdUser(this.getUserBean().getIdUser());
 
             this.getUserBean().setIdElection((int)this.session.get("eleicao"));

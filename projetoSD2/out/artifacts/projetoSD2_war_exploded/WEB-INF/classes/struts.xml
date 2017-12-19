@@ -100,7 +100,7 @@
             <result name="success">/voteboothmenu.jsp</result>
         </action>
         <action name="ElectionListMenu">
-            <result name="success">/voteboothmenu.jsp</result>
+            <result name="success">/electionlistmenu.jsp</result>
         </action>
         <action name="ElectionDetailsMenu">
             <result name="success">/electiondetailsmenu.jsp</result>

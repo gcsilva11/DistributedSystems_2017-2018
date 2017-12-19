@@ -18,26 +18,40 @@
     <java:redirect url="index.jsp"/>
 </java:if>
 
-<div class="content">
-    <div class="row">
-        <div class="col-xs-6">
-            <s:form action="listElections">
-                <s:submit  value= "Votar" class="button" />
-            </s:form>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="usermenu.jsp">Menu de Voto</a>
         </div>
-
-        <div class="col-xs-6">
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="usermenu.jsp">Home</a></li>
+        </ul>
         <s:form action="logout">
-            <s:submit  value= "Logout" class="button" />
+            <button class="btn btn-danger navbar-btn navbar-right">Logout</button>
         </s:form>
+    </div>
+</nav>
+
+<div class="content">
+        <div class="row">
+            <div class="col-xs-6">
+                <s:form action="listElections">
+                    <s:submit  value= "Votar" class="button" />
+                </s:form>
+            </div>
+
+            <div class="col-xs-6">
+                <s:form action="logout">
+                    <s:submit  value= "Logout" class="button" />
+                </s:form>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <p>${session.eleicao}</p>
-    </div>
-    <div class="row">
-        <p>${session.lista}</p>
-    </div>
+        <div class="row">
+            <p>${session.eleicao}</p>
+        </div>
+        <div class="row">
+            <p>${session.lista}</p>
+        </div>
 </div>
 </body>
 </html>

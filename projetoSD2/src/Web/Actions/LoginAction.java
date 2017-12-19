@@ -14,29 +14,17 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	@Override
 	public String execute() throws Exception{
 
-		if(this.username != null && !this.username.equals("") && this.password != null && !this.password.equals("") && this.faculdade!= null && !this.faculdade.equals("") && !this.username.equals("admin")) {
-			this.getLoginBean().setFaculdade(this.faculdade);
+		if(this.username != null && !this.username.equals("") && this.password != null && !this.password.equals("") && !this.username.equals("admin")) {
+			this.getLoginBean().setUsername(this.username);
+			this.getLoginBean().setPassword(this.password);
 
-			if (this.getLoginBean().getCheckFaculdade()) {
-				this.session.put("votebooth", this.faculdade);
+			if (this.getLoginBean().getAuthenticateUser()) {
+				this.session.put("username", this.username);
+				this.session.put("loggedin", true); // this marks the user as logged in
 
-				this.getLoginBean().setUsername(this.username);
-				this.getLoginBean().setPassword(this.password);
-
-				if (this.getLoginBean().getIdentifyName()) {
-					if (this.getLoginBean().getAuthenticateUser()) {
-						this.session.put("username", this.username);
-						this.session.put("loggedin", true); // this marks the user as logged in
-
-						return "LOGIN_SUCCESS";
-					} else {
-						this.session.put("message","Credenciais incorretas");
-					}
-				} else {
-					this.session.put("message","User não pertence à faculdade");
-				}
+				return "LOGIN_SUCCESS";
 			} else {
-				this.session.put("message","Faculdade não existe");
+				this.session.put("message","Credenciais incorretas");
 			}
 		} else if(this.username.equals("admin") && this.password.equals("admin") && this.faculdade.equals("")){
 			session.put("Admin",true);

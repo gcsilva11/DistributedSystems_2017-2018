@@ -6,7 +6,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public class UserBean extends RMIBean {
-    private int idFac, idUser, idElection, idList;
+    private int idUser, idElection, idList;
     private String username, electionName, listName;
 
     private ArrayList<Integer> eleicoes = null, listas = null;
@@ -37,11 +37,12 @@ public class UserBean extends RMIBean {
     }
 
     public boolean getVote() throws RemoteException{
-        return this.server.voteElection(this.idUser,this.idElection,this.idList,this.idFac);
+        return this.server.antecipatedVote(this.idUser,this.idElection,this.idList);
     }
 
+
     public ArrayList<Integer> getEleicoes() throws RemoteException{
-        return this.server.getMesaDeVotoEls(this.idFac);
+        return this.server.getEls();
     }
 
     public void setEleicoes(ArrayList<Integer> eleicoes) {
@@ -66,10 +67,6 @@ public class UserBean extends RMIBean {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public void setIdFac(int idFac) {
-        this.idFac = idFac;
     }
 
     public void setIdElection(int idElection) {
