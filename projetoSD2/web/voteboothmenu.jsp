@@ -3,13 +3,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>iVotas - Mesas De Voto</title>
-
+    <title>iVotas: Menu de Admin - Mesas De Voto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
 <java:if test="${session.Admin != true}">
     <java:redirect url="index.jsp"/>
 </java:if>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="adminmenu.jsp">Menu de Voto</a>
+        </div>
+        <s:form action="AdminLogout">
+            <button class="btn btn-danger navbar-btn navbar-right">Logout</button>
+        </s:form>
+    </div>
+</nav>
+
 <div>
     <h1>Adicionar/Remover Mesas de Voto</h1>
 </div>
@@ -48,7 +61,7 @@
         <br>Adicionar Mesa de Voto:<br>
         <li>ID da Faculdade: <s:textfield name="facID"/></li>
         <li>ID da Eleiçao: <s:textfield name="elecID"/></li><br>
-        <s:submit value="Adicionar Mesa"/>
+        <s:submit value="Adicionar Mesa" cssClass="btn btn-default"/>
     </s:form>
 </div>
 <div style="display:none;" id='removeBooth'>
@@ -56,16 +69,11 @@
         <br>Remover Mesa de Voto:<br>
         <li>ID da Faculdade: <s:textfield name="facID"/></li>
         <li>ID da Eleiçao: <s:textfield name="elecID"/></li><br>
-        <s:submit value="Remover Mesa"/>
+        <s:submit value="Remover Mesa" cssClass="btn btn-default"/>
     </s:form>
 </div>
 <s:if test="hasActionMessages()">
     <s:actionmessage/>
 </s:if>
-<div>
-    <s:form action="menuButtonAdmin">
-        <s:submit value="Back To Menu" class="button" />
-    </s:form>
-</div>
 </body>
 </html>

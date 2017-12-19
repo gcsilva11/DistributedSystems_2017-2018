@@ -1,16 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: joaoferreiro
-  Date: 18/12/2017
-  Time: 18:52
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="java" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>iVotas: Menu de Voto</title>
+    <title>iVotas: Menu de Voto - Locais de Voto</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
@@ -29,22 +22,34 @@
         </s:form>
     </div>
 </nav>
+<div>
+    <h1>Locais de Voto</h1>
+</div>
 
-<div class="content">
-    <div class="row">
-        <div class="col-xs-3"></div>
-        <div class="col-xs-3">
-            <s:form action="listElections">
-                <s:submit  value="Votar" cssClass="btn btn-default"/>
-            </s:form>
-        </div>
-        <div class="col-xs-3"></div>
-        <div class="col-xs-3">
-            <s:form action="VotedListMenu">
-                <s:submit  value="Listar Locais de Voto" cssClass="btn btn-default"/>
-            </s:form>
-        </div>
-    </div>
+<div>
+    <s:form action="listLocal">
+        <s:submit  value= "List Elections" cssClass="btn btn-default"/>
+    </s:form>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID Eleicao</th>
+            <th>Local de Voto</th>
+        </tr>
+        </thead>
+        <c:forEach items="${ListUserVotePlacesBean.placesVoted}" var="place">
+            <tbody>
+            <tr>
+                <td><c:out value="${place.get(0)}" /></td>
+                <td><c:out value="${place.get(1)}" /></td>
+            </tr>
+            </tbody>
+        </c:forEach>
+    </table>
 </div>
 </body>
+
 </html>

@@ -44,6 +44,14 @@
             <result name="error">/usermenu.jsp</result>
         </action>
 
+        <action name="listLocal" class="Web.Actions.ListLocalAction" method="execute">
+            <result name="LIST_LOCAL_ELECTIONS_SUCCESS">/listlocals.jsp </result>
+        </action>
+
+        <action name="VotedListMenu">
+            <result name="success">/listlocals.jsp</result>
+        </action>
+
         <!-- Admin Actions-->
         <action name="registerUser" class="Web.Actions.RegisterUserAction" method ="execute">
             <result name="registerSuccess">/adminmenu.jsp</result>
@@ -80,6 +88,14 @@
             <result name="BOOTH_REMOVE_FAIL">/voteboothmenu.jsp</result>
         </action>
 
+        <action name="listAllElections" class="Web.Actions.ListAllElectionsAction" method="execute">
+            <result name="LIST_ALL_ELECTIONS_SUCCESS">/electionlistmenu.jsp</result>
+        </action>
+
+        <action name="AdminLogout" class="Web.Actions.AdminLogoutAction" method ="execute">
+            <result name="LOGOUT">/index.jsp</result>
+        </action>
+
         <!--Navigation Actions-->
         <action name="registerUserMenu">
             <result name="success">/registerUser.jsp</result>
@@ -101,9 +117,6 @@
         </action>
         <action name="ElectionListMenu">
             <result name="success">/electionlistmenu.jsp</result>
-        </action>
-        <action name="ElectionDetailsMenu">
-            <result name="success">/electiondetailsmenu.jsp</result>
         </action>
         <action name="VoteHistoryMenu">
             <result name="success">/votehistorymenu.jsp</result>

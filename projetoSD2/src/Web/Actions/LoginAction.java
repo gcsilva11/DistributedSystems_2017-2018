@@ -26,7 +26,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 			} else {
 				this.session.put("message","Credenciais incorretas");
 			}
-		} else if(this.username.equals("admin") && this.password.equals("admin") && this.faculdade.equals("")){
+		} else if(this.username.equals("admin") && this.password.equals("admin")){
 			session.put("Admin",true);
 			return "LOGIN_ADMIN";
 		} else {

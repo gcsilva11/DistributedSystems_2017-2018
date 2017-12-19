@@ -3,13 +3,27 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>iVotas - Criar Eleicao</title>
-
+    <title>iVotas: Menu de Admin - Criar Eleicao</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
 <java:if test="${session.Admin != true}">
     <java:redirect url="index.jsp"/>
 </java:if>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="adminmenu.jsp">Menu de Voto</a>
+        </div>
+
+        <s:form action="AdminLogout">
+            <button class="btn btn-danger navbar-btn navbar-right">Logout</button>
+        </s:form>
+    </div>
+</nav>
+
 <div>
     <h1>Criar Nova Eleição</h1>
 </div>
@@ -53,7 +67,7 @@
         <li>Data de Fim: <s:textfield name="elecEndDate"/></li>
         <li>Faculdade(ID): <s:textfield name="elecFacID"/></li>
         <s:textfield name="elecType" value = "2" type="hidden"/></li><br>
-        <s:submit value="Create Election"/>
+        <s:submit value="Create Election" cssClass="btn btn-default"/>
     </s:form>
 </div>
 <div style="display:none;" id='genEle'>
@@ -66,16 +80,11 @@
         <li>Data de Fim: <s:textfield name="elecEndDate"/></li>
         <s:textfield name="elecFacID" value = "0" type ="hidden"/></li>
         <s:textfield name="elecType" value = "1" type="hidden"/></li><br>
-        <s:submit value="Create Election"/>
+        <s:submit value="Create Election" cssClass="btn btn-default"/>
     </s:form>
 </div>
 <s:if test="hasActionMessages()">
     <s:actionmessage/>
 </s:if>
-<div>
-    <s:form action="menuButtonAdmin">
-        <s:submit value="Back To Menu" class="button" />
-    </s:form>
-</div>
 </body>
 </html>

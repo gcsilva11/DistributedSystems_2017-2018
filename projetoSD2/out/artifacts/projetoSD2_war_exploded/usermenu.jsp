@@ -10,7 +10,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>iVotas - Menu de Voto</title>
+    <title>iVotas: Menu de Voto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
@@ -23,9 +24,6 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="usermenu.jsp">Menu de Voto</a>
         </div>
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="usermenu.jsp">Home</a></li>
-        </ul>
         <s:form action="logout">
             <button class="btn btn-danger navbar-btn navbar-right">Logout</button>
         </s:form>
@@ -33,25 +31,20 @@
 </nav>
 
 <div class="content">
-        <div class="row">
-            <div class="col-xs-6">
-                <s:form action="listElections">
-                    <s:submit  value= "Votar" class="button" />
-                </s:form>
-            </div>
-
-            <div class="col-xs-6">
-                <s:form action="logout">
-                    <s:submit  value= "Logout" class="button" />
-                </s:form>
-            </div>
+    <div class="row">
+        <div class="col-xs-3"></div>
+        <div class="col-xs-3">
+            <s:form action="listElections">
+                <s:submit  value="Votar" cssClass="btn btn-default"/>
+            </s:form>
         </div>
-        <div class="row">
-            <p>${session.eleicao}</p>
+        <div class="col-xs-3"></div>
+        <div class="col-xs-3">
+            <s:form action="VotedListMenu">
+                <s:submit  value="Listar Locais de Voto" cssClass="btn btn-default"/>
+            </s:form>
         </div>
-        <div class="row">
-            <p>${session.lista}</p>
-        </div>
+    </div>
 </div>
 </body>
 </html>
