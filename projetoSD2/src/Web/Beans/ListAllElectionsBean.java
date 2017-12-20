@@ -12,6 +12,7 @@ public class ListAllElectionsBean extends RMIBean{
 	}
 
     public ArrayList<ArrayList<String>> getElections() throws RemoteException {
+	    this.elections.clear();
         ArrayList<Integer> elecIds = this.server.getElsID();
         for (int i = 0; i < elecIds.size(); i++)
             this.elections.add(this.server.getEl(elecIds.get(i)));

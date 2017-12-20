@@ -20,6 +20,11 @@ public class DetailElectionBean extends RMIBean{
     }
 
     public ArrayList<String> getElection() throws RemoteException{
+	    if(this.server.isElActive(this.eleID)){
+            System.out.println("Esta election esta ongoing");
+	        return null;
+        }
+        System.out.println("Esta election esta FINIT");
 	    this.election = this.server.getEl(this.eleID);
         return this.election;
     }
