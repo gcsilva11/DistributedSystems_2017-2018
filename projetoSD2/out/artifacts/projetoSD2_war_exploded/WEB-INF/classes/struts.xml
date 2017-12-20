@@ -92,6 +92,10 @@
             <result name="LIST_ALL_ELECTIONS_SUCCESS">/electionlistmenu.jsp</result>
         </action>
 
+        <action name="detailElection" class="Web.Actions.DetailElectionAction" method="execute">
+            <result name="DETAIL_SUCCESS">/detailsmenu.jsp</result>
+        </action>
+
         <action name="AdminLogout" class="Web.Actions.AdminLogoutAction" method ="execute">
             <result name="LOGOUT">/index.jsp</result>
         </action>
@@ -117,6 +121,9 @@
         </action>
         <action name="ElectionListMenu">
             <result name="success">/electionlistmenu.jsp</result>
+        </action>
+        <action name="ElectionDetailsMenu">
+            <result name="success">/detailsmenu.jsp</result>
         </action>
         <action name="VoteHistoryMenu">
             <result name="success">/votehistorymenu.jsp</result>

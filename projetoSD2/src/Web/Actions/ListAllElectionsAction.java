@@ -12,7 +12,7 @@ public class ListAllElectionsAction extends ActionSupport implements SessionAwar
     private Map<String, Object> session;
 
     @Override
-    public String execute() throws Exception {
+    public String execute(){
         return "LIST_ALL_ELECTIONS_SUCCESS";
     }
 
