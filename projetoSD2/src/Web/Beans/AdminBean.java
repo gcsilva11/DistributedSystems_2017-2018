@@ -51,4 +51,8 @@ public class AdminBean extends RMIBean{
 			return false;
 		}
 	}
+
+	public void getEditUser() throws RemoteException{
+		this.server.editUser(this.id,this.username, this.password,this.phone,this.expDate,this.address);
+	}
 }

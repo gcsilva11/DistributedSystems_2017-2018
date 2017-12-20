@@ -22,10 +22,6 @@
             <result name="LOGIN_FAIL">/index.jsp</result>
         </action>
 
-        <action name="logout" class="Web.Actions.LogoutAction" method ="execute">
-            <result name="LOGOUT">/index.jsp</result>
-        </action>
-
         <!-- User Actions-->
         <action name="listElections" class="Web.Actions.ListElectionAction" method="execute">
             <result name="success">/listelections.jsp</result>
@@ -46,16 +42,25 @@
 
         <action name="listLocal" class="Web.Actions.ListLocalAction" method="execute">
             <result name="LIST_LOCAL_ELECTIONS_SUCCESS">/listlocals.jsp </result>
+            <result name="errorLogin">/index.jsp</result>
         </action>
 
         <action name="VotedListMenu">
             <result name="success">/listlocals.jsp</result>
         </action>
 
+        <action name="logout" class="Web.Actions.LogoutAction" method ="execute">
+            <result name="LOGOUT">/index.jsp</result>
+        </action>
+
         <!-- Admin Actions-->
         <action name="registerUser" class="Web.Actions.RegisterUserAction" method ="execute">
             <result name="registerSuccess">/adminmenu.jsp</result>
             <result name="registerFail">/error.jsp</result>
+        </action>
+
+        <action name="editUser" class="Web.Actions.EditUserAction" method="execute">
+            <result name="success">/adminmenu.jsp</result>
         </action>
 
         <action name="createElection" class="Web.Actions.CreateElectionAction" method ="execute">
@@ -99,6 +104,9 @@
         <!--Navigation Actions-->
         <action name="registerUserMenu">
             <result name="success">/registerUser.jsp</result>
+        </action>
+        <action name="editUserMenu">
+            <result name="success">/editUser.jsp</result>
         </action>
         <action name="menuButtonAdmin">
             <result name="success">/adminmenu.jsp</result>

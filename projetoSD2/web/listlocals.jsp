@@ -40,7 +40,7 @@
             <th>Local de Voto</th>
         </tr>
         </thead>
-        <c:forEach items="${ListUserVotePlacesBean.placesVoted}" var="place">
+        <c:forEach items="${UserBean.placesVoted}" var="place">
             <tbody>
             <tr>
                 <td><c:out value="${place.get(0)}" /></td>

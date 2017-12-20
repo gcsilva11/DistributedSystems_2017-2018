@@ -12,6 +12,8 @@ public class UserBean extends RMIBean {
     private ArrayList<Integer> eleicoes = null, listas = null;
     private ArrayList<String> elnames = null, lnames = null;
 
+    private ArrayList<ArrayList<String>> placesVoted = new ArrayList<ArrayList<String>>();
+
     public UserBean() {
         super();
     }
@@ -110,5 +112,22 @@ public class UserBean extends RMIBean {
 
     public void setLNames(ArrayList<String> lnames) {
         this.lnames = lnames;
+    }
+
+
+    public String getNameFac() throws RemoteException{
+        return this.server.getFaculdadeVoted(this.idUser, this.idElection);
+    }
+
+    public ArrayList<Integer> getEls() throws RemoteException{
+        return this.server.getEls();
+    }
+
+    public ArrayList<ArrayList<String>> getPlacesVoted() {
+        return placesVoted;
+    }
+
+    public void setPlacesVoted(ArrayList<ArrayList<String>> placesVoted) {
+        this.placesVoted = placesVoted;
     }
 }

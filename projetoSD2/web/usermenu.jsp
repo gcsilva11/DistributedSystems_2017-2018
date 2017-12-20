@@ -22,7 +22,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="usermenu.jsp">Menu de Voto</a>
+            <a class="navbar-brand" href="usermenu.jsp">Menu de Admin</a>
         </div>
         <s:form action="logout">
             <button class="btn btn-danger navbar-btn navbar-right">Logout</button>
