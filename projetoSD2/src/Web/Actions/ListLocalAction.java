@@ -36,7 +36,7 @@ public class ListLocalAction extends ActionSupport implements SessionAware {
             }
             this.getUserBean().setPlacesVoted(this.lista);
             return "LIST_LOCAL_ELECTIONS_SUCCESS";
-        } else return "errorLogin";
+        } else return "LOGIN_FAIL";
     }
 
     public UserBean getUserBean() {

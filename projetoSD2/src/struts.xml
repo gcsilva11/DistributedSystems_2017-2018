@@ -24,29 +24,23 @@
 
         <!-- User Actions-->
         <action name="listElections" class="Web.Actions.ListElectionAction" method="execute">
-            <result name="success">/listelections.jsp</result>
-            <result name="error">/usermenu.jsp</result>
-            <result name="error_login">/index.jsp</result>
+            <result name="LIST_SUCCESS">/listelections.jsp</result>
+            <result name="LOGIN_FAIL">/index.jsp</result>
         </action>
 
         <action name="listElectionLists" class="Web.Actions.ListElectionListsAction" method="execute">
-            <result name="success">/listelectionlists.jsp</result>
-            <result name="error">/usermenu.jsp</result>
-            <result name="errorLogin">/index.jsp</result>
+            <result name="LIST_SUCCESS">/listelectionlists.jsp</result>
+            <result name="LOGIN_FAIL">/index.jsp</result>
         </action>
 
         <action name="vote" class="Web.Actions.VoteAction" method="execute">
-            <result name="success">/usermenu.jsp </result>
-            <result name="error">/usermenu.jsp</result>
+            <result name="VOTE_SUCCESS">/usermenu.jsp </result>
+            <result name="LOGIN_FAIL">/index.jsp</result>
         </action>
 
         <action name="listLocal" class="Web.Actions.ListLocalAction" method="execute">
             <result name="LIST_LOCAL_ELECTIONS_SUCCESS">/listlocals.jsp </result>
-            <result name="errorLogin">/index.jsp</result>
-        </action>
-
-        <action name="VotedListMenu">
-            <result name="success">/listlocals.jsp</result>
+            <result name="LOGIN_FAIL">/index.jsp</result>
         </action>
 
         <action name="logout" class="Web.Actions.LogoutAction" method ="execute">
@@ -97,6 +91,10 @@
             <result name="LIST_ALL_ELECTIONS_SUCCESS">/electionlistmenu.jsp</result>
         </action>
 
+        <action name="listAllLocal" class="Web.Actions.ListAllLocalAction" method="execute">
+            <result name="LIST_ALL_LOCAL_SUCCESS">/votehistorymenu.jsp</result>
+        </action>
+
         <action name="detailElection" class="Web.Actions.DetailElectionAction" method="execute">
             <result name="DETAIL_SUCCESS">/detailsmenu.jsp</result>
         </action>
@@ -136,18 +134,9 @@
         <action name="VoteHistoryMenu">
             <result name="success">/votehistorymenu.jsp</result>
         </action>
-
-        <!---                                         -->
-
-        <!--action name="chooseElection" class="Web.Actions.ChooseElectionAction" method="execute">
-            <result name="success">/listelectionlists.jsp</result>
-            <result name="error">/index.jsp</result>
+        <action name="VotedListMenu">
+            <result name="success">/listlocals.jsp</result>
         </action>
-
-        <action name="chooseList" class="Web.Actions.ChooseListAction" method="execute">
-            <result name="success">/index.jsp</result>
-            <result name="error">/index.jsp</result>
-        </action-->
     </package>
 
 </struts>

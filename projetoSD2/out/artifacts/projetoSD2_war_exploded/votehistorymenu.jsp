@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>iVotas: Menu de Admin - Historico de Votos</title>
+    <title>iVotas: Menu de Admin - Historico Votos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
@@ -15,7 +15,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="adminmenu.jsp">Menu de Admin</a>
+            <a class="navbar-brand" href="adminmenu.jsp">Menu de Voto</a>
         </div>
         <s:form action="AdminLogout">
             <button class="btn btn-danger navbar-btn navbar-right">Logout</button>
@@ -24,22 +24,30 @@
 </nav>
 
 <div>
-    <h1>Registar Novo User</h1>
-</div>
-
-<div>
-    <s:form action="registerUser" method="post">
-        <li>Nome: <s:textfield name="name"/></li>
-        <li>ID: <s:textfield name="id"/></li>
-        <li>Data de Validade: <s:textfield name="expDate"/></li>
-        <li>Telefone: <s:textfield name="phone"/></li>
-        <li>Morada: <s:textfield name="address"/></li>
-        <li>Faculdade: <s:textfield name="faculdade"/><br>
-        <li>Profissao: <s:textfield name="profession"/> 1-Estudante 2-Professor 3-Empregado</li>
-        <li>Password: <s:password name="password"/><br></li>
-        <s:submit value="Register" cssClass="btn btn-default"/>
+    <s:form action="listAllLocal" method="post" >
+        <li>ID User: <s:textfield name="userID" value="0"/><br></li>
+        <s:submit value="Verificar Detalhes" cssClass="btn btn-default"/>
     </s:form>
 </div>
-</body>
 
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID Eleicao</th>
+            <th>Local de Voto</th>
+        </tr>
+        </thead>
+        <c:forEach items="${ListAllLocalBean.placesVoted}" var="place">
+            <tbody>
+            <tr>
+                <td><c:out value="${place.get(0)}" /></td>
+                <td><c:out value="${place.get(1)}" /></td>
+            </tr>
+            </tbody>
+        </c:forEach>
+    </table>
+</div>
+
+</body>
 </html>

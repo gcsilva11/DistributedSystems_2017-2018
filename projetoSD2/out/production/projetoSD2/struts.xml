@@ -97,6 +97,10 @@
             <result name="LIST_ALL_ELECTIONS_SUCCESS">/electionlistmenu.jsp</result>
         </action>
 
+        <action name="listAllLocal" class="Web.Actions.ListAllLocalAction" method="execute">
+            <result name="LIST_ALL_LOCAL_SUCCESS">/votehistorymenu.jsp</result>
+        </action>
+
         <action name="detailElection" class="Web.Actions.DetailElectionAction" method="execute">
             <result name="DETAIL_SUCCESS">/detailsmenu.jsp</result>
         </action>

@@ -20,11 +20,9 @@ public class VoteAction extends ActionSupport implements SessionAware {
             this.getUserBean().setIdList(this.getUserBean().getListID(this.nomeLista));
             this.session.put("lista", this.getUserBean().getListID(this.nomeLista));
 
-            if(this.getUserBean().getVote())
-                return "success";
-            else
-                return "error";
-        } else return "errorLogin";
+            this.getUserBean().getVote();
+            return "VOTE_SUCCESS";
+        } else return "LOGIN_FAIL";
     }
 
     public void setNomeLista(String nomeLista) {

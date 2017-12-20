@@ -24,8 +24,8 @@ public class ListElectionAction extends ActionSupport implements SessionAware {
                 }
             }
             this.getUserBean().setElNames(this.eleicoes);
-            return "success";
-        } else return "errorLogin";
+            return "LIST_SUCCESS";
+        } else return "LOGIN_FAIL";
     }
 
     public UserBean getUserBean() {

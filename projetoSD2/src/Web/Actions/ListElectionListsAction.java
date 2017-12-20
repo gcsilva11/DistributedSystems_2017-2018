@@ -30,8 +30,8 @@ public class ListElectionListsAction extends ActionSupport implements SessionAwa
                 }
             }
             this.getUserBean().setLNames(this.listas);
-            return "success";
-        } else return "errorLogin";
+            return "LIST_SUCCESS";
+        } else return "LOGIN_FAIL";
     }
 
     public void setNomeEleicao(String nomeEleicao) {

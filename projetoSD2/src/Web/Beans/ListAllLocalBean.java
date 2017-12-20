@@ -4,17 +4,48 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public class ListAllLocalBean extends RMIBean{
+    private int idElection, idUser;
 
-    private ArrayList<ArrayList<String>> elections = new ArrayList<ArrayList<String>>();
+    private ArrayList<ArrayList<String>> placesVoted = new ArrayList<>();
 
     public ListAllLocalBean(){
         super();
     }
 
-    public ArrayList<ArrayList<String>> getElections() throws RemoteException {
-        ArrayList<Integer> elecIds = this.server.getElsID();
-        for (int i = 0; i < elecIds.size(); i++)
-            this.elections.add(this.server.getEl(elecIds.get(i)));
-        return this.elections;
+    public boolean getJaVotou() throws RemoteException{
+        System.out.println(this.idUser);
+        return this.server.hasVoted(this.idUser,this.idElection);
     }
+
+    public boolean getUserPodeVotar() throws RemoteException{
+        System.out.println(this.idUser);
+        return this.server.userCanVote(this.idUser,this.idElection);
+    }
+
+    public String getNameFac() throws RemoteException{
+        System.out.println(this.idUser);
+        return this.server.getFaculdadeVoted(this.idUser, this.idElection);
+    }
+
+    public ArrayList<Integer> getEls() throws RemoteException{
+        return this.server.getEls();
+    }
+
+    public void setIdElection(int idElection) {
+        this.idElection = idElection;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = Integer.parseInt(idUser);
+        System.out.println(this.idUser);
+    }
+
+    public ArrayList<ArrayList<String>> getPlacesVoted() {
+        return placesVoted;
+    }
+
+    public void setPlacesVoted(ArrayList<ArrayList<String>> placesVoted) {
+        this.placesVoted = placesVoted;
+    }
+
 }
