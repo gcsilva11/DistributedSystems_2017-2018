@@ -15,7 +15,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="adminmenu.jsp">Menu de Voto</a>
+            <a class="navbar-brand" href="adminmenu.jsp">Menu de Admin</a>
         </div>
         <s:form action="AdminLogout">
             <button class="btn btn-danger navbar-btn navbar-right">Logout</button>
@@ -30,11 +30,10 @@
     </s:form>
 </div>
 
-    <c:set var = "var1" value = "${detailsElectionBean.election}"></c:set>
     <c:choose>
-    <c:when test="%{empty var1}">
+    <c:when test="${DetailElectionBean.election==null||DetailELectionBean.size()==0}">
 
-        <h1>There are no finished elections with that id.</h1>
+        Oops - There are no finished elections with that id :(
 
     </c:when>
     <c:otherwise>
