@@ -2,21 +2,16 @@ package RMIPackage;
 
 import ServerPackage.TCPServerInterface;
 import adminPackage.VotingAdminInterface;
-import com.sun.org.apache.regexp.internal.RE;
 
-import javax.xml.transform.Result;
-import java.io.IOException;
+import java.io.*;
 import java.net.*;
 import java.rmi.*;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
+import java.rmi.registry.*;
 import java.rmi.server.*;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.sql.*;
 
-public class serverRMI extends UnicastRemoteObject implements VotingAdminInterface, TCPServerInterface {
+public class serverRMI extends UnicastRemoteObject implements TCPServerInterface, VotingAdminInterface{
 	private static final long serialVersionUID = 1L;
 
 	private static Connection connection = null;
@@ -25,8 +20,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		super();
 	}
 
-	// ==================================================================================================================
-	// VotingAdminInterface
+	// =================================================================================================================
 
 	// Verfica o departamento
 	public boolean checkFaculdade(int facID) throws RemoteException{
@@ -259,6 +253,18 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return 0;
 	}
 
+	// Retorna ID de um user por nome
+	public int getUserID(String name) throws RemoteException{
+		try {
+			ResultSet rs = queryDB("SELECT numberid FROM user WHERE name = '"+name+"';");
+			if(rs.next())
+				return rs.getInt("numberid");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
 	// Retorna ID da lista por nome
 	public int getListID(String name, int electionID) throws RemoteException{
 		try {
@@ -305,15 +311,12 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 	}
 
 	// Retorna id maximo das eleicoes
-	public int[] getEls() throws RemoteException{
-		int[] aux = new int[100];
-		Arrays.fill(aux,0);
+	public ArrayList<Integer> getEls() throws RemoteException{
+		ArrayList<Integer> aux = new ArrayList<>();
 		try{
 			ResultSet rs = queryDB("SELECT electionid FROM eleicao;");
-			int i = 0;
 			while (rs.next()){
-				aux[i] = rs.getInt("electionid");
-				i++;
+				aux.add(rs.getInt("electionid"));
 			}
 		} catch (SQLException e){
 			e.printStackTrace();
@@ -364,7 +367,7 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			ResultSet rs = queryDB("SELECT faculdade_facid FROM eleicao_user WHERE eleicao_electionid = "+electionID+" AND user_numberid = "+userID+";");
 			if(rs.next()) {
 				int aux = rs.getInt("faculdade_facid");
-					return getFacName(aux);
+				return getFacName(aux);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -384,14 +387,10 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return "";
 	}
 
-
-	// ==================================================================================================================
-	// TCPServerInterface
-
 	// Log in User
-	public boolean authenticateUser(int id, String name, String password) throws RemoteException{
+	public boolean authenticateUser(String name, String password) throws RemoteException{
 		try{
-			ResultSet rs = queryDB("SELECT password FROM user WHERE name = '"+name+"' AND numberid = "+id+";");
+			ResultSet rs = queryDB("SELECT password FROM user WHERE name = '"+name+"';");
 			if(rs.next()){
 				if(rs.getString("password").equals(password))
 					return true;
@@ -415,16 +414,44 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return false;
 	}
 
+	// Retorna faculdades a que user pertence
+	public boolean identifyName(String name, int facID) throws RemoteException{
+		try{
+			ResultSet rs = queryDB("SELECT numberid FROM user WHERE name = '"+name+"';");
+			if(rs.next()){
+				ResultSet rs2 = queryDB("SELECT * FROM user_faculdade WHERE user_numberid = "+rs.getString("numberid"));
+				while (rs2.next()){
+					if(rs2.getInt("faculdade_facid")==facID)
+						return true;
+				}
+			}
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	// Retorna eleicoes elegiveis para determinada faculdade
-	public int[] getMesaDeVotoEls(int facid) throws RemoteException{
-		int[] aux = new int[100];
-		Arrays.fill(aux,0);
+	public ArrayList<Integer> getMesaDeVotoEls(int facid) throws RemoteException{
+		ArrayList<Integer> aux = new ArrayList<>();
 		try{
 			ResultSet rs = queryDB("SELECT eleicao_electionid FROM mesa_de_voto WHERE faculdade_facid = "+facid+";");
-			int i = 0;
 			while (rs.next()){
-				aux[i] = rs.getInt("eleicao_electionid");
-				i++;
+				aux.add(rs.getInt("eleicao_electionid"));
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		return aux;
+	}
+
+	// Retorna id de todas as eleicoes
+	public ArrayList<Integer> getElsID() throws RemoteException{
+		ArrayList<Integer> aux = new ArrayList<>();
+		try{
+			ResultSet rs= queryDB("SELECT electionid FROM eleicao;");
+			while (rs.next()){
+				aux.add(rs.getInt("electionid"));
 			}
 		} catch (SQLException e){
 			e.printStackTrace();
@@ -451,11 +478,6 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 			return true;
 		return false;
 	}
-
-
-
-	// ==================================================================================================================
-	// Both Interfaces
 
 	// Verifica se user já votou em eleição
 	public boolean hasVoted(int userID, int electionID) throws RemoteException {
@@ -495,25 +517,38 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return "";
 	}
 
+	// Retorna dados de uma eleicao
+	public ArrayList<String> getEl(int id) throws RemoteException{
+		ArrayList<String> aux = new ArrayList<>();
+		try{
+			ResultSet rs = queryDB("SELECT electionid,title,description,startdate,enddate FROM eleicao WHERE electionid = "+id+";");
+			if(rs.next()){
+				aux.add(rs.getString("electionid"));
+				aux.add(rs.getString("title"));
+				aux.add(rs.getString("description"));
+				aux.add(rs.getString("startdate"));
+				aux.add(rs.getString("enddate"));
+			}
+		}catch (SQLException e){ }
+		return aux;
+	}
+
 	// Retorna listas elegiveis para determinada eleicao
-	public int[] getElectionLists(int electionid) throws RemoteException{
-		int[] aux = new int[100];
-		Arrays.fill(aux,-1);
+	public ArrayList<Integer> getElectionLists(int electionid) throws RemoteException{
+		ArrayList<Integer> aux = new ArrayList<>();
 		try{
 			ResultSet rs = queryDB("SELECT listid FROM lista_candidata WHERE eleicao_electionid = "+electionid+";");
-			int i = 0;
 			while (rs.next()){
-				aux[i] = rs.getInt("listid");
-				i++;
+				aux.add(rs.getInt("listid"));
 			}
 		} catch (SQLException e){ }
 		return aux;
 	}
 
 	// Retorna nome lista por ID
-	public String getListName(int id) throws RemoteException{
+	public String getListName(int id, int eleicaoid) throws RemoteException{
 		try{
-			ResultSet rs = queryDB("SELECT name FROM lista_candidata WHERE listid = "+id+";");
+			ResultSet rs = queryDB("SELECT name FROM lista_candidata WHERE listid = "+id+" AND eleicao_electionid = "+eleicaoid+";");
 			if(rs.next()){
 				return rs.getString("name");
 			}
@@ -521,9 +556,18 @@ public class serverRMI extends UnicastRemoteObject implements VotingAdminInterfa
 		return "";
 	}
 
+	public int getElectionID(String name) throws RemoteException{
+		try {
+			ResultSet rs = queryDB("SELECT electionid FROM eleicao WHERE title = '"+name+"';");
+			if(rs.next())
+				return rs.getInt("electionid");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 
-
-	// ==================================================================================================================
+	// =================================================================================================================
 	// Main
 	public static void main(String args[]) {
 		Scanner sc = new Scanner(System.in);
@@ -647,8 +691,8 @@ class RMIFailover extends Thread {
 			// Abre socket UDP
 			this.aSocket = new DatagramSocket(this.serverPort);
 
-			serverRMI serverRMI = new serverRMI();
-			serverRMI.startRMI(this.rmiPort);
+			serverRMI RMIServer = new serverRMI();
+			RMIServer.startRMI(this.rmiPort);
 
 			while (true) {
 				String texto = "";

@@ -161,35 +161,35 @@ class Connection extends Thread {
             // Verifica se user pertence à faculdade
 
             // Autentica user
-            if (tcp.authenticateUser(userID, data, aux)) {
+            if (tcp.authenticateUser(data, aux)) {
 
                 // Lista eleicoes
-                int[] eleicoes = tcp.getMesaDeVotoEls(facID);
+                ArrayList<Integer> eleicoes = tcp.getMesaDeVotoEls(facID);
                 output.println("\nEscolha eleicao para votar: ");
-                for (int i = 0; i < eleicoes.length; i++) {
-                    if (!tcp.getElName(eleicoes[i]).equals("") && !tcp.hasVoted(userID,eleicoes[i]) && tcp.userCanVote(userID,eleicoes[i]) && tcp.isElActive(eleicoes[i]))
-                        output.println(eleicoes[i] + ". " + tcp.getElName(eleicoes[i]));
+                for (int i = 0; i < eleicoes.size(); i++) {
+                    if (!tcp.getElName(eleicoes.get(i)).equals("") && !tcp.hasVoted(userID,eleicoes.get(i)) && tcp.userCanVote(userID,eleicoes.get(i)) && tcp.isElActive(eleicoes.get(i)))
+                        output.println(eleicoes.get(i) + ". " + tcp.getElName(eleicoes.get(i)));
                 }
                 aux = input.readLine();
                 int idEleicao = Integer.parseInt(aux);
 
                 // Lista listas candidatas
-                int[] listas = tcp.getElectionLists(idEleicao);
+                ArrayList<Integer> listas = tcp.getElectionLists(idEleicao);
                 output.println("\nEscolha lista para votar: ");
-                for (int i = 0; i < listas.length; i++) {
-                    if (!tcp.getListName(listas[i]).equals("") && !tcp.getListName(listas[i]).equals("NULLVOTE")) {
-                        if (!tcp.getListName(listas[i]).equals("BLANKVOTE"))
-                            output.println(listas[i] + ". " + tcp.getListName(listas[i]));
+                for (int i = 0; i < listas.size(); i++) {
+                    if (!tcp.getListName(listas.get(i),idEleicao).equals("") && !tcp.getListName(listas.get(i),idEleicao).equals("NULLVOTE")) {
+                        if (!tcp.getListName(listas.get(i),idEleicao).equals("BLANKVOTE"))
+                            output.println(listas.get(i) + ". " + tcp.getListName(listas.get(i),idEleicao));
                         else
-                            output.println(listas[i] + ". ");
+                            output.println(listas.get(i) + ". ");
                     }
                 }
                 aux = input.readLine();
                 int idLista = Integer.parseInt(aux);
 
                 boolean contains = false;
-                for (int i = 0;i<listas.length;i++)
-                    if(listas[i] == idLista) contains = true;
+                for (int i = 0;i<listas.size();i++)
+                    if(listas.get(i) == idLista) contains = true;
 
                 // Efetua voto
                 if (contains) {
@@ -199,9 +199,9 @@ class Connection extends Thread {
                         output.println("\nErro");
                 }
                 else {
-                    for (int i = 0 ;i<listas.length;i++){
-                        if(tcp.getListName(listas[i]).equals("NULLVOTE"))
-                            idLista = listas[i];
+                    for (int i = 0 ;i<listas.size();i++){
+                        if(tcp.getListName(listas.get(i),idEleicao).equals("NULLVOTE"))
+                            idLista = listas.get(i);
                     }
                     if (tcp.voteElection(userID, idEleicao, idLista, facID))
                         output.println("\nVoto registado!");

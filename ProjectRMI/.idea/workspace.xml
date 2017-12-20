@@ -13,16 +13,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d94659c3-7663-4a7a-954b-c1093c75fd07" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/../projetoSD2/.idea/artifacts/projetoSD2_war_exploded.xml" afterPath="$PROJECT_DIR$/../projetoSD2/.idea/artifacts/projetoSD2_war_exploded.xml" />
-      <change beforePath="$PROJECT_DIR$/../projetoSD2/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../projetoSD2/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/../projetoSD2/out/artifacts/projetoSD2_war_exploded/WEB-INF/classes/struts.xml" afterPath="$PROJECT_DIR$/../projetoSD2/out/artifacts/projetoSD2_war_exploded/WEB-INF/classes/struts.xml" />
-      <change beforePath="$PROJECT_DIR$/../projetoSD2/out/artifacts/projetoSD2_war_exploded/adminmenu.jsp" afterPath="$PROJECT_DIR$/../projetoSD2/out/artifacts/projetoSD2_war_exploded/adminmenu.jsp" />
-      <change beforePath="$PROJECT_DIR$/../projetoSD2/out/production/projetoSD2/struts.xml" afterPath="$PROJECT_DIR$/../projetoSD2/out/production/projetoSD2/struts.xml" />
-      <change beforePath="$PROJECT_DIR$/../projetoSD2/src/Web/Actions/LoginAction.java" afterPath="$PROJECT_DIR$/../projetoSD2/src/Web/Actions/LoginAction.java" />
-      <change beforePath="$PROJECT_DIR$/../projetoSD2/src/Web/Beans/LoginBean.java" afterPath="$PROJECT_DIR$/../projetoSD2/src/Web/Beans/LoginBean.java" />
-      <change beforePath="$PROJECT_DIR$/../projetoSD2/src/struts.xml" afterPath="$PROJECT_DIR$/../projetoSD2/src/struts.xml" />
-      <change beforePath="$PROJECT_DIR$/../projetoSD2/web/adminmenu.jsp" afterPath="$PROJECT_DIR$/../projetoSD2/web/adminmenu.jsp" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/RMIPackage/rmiJAR/META-INF/MANIFEST.MF" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/ServerPackage/TCPClientJAR/META-INF/MANIFEST.MF" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/ServerPackage/TCPServerJAR/META-INF/MANIFEST.MF" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/adminPackage/AdminJAR/META-INF/MANIFEST.MF" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/RMIPackage/rmiJAR/META-INF/MANIFEST.MF" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ServerPackage/TCPClientJAR/META-INF/MANIFEST.MF" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ServerPackage/TCPServerJAR/META-INF/MANIFEST.MF" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/adminPackage/AdminJAR/META-INF/MANIFEST.MF" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ServerPackage/TCPServer.java" afterPath="$PROJECT_DIR$/src/ServerPackage/TCPServer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ServerPackage/TCPServerInterface.java" afterPath="$PROJECT_DIR$/src/ServerPackage/TCPServerInterface.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/RMIPackage/serverRMI.java" afterPath="$PROJECT_DIR$/src/RMIPackage/serverRMI.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/adminPackage/Admin.java" afterPath="$PROJECT_DIR$/src/adminPackage/Admin.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/adminPackage/VotingAdminInterface.java" afterPath="$PROJECT_DIR$/src/adminPackage/VotingAdminInterface.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../projetoSD2/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../projetoSD2/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../projetoSD2/web/index.jsp" afterPath="$PROJECT_DIR$/../projetoSD2/web/index.jsp" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/bin/" />
@@ -35,19 +41,59 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/ProjectRMI$RMI.coverage" NAME="RMI Coverage Results" MODIFIED="1512001763181" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/ProjectRMI$Admin.coverage" NAME="Admin Coverage Results" MODIFIED="1512157015519" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/ProjectRMI$TCPClient.coverage" NAME="TCPClient Coverage Results" MODIFIED="1509055625775" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/ProjectRMI$Admin.coverage" NAME="Admin Coverage Results" MODIFIED="1512157015519" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TCPServer.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TCPServer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="969">
-              <caret line="57" column="0" lean-forward="true" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+            <state relative-caret-position="3045">
+              <caret line="203" column="51" lean-forward="false" selection-start-line="203" selection-start-column="51" selection-end-line="203" selection-end-column="51" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="serverRMI.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/RMIPackage/serverRMI.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="10275">
+              <caret line="694" column="22" lean-forward="false" selection-start-line="694" selection-start-column="22" selection-end-line="694" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TCPServerInterface.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServerInterface.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1530">
+              <caret line="103" column="22" lean-forward="false" selection-start-line="103" selection-start-column="11" selection-end-line="103" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VotingAdminInterface.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/adminPackage/VotingAdminInterface.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="7" column="35" lean-forward="false" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Admin.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/adminPackage/Admin.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="172">
+              <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -56,8 +102,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>info</find>
-      <find>cat</find>
       <find>main</find>
       <find>startRMI</find>
       <find>maxhear</find>
@@ -86,6 +130,8 @@
       <find>fac</find>
       <find>check</find>
       <find>i</find>
+      <find>int[]</find>
+      <find>getlistname</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -97,12 +143,12 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/adminPackage/Admin.java" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/src/RMIPackage/serverRMI.java" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/src/ServerPackage/TCPClient.java" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/src/ServerPackage/TCPServer.java" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/src/ServerPackage/TCPServerInterface.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/adminPackage/VotingAdminInterface.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/RMIPackage/serverRMI.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/ServerPackage/TCPServerInterface.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/ServerPackage/TCPClient.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/adminPackage/Admin.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/ServerPackage/TCPServer.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -116,11 +162,11 @@
         <option value="$PROJECT_DIR$/src/RMIPackage/UserList.java" />
         <option value="$PROJECT_DIR$/src/RMIPackage/User.java" />
         <option value="$PROJECT_DIR$/src/RMIPackage/candidateList.java" />
-        <option value="$PROJECT_DIR$/src/ServerPackage/TCPServer.java" />
         <option value="$PROJECT_DIR$/src/ServerPackage/TCPServerInterface.java" />
         <option value="$PROJECT_DIR$/src/adminPackage/VotingAdminInterface.java" />
-        <option value="$PROJECT_DIR$/src/adminPackage/Admin.java" />
         <option value="$PROJECT_DIR$/src/RMIPackage/serverRMI.java" />
+        <option value="$PROJECT_DIR$/src/ServerPackage/TCPServer.java" />
+        <option value="$PROJECT_DIR$/src/adminPackage/Admin.java" />
       </list>
     </option>
   </component>
@@ -130,7 +176,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="width" value="1680" />
     <option name="height" value="1050" />
   </component>
@@ -150,10 +196,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
       <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -196,10 +240,19 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="ServerPackage" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="ProjectRMI" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ProjectRMI" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="ServerPackage" type="462c0819:PsiDirectoryNode" />
+              <item name="TCPServer.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -212,6 +265,9 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="adminPackage" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/out" />
       <recent name="$PROJECT_DIR$" />
@@ -231,13 +287,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.Admin">
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <module />
-    </configuration>
     <configuration name="Admin" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="adminPackage.Admin" />
@@ -294,6 +343,13 @@
       <module name="projectRMI" />
       <envs />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <module />
+    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" />
@@ -328,6 +384,12 @@
       <envs />
       <patterns />
     </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file id="idea.log" enabled="true" />
+    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -361,12 +423,6 @@
       <envs />
       <properties />
       <listeners />
-    </configuration>
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
-      <module name="" />
-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
-      <option name="PROGRAM_PARAMETERS" />
-      <predefined_log_file id="idea.log" enabled="true" />
     </configuration>
     <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Application.RMI" />
@@ -409,11 +465,13 @@
       <workItem from="1513345535239" duration="460000" />
       <workItem from="1513351187442" duration="13000" />
       <workItem from="1513537632542" duration="451000" />
+      <workItem from="1513737924421" duration="1085000" />
+      <workItem from="1513739058740" duration="77000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="91401000" />
+    <option name="totallyTimeSpent" value="92563000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -425,7 +483,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958034" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -435,12 +493,12 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38894576" sideWeight="0.507326" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42269737" sideWeight="0.492674" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42169908" sideWeight="0.492674" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32884398" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3306039" sideWeight="0.497558" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17246597" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17216118" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24969475" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -497,7 +555,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/RMIPackage/serverRMI.java</url>
-          <line>190</line>
+          <line>184</line>
           <properties />
           <option name="timeStamp" value="80" />
         </line-breakpoint>
@@ -524,61 +582,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="14" column="29" lean-forward="false" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#checkFaculdade#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#registerUser#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#addUserFac#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#editUser#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#deleteUser#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#registerFac#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#registerDep#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#registerUnit#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#editFac#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#editDep#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#deleteFac#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#deleteDep#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#deleteUnit#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#addEl#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#editELText#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#editElDate#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#deleteEL#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#addLista#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#addUserLista#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#deleteLista#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#addBooth#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#deleteBooth#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#addUserBooth#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#removeUserBooth#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getElectionType#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getListType#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getUserType#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getListID#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#elAntecipated#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#elTerminated#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#antecipatedVote#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getEls#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#pastEl#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getVotes#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getTotalVotes#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getFacName#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#authenticateUser#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#identifyID#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getMesaDeVotoEls#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#isElActive#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#voteElection#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#hasVoted#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#userCanVote#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getElName#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getElectionLists#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getListName#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#main#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#startRMI#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#connectDB#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#updateDB#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#queryDB#0;class#serverRMI#0" expanded="false" />
-            <element signature="class#RMIFailover#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -645,141 +649,45 @@
       </provider>
     </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/src.zip!/java/sql/ResultSet.java" />
-    <entry file="file://$PROJECT_DIR$/src/RMIPackage/serverRMI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="384" column="5" lean-forward="true" selection-start-line="384" selection-start-column="5" selection-end-line="384" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#checkFaculdade#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#registerUser#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#addUserFac#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#editUser#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#deleteUser#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#registerFac#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#registerDep#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#registerUnit#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#editFac#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#editDep#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#deleteFac#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#deleteDep#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#deleteUnit#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#addEl#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#editELText#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#editElDate#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#deleteEL#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#addLista#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#addUserLista#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#deleteLista#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#addBooth#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#deleteBooth#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#addUserBooth#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#removeUserBooth#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getElectionType#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getListType#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getUserType#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getListID#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#elAntecipated#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#elTerminated#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#antecipatedVote#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getEls#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#pastEl#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getVotes#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getTotalVotes#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getFacName#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#authenticateUser#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#identifyID#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getMesaDeVotoEls#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#isElActive#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#voteElection#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#hasVoted#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#userCanVote#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getElName#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getElectionLists#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#getListName#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#main#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#startRMI#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#connectDB#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#updateDB#0;class#serverRMI#0" expanded="false" />
-            <element signature="method#queryDB#0;class#serverRMI#0" expanded="false" />
-            <element signature="class#RMIFailover#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServerInterface.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="69" column="4" lean-forward="false" selection-start-line="69" selection-start-column="4" selection-end-line="69" selection-end-column="4" />
+        <state relative-caret-position="1530">
+          <caret line="103" column="22" lean-forward="false" selection-start-line="103" selection-start-column="11" selection-end-line="103" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/adminPackage/VotingAdminInterface.java">
+    <entry file="file://$PROJECT_DIR$/src/RMIPackage/serverRMI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="235" column="4" lean-forward="false" selection-start-line="235" selection-start-column="4" selection-end-line="235" selection-end-column="4" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="docComment;method#registerUser#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#addUserFac#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#editUser#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#deleteUser#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#registerFac#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#registerDep#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#registerUnit#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#editFac#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#editDep#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#deleteFac#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#deleteDep#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#deleteUnit#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#addEl#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#deleteEL#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#editELText#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#editElDate#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#addLista#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#addUserLista#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#deleteLista#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#addBooth#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#deleteBooth#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#addUserBooth#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#removeUserBooth#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getElectionType#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getListType#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getListID#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#elAntecipated#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#elTerminated#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getUserType#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#antecipatedVote#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getElName#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getElectionLists#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getListName#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getEls#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#hasVoted#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#userCanVote#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#pastEl#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getVotes#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getTotalVotes#0;class#VotingAdminInterface#0" expanded="false" />
-            <element signature="docComment;method#getFaculdadeVoted#0;class#VotingAdminInterface#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/adminPackage/Admin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="538">
-          <caret line="571" column="67" lean-forward="false" selection-start-line="571" selection-start-column="50" selection-end-line="571" selection-end-column="67" />
+        <state relative-caret-position="10275">
+          <caret line="694" column="22" lean-forward="false" selection-start-line="694" selection-start-column="22" selection-end-line="694" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ServerPackage/TCPServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="969">
-          <caret line="57" column="0" lean-forward="true" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+        <state relative-caret-position="3045">
+          <caret line="203" column="51" lean-forward="false" selection-start-line="203" selection-start-column="51" selection-end-line="203" selection-end-column="51" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/adminPackage/VotingAdminInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="7" column="35" lean-forward="false" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/adminPackage/Admin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

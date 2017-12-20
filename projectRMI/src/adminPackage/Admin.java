@@ -494,29 +494,29 @@ public class Admin {
                             System.out.println("\nID: ");
                             ID = Integer.parseInt(input.nextLine());
 
-                            int[] eleicoes = vote.getEls();
+                            ArrayList<Integer> eleicoes = vote.getEls();
                             System.out.println("\nEscolha eleicao: ");
-                            for (int i = 0; i < eleicoes.length; i++) {
-                                if (eleicoes[i] != -1 && !vote.getElName(eleicoes[i]).equals("") && !vote.hasVoted(ID,eleicoes[i]) && vote.userCanVote(ID,eleicoes[i]) && vote.elAntecipated(eleicoes[i]))
-                                    System.out.println(eleicoes[i] + ". " + vote.getElName(eleicoes[i]));
+                            for (int i = 0; i < eleicoes.size(); i++) {
+                                if (eleicoes.get(i) != -1 && !vote.getElName(eleicoes.get(i)).equals("") && !vote.hasVoted(ID,eleicoes.get(i)) && vote.userCanVote(ID,eleicoes.get(i)) && vote.elAntecipated(eleicoes.get(i)))
+                                    System.out.println(eleicoes.get(i) + ". " + vote.getElName(eleicoes.get(i)));
                             }
                             electionID = Integer.parseInt(input.nextLine());
 
-                            int[] listas = vote.getElectionLists(electionID);
+                            ArrayList<Integer> listas = vote.getElectionLists(electionID);
                             System.out.println("\nEscolha lista (ID nao imprimido e considerado voto nulo): ");
-                            for (int i = 0; i < listas.length; i++) {
-                                if (!vote.getListName(listas[i]).equals("") && !vote.getListName(listas[i]).equals("NULLVOTE")) {
-                                    if (listas[i] != -1 && !vote.getListName(listas[i]).equals("BLANKVOTE"))
-                                        System.out.println(listas[i] + ". " + vote.getListName(listas[i]));
+                            for (int i = 0; i < listas.size(); i++) {
+                                if (!vote.getListName(listas.get(i),electionID).equals("") && !vote.getListName(listas.get(i),electionID).equals("NULLVOTE")) {
+                                    if (listas.get(i) != -1 && !vote.getListName(listas.get(i),electionID).equals("BLANKVOTE"))
+                                        System.out.println(listas.get(i) + ". " + vote.getListName(listas.get(i),electionID));
                                     else
-                                        System.out.println(listas[i] + ". ");
+                                        System.out.println(listas.get(i) + ". ");
                                 }
                             }
                             listID = Integer.parseInt(input.nextLine());
 
                             boolean contains = false;
-                            for (int i = 0;i<listas.length;i++)
-                                if(listas[i] == listID) contains = true;
+                            for (int i = 0;i<listas.size();i++)
+                                if(listas.get(i) == listID) contains = true;
 
                             if (contains) {
                                 if (vote.antecipatedVote(ID, electionID, listID))
@@ -525,9 +525,9 @@ public class Admin {
                                     System.out.println("\nErro");
                             }
                             else {
-                                for (int i = 0 ;i<listas.length;i++){
-                                    if(vote.getListName(listas[i]).equals("NULLVOTE"))
-                                        listID = listas[i];
+                                for (int i = 0 ;i<listas.size();i++){
+                                    if(vote.getListName(listas.get(i),electionID).equals("NULLVOTE"))
+                                        listID = listas.get(i);
                                 }
                                 if (vote.antecipatedVote(ID, electionID, listID))
                                     System.out.println("\nVoto registado!");
@@ -540,21 +540,21 @@ public class Admin {
                         case "7":
                             eleicoes = vote.getEls();
                             System.out.println("Consultar resultados eleicoes passadas");
-                            for (int i = 0; i < eleicoes.length; i++) {
-                                if (eleicoes[i] != -1 && !vote.getElName(eleicoes[i]).equals("") && vote.elTerminated(eleicoes[i])) {
-                                    System.out.println("Eleicao: " + vote.getElName(eleicoes[i]));
-                                    listas = vote.getElectionLists(eleicoes[i]);
-                                    int percent = vote.getTotalVotes(eleicoes[i]);
+                            for (int i = 0; i < eleicoes.size(); i++) {
+                                if (eleicoes.get(i) != -1 && !vote.getElName(eleicoes.get(i)).equals("") && vote.elTerminated(eleicoes.get(i))) {
+                                    System.out.println("Eleicao: " + vote.getElName(eleicoes.get(i)));
+                                    listas = vote.getElectionLists(eleicoes.get(i));
+                                    int percent = vote.getTotalVotes(eleicoes.get(i));
                                     System.out.println("\tTotal de votos: "+percent);
-                                    for (int j = 0; j < listas.length; j++) {
+                                    for (int j = 0; j < listas.size(); j++) {
                                         double aux=0;
-                                        if(listas[j] != -1 && !vote.getListName(listas[j]).equals("") && !vote.getListName(listas[j]).equals("BLANKVOTE") && !vote.getListName(listas[j]).equals("NULLVOTE")) {
-                                            if(percent!=0) aux = (vote.getVotes(listas[j]) / (double) percent) * 100;
-                                            System.out.println(String.format("\t" + vote.getListName(listas[j]) + ": " + vote.getVotes(listas[j]) + " votos; %.2f %%",aux));
+                                        if(listas.get(j) != -1 && !vote.getListName(listas.get(j),eleicoes.get(i)).equals("") && !vote.getListName(listas.get(j),eleicoes.get(i)).equals("BLANKVOTE") && !vote.getListName(listas.get(j),eleicoes.get(i)).equals("NULLVOTE")) {
+                                            if(percent!=0) aux = (vote.getVotes(listas.get(j)) / (double) percent) * 100;
+                                            System.out.println(String.format("\t" + vote.getListName(listas.get(j),eleicoes.get(i)) + ": " + vote.getVotes(listas.get(j)) + " votos; %.2f %%",aux));
                                         }
-                                        else if(vote.getListName(listas[j]).equals("BLANKVOTE")) {
-                                            if(percent!=0) aux = (vote.getVotes(listas[j])/ (double) percent) * 100;
-                                            System.out.println(String.format("\tVotos em branco: " + vote.getVotes(listas[j]) + " votos; %.2f %%",aux));
+                                        else if(vote.getListName(listas.get(j),eleicoes.get(i)).equals("BLANKVOTE")) {
+                                            if(percent!=0) aux = (vote.getVotes(listas.get(j))/ (double) percent) * 100;
+                                            System.out.println(String.format("\tVotos em branco: " + vote.getVotes(listas.get(j)) + " votos; %.2f %%",aux));
                                         }
                                     }
                                 }
