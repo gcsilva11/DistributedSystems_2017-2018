@@ -39,8 +39,9 @@
                 <th>ID</th>
                 <th>Titulo</th>
                 <th>Descriçao</th>
-                <th>Start Date</th>
-                <th>End Date</th>
+                <th>Data de Inicio</th>
+                <th>Data de Fim</th>
+                <th>Tipo</th>
             </tr>
         </thead>
     <c:forEach items="${ListAllElectionsBean.elections}" var="election">
@@ -51,6 +52,7 @@
                 <td><c:out value="${election.get(2)}" /></td>
                 <td><c:out value="${election.get(3)}" /></td>
                 <td><c:out value="${election.get(4)}" /></td>
+                <td><c:out value="${election.get(5)}"/></td>
             </tr>
         </tbody>
     </c:forEach>

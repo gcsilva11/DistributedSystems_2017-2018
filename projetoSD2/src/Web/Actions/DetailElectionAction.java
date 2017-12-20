@@ -5,6 +5,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.SessionAware;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class DetailElectionAction extends ActionSupport implements SessionAware {
@@ -15,7 +16,8 @@ public class DetailElectionAction extends ActionSupport implements SessionAware 
     @Override
     public String execute() throws RemoteException {
         this.getDetailElectionBean().setEleID(this.eleID);
-        this.getDetailElectionBean().setElection(this.getDetailElectionBean().getElection());
+        this.getDetailElectionBean().setVotes(this.getDetailElectionBean().getVotes());
+
         return "DETAIL_SUCCESS";
     }
 

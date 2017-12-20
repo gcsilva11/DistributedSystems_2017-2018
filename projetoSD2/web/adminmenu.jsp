@@ -49,11 +49,11 @@
     </s:form>
 
     <s:form action="ElectionListMenu">
-        <s:submit  value= "Election List" cssClass="btn btn-default" />
+        <s:submit  value= "Election Details" cssClass="btn btn-default" />
     </s:form>
 
     <s:form action="ElectionDetailsMenu">
-        <s:submit  value= "Election Details" cssClass="btn btn-default" />
+        <s:submit  value= "Past Elections" cssClass="btn btn-default" />
     </s:form>
 
     <s:form action="VoteHistoryMenu">

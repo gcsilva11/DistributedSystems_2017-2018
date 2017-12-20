@@ -518,7 +518,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     public ArrayList<String> getEl(int id) throws RemoteException{
         ArrayList<String> aux = null;
         try{
-            ResultSet rs = queryDB("SELECT electionid,title,description,startdate,enddate FROM eleicao WHERE electionid = "+id+";");
+            ResultSet rs = queryDB("SELECT electionid,title,description,startdate,enddate,type FROM eleicao WHERE electionid = "+id+";");
             if(rs.next()){
             	aux = new ArrayList<String>();
                 aux.add(rs.getString("electionid"));
@@ -526,6 +526,10 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
                 aux.add(rs.getString("description"));
                 aux.add(rs.getString("startdate"));
                 aux.add(rs.getString("enddate"));
+                if(rs.getInt("type")==1)
+                    aux.add("Conselho Geral");
+                else
+                    aux.add("Nucleos");
             }
         }catch (SQLException e){ }
         return aux;

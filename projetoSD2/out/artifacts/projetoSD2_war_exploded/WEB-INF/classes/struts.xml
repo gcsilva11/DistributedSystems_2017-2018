@@ -64,7 +64,10 @@
 
         <action name="createList" class="Web.Actions.CreateListAction" method ="execute">
             <result name="LISTCREATE_SUCCESS">/usertolist.jsp</result>
-            <result name="LISTCREATE_FAIL">/error.jsp</result>
+        </action>
+
+        <action name="addUserToList" class="Web.Actions.CreateListAction" method="executeAdd">
+            <result name="USER_ADD">/usertolist.jsp</result>
         </action>
 
         <action name="editElText" class="Web.Actions.EditElectionAction" method ="executeText">

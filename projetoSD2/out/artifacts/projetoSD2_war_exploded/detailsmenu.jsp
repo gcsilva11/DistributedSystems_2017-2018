@@ -31,7 +31,7 @@
 </div>
 
     <c:choose>
-    <c:when test="${DetailElectionBean.election==null||DetailELectionBean.size()==0}">
+    <c:when test="${DetailElectionBean.votes==null || DetailElectionBean.votes.isEmpty()}">
 
         Oops - There are no finished elections with that id :(
 
@@ -41,22 +41,20 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Titulo</th>
-            <th>Descriçao</th>
-            <th>Start Date</th>
-            <th>End Date</th>
+            <th>Lista</th>
+            <th>Votos</th>
+            <th>Percentagem</th>
         </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td><c:out value="${DetailElectionBean.election.get(0)}" /></td>
-                <td><c:out value="${DetailElectionBean.election.get(1)}" /></td>
-                <td><c:out value="${DetailElectionBean.election.get(2)}" /></td>
-                <td><c:out value="${DetailElectionBean.election.get(3)}" /></td>
-                <td><c:out value="${DetailElectionBean.election.get(4)}" /></td>
-            </tr>
-        </tbody>
+        <c:forEach items="${DetailElectionBean.votes}" var="voto">
+            <tbody>
+                <tr>
+                    <td><c:out value="${voto.get(0)}"/></td>
+                    <td><c:out value="${voto.get(1)}"/></td>
+                    <td><c:out value="${voto.get(2)}"/></td>
+                </tr>
+            </tbody>
+        </c:forEach>
     </table>
     </c:otherwise>
     </c:choose>

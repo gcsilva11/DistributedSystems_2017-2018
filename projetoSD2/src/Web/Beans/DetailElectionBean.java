@@ -8,7 +8,7 @@ public class DetailElectionBean extends RMIBean{
 
     private int eleID;
 
-    private ArrayList<String> election = new ArrayList<String>();
+    private ArrayList<ArrayList<String>> votes;
 
 
 	public DetailElectionBean(){
@@ -19,16 +19,32 @@ public class DetailElectionBean extends RMIBean{
         this.eleID = Integer.parseInt(eleID);
     }
 
-    public ArrayList<String> getElection() throws RemoteException{
-	    this.election = new ArrayList<String>();
-	    if(this.server.isElActive(this.eleID)){
-	        return null;
+    public ArrayList<ArrayList<String>> getVotes() throws RemoteException{
+        ArrayList<ArrayList<String>> votos = new ArrayList<>();
+        if(!this.server.isElActive(this.eleID)){
+            for (int i = 0;i<this.server.getElectionLists(this.eleID).size();i++){
+                ArrayList<String> lista = new ArrayList<>();
+
+                if(this.server.getListName(this.server.getElectionLists(this.eleID).get(i),this.eleID).equals("BLANKVOTE"))
+                    lista.add("Votos em Branco");
+                else if(this.server.getListName(this.server.getElectionLists(this.eleID).get(i),this.eleID).equals("NULLVOTE"))
+                    lista.add("Votos Nulos");
+                else lista.add(this.server.getListName(this.server.getElectionLists(this.eleID).get(i),this.eleID));
+
+                lista.add(Integer.toString(this.server.getVotes(this.server.getElectionLists(this.eleID).get(i))));
+
+                if(this.server.getTotalVotes(this.eleID) == 0)
+                    lista.add("0");
+                else
+                    lista.add(Double.toString(this.server.getVotes(this.server.getElectionLists(this.eleID).get(i)) / this.server.getTotalVotes(this.eleID) * 100)+" %");
+                votos.add(lista);
+            }
+            return votos;
         }
-	    this.election = this.server.getEl(this.eleID);
-        return this.election;
+        else return null;
     }
 
-    public void setElection(ArrayList<String> election) {
-        this.election = election;
+    public void setVotes(ArrayList<ArrayList<String>> votes) {
+        this.votes = votes;
     }
 }
