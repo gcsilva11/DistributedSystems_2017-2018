@@ -29,6 +29,15 @@
         <s:submit value="Verificar Detalhes" cssClass="btn btn-default"/>
     </s:form>
 </div>
+
+    <c:set var = "var1" value = "${detailsElectionBean.election}"></c:set>
+    <c:choose>
+    <c:when test="%{empty var1}">
+
+        <h1>There are no finished elections with that id.</h1>
+
+    </c:when>
+    <c:otherwise>
 <div class="table-responsive">
     <table class="table table-bordered">
         <thead>
@@ -50,6 +59,8 @@
             </tr>
         </tbody>
     </table>
+    </c:otherwise>
+    </c:choose>
 </div>
 </body>
 </html>
