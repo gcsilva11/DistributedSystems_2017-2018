@@ -34,6 +34,13 @@ public class WebSocketAnnotation{
 
     @OnClose
     public void end() {
+        ArrayList<String> usernames = new ArrayList<String>();
+        usernames = retrieveUsers();
+        for(int i=0;i<usernames.size();i++){
+            if(this.username.equals(usernames.get(i))){
+                usernames.remove(i);
+            }
+        }
         users.remove(this);
         // clean up once the WebSocket connection is closed
     }
@@ -41,11 +48,28 @@ public class WebSocketAnnotation{
     @OnMessage
     public void receiveMessage(String message){
         ArrayList<String> usernames = new ArrayList<String>();
-        this.username = message;
+        if(message.equals("bye")){
+            this.username = "";
+        }
+        else{
+            this.username = message;
+        }
         usernames = retrieveUsers();
         String toSend = "";
-        for(int i=0;i<usernames.size();i++){
-            toSend = toSend + "---" + usernames.get(i);
+        if(message.equals("bye")){
+            for(int i=0;i<usernames.size();i++){
+                if(this.username.equals(usernames.get(i))){
+                    usernames.remove(i);
+                }
+            }
+            for(int i=0;i<usernames.size();i++){
+                toSend = toSend + "  " + usernames.get(i);
+            }
+        }
+        else{
+            for(int i=0;i<usernames.size();i++){
+                toSend = toSend + "  " + usernames.get(i);
+            }
         }
         sendMessage(toSend);
     }

@@ -37,9 +37,10 @@
         }
 
         function onClose(event) {
-            writeToHistory('WebSocket closed.');
-            document.getElementById('chat').onkeydown = null;
+            var message = "bye";
+            websocket.send(username);
         }
+
 
         function onMessage(message) { // print the received message
             writeToHistory(message.data);
