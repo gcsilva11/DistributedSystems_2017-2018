@@ -3,8 +3,7 @@ package Web.Beans;
 import java.rmi.*;
 
 public class LoginBean extends RMIBean{
-	private String username, password;
-	private int faculdade;
+	private String username, password, idFacebook;
 
 	public LoginBean(){
 		super();
@@ -14,12 +13,8 @@ public class LoginBean extends RMIBean{
 		return this.server.authenticateUser(this.username, this.password);
 	}
 
-	public boolean getIdentifyName() throws RemoteException{
-		return this.server.identifyName(this.username,this.faculdade);
-	}
-
-	public boolean getCheckFaculdade() throws RemoteException{
-		return this.server.checkFaculdade(this.faculdade);
+	public String getAuthenticateFacebook() throws RemoteException{
+		return this.server.authenticateFacebook(this.idFacebook);
 	}
 
 	public void setUsername(String username) {
@@ -30,7 +25,7 @@ public class LoginBean extends RMIBean{
 		this.password = password;
 	}
 
-	public void setFaculdade(String faculdade) {
-		this.faculdade = Integer.parseInt(faculdade);
+	public void setIdFacebook(String idFacebook) {
+		this.idFacebook = idFacebook;
 	}
 }

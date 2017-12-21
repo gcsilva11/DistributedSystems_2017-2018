@@ -9,6 +9,7 @@ CREATE TABLE user(
 	phone	 varchar(1024),
 	expdate	 datetime NOT NULL,
 	morada varchar (1024),
+	facebookid varchar(1024) UNIQUE DEFAULT NULL,
 	PRIMARY KEY(numberid)
 );
 # User (Estudante)

@@ -9,6 +9,8 @@ public interface RMIServerInterface extends Remote {
 
     boolean registerUser(int numberID, String name, String password, String phone, String address, String expDate, int profession) throws RemoteException;
 
+    boolean associateFacebookUser(int numberID, String fbid) throws RemoteException;
+
     boolean addUserFac(int numberID, int faculdadeID) throws RemoteException;
 
     void editUser(int numberID, String name, String password, String phone, String expDate, String address) throws RemoteException;
@@ -78,6 +80,8 @@ public interface RMIServerInterface extends Remote {
     String getFaculdadeVoted(int userID, int electionID) throws RemoteException;
 
     boolean authenticateUser(String name, String password) throws RemoteException;
+
+    String authenticateFacebook(String facebookid) throws RemoteException;
 
     boolean identifyID(int userID, int facID) throws RemoteException;
 

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class UserBean extends RMIBean {
     private int idUser, idElection, idList;
-    private String username, electionName, listName;
+    private String username, electionName, listName, idFacebook;
 
     private ArrayList<Integer> eleicoes = null, listas = null;
     private ArrayList<String> elnames = null, lnames = null;
@@ -129,5 +129,14 @@ public class UserBean extends RMIBean {
 
     public void setPlacesVoted(ArrayList<ArrayList<String>> placesVoted) {
         this.placesVoted = placesVoted;
+    }
+
+
+    public void setIdFacebook(String idFacebook) {
+        this.idFacebook = idFacebook;
+    }
+
+    public boolean getAssociateUser() throws RemoteException{
+        return this.server.associateFacebookUser(this.idUser,this.idFacebook);
     }
 }

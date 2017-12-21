@@ -24,6 +24,9 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="usermenu.jsp">Menu de Admin</a>
         </div>
+        <div class="nav navbar-nav">
+            ${session.username}
+        </div>
         <s:form action="logout">
             <button class="btn btn-danger navbar-btn navbar-right">Logout</button>
         </s:form>
@@ -32,17 +35,27 @@
 
 <div class="content">
     <div class="row">
-        <div class="col-xs-3"></div>
-        <div class="col-xs-3">
+        <div class="col-xs-2">
             <s:form action="listElections">
                 <s:submit  value="Votar" cssClass="btn btn-default"/>
             </s:form>
         </div>
-        <div class="col-xs-3"></div>
-        <div class="col-xs-3">
+        <div class="col-xs-2">
+
+        </div>
+        <div class="col-xs-2">
             <s:form action="VotedListMenu">
                 <s:submit  value="Listar Locais de Voto" cssClass="btn btn-default"/>
             </s:form>
+        </div>
+        <div class="col-xs-2">
+
+        </div>
+        <div class="col-xs-2">
+            <a href="${session.authURL}" class="btn btn-default">Associar Facebook</a>
+        </div>
+        <div class="col-xs-2">
+
         </div>
     </div>
 </div>

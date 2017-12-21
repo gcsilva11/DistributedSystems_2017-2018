@@ -22,6 +22,15 @@
             <result name="LOGIN_FAIL">/index.jsp</result>
         </action>
 
+        <action name="loginFacebook" class="Web.Actions.LoginFacebookAction" method="execute">
+            <result name="REDIRECT" type="redirect">${authorization}</result>
+        </action>
+
+        <action name="loginFacebookSuccess" class="Web.Actions.LoginFacebookSuccessAction" method="execute">
+            <result name="LOGIN_SUCCESS">/usermenu.jsp</result>
+            <result name="LOGIN_FAIL">/index.jsp</result>
+        </action>
+
         <!-- User Actions-->
         <action name="listElections" class="Web.Actions.ListElectionAction" method="execute">
             <result name="LIST_SUCCESS">/listelections.jsp</result>
@@ -41,6 +50,11 @@
         <action name="listLocal" class="Web.Actions.ListLocalAction" method="execute">
             <result name="LIST_LOCAL_ELECTIONS_SUCCESS">/listlocals.jsp </result>
             <result name="LOGIN_FAIL">/index.jsp</result>
+        </action>
+
+        <action name="associateFacebook" class="Web.Actions.AssociateFacebookAction" method="execute">
+            <result name="ASSOCIATE_SUCCESS">/usermenu.jsp</result>
+            <result name="ASSOCIATE_ERROR">/index.jsp</result>
         </action>
 
         <action name="logout" class="Web.Actions.LogoutAction" method ="execute">

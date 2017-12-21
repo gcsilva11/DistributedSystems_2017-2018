@@ -36,6 +36,13 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
         return false;
     }
 
+    // Adiciona tokens facebook a utilizador
+    public boolean associateFacebookUser(int numberID, String fbid) throws RemoteException {
+        if(updateDB("CALL add_facebook("+numberID+",'"+fbid+"');"))
+            return true;
+        return false;
+    }
+
     // Associa Faculdade a User
     public boolean addUserFac(int numberID, int faculdadeID) throws RemoteException{
         if(updateDB("CALL add_user_faculdade("+numberID+","+faculdadeID+");"))
@@ -396,6 +403,18 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
             e.printStackTrace();
         }
         return false;
+    }
+
+    public String authenticateFacebook(String facebookid) throws RemoteException{
+        try {
+            ResultSet rs = queryDB("SELECT name FROM user WHERE facebookid = '"+facebookid+"';");
+            if(rs.next()){
+                return rs.getString("name");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return "";
     }
 
     // Retorna faculdades a que user pertence

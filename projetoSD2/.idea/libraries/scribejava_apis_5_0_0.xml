@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="scribejava-apis-5.0.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/scribejava-apis-5.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

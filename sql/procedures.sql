@@ -3,11 +3,19 @@ DELIMITER //
 DROP PROCEDURE IF EXISTS add_user //
 CREATE PROCEDURE add_user (IN numberid int(11), IN name varchar(1024), IN password varchar(1024), IN phone varchar(1024), IN address varchar(1024), IN expdate datetime, IN profession int)
 BEGIN
-	INSERT INTO user VALUES (numberid,name,password,phone,STR_TO_DATE(expdate,"%Y-%m-%d %H:%i:%s"),address);
+	INSERT INTO user VALUES (numberid,name,password,phone,STR_TO_DATE(expdate,"%Y-%m-%d %H:%i:%s"),address,NULL);
 	IF profession = 1 THEN INSERT INTO estudante VALUES (numberid);
 	ELSEIF profession = 2 THEN INSERT INTO professor VALUES (numberid);
 	ELSEIF profession = 3 THEN INSERT INTO funcionario VALUES (numberid);
 	END IF;
+END //
+DELIMITER ;
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS add_facebook //
+CREATE PROCEDURE add_facebook (IN userid int, IN fbid varchar(1024))
+BEGIN
+	UPDATE user SET facebookid = fbid WHERE numberid = userid;
 END //
 DELIMITER ;
 

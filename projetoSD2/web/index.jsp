@@ -18,7 +18,7 @@
   <li>Password: <s:password name="password"/><br></li>
   <s:submit value="LOGIN" cssClass="btn btn-default"/>
 </s:form>
-<s:form action="fbLogin" method="execute">
+<s:form action="loginFacebook" method="execute">
   <s:submit value="FACEBOOK LOGIN" cssClass="btn btn-default"/>
 </s:form>
 <h4>${session.message}</h4>
