@@ -43,8 +43,9 @@
             document.getElementById('chat').onkeydown = null;
         }
 
-        function onMessage(message) { // print the received message
-            writeToHistory(message.data);
+        function onClose(event) {
+            var message = "bye";
+            websocket.send(username);
         }
 
         function onError(event) {

@@ -34,12 +34,11 @@
         function onOpen(event) {
             var username = "${session.username}";
             websocket.send(username);
-            writeToHistory('Connected to ' + window.location.host + '.');
         }
 
         function onClose(event) {
-            writeToHistory('WebSocket closed.');
-            document.getElementById('chat').onkeydown = null;
+            var message = "bye";
+            websocket.send(username);
         }
 
         function onMessage(message) { // print the received message

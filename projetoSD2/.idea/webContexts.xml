@@ -4,6 +4,7 @@
     <option name="state">
       <map>
         <entry key="file://$PROJECT_DIR$/web/detailsmenu.jsp" value="file://$PROJECT_DIR$/out/artifacts/projetoSD2_war_exploded" />
+        <entry key="file://$PROJECT_DIR$/web/usermenu.jsp" value="file://$PROJECT_DIR$/out/artifacts/projetoSD2_war_exploded" />
       </map>
     </option>
   </component>
