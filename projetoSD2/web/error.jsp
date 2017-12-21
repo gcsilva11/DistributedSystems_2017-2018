@@ -15,6 +15,13 @@
     <p><s:property value="exceptionStack" /></p>
 </div>
 
+<noscript>JavaScript must be enabled for WebSockets to work.</noscript>
+<div style="float:right;">
+    <h4>Online User List</h4>
+    <div id="container"><div id="history"></div></div>
+</div>
+
+
 </body>
 
 </html>

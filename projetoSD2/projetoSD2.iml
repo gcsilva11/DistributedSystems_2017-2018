@@ -32,5 +32,6 @@
     <orderEntry type="library" exported="" scope="PROVIDED" name="Tomcat 8.5.23" level="application_server_libraries" />
     <orderEntry type="library" name="mysql-connector-java-5.1.44-bin" level="project" />
     <orderEntry type="library" name="jdk1.8" level="project" />
+    <orderEntry type="library" name="javax.websocket-api-1.0-rc4" level="project" />
   </component>
 </module>

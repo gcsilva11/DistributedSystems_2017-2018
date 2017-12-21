@@ -12,8 +12,8 @@ public class AdminLogoutAction extends ActionSupport implements SessionAware {
 
     @Override
     public String execute() throws Exception{
-        if((boolean)this.session.get("Admin"))
-            this.session.put("Admin",false);
+        if((boolean)this.session.get("loggedin"))
+            this.session.put("loggedin",false);
         return "LOGOUT";
     }
 

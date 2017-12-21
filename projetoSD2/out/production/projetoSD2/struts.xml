@@ -7,6 +7,7 @@
 <struts>
     <constant name="struts.devMode" value="true" />
     <constant name="struts.ui.theme" value="simple" />
+    <constant name="struts.action.excludePattern" value="/ws"/>
 
     <package name="iVotas" extends="struts-default">
 
