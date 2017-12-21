@@ -8,7 +8,8 @@ import java.util.*;
 public class VoteAction extends ActionSupport implements SessionAware {
     private static final long serialVersionUID = 4L;
     private Map<String, Object> session;
-    public String nomeEleicao, nomeLista;
+    public String nomeLista;
+    public boolean postFacebook;
 
     @Override
     public String execute() throws Exception {
@@ -21,6 +22,12 @@ public class VoteAction extends ActionSupport implements SessionAware {
             this.session.put("lista", this.getUserBean().getListID(this.nomeLista));
 
             this.getUserBean().getVote();
+
+            if(this.postFacebook){
+
+            }
+
+
             return "VOTE_SUCCESS";
         } else return "LOGIN_FAIL";
     }
@@ -33,6 +40,10 @@ public class VoteAction extends ActionSupport implements SessionAware {
         if(!session.containsKey("userBean"))
             this.setUserBean(new UserBean());
         return (UserBean) session.get("userBean");
+    }
+
+    public void setPostFacebook(boolean postFacebook) {
+        this.postFacebook = postFacebook;
     }
 
     public void setUserBean(UserBean userBean) {

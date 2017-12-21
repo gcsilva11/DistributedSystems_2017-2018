@@ -2,19 +2,16 @@
   <artifact type="exploded-war" name="projetoSD2:war exploded">
     <output-path>$PROJECT_DIR$/out/artifacts/projetoSD2_war_exploded</output-path>
     <root id="root">
-      <element id="javaee-facet-resources" facet="projetoSD2/web/Web" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="projetoSD2" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Struts 2-2.5.14.1" />
-          <element id="library" level="project" name="mysql-connector-java-5.1.44-bin" />
-          <element id="library" level="project" name="scribejava-apis-5.0.0" />
-          <element id="library" level="project" name="scribejava-core-5.0.0" />
-          <element id="library" level="project" name="json-simple-2.3.0" />
+          <element id="library" level="project" name="asm-commons-3.3" />
         </element>
       </element>
+      <element id="javaee-facet-resources" facet="projetoSD2/web/Web" />
+      <element id="javaee-facet-resources" facet="projetoSD2/web/Web2" />
     </root>
   </artifact>
 </component>

@@ -7,6 +7,7 @@
 <struts>
     <constant name="struts.devMode" value="true" />
     <constant name="struts.ui.theme" value="simple" />
+    <constant name="struts.action.excludePattern" value="/ws"/>
 
     <package name="iVotas" extends="struts-default">
 
@@ -54,7 +55,7 @@
 
         <action name="associateFacebook" class="Web.Actions.AssociateFacebookAction" method="execute">
             <result name="ASSOCIATE_SUCCESS">/usermenu.jsp</result>
-            <result name="ASSOCIATE_ERROR">/index.jsp</result>
+            <result name="ASSOCIATE_ERROR">/usermenu.jsp</result>
         </action>
 
         <action name="logout" class="Web.Actions.LogoutAction" method ="execute">
@@ -63,12 +64,12 @@
 
         <!-- Admin Actions-->
         <action name="registerUser" class="Web.Actions.RegisterUserAction" method ="execute">
-            <result name="registerSuccess">/adminmenu.jsp</result>
-            <result name="registerFail">/error.jsp</result>
+            <result name="REGISTER_SUCCESS">/registerUser.jsp</result>
+            <result name="REGISTER_FAIL">/registerUser.jsp</result>
         </action>
 
         <action name="editUser" class="Web.Actions.EditUserAction" method="execute">
-            <result name="success">/adminmenu.jsp</result>
+            <result name="SUCCESS">/adminmenu.jsp</result>
         </action>
 
         <action name="createElection" class="Web.Actions.CreateElectionAction" method ="execute">

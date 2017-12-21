@@ -33,8 +33,11 @@ public class AssociateFacebookAction extends ActionSupport implements SessionAwa
         this.getUserBean().setIdFacebook(responseID);
         if(this.getUserBean().getAssociateUser())
             return "ASSOCIATE_SUCCESS";
-        else
+        else{
+            addActionMessage("Não foi possivel associar conta de facebook");
             return "ASSOCIATE_ERROR";
+        }
+
     }
 
     public String getCode() {

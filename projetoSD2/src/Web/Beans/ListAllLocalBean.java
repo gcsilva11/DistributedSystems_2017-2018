@@ -13,17 +13,14 @@ public class ListAllLocalBean extends RMIBean{
     }
 
     public boolean getJaVotou() throws RemoteException{
-        System.out.println(this.idUser);
         return this.server.hasVoted(this.idUser,this.idElection);
     }
 
     public boolean getUserPodeVotar() throws RemoteException{
-        System.out.println(this.idUser);
         return this.server.userCanVote(this.idUser,this.idElection);
     }
 
     public String getNameFac() throws RemoteException{
-        System.out.println(this.idUser);
         return this.server.getFaculdadeVoted(this.idUser, this.idElection);
     }
 
@@ -37,7 +34,6 @@ public class ListAllLocalBean extends RMIBean{
 
     public void setIdUser(String idUser) {
         this.idUser = Integer.parseInt(idUser);
-        System.out.println(this.idUser);
     }
 
     public ArrayList<ArrayList<String>> getPlacesVoted() {

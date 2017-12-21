@@ -24,9 +24,9 @@ public class RegisterUserAction extends ActionSupport implements SessionAware {
         this.getAdminBean().setProfType(this.profType);
         this.getAdminBean().setPassword(this.password);
 	    if(this.getAdminBean().getRegistrationSuccess()){
-	        return "registerSuccess";
+	        return "REGISTER_SUCCESS";
         }
-        return "registerFail";
+        return "REGISTER_FAIL";
 	}
 
     public AdminBean getAdminBean() {

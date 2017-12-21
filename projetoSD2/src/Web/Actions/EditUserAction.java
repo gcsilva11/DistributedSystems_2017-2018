@@ -21,7 +21,7 @@ public class EditUserAction extends ActionSupport implements SessionAware {
         this.getAdminBean().setAddress(this.address);
         this.getAdminBean().setPassword(this.password);
         this.getAdminBean().getEditUser();
-        return "success";
+        return "SUCCESS";
     }
 
     public AdminBean getAdminBean() {

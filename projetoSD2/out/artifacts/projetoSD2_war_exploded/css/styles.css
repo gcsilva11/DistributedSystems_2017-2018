@@ -1,0 +1,13 @@
+.center{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10%;
+}
+
+.no-margin{
+    margin: 0 0 0 0;
+}
+
+.hide-display{
+    display: none;
+}
