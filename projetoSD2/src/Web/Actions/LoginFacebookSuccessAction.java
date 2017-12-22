@@ -34,8 +34,10 @@ public class LoginFacebookSuccessAction extends ActionSupport implements Session
             this.session.put("loggedin",true);
             return "LOGIN_SUCCESS";
         }
-        else
-            return "ASSOCIATE_ERROR";
+        else {
+            this.session.put("message","Login com facebook falhado");
+            return "LOGIN_FAIL";
+        }
     }
 
     public String getCode() {

@@ -82,7 +82,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="usermenu.jsp">Menu de Admin</a>
+            <a class="navbar-brand" href="usermenu.jsp">Menu de Utilizador</a>
         </div>
         <ul class="nav navbar-nav">
             <li><a>${session.username}</a></li>
@@ -106,10 +106,9 @@
             </s:form>
         </div>
         <div class="col-xs-3 center">
-            <a href="${session.authURL}" class="btn btn-default">Associar Facebook</a>
-            <s:if test="hasActionMessages()">
-                <s:actionmessage/>
-            </s:if>
+            <s:form action="associateButton">
+                <s:submit value="Associar Facebook" cssClass="btn btn-default"/>
+            </s:form>
         </div>
         <div class="col-xs-3 center">
             <h4>Online User List</h4>
@@ -118,9 +117,11 @@
     </div>
 </div>
 
-<div>
-    <noscript>JavaScript must be enabled for WebSockets to work.</noscript>
-</div>
+<s:if test="hasActionMessages()">
+    <s:actionmessage/>
+</s:if>
+
+<noscript>JavaScript must be enabled for WebSockets to work.</noscript>
 
 </body>
 </html>

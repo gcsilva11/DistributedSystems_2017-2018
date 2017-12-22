@@ -44,13 +44,23 @@
         </action>
 
         <action name="vote" class="Web.Actions.VoteAction" method="execute">
-            <result name="VOTE_SUCCESS">/usermenu.jsp </result>
+            <result name="REDIRECT" type="redirect">${authorization}</result>
+            <result name="VOTE_SUCCESS">/usermenu.jsp</result>
             <result name="LOGIN_FAIL">/index.jsp</result>
+        </action>
+
+        <action name="postVote" class="Web.Actions.PostVoteAction" method="execute">
+            <result name="PUBLISH_SUCCESS">/usermenu.jsp</result>
+            <result name="PUBLISH_FAIL">/usermenu.jsp</result>
         </action>
 
         <action name="listLocal" class="Web.Actions.ListLocalAction" method="execute">
             <result name="LIST_LOCAL_ELECTIONS_SUCCESS">/listlocals.jsp </result>
             <result name="LOGIN_FAIL">/index.jsp</result>
+        </action>
+
+        <action name="associateButton" class="Web.Actions.AssociateButtonAction" method="execute">
+            <result name="REDIRECT" type="redirect">${authorization}</result>
         </action>
 
         <action name="associateFacebook" class="Web.Actions.AssociateFacebookAction" method="execute">

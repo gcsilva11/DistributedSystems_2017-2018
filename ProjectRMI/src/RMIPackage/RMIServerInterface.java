@@ -1,13 +1,15 @@
-package ServerPackage;
+package RMIPackage;
 
 import java.rmi.*;
 import java.util.ArrayList;
 
-public interface TCPServerInterface extends Remote {
+public interface RMIServerInterface extends Remote {
 
     boolean checkFaculdade(int facID) throws RemoteException;
 
     boolean registerUser(int numberID, String name, String password, String phone, String address, String expDate, int profession) throws RemoteException;
+
+    boolean associateFacebookUser(int numberID, String fbid) throws RemoteException;
 
     boolean addUserFac(int numberID, int faculdadeID) throws RemoteException;
 
@@ -78,6 +80,8 @@ public interface TCPServerInterface extends Remote {
     String getFaculdadeVoted(int userID, int electionID) throws RemoteException;
 
     boolean authenticateUser(String name, String password) throws RemoteException;
+
+    String authenticateFacebook(String facebookid) throws RemoteException;
 
     boolean identifyID(int userID, int facID) throws RemoteException;
 

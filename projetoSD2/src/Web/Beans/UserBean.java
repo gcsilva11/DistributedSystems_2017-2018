@@ -131,6 +131,9 @@ public class UserBean extends RMIBean {
         this.placesVoted = placesVoted;
     }
 
+    public String getIdFacebook() throws RemoteException{
+        return this.server.getIDFacebook(this.username);
+    }
 
     public void setIdFacebook(String idFacebook) {
         this.idFacebook = idFacebook;

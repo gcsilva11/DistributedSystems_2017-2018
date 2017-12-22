@@ -417,6 +417,18 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
         return "";
     }
 
+    public String getIDFacebook(String username) throws RemoteException{
+        try{
+            ResultSet rs = queryDB("SELECT facebookid FROM user WHERE name = '"+username+"';");
+            if(rs.next()){
+                return rs.getString("facebookid");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     // Retorna faculdades a que user pertence
     public boolean identifyID(int userID, int facID) throws RemoteException{
         try{

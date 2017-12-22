@@ -35,6 +35,10 @@
   </div>
 </div>
 
+<s:if test="hasActionMessages()">
+  <s:actionmessage/>
+</s:if>
+
 <h4>${session.message}</h4>
 
 </body>

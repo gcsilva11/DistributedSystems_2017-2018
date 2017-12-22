@@ -1,5 +1,8 @@
 package Web.Actions;
 
+import com.github.scribejava.apis.FacebookApi;
+import com.github.scribejava.core.builder.ServiceBuilder;
+import com.github.scribejava.core.oauth.OAuth20Service;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.SessionAware;
 import Web.Beans.*;
@@ -7,8 +10,10 @@ import java.util.*;
 
 public class VoteAction extends ActionSupport implements SessionAware {
     private static final long serialVersionUID = 4L;
+    private static final String apiKey = "512274325811129", apiSecret = "83172050c3bb8239b8f11d6c0a785a1f";
     private Map<String, Object> session;
-    public String nomeLista;
+    public String nomeLista, authorization;
+    OAuth20Service service = null;
     public boolean postFacebook;
 
     @Override
@@ -24,16 +29,27 @@ public class VoteAction extends ActionSupport implements SessionAware {
             this.getUserBean().getVote();
 
             if(this.postFacebook){
-
+                String secretState = "secret" + new Random().nextInt(999_999);
+                this.service = new ServiceBuilder(apiKey)
+                        .apiSecret(apiSecret)
+                        .callback("http://localhost:8080/postVote") // Do not change this.
+                        .state(secretState)
+                        .scope("publish_actions")
+                        .build(FacebookApi.instance());
+                this.authorization = this.service.getAuthorizationUrl();
+                this.session.put("service",this.service);
+                return "REDIRECT";
             }
-
-
             return "VOTE_SUCCESS";
         } else return "LOGIN_FAIL";
     }
 
     public void setNomeLista(String nomeLista) {
         this.nomeLista = nomeLista;
+    }
+
+    public void setAuthorization(String authorization) {
+        this.authorization = authorization;
     }
 
     public UserBean getUserBean() {

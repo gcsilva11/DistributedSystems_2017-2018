@@ -83,6 +83,8 @@ public interface RMIServerInterface extends Remote {
 
     String authenticateFacebook(String facebookid) throws RemoteException;
 
+    String getIDFacebook(String username) throws RemoteException;
+
     boolean identifyID(int userID, int facID) throws RemoteException;
 
     boolean identifyName(String name, int facID) throws RemoteException;

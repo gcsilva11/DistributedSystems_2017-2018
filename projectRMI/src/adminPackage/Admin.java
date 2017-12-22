@@ -2,13 +2,13 @@ package adminPackage;
 
 import java.awt.*;
 import java.lang.reflect.Array;
+import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
 
 import RMIPackage.*;
 import com.sun.org.apache.regexp.internal.RE;
@@ -42,7 +42,7 @@ public class Admin {
 
         try{
         	//Ligacao ao RMI
-            VotingAdminInterface vote = (VotingAdminInterface) LocateRegistry.getRegistry(hostname,rmiPort).lookup("vote_booth");
+            RMIServerInterface vote = (RMIServerInterface) Naming.lookup("rmi://" + hostname + ":" + rmiPort + "/" + "vote_booth");
 
             int electionID, type, ID, profession, faculdadeID, facID, depID, listID;
             String title, description, startDate, endDate, facName, depName, name, myDate, phone, password, address;

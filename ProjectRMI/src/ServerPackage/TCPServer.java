@@ -8,12 +8,15 @@ import java.net.*;
 import java.io.*;
 
 import java.rmi.NotBoundException;
+import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.*;
 
+import RMIPackage.*;
+
 public class TCPServer {
-    public static TCPServerInterface tcp;
+    public static RMIServerInterface tcp;
     private static String userID;
 
     // Contrutor: Inicializa conexão ao RMI
@@ -21,13 +24,13 @@ public class TCPServer {
         int failed = 0;
         while (failed <= 30) {
             try {
-                tcp = (TCPServerInterface) LocateRegistry.getRegistry(hostname,rmiPort).lookup("vote_booth");
+                tcp = (RMIServerInterface) LocateRegistry.getRegistry(hostname,rmiPort).lookup("vote_booth");
                 break;
             } catch (RemoteException|NotBoundException e) {
                 System.out.println("RMI Timeout on User registry, trying to reconnect");
                 try {
                     Thread.sleep(500);
-                    tcp = (TCPServerInterface) LocateRegistry.getRegistry(hostname,rmiPort).lookup("vote_booth");
+                    tcp = (RMIServerInterface) LocateRegistry.getRegistry(hostname,rmiPort).lookup("vote_booth");
                     break;
                 } catch (Exception e2) { failed++; }
                 try { Thread.sleep(500); } catch (InterruptedException e1) { }
@@ -118,13 +121,13 @@ class Connection extends Thread {
 
     private TCPServer tcpServer;
 
-    private TCPServerInterface tcp;
+    private RMIServerInterface tcp;
 
     private String hostname;
     private int userID, rmiPort, facID;
 
     // Construtor: Inicializa dados do socket e do RMI
-    public Connection(Socket aClientSocket, int userID, String hostname, int rmiPort, TCPServerInterface tcp, int facID) {
+    public Connection(Socket aClientSocket, int userID, String hostname, int rmiPort, RMIServerInterface tcp, int facID) {
         this.clientSocket = aClientSocket;
         try {
             this.input = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));

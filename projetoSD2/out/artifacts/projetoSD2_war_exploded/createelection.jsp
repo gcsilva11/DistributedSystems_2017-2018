@@ -91,7 +91,8 @@
     </div>
 </nav>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"/>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+</script>
 <script>
     $(document).ready(function(){
         $('#purpose').on('change', function() {

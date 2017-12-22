@@ -1,8 +1,5 @@
 package RMIPackage;
 
-import ServerPackage.TCPServerInterface;
-import adminPackage.VotingAdminInterface;
-
 import java.io.*;
 import java.net.*;
 import java.rmi.*;
@@ -11,7 +8,7 @@ import java.rmi.server.*;
 import java.util.*;
 import java.sql.*;
 
-public class serverRMI extends UnicastRemoteObject implements TCPServerInterface, VotingAdminInterface{
+public class serverRMI extends UnicastRemoteObject implements RMIServerInterface {
 	private static final long serialVersionUID = 1L;
 
 	private static Connection connection = null;
@@ -35,6 +32,13 @@ public class serverRMI extends UnicastRemoteObject implements TCPServerInterface
 	// Adiciona User na BD
 	public boolean registerUser(int numberID, String name, String password, String phone, String address, String expDate, int profession) throws RemoteException {
 		if(updateDB("CALL add_user("+numberID+",'"+name+"','"+password+"','"+phone+"','"+address+"','"+expDate+"',"+profession+");"))
+			return true;
+		return false;
+	}
+
+	// Adiciona tokens facebook a utilizador
+	public boolean associateFacebookUser(int numberID, String fbid) throws RemoteException {
+		if(updateDB("CALL add_facebook("+numberID+",'"+fbid+"');"))
 			return true;
 		return false;
 	}
@@ -401,6 +405,18 @@ public class serverRMI extends UnicastRemoteObject implements TCPServerInterface
 		return false;
 	}
 
+	public String authenticateFacebook(String facebookid) throws RemoteException{
+		try {
+			ResultSet rs = queryDB("SELECT name FROM user WHERE facebookid = '"+facebookid+"';");
+			if(rs.next()){
+				return rs.getString("name");
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		return "";
+	}
+
 	// Retorna faculdades a que user pertence
 	public boolean identifyID(int userID, int facID) throws RemoteException{
 		try{
@@ -519,15 +535,20 @@ public class serverRMI extends UnicastRemoteObject implements TCPServerInterface
 
 	// Retorna dados de uma eleicao
 	public ArrayList<String> getEl(int id) throws RemoteException{
-		ArrayList<String> aux = new ArrayList<>();
+		ArrayList<String> aux = null;
 		try{
-			ResultSet rs = queryDB("SELECT electionid,title,description,startdate,enddate FROM eleicao WHERE electionid = "+id+";");
+			ResultSet rs = queryDB("SELECT electionid,title,description,startdate,enddate,type FROM eleicao WHERE electionid = "+id+";");
 			if(rs.next()){
+				aux = new ArrayList<String>();
 				aux.add(rs.getString("electionid"));
 				aux.add(rs.getString("title"));
 				aux.add(rs.getString("description"));
 				aux.add(rs.getString("startdate"));
 				aux.add(rs.getString("enddate"));
+				if(rs.getInt("type")==1)
+					aux.add("Conselho Geral");
+				else
+					aux.add("Nucleos");
 			}
 		}catch (SQLException e){ }
 		return aux;

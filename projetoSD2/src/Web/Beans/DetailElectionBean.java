@@ -35,8 +35,14 @@ public class DetailElectionBean extends RMIBean{
 
                 if(this.server.getTotalVotes(this.eleID) == 0)
                     lista.add("0");
-                else
-                    lista.add(Double.toString(this.server.getVotes(this.server.getElectionLists(this.eleID).get(i)) / this.server.getTotalVotes(this.eleID) * 100)+" %");
+                else {
+                    int numVotos = this.server.getVotes(this.server.getElectionLists(this.eleID).get(i));
+                    int numTotal = this.server.getTotalVotes(this.eleID);
+                    double aux = ((double)numVotos / (double)numTotal) * 100;
+
+                    String smtg = String.format("$%.2f",aux);
+                    lista.add(smtg+" %");
+                }
                 votos.add(lista);
             }
             return votos;

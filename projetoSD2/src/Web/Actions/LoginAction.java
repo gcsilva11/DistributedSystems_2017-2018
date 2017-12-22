@@ -15,7 +15,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	private static final long serialVersionUID = 4L;
 	private static final String apiKey = "512274325811129", apiSecret = "83172050c3bb8239b8f11d6c0a785a1f";
 	private Map<String, Object> session;
-	private String username = null, password = null, faculdade = null;
+	private String username = null, password = null;
 
 	@Override
 	public String execute() throws Exception{
@@ -23,18 +23,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		if(this.username != null && !this.username.equals("") && this.password != null && !this.password.equals("") && !this.username.equals("admin")) {
 			this.getLoginBean().setUsername(this.username);
 			this.getLoginBean().setPassword(this.password);
-
 			if (this.getLoginBean().getAuthenticateUser()) {
-				final String secretState = "secret" + new Random().nextInt(999_999);
-				final OAuth20Service service = new ServiceBuilder(apiKey)
-						.apiSecret(apiSecret)
-						.callback("http://localhost:8080/associateFacebook") // Do not change this.
-						.state(secretState)
-						.scope("publish_actions")
-						.build(FacebookApi.instance());
-				final String authorization = service.getAuthorizationUrl();
-				this.session.put("service",service);
-				this.session.put("authURL",authorization);
 				this.session.put("username", this.username);
 				this.session.put("loggedin", true); // this marks the user as logged in
 
@@ -68,10 +57,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public void setVotebooth(String faculdade) {
-		this.faculdade = faculdade;
 	}
 
 	@Override
