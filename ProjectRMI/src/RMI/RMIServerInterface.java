@@ -1,4 +1,4 @@
-package RMIPackage;
+package RMI;
 
 import java.rmi.*;
 import java.util.ArrayList;
@@ -82,6 +82,8 @@ public interface RMIServerInterface extends Remote {
     boolean authenticateUser(String name, String password) throws RemoteException;
 
     String authenticateFacebook(String facebookid) throws RemoteException;
+
+    String getIDFacebook(String username) throws RemoteException;
 
     boolean identifyID(int userID, int facID) throws RemoteException;
 

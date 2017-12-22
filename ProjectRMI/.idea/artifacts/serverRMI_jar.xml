@@ -1,9 +1,9 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="RMI:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/RMI_jar</output-path>
+  <artifact type="jar" name="serverRMI:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/serverRMI_jar</output-path>
     <root id="archive" name="projectRMI.jar">
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/src/RMIPackage/rmiJAR/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/src/RMI/META-INF/MANIFEST.MF" />
       </element>
       <element id="module-output" name="projectRMI" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../mysql-connector-java-5.1.44-bin.jar" path-in-jar="/" />

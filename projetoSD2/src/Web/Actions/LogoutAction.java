@@ -11,8 +11,10 @@ public class LogoutAction extends ActionSupport implements SessionAware {
 
     @Override
     public String execute() throws Exception{
-        if((boolean)this.session.get("loggedin"))
-            this.session.put("loggedin",false);
+        if((boolean)this.session.get("loggedin")) {
+            this.session.put("loggedin", false);
+            this.session.put("isUser", false);
+        }
         return "LOGOUT";
     }
     @Override

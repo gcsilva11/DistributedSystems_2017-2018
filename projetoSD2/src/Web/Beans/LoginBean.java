@@ -28,4 +28,8 @@ public class LoginBean extends RMIBean{
 	public void setIdFacebook(String idFacebook) {
 		this.idFacebook = idFacebook;
 	}
+
+	public String getUsername() {
+		return username;
+	}
 }

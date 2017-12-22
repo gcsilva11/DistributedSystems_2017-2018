@@ -13,7 +13,6 @@ import java.util.*;
 
 public class LoginAction extends ActionSupport implements SessionAware {
 	private static final long serialVersionUID = 4L;
-	private static final String apiKey = "512274325811129", apiSecret = "83172050c3bb8239b8f11d6c0a785a1f";
 	private Map<String, Object> session;
 	private String username = null, password = null;
 
@@ -26,6 +25,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 			if (this.getLoginBean().getAuthenticateUser()) {
 				this.session.put("username", this.username);
 				this.session.put("loggedin", true); // this marks the user as logged in
+				this.session.put("isUser",true);
 
 				return "LOGIN_SUCCESS";
 			} else {
@@ -34,6 +34,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		} else if(this.username.equals("admin") && this.password.equals("admin")){
 			session.put("username","Admin");
 			this.session.put("loggedin", true);
+			this.session.put("isUser",false);
 			return "LOGIN_ADMIN";
 		} else {
 			this.session.put("message","Fail no login");

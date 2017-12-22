@@ -14,7 +14,7 @@ public class ListLocalAction extends ActionSupport implements SessionAware {
 
     @Override
     public String execute() throws Exception {
-        if((boolean)this.session.get("loggedin") && this.session.get("username") != null) {
+        if((boolean)this.session.get("loggedin") && this.session.get("username") != null && (boolean)this.session.get("isUser")) {
             this.getUserBean().setUsername((String) this.session.get("username"));
             this.getUserBean().setIdUser(this.getUserBean().getIdUser());
             ArrayList<Integer> elecIds = this.getUserBean().getEls();

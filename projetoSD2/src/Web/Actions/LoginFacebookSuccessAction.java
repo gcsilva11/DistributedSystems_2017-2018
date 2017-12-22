@@ -30,8 +30,9 @@ public class LoginFacebookSuccessAction extends ActionSupport implements Session
         this.getLoginBean().setIdFacebook(responseID);
         String name = this.getLoginBean().getAuthenticateFacebook();
         if(!name.equals("")) {
-            this.session.put("username",name);
-            this.session.put("loggedin",true);
+            this.session.put("username", name);
+            this.session.put("loggedin", true); // this marks the user as logged in
+            this.session.put("isUser",true);
             return "LOGIN_SUCCESS";
         }
         else {

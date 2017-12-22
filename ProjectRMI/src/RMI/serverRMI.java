@@ -1,4 +1,4 @@
-package RMIPackage;
+package RMI;
 
 import java.io.*;
 import java.net.*;
@@ -412,6 +412,18 @@ public class serverRMI extends UnicastRemoteObject implements RMIServerInterface
 				return rs.getString("name");
 			}
 		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		return "";
+	}
+
+	public String getIDFacebook(String username) throws RemoteException{
+		try{
+			ResultSet rs = queryDB("SELECT facebookid FROM user WHERE name = '"+username+"';");
+			if(rs.next()){
+				return rs.getString("facebookid");
+			}
+		}catch (SQLException e){
 			e.printStackTrace();
 		}
 		return "";

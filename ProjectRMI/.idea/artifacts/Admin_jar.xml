@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/Admin_jar</output-path>
     <root id="archive" name="projectRMI.jar">
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/src/adminPackage/AdminJAR/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/src/adminPackage/META-INF/MANIFEST.MF" />
       </element>
       <element id="module-output" name="projectRMI" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../mysql-connector-java-5.1.44-bin.jar" path-in-jar="/" />

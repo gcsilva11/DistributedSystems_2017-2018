@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Meta2:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/Meta2_war</output-path>
+    <root id="archive" name="Meta2_war.war">
+      <element id="artifact" artifact-name="projetoSD2:war exploded" />
+    </root>
+  </artifact>
+</component>

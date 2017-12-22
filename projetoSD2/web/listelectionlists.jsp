@@ -77,7 +77,7 @@
 
 </head>
 <body>
-<java:if test="${session.loggedin != true || session.username == null}">
+<java:if test="${session.loggedin != true || session.username == null || session.isUser != true}">
     <java:redirect url="index.jsp"/>
 </java:if>
 

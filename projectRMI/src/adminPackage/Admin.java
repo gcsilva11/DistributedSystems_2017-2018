@@ -1,18 +1,9 @@
 package adminPackage;
 
-import java.awt.*;
-import java.lang.reflect.Array;
 import java.rmi.Naming;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
-import RMIPackage.*;
-import com.sun.org.apache.regexp.internal.RE;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+import RMI.*;
 
 public class Admin {
     private static Scanner input;
