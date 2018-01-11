@@ -23,7 +23,7 @@ public class AssociateButtonAction extends ActionSupport implements SessionAware
         final String secretState = "secret" + new Random().nextInt(999_999);
         final OAuth20Service service = new ServiceBuilder(apiKey)
                 .apiSecret(apiSecret)
-                .callback("http://localhost:8080/associateFacebook") // Do not change this.
+                .callback("http://169.254.236.23:8080/associateFacebook") // Do not change this.
                 .state(secretState)
                 .scope("publish_actions")
                 .build(FacebookApi.instance());

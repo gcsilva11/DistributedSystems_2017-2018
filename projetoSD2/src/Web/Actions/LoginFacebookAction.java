@@ -20,7 +20,7 @@ public class LoginFacebookAction extends ActionSupport implements SessionAware {
         String secretState = "secret" + new Random().nextInt(999_999);
         this.service = new ServiceBuilder(apiKey)
                 .apiSecret(apiSecret)
-                .callback("http://localhost:8080/loginFacebookSuccess") // Do not change this.
+                .callback("http://169.254.236.23:8080/loginFacebookSuccess") // Do not change this.
                 .state(secretState)
                 .scope("publish_actions")
                 .build(FacebookApi.instance());

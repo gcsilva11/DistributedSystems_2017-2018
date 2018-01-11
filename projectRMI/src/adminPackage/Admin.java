@@ -32,9 +32,8 @@ public class Admin {
 
 
         try{
-        	//Ligacao ao RMI
+            //Ligacao ao RMI
             RMIServerInterface vote = (RMIServerInterface) Naming.lookup("rmi://" + hostname + ":" + rmiPort + "/" + "vote_booth");
-
             int electionID, type, ID, profession, faculdadeID, facID, depID, listID;
             String title, description, startDate, endDate, facName, depName, name, myDate, phone, password, address;
 
